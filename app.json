@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "mobile-app",
+    "slug": "touron",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": ""
+  },
+  "expo": {
+    "name": "tour On",
+    "icon": "./assets/playstore.png",
+    "orientation": "portrait",
+    "version": "1.1.0",
+    "slug": "touron",
+    "notification": {
+      "icon": "./assets/playstore.png",
+      "color": "#2ECC71"
+    },
+    "ios": {
+      "bundleIdentifier": "com.touron.travelapp",
+      "buildNumber": "1.0.0",
+      "usesIcloudStorage": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to take photos to upload profile pictures.",
+        "NSPhotoLibraryAddUsageDescription":"This app uses photo bibrary to pick and save photos",
+        "NSPhotoLibraryUsageDescription":"This app uses photo bibrary to pick and save photos"
+
+      }
+    },
+    "android": {
+      "package": "com.touron.travelapp",
+      "versionCode": 17,
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json"
+    },
+    "assetBundlePatterns": [
+      "./assets/*/*"
+    ]
+  },
+  "splash": {
+    "image": "./assets/logo.jpeg",
+    "resizeMode": "cover"
+  },
+  "androidStatusBar": {
+    "backgroundColor": "#C2185B",
+    "translucent": false
+  }
+}
+

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "813320271971",
+    "firebase_url": "https://touronapp-248e4.firebaseio.com",
+    "project_id": "touronapp-248e4",
+    "storage_bucket": "touronapp-248e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813320271971:android:fd5d06f031e4b8943aa056",
+        "android_client_info": {
+          "package_name": "com.touron.travelapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813320271971-g7bth4oej5kc7ljd3jfcs1it76bqimgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBL_6l1pHXUCwCr28tZ-c2oopSe804pks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813320271971-g7bth4oej5kc7ljd3jfcs1it76bqimgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
