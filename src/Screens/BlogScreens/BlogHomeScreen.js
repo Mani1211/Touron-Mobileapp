@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import touron from "../../api/touron";
 import { Surface } from "react-native-paper";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 const BlogHomeScreen = ({ navigation }) => {
@@ -78,14 +79,26 @@ const BlogHomeScreen = ({ navigation }) => {
                 }}
               >
                 <View>
-                  <Image
+                  <ProgressiveImage
+                    style={{
+                      height: HEIGHT / 4.8,
+                      width: WIDTH / 2.2,
+                      borderRadius: 15,
+                    }}
+                    resizeMode="cover"
+                    source={{ uri: item.imageSrc }}
+                  />
+                  {/* <Image
+
+
+
                     style={{
                       height: HEIGHT / 4.8,
                       width: WIDTH / 2.2,
                       borderRadius: 15,
                     }}
                     source={{ uri: item.imageSrc }}
-                  />
+                  /> */}
                 </View>
                 <View>
                   <Text

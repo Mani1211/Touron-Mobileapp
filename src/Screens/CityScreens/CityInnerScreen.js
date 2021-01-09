@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -31,7 +32,10 @@ const CityInnerScreen = ({ navigation, route }) => {
     <ScrollView>
       <View style={styles.container}>
         <View>
-          <Image style={styles.image} source={{ uri: item.imageUrl }} />
+          <ProgressiveImage
+            style={styles.image}
+            source={{ uri: item.imageUrl }}
+          />
         </View>
         <View style={styles.innerDetail}>
           <Text style={styles.cityName}>{item.cityName}</Text>

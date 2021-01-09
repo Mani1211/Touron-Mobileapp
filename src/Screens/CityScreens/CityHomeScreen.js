@@ -16,6 +16,7 @@ import { AuthContext } from "../../context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import touron from "../../api/touron";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const CityHomeScreen = ({ navigation, route }) => {
   const { cities } = useContext(AuthContext);
@@ -55,17 +56,13 @@ const CityHomeScreen = ({ navigation, route }) => {
   }, []);
 
   const search = () => {
-    console.log(cityName, "NAME");
-
-    if (city.length > 0) {
-      const d = city.filter((c) => {
-        return c.cityName
-          .trim()
-          .toUpperCase()
-          .includes(cityName.trim().toUpperCase());
-      });
-      return d;
-    }
+    const d = city.filter((c) => {
+      return c.cityName
+        .trim()
+        .toUpperCase()
+        .includes(cityName.trim().toUpperCase());
+    });
+    return d;
   };
 
   return (
@@ -98,7 +95,7 @@ const CityHomeScreen = ({ navigation, route }) => {
                 <View style={styles.imageContainer}>
                   <View>
                     <Text style={styles.name}>{item.cityName}</Text>
-                    <Image
+                    <ProgressiveImage
                       style={styles.image}
                       source={{ uri: item.imageUrl }}
                     />

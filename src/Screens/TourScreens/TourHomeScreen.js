@@ -20,9 +20,11 @@ import { LinearGradient } from "expo-linear-gradient";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { Chip, Surface } from "react-native-paper";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const TourHomeScreen = ({ navigation, route }) => {
   const { isLoggedIn, user, tours, countries, cities } = useContext(
@@ -540,14 +542,98 @@ const TourHomeScreen = ({ navigation, route }) => {
             }
           >
             {loader ? (
-              <ActivityIndicator
-                size="large"
-                style={{
-                  flex: 1,
+              <ScrollView
+                style={{ flex: 1 }}
+                contentContainerStyle={{
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-              />
+              >
+                <SkeletonPlaceholder>
+                  <View
+                    style={{
+                      margin: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        height: 50,
+                        borderRadius: 50,
+                        marginVertical: 30,
+                      }}
+                    />
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        height: HEIGHT / 3.2,
+                        borderRadius: 10,
+                      }}
+                    />
+                    <View
+                      style={{
+                        width: 120,
+                        height: 20,
+                        borderRadius: 4,
+                        marginTop: 10,
+                      }}
+                    />
+                    <View
+                      style={{
+                        width: WIDTH * 0.7,
+                        height: 20,
+                        marginTop: 10,
+                        borderRadius: 4,
+                      }}
+                    />
+                    <View
+                      style={{
+                        marginTop: 6,
+                        width: 80,
+                        height: 20,
+                        borderRadius: 4,
+                      }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      margin: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        height: HEIGHT / 3.2,
+                        borderRadius: 10,
+                      }}
+                    />
+                    <View
+                      style={{
+                        width: 120,
+                        height: 20,
+                        borderRadius: 4,
+                        marginTop: 10,
+                      }}
+                    />
+                    <View
+                      style={{
+                        width: WIDTH * 0.7,
+                        height: 20,
+                        marginTop: 10,
+                        borderRadius: 4,
+                      }}
+                    />
+                    <View
+                      style={{
+                        marginTop: 6,
+                        width: 80,
+                        height: 20,
+                        borderRadius: 4,
+                      }}
+                    />
+                  </View>
+                </SkeletonPlaceholder>
+              </ScrollView>
             ) : (
               <View>
                 <View
@@ -733,7 +819,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                             >
                               <View style={styles.imageContainer}>
                                 <View style={styles.shadow}>
-                                  <Image
+                                  <ProgressiveImage
                                     style={styles.image}
                                     source={{ uri: item.imageUrl }}
                                   />

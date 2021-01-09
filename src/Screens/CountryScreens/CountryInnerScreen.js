@@ -11,9 +11,9 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const WIDTH = Dimensions.get("window").width;
-
 const HEIGHT = Dimensions.get("window").height;
 const CountryInnerScreen = ({ navigation, route }) => {
   const item = route.params.item;
@@ -35,7 +35,10 @@ const CountryInnerScreen = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: item.imageUrl }} />
+        <ProgressiveImage
+          style={styles.image}
+          source={{ uri: item.imageUrl }}
+        />
         <Text style={styles.countryName}>{item.countryName}</Text>
 
         <TouchableOpacity

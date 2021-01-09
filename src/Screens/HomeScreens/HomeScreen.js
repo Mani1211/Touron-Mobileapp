@@ -13,13 +13,13 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import * as Buffer from "buffer";
 import * as Network from "expo-network";
 import Categories from "./components/CategoriesScreen";
 import ContentList from "./components/ContentList";
 import { Feather } from "@expo/vector-icons";
 import * as Font from "expo-font";
-
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -27,6 +27,7 @@ import { AuthContext } from "../../context/AuthContext";
 import touron from "../../api/touron";
 import { AppLoading } from "expo";
 import Faq from "../AccountScreens/utilities/Faq";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const HomeScreen = ({ navigation, route }) => {
   const { user, userInfo } = useContext(AuthContext);
@@ -160,14 +161,6 @@ const HomeScreen = ({ navigation, route }) => {
   //     });
   // };
 
-  if (!fontLoaded) {
-    return (
-      <>
-        <AppLoading />
-      </>
-    );
-  }
-
   return (
     <ScrollView
       style={{ backgroundColor: "#fff" }}
@@ -178,7 +171,7 @@ const HomeScreen = ({ navigation, route }) => {
         backgroundColor="transparent"
         animated={true}
       />
-      {status ? (
+      {fontLoaded ? (
         <View style={styles.container}>
           <View>
             <TouchableOpacity>
@@ -194,7 +187,7 @@ const HomeScreen = ({ navigation, route }) => {
                   onPress={() => navigation.toggleDrawer()}
                   style={{ paddingTop: Platform.OS === "ios" ? 20 : 0 }}
                 >
-                  <Image
+                  <ProgressiveImage
                     style={{
                       height: 70,
                       width: 70,
@@ -250,22 +243,11 @@ const HomeScreen = ({ navigation, route }) => {
                     <View style={styles.tileStyle}>
                       <Text style={styles.name}>{item.countryName}</Text>
 
-                      {loaded ? (
-                        <Image
-                          fadeDuration={1000}
-                          style={styles.cityImage}
-                          source={{
-                            uri:
-                              "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOsAAADWCAMAAAAHMIWUAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIB3A8VIAAFqm4S1AAAAAElFTkSuQmCC",
-                          }}
-                        />
-                      ) : (
-                        <Image
-                          fadeDuration={1000}
-                          style={styles.cityImage}
-                          source={{ uri: item.imageUrl }}
-                        />
-                      )}
+                      <ProgressiveImage
+                        fadeDuration={1000}
+                        style={styles.cityImage}
+                        source={{ uri: item.imageUrl }}
+                      />
                     </View>
                   </TouchableOpacity>
                 );
@@ -293,7 +275,7 @@ const HomeScreen = ({ navigation, route }) => {
                   >
                     <View style={styles.tileStyle}>
                       <Text style={styles.name}>{item.cityName}</Text>
-                      <Image
+                      <ProgressiveImage
                         fadeDuration={1000}
                         style={styles.cityImage}
                         source={{ uri: item.imageUrl }}
@@ -357,9 +339,15 @@ const HomeScreen = ({ navigation, route }) => {
                     <View style={styles.tileStyle}>
                       <Text style={styles.name}>{item.tourName}</Text>
 
-                      <Image
+                      <ProgressiveImage
                         fadeDuration={1000}
-                        style={styles.tourImage}
+                        style={{
+                          height: HEIGHT / 3.8,
+                          width: WIDTH / 1.2,
+                          borderRadius: 10,
+                          marginVertical: 10,
+                          marginRight: 10,
+                        }}
                         source={{ uri: item.imageUrl }}
                       />
                     </View>
@@ -370,29 +358,156 @@ const HomeScreen = ({ navigation, route }) => {
         </View>
       ) : (
         <>
-          <View
-            style={{
-              flex: 1,
+          <ScrollView
+            style={{ flex: 1, padding: 20 }}
+            contentContainerStyle={{
               alignItems: "center",
-              justifyContent: "flex-end",
-              display: "flex",
-              marginTop: HEIGHT / 4,
+              justifyContent: "center",
             }}
           >
-            {/* <Image
-              style={{ height: WIDTH * 0.8, width: WIDTH * 0.8 }}
-              source={require("../../../assets/oops.jpg")}
-            />
-
-            <TouchableOpacity
-              onPress={() => {
-                getNetwork();
-              }}
-            >
-              <MaterialCommunityIcons name="reload" size={30} color="black" />
-              {networkLoader ? <ActivityIndicator size="small" /> : null}
-            </TouchableOpacity> */}
-          </View>
+            <SkeletonPlaceholder>
+              <View
+                style={{
+                  padding: 20,
+                }}
+              >
+                <View
+                  style={{
+                    width: WIDTH * 0.9,
+                    height: 25,
+                    borderRadius: 50,
+                    marginTop: 60,
+                    marginBottom: 20,
+                  }}
+                />
+                <View
+                  style={{
+                    width: 100,
+                    height: 30,
+                    borderRadius: 50,
+                    marginBottom: 40,
+                  }}
+                />
+                <View
+                  style={{
+                    width: WIDTH / 2,
+                    height: 20,
+                    borderRadius: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    width: 120,
+                    height: 16,
+                    borderRadius: 4,
+                    marginTop: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-evenly",
+                    marginVertical: 20,
+                  }}
+                >
+                  <View
+                    style={{ height: 100, width: 100, borderRadius: 50 }}
+                  ></View>
+                  <View style={{ height: 100, width: 100, borderRadius: 50 }} />
+                  <View style={{ height: 100, width: 100, borderRadius: 50 }} />
+                </View>
+                <View
+                  style={{
+                    width: WIDTH * 0.7,
+                    height: 20,
+                    marginTop: 10,
+                    borderRadius: 4,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: 6,
+                    width: 80,
+                    height: 20,
+                    borderRadius: 4,
+                  }}
+                />
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    // justifyContent: "space-evenly",
+                    marginVertical: 20,
+                  }}
+                >
+                  <View style={styles.cityImage} />
+                  <View style={styles.cityImage} />
+                  <View style={styles.cityImage} />
+                </View>
+                <View
+                  style={{
+                    width: WIDTH * 0.7,
+                    height: 20,
+                    marginTop: 10,
+                    borderRadius: 4,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: 6,
+                    width: 80,
+                    height: 20,
+                    borderRadius: 4,
+                  }}
+                />
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    // justifyContent: "space-evenly",
+                    marginVertical: 20,
+                  }}
+                >
+                  <View style={styles.cityImage} />
+                  <View style={styles.cityImage} />
+                  <View style={styles.cityImage} />
+                </View>
+                <View
+                  style={{
+                    width: WIDTH * 0.7,
+                    height: 20,
+                    marginTop: 10,
+                    borderRadius: 4,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: 6,
+                    width: 80,
+                    height: 20,
+                    borderRadius: 4,
+                  }}
+                />
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    // justifyContent: "space-evenly",
+                    marginVertical: 20,
+                  }}
+                >
+                  <View style={styles.cityImage} />
+                  <View style={styles.cityImage} />
+                  <View style={styles.cityImage} />
+                </View>
+              </View>
+            </SkeletonPlaceholder>
+          </ScrollView>
         </>
       )}
     </ScrollView>

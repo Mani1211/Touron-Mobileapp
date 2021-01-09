@@ -14,6 +14,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { AuthContext } from "../../context/AuthContext";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 const SelfPlanForm = ({ navigation }) => {
@@ -101,7 +102,7 @@ const SelfPlanForm = ({ navigation }) => {
                       ]);
                     }}
                   >
-                    <Image
+                    <ProgressiveImage
                       style={styles.cityImage}
                       source={{ uri: item.imageUrl }}
                     />

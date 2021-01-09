@@ -14,6 +14,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import touron from "../../api/touron";
 import { AuthContext } from "../../context/AuthContext";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -83,7 +84,7 @@ const CountryHomeScreen = ({ navigation }) => {
                 <View style={styles.imageContainer}>
                   <View>
                     <Text style={styles.name}>{item.countryName}</Text>
-                    <Image
+                    <ProgressiveImage
                       style={styles.image}
                       source={{ uri: item.imageUrl }}
                     />
