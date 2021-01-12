@@ -28,6 +28,7 @@ import touron from "../../api/touron";
 import { AppLoading } from "expo";
 import Faq from "../AccountScreens/utilities/Faq";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
+import * as firebase from "firebase";
 
 const HomeScreen = ({ navigation, route }) => {
   const { user, userInfo } = useContext(AuthContext);
@@ -61,17 +62,71 @@ const HomeScreen = ({ navigation, route }) => {
     setFont(true);
   };
 
-  // const openWhatsApp = (name) => {
-  //   let url = `whatsapp://send?text=Hi,I would like to go know more details about this offer &phone= +91 8667801206`;
+  const openWhatsApp = () => {
+    let url = `whatsapp://send?text=Hi,I would like to go know more details about this offer &phone= +91 8667801206`;
 
-  //   Linking.openURL(url)
-  //     .then((data) => {
-  //       console.log("WhatsApp Opened successfully " + data);
-  //     })
-  //     .catch(() => {
-  //       alert("Make sure WhatsApp installed on your device");
-  //     });
-  // };
+    Linking.openURL(url)
+      .then((data) => {
+        console.log("WhatsApp Opened successfully " + data);
+      })
+      .catch(() => {
+        alert("Make sure WhatsApp installed on your device");
+      });
+  };
+
+  const testMonials = [
+    {
+      name: "Vikash",
+      comment:
+        "We really had a great time in dubai,Vikas from tour on hosted uh and done all the arrangements perfectly from his end.we will never forget our trip with tour on.It was overall a nice experience in dubai and I can't wait for my next trip with tour on",
+      testImage:
+        "https://images.pexels.com/photos/3556116/pexels-photo-3556116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      tourPlace: "Dubai",
+    },
+    {
+      name: "Vikash",
+      comment:
+        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, at.dolor sit, amet consectetur adipisicing elit. Similique, at.",
+      testImage:
+        "https://images.pexels.com/photos/3215476/pexels-photo-3215476.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      tourPlace: "Maldives",
+    },
+    {
+      name: "Vikash",
+      comment:
+        "Lorem ipsum dolor sit, amet conseor sit, amet consectetur adipisicing elit. Similique, at..",
+      testImage:
+        "https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      tourPlace: "Singapore",
+    },
+    {
+      name: "Vikash",
+      comment:
+        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique dolor sit, amet consectetur adipisicing elit. Similique, at., at.",
+      testImage:
+        "https://www.seekpng.com/png/detail/60-604032_face-businessman-png-dummy-images-for-testimonials.png",
+      tourPlace: "Bali",
+    },
+  ];
+  const getTestimonial = () => {
+    firebase
+      .database()
+      .ref("testimonials")
+      .on("value", (data) => {
+        if (data !== null) {
+          let req = [];
+          data.forEach((d) => {
+            req.push(d.val());
+          });
+
+          console.log("req", req);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getTestimonial();
+  }, []);
 
   const getTours = async () => {
     const tours = await touron.get("/tour?page=32&pageSize=10");
@@ -88,7 +143,6 @@ const HomeScreen = ({ navigation, route }) => {
   const getNetwork = async () => {
     setNetworkLoader(true);
     const status = (await Network.getNetworkStateAsync()).isConnected;
-    // console.log(status, "STATUS");
     setStatus(status);
     setNetworkLoader(false);
   };
@@ -108,7 +162,7 @@ const HomeScreen = ({ navigation, route }) => {
       fetchFont();
       setTimeout(() => {
         setLoaded(false);
-      }, 2000);
+      }, 5000);
     }
 
     return () => (mounted = false);
@@ -161,6 +215,10 @@ const HomeScreen = ({ navigation, route }) => {
   //     });
   // };
 
+  // if (!fontLoaded) {
+  //   return <AppLoading />;
+  // }
+
   return (
     <ScrollView
       style={{ backgroundColor: "#fff" }}
@@ -173,33 +231,33 @@ const HomeScreen = ({ navigation, route }) => {
       />
       {fontLoaded ? (
         <View style={styles.container}>
-          <View>
-            <TouchableOpacity>
-              <View style={{ height: HEIGHT / 10, width: HEIGHT / 10 }}>
-                {/* <Feather
-                  name="menu"
-                  size={28}
-                  color="black"
-                  style={{ paddingHorizontal: 10, paddingTop: 20 }}
-                  onPress={() => navigation.toggleDrawer()}
-                /> */}
-                <TouchableOpacity
-                  onPress={() => navigation.toggleDrawer()}
-                  style={{ paddingTop: Platform.OS === "ios" ? 20 : 0 }}
-                >
-                  <ProgressiveImage
-                    style={{
-                      height: 70,
-                      width: 70,
-                    }}
-                    source={require("../../../assets/logo.jpeg")}
-                  />
-                </TouchableOpacity>
-              </View>
+          <View
+            style={{
+              height: HEIGHT / 10,
+              // width: HEIGHT / 10,
+              flexDirection: "row",
+              // justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => navigation.toggleDrawer()}
+              style={{ paddingTop: Platform.OS === "ios" ? 20 : 0 }}
+            >
+              <Image
+                style={{
+                  height: 70,
+                  width: 70,
+                }}
+                source={require("../../../assets/logo.jpeg")}
+              />
             </TouchableOpacity>
+            <Text style={{ fontSize: 20, fontFamily: "Andika" }}>
+              Hey, Vikash
+            </Text>
           </View>
 
-          <View
+          {/* <View
             style={{
               width: window.width,
               flexDirection: "row",
@@ -211,13 +269,51 @@ const HomeScreen = ({ navigation, route }) => {
             ) : (
               <Text style={styles.title}>Hey, Start Planning your...</Text>
             )}
-          </View>
+          </View> */}
+          <FlatList
+            data={testMonials}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            pagingEnabled
+            keyExtractor={(d) => d.tourPlace}
+            renderItem={({ item, index }) => {
+              return (
+                <View
+                  key={index}
+                  style={{
+                    // width: WIDTH * 0.9,
+                    // marginHorizontal: 10,
+                    justifyContent: "center",
+                    marginBottom: 35,
+                    alignItems: "center",
+                  }}
+                >
+                  <TouchableOpacity onPress={() => openWhatsApp()}>
+                    <Image
+                      style={{
+                        width: WIDTH * 0.8,
+                        height: HEIGHT / 2,
+                        borderRadius: 10,
+                        marginHorizontal: 20,
+                      }}
+                      source={{
+                        uri: item.testImage,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+          />
+
           <ContentList
             route={"CountryHome"}
             navigation={navigation}
             title={"Tour Categories"}
             more={""}
-            content={"Content Goes Here"}
+            content={
+              "Are you the adventurous type? Do you love a long ride? Are you an organizing freak? Whichever you are, find the ultimate vacation for you!"
+            }
           />
           <Categories navigation={navigation} />
           <ContentList
@@ -225,7 +321,9 @@ const HomeScreen = ({ navigation, route }) => {
             navigation={navigation}
             title={"Popular Countries"}
             more={"Show More"}
-            content={"Content Goes Here"}
+            content={
+              "Explore enchanting new lands that will steal your heart. Find out more about the countries you want to visit"
+            }
           />
           <FlatList
             data={countries}
@@ -254,11 +352,76 @@ const HomeScreen = ({ navigation, route }) => {
             }}
           />
           <ContentList
+            // route={"CountryHome"}
+            navigation={navigation}
+            title={"Our Travellers"}
+            more={""}
+            content={""}
+          />
+          <FlatList
+            data={testMonials}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            // pagingEnabled
+            keyExtractor={(d) => d.tourPlace}
+            renderItem={({ item, index }) => {
+              return (
+                <View
+                  style={{
+                    width: WIDTH * 0.9,
+                    // backgroundColor: "#02B290",
+                    marginHorizontal: 20,
+                    // flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 10,
+                    // height: WIDTH / 2,
+                  }}
+                >
+                  <Image
+                    source={require("../../../assets/1.jpeg")}
+                    resizeMode="cover"
+                    style={{
+                      width: WIDTH * 0.9,
+                      height: WIDTH * 0.55,
+                      // borderRadius: 50,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginHorizontal: 20,
+                    }}
+                  />
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      marginTop: 20,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        // paddingTop: 20,
+                        paddingLeft: 10,
+                        color: "#FF6263",
+                        fontWeight: "bold",
+                        fontFamily: "Avenir",
+                      }}
+                    >
+                      {item.name},{""} {item.tourPlace}
+                    </Text>
+                    <Text style={{ paddingLeft: 10 }}>{item.comment}</Text>
+                  </View>
+                </View>
+              );
+            }}
+          />
+
+          <ContentList
             route={"CityHome"}
             navigation={navigation}
             title={"Marvelous Cities"}
             more={"Show More"}
-            content={"Content Goes Here"}
+            content={
+              "Are you a wanderlust soul getting lost in breathtaking cities? Here are our suggestions!"
+            }
           />
           <FlatList
             data={cities}
@@ -321,7 +484,9 @@ const HomeScreen = ({ navigation, route }) => {
             navigation={navigation}
             title={"Curated Tours"}
             more={"Show More"}
-            content={"Content Goes Here"}
+            content={
+              "Are you a kindred spirit looking for the perfect holiday? Look no further!"
+            }
           />
           <FlatList
             data={tour}
@@ -545,6 +710,7 @@ const styles = StyleSheet.create({
   tileStyle: {
     flexDirection: "column",
     position: "relative",
+    marginVertical: 30,
   },
   name: {
     fontSize: 17,

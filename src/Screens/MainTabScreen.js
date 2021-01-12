@@ -35,6 +35,7 @@ import AboutUs from "./AccountScreens/AboutUs";
 import ContactUs from "./AccountScreens/ContactUs";
 import BookingDetails from "./AccountScreens/BookingDetails";
 import MyPlansInner from "./AccountScreens/MyPlansInner";
+import WildLife from "./CategoryScreens/WildlifeScreen";
 const HomeStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -75,6 +76,21 @@ const HomeStackScreen = () => {
         name="Road"
         component={RoadTripScreen}
       />
+      <HomeStack.Screen
+        options={{ headerShown: false }}
+        name="Wildlife"
+        component={WildLife}
+      />
+      {/* <HomeStack.Screen
+        options={{ headerShown: false }}
+        name="Road"
+        component={RoadTripScreen}
+      />
+      <HomeStack.Screen
+        options={{ headerShown: false }}
+        name="Road"
+        component={RoadTripScreen}
+      /> */}
       <HomeStack.Screen
         options={{
           title: "Country",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Animated, StyleSheet, Image } from "react-native";
 import DefaultImage from "../../assets/default_image.png";
 const ProgressiveImage = ({ source, style, ...props }) => {
@@ -18,12 +18,29 @@ const ProgressiveImage = ({ source, style, ...props }) => {
     }).start();
   };
 
+  const [randomColor, setRandomColor] = useState("rgb(32,0,126)");
+
+  const changeBackground = () => {
+    let color = `rgb(${Math.floor(Math.random() * 256)},${Math.floor(
+      Math.random() * 256
+    )},${Math.floor(Math.random() * 256)})`;
+
+    setRandomColor(color);
+  };
+
+  useEffect(() => {
+    changeBackground();
+  }, []);
+
   return (
     <View>
       <Animated.Image
         {...props}
         source={DefaultImage}
-        style={[style, { opacity: defaultImageAnimated }]}
+        style={[
+          style,
+          { opacity: defaultImageAnimated, backgroundColor: randomColor },
+        ]}
         onLoad={handleDefaultImageLoad}
         blurRadius={1}
       ></Animated.Image>

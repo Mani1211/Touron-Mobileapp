@@ -167,10 +167,6 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
           <View style={styles.dateContainer}>
             <View style={styles.from}>
               <Text style={{ fontSize: 20, color: "#fff" }}>From</Text>
-              <Image
-                style={{ width: 20, height: 20, marginHorizontal: 5 }}
-                source={require("../../../assets/c.png")}
-              />
             </View>
             <View style={styles.picker}>
               <DatePicker
@@ -180,6 +176,10 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
                 textStyle={{ fontFamily: "Andika" }}
                 androidMode={"spinner"}
                 onDateChange={(date) => handleFromDate(date)}
+              />
+              <Image
+                style={{ width: 20, height: 20, marginRight: 5 }}
+                source={require("../../../assets/c.png")}
               />
             </View>
           </View>
@@ -192,14 +192,6 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
           <View style={styles.toContainer}>
             <View style={styles.from}>
               <Text style={{ fontSize: 20, color: "#fff" }}>To</Text>
-              <Image
-                style={{
-                  width: 20,
-                  height: 20,
-                  marginHorizontal: 5,
-                }}
-                source={require("../../../assets/c.png")}
-              />
             </View>
             <View style={styles.picker}>
               <DatePicker
@@ -210,6 +202,10 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
                 textStyle={{ fontFamily: "Andika" }}
                 androidMode={"spinner"}
                 onDateChange={handleToDate}
+              />
+              <Image
+                style={{ width: 20, height: 20, marginRight: 5 }}
+                source={require("../../../assets/c.png")}
               />
             </View>
           </View>
@@ -348,6 +344,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f2f6",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
   },
   from: {
     flexDirection: "row",

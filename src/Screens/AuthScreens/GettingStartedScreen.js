@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Image, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
@@ -34,6 +41,22 @@ const GettingStartedScreen = ({ navigation }) => {
       </View>
     );
   };
+  const _renderDoneButton = () => {
+    return (
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          marginHorizontal: 10,
+          height: 50,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#51E1ED",
+        }}
+      >
+        <Text>Get Started</Text>
+      </View>
+    );
+  };
   const _onDone = () => {
     navigation.navigate("Main");
   };
@@ -43,6 +66,7 @@ const GettingStartedScreen = ({ navigation }) => {
       <AppIntroSlider
         renderItem={_renderItem}
         keyExtractor={(item) => item.key.toString()}
+        renderDoneButton={_renderDoneButton}
         data={slides}
         onDone={_onDone}
         nextLabel="Next"
