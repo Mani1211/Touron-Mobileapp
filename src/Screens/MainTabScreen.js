@@ -36,6 +36,8 @@ import ContactUs from "./AccountScreens/ContactUs";
 import BookingDetails from "./AccountScreens/BookingDetails";
 import MyPlansInner from "./AccountScreens/MyPlansInner";
 import WildLife from "./CategoryScreens/WildlifeScreen";
+import Luxury from "./CategoryScreens/Luxury";
+import Honeymoon from "./CategoryScreens/Honeymoon";
 const HomeStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -81,16 +83,16 @@ const HomeStackScreen = () => {
         name="Wildlife"
         component={WildLife}
       />
-      {/* <HomeStack.Screen
+      <HomeStack.Screen
         options={{ headerShown: false }}
-        name="Road"
-        component={RoadTripScreen}
+        name="Luxury"
+        component={Luxury}
       />
       <HomeStack.Screen
         options={{ headerShown: false }}
-        name="Road"
-        component={RoadTripScreen}
-      /> */}
+        name="Honeymoon"
+        component={Honeymoon}
+      />
       <HomeStack.Screen
         options={{
           title: "Country",

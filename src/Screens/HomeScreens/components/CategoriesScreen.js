@@ -94,7 +94,7 @@ const Categories = ({ navigation }) => {
             <Text style={styles.text}>Surprise </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Surprise")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Honeymoon")}>
           <View
             style={{
               marginHorizontal: 5,
@@ -118,7 +118,7 @@ const Categories = ({ navigation }) => {
             <Text style={styles.text}>Honeymoon</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Surprise")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Luxury")}>
           <View
             style={{
               marginHorizontal: 5,
