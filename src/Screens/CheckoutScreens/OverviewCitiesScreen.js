@@ -33,8 +33,9 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
     setToDate(updatedDate);
   };
   const handleFromDate = (date) => {
+    console.log("date", date);
     setDatePickerVisibility(false);
-    setFromDate(date.toDateString());
+    setFromDate(date);
     setDate(date.getDate());
     setMonth(date.getMonth());
     setYear(date.getFullYear());
@@ -173,6 +174,7 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
                 locale={"en"}
                 modalTransparent={true}
                 animationType={"fade"}
+                minimumDate={new Date()}
                 textStyle={{ fontFamily: "Andika" }}
                 androidMode={"spinner"}
                 onDateChange={(date) => handleFromDate(date)}
@@ -181,9 +183,10 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
                 style={{ width: 20, height: 20, marginRight: 5 }}
                 source={require("../../../assets/c.png")}
               />
+              <Text>{fromDate.toString()}</Text>
             </View>
           </View>
-          <View style={styles.planeCOntainer}>
+          <View style={styles.planeContainer}>
             <Image
               source={require("../../../assets/Plane.png")}
               style={{ height: 35, width: 35 }}
@@ -194,7 +197,7 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
               <Text style={{ fontSize: 20, color: "#fff" }}>To</Text>
             </View>
             <View style={styles.picker}>
-              <DatePicker
+              {/* <DatePicker
                 textStyle={{ color: "#FFF", fontFamily: "Andika" }}
                 minimumDate={new Date(year, month, date * 1 + totalDays - 1)}
                 maximumDate={new Date(year, month, date * 1 + totalDays - 1)}
@@ -202,11 +205,14 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
                 textStyle={{ fontFamily: "Andika" }}
                 androidMode={"spinner"}
                 onDateChange={handleToDate}
-              />
-              <Image
+              /> */}
+              {/* <Image
                 style={{ width: 20, height: 20, marginRight: 5 }}
                 source={require("../../../assets/c.png")}
-              />
+              /> */}
+              <Text>
+                {new Date(year, month, date * 1 + totalDays - 1).toDateString()}
+              </Text>
             </View>
           </View>
 

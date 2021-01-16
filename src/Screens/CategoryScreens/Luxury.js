@@ -18,22 +18,19 @@ import Checkout from "./Reusable components/Checkout";
 import Destination from "./Reusable components/Destination";
 import Tourtype from "./Reusable components/Tourtype";
 import Travellertype from "./Reusable components/Travellertype";
-import Travelmode from "./Reusable components/Travelmode";
-import Touristnumber from "./Reusable components/Touristnumber";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
+import Touristnumber from "./Reusable components/Touristnumber";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 const Luxury = ({ navigation, route }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [tourType, setTourType] = React.useState("");
   const [travellerType, setTravellerType] = React.useState("");
-  const [adult, setAdult] = React.useState(0);
-  const [children, setChildren] = React.useState(0);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [travelMode, setTravelMode] = React.useState("");
   const [preferanece, setPreferanece] = React.useState("");
   const [destination, setDestination] = useState("");
   const [startPoint, setStartPoint] = useState("");
@@ -142,7 +139,16 @@ const Luxury = ({ navigation, route }) => {
         );
 
       case 2:
-        return <Text>Wildlife</Text>;
+        return (
+          <Tourtype
+            imgSrc1={require("../../../assets/planned-tour/india.png")}
+            imgScr2={require("../../../assets/planned-tour/International.png")}
+            nextStep={() => nextStep()}
+            tourType={tourType}
+            setDomestic={() => setTourType("Domestic")}
+            setInternational={() => setTourType("International")}
+          />
+        );
 
       case 3:
         return (
@@ -187,24 +193,8 @@ const Luxury = ({ navigation, route }) => {
             setAdult={(value) => setAdult(value)}
           />
         );
+
       case 5:
-        return (
-          <Travelmode
-            imgSrc1={
-              "https://image.freepik.com/free-vector/train-ride-railroad_1308-11154.jpg"
-            }
-            imgScr2={
-              "https://image.freepik.com/free-vector/airplane-sky_1308-31202.jpg"
-            }
-            nextStep={() => nextStep()}
-            name1={"Train"}
-            name2={"Flight"}
-            travelMode={travelMode}
-            setTrain={() => setTravelMode("Train")}
-            setFlight={() => setTravelMode("Flight")}
-          />
-        );
-      case 6:
         return (
           <View style={{ alignItems: "center" }}>
             <View style={styles.imageContainer}>
@@ -285,7 +275,7 @@ const Luxury = ({ navigation, route }) => {
             </View>
           </View>
         );
-      case 7:
+      case 6:
         return (
           <Destination
             imgSrc={
@@ -299,7 +289,7 @@ const Luxury = ({ navigation, route }) => {
             setPreferanece={(value) => setPreferanece(value)}
           />
         );
-      case 8:
+      case 7:
         return (
           <Checkout
             imgSrc={
@@ -315,7 +305,7 @@ const Luxury = ({ navigation, route }) => {
           />
         );
 
-      case 9:
+      case 8:
         return (
           <View
             style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
@@ -365,12 +355,10 @@ const Luxury = ({ navigation, route }) => {
 
     const data = {
       requestID: `T0-${date}${formatedMonth}${year}-${random}`,
-      tourCategory: "Wildlife",
+      tourCategory: "Luxury Tour",
+
       travellerType: travellerType,
       fromDate: fromDate,
-      adult: adult,
-      children: children,
-      travelMode: travelMode,
       startPoint: startPoint,
       toDate: toDate,
       preferanece: preferanece,
@@ -398,7 +386,7 @@ const Luxury = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        {step == 9 ? null : (
+        {step == 7 ? null : (
           <View style={styles.arrowsContainer}>
             {step == 1 ? (
               <TouchableOpacity
@@ -434,7 +422,7 @@ const Luxury = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step !== 8 && step !== 2 && step !== 3 && step !== 5 ? (
+              {step !== 8 && step !== 2 && step !== 3 && step !== 6 ? (
                 <View>
                   <AntDesign name="arrowright" size={28} />
                 </View>
@@ -442,7 +430,7 @@ const Luxury = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         )}
-        {step == 1 || step == 9 ? null : (
+        {step == 1 || step == 7 ? null : (
           <View style={styles.progressContainer}>
             <View
               style={{
@@ -451,7 +439,7 @@ const Luxury = ({ navigation, route }) => {
                 borderWidth: 2,
                 borderColor: "#a2cffe",
                 paddingVertical: 1,
-                width: WIDTH == 360 ? 38.5 * step : 45 * step,
+                width: WIDTH == 360 ? 38.5 * step : 60 * step,
                 overflow: "hidden",
                 backgroundColor: "#a2cffe",
               }}

@@ -42,7 +42,7 @@ const Categories = ({ navigation }) => {
               marginBottom: 10,
             }}
           >
-            <View style={{ padding: 10 }}>
+            <View>
               <Image
                 style={styles.categoryImage}
                 source={require("../../../../assets/Categories/Plannedtour.jpg")}
@@ -60,7 +60,7 @@ const Categories = ({ navigation }) => {
               justifyContent: "center",
             }}
           >
-            <View style={{ borderRadius: 50, padding: 10 }}>
+            <View>
               <Image
                 style={styles.categoryImage}
                 source={require("../../../../assets/Categories/Roadtrip.jpg")}
@@ -76,16 +76,9 @@ const Categories = ({ navigation }) => {
               marginHorizontal: 5,
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: 20,
             }}
           >
-            <View
-              style={{
-                borderColor: "#cfeeec",
-                borderRadius: 50,
-                padding: 10,
-              }}
-            >
+            <View>
               <Image
                 style={styles.categoryImage}
                 source={require("../../../../assets/Categories/Surprise.jpg")}
@@ -100,16 +93,9 @@ const Categories = ({ navigation }) => {
               marginHorizontal: 5,
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: 20,
             }}
           >
-            <View
-              style={{
-                borderColor: "#cfeeec",
-                borderRadius: 50,
-                padding: 10,
-              }}
-            >
+            <View>
               <Image
                 style={styles.categoryImage}
                 source={require("../../../../assets/Categories/Honeymoon.jpg")}
@@ -124,16 +110,9 @@ const Categories = ({ navigation }) => {
               marginHorizontal: 5,
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: 20,
             }}
           >
-            <View
-              style={{
-                borderColor: "#cfeeec",
-                borderRadius: 50,
-                padding: 10,
-              }}
-            >
+            <View>
               <Image
                 style={styles.categoryImage}
                 source={require("../../../../assets/Categories/luxury.jpg")}
@@ -148,17 +127,10 @@ const Categories = ({ navigation }) => {
               marginHorizontal: 5,
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: 20,
               marginBottom: 10,
             }}
           >
-            <View
-              style={{
-                borderColor: "#cfeeec",
-                borderRadius: 50,
-                padding: 10,
-              }}
-            >
+            <View>
               <Image
                 style={styles.categoryImage}
                 source={{
@@ -176,10 +148,8 @@ const Categories = ({ navigation }) => {
 };
 
 export default Categories;
-
 const styles = StyleSheet.create({
   container: {
-    // height: HEIGHT / 5.8,
     justifyContent: "center",
     marginBottom: 20,
   },
@@ -187,7 +157,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     flexWrap: "wrap",
-    // alignItems: "center",
   },
 
   text: {

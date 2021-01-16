@@ -139,26 +139,37 @@ const TourHomeScreen = ({ navigation, route }) => {
     const idealTypes = [
       {
         name: "Family",
+        queryName: "Family",
         imageUrl:
           "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
       },
       {
         name: "Family and kids",
+        queryName: "Family and kids",
         imageUrl:
           "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
       },
       {
         name: "Solo",
+        queryName: "Solo",
         imageUrl:
           "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
       },
       {
-        name: "Mature Couple",
+        name: "Long-time Married Couple",
+        queryName: "Mature Couple",
         imageUrl:
           "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
       },
       {
-        name: "Young Couple",
+        name: "Honeymoon Phase Couple",
+        queryName: "Young Couple",
+        imageUrl:
+          "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
+      },
+      {
+        name: "Friends",
+        queryName: "Friends",
         imageUrl:
           "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
       },
@@ -183,22 +194,26 @@ const TourHomeScreen = ({ navigation, route }) => {
     ];
     const tourCategorys = [
       {
-        name: "Activities",
+        name: "Adventure Trip",
+        queryName: "Activities",
         imageUrl:
           "https://image.freepik.com/free-vector/local-tourism-concept_23-2148606915.jpg",
       },
       {
-        name: "Hop On and Off",
+        name: "Quick Escapade",
+        queryName: "Hop On and Off",
         imageUrl:
           "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
       },
       {
-        name: "Attraction",
+        name: "Sight Seeing",
+        queryName: "Attraction",
         imageUrl:
           "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
       },
       {
-        name: "Learning",
+        name: "Educational",
+        queryName: "Learning",
         imageUrl:
           "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
       },
@@ -222,10 +237,10 @@ const TourHomeScreen = ({ navigation, route }) => {
                 return (
                   <TouchableWithoutFeedback
                     onPress={() => {
-                      if (idealType == item.name) {
+                      if (idealType == item.queryName) {
                         setIdealType("");
                       } else {
-                        setIdealType(item.name);
+                        setIdealType(item.queryName);
                       }
                     }}
                   >
@@ -258,7 +273,11 @@ const TourHomeScreen = ({ navigation, route }) => {
                         </View>
                       ) : null}
 
-                      <Text style={{ fontFamily: "Andika" }}>{item.name}</Text>
+                      <Text
+                        style={{ fontFamily: "Andika", textAlign: "center" }}
+                      >
+                        {item.name}
+                      </Text>
                     </Surface>
                   </TouchableWithoutFeedback>
                 );
@@ -285,10 +304,10 @@ const TourHomeScreen = ({ navigation, route }) => {
                 return (
                   <TouchableWithoutFeedback
                     onPress={() => {
-                      if (tourCategory == item.name) {
+                      if (tourCategory == item.queryName) {
                         setTourCategory("");
                       } else {
-                        setTourCategory(item.name);
+                        setTourCategory(item.queryName);
                       }
                     }}
                   >
@@ -481,36 +500,38 @@ const TourHomeScreen = ({ navigation, route }) => {
               numColumns={2}
               data={cities}
               keyExtractor={(item) => item._id}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableWithoutFeedback
-                    onPress={() => {
-                      if (cityName == item.cityName) {
-                        setCityName("");
-                      } else {
-                        setCityName(item.cityName);
-                      }
-                    }}
-                  >
-                    <Surface
-                      style={{
-                        margin: 10,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor:
-                          cityName == item.cityName ? "#00d8d6" : "#fff",
-                        elevation: 5,
-                        height: WIDTH / 10,
-                        borderRadius: 20,
-                        width: WIDTH / 2.6,
+              renderItem={({ item, index }) => {
+                if (item.countryName === countryName) {
+                  return (
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        if (cityName == item.cityName) {
+                          setCityName("");
+                        } else {
+                          setCityName(item.cityName);
+                        }
                       }}
                     >
-                      <Text style={{ fontFamily: "Andika" }}>
-                        {item.cityName}
-                      </Text>
-                    </Surface>
-                  </TouchableWithoutFeedback>
-                );
+                      <Surface
+                        style={{
+                          margin: 10,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          backgroundColor:
+                            cityName == item.cityName ? "#00d8d6" : "#fff",
+                          elevation: 5,
+                          height: WIDTH / 10,
+                          borderRadius: 20,
+                          width: WIDTH / 2.6,
+                        }}
+                      >
+                        <Text style={{ fontFamily: "Andika" }}>
+                          {item.cityName}
+                        </Text>
+                      </Surface>
+                    </TouchableWithoutFeedback>
+                  );
+                }
               }}
             />
           </View>

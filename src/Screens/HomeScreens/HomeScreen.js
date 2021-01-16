@@ -5,6 +5,7 @@ import {
   View,
   StatusBar,
   Linking,
+  Animated,
   FlatList,
   ScrollView,
   Platform,
@@ -14,6 +15,7 @@ import {
   Image,
 } from "react-native";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import Carousel from "react-native-snap-carousel";
 import * as Buffer from "buffer";
 import * as Network from "expo-network";
 import Categories from "./components/CategoriesScreen";
@@ -78,7 +80,7 @@ const HomeScreen = ({ navigation, route }) => {
     {
       name: "Vikash",
       comment:
-        "We really had a great time in dubai,Vikas from tour on hosted uh and done all the arrangements perfectly from his end.we will never forget our trip with tour on.It was overall a nice experience in dubai and I can't wait for my next trip with tour on",
+        "We really had a great time in dubai,Vikas from tour on hosted uh and done all the arrangements perfectly from his end.we will never forget our trip with tour my next trip with tour on",
       testImage:
         "https://images.pexels.com/photos/3556116/pexels-photo-3556116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       tourPlace: "Dubai",
@@ -99,6 +101,7 @@ const HomeScreen = ({ navigation, route }) => {
         "https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       tourPlace: "Singapore",
     },
+
     {
       name: "Vikash",
       comment:
@@ -108,24 +111,24 @@ const HomeScreen = ({ navigation, route }) => {
       tourPlace: "Bali",
     },
   ];
-  const getTestimonial = () => {
-    firebase
-      .database()
-      .ref("testimonials")
-      .on("value", (data) => {
-        if (data !== null) {
-          let req = [];
-          data.forEach((d) => {
-            req.push(d.val());
-          });
+  // const getTestimonial = () => {
+  //   firebase
+  //     .database()
+  //     .ref("testimonials")
+  //     .on("value", (data) => {
+  //       if (data !== null) {
+  //         let req = [];
+  //         data.forEach((d) => {
+  //           req.push(d.val());
+  //         });
 
-          console.log("req", req);
-        }
-      });
-  };
+  //         console.log("req", req);
+  //       }
+  //     });
+  // };
 
   useEffect(() => {
-    getTestimonial();
+    // getTestimonial();
   }, []);
 
   const getTours = async () => {
@@ -219,6 +222,73 @@ const HomeScreen = ({ navigation, route }) => {
   //   return <AppLoading />;
   // }
 
+  const scrollX = React.useRef(new Animated.Value(0)).current;
+
+  const _renderItem = ({ item, index }) => {
+    return (
+      <>
+        <View
+          style={{
+            borderColor: "#00000008",
+            borderWidth: 0.5,
+            backgroundColor: "#FFF",
+            borderRadius: 10,
+            paddingBottom: 20,
+            elevation: 2,
+            marginVertical: 10,
+            // height: HEIGHT / 3.5,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              paddingHorizontal: 20,
+              paddingTop: 20,
+            }}
+          >
+            <Image
+              source={{ uri: item.testImage }}
+              resizeMode="cover"
+              style={{
+                height: WIDTH / 5,
+                width: WIDTH / 5,
+                borderRadius: 50,
+              }}
+            />
+            <View style={{ paddingHorizontal: 15 }}>
+              <Text
+                style={{
+                  color: "#333",
+                  fontSize: 20,
+                  fontFamily: "NewYorkl",
+                }}
+              >
+                {item.name}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: "Andika",
+                }}
+              >
+                {item.tourPlace}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              // width: WIDTH,
+              padding: 10,
+            }}
+          >
+            <Text style={{ paddingLeft: 10 }}>{item.comment}</Text>
+          </View>
+        </View>
+      </>
+    );
+  };
+
   return (
     <ScrollView
       style={{ backgroundColor: "#fff" }}
@@ -234,10 +304,11 @@ const HomeScreen = ({ navigation, route }) => {
           <View
             style={{
               height: HEIGHT / 10,
-              // width: HEIGHT / 10,
               flexDirection: "row",
-              // justifyContent: "center",
               alignItems: "center",
+              position: "absolute",
+              left: 25,
+              zIndex: 10,
             }}
           >
             <TouchableOpacity
@@ -252,7 +323,28 @@ const HomeScreen = ({ navigation, route }) => {
                 source={require("../../../assets/logo.jpeg")}
               />
             </TouchableOpacity>
-            <Text style={{ fontSize: 20, fontFamily: "Andika" }}>
+            {/* <TouchableOpacity
+              onPress={() => navigation.toggleDrawer()}
+              style={{ paddingTop: Platform.OS === "ios" ? 20 : 0 }}
+            >
+              <Feather
+                name="menu"
+                color="#FFF"
+                style={{
+                  fontSize: 30,
+                  paddingRight: 20,
+                  fontWeight: "bold",
+                }}
+              />
+            </TouchableOpacity> */}
+
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "Andika",
+                // color: "#FFF",
+              }}
+            >
               Hey, Vikash
             </Text>
           </View>
@@ -270,8 +362,34 @@ const HomeScreen = ({ navigation, route }) => {
               <Text style={styles.title}>Hey, Start Planning your...</Text>
             )}
           </View> */}
-          <FlatList
+          {/* <View style={[StyleSheet.absoluteFillObject]}>
+            {testMonials.map((i, index) => {
+              const inputRange = [
+                (index - 1) * WIDTH,
+                index * WIDTH,
+                (index + 1) * WIDTH,
+              ];
+              const opacity = scrollX.interpolate({
+                inputRange,
+                outputRange: [0, 1, 0],
+              });
+              if (index < 3)
+                return (
+                  <Animated.Image
+                    key={index}
+                    source={{ uri: i.testImage }}
+                    style={[StyleSheet.absoluteFillObject]}
+                    blurRadius={10}
+                  />
+                );
+            })}
+          </View> */}
+          <Animated.FlatList
             data={testMonials}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              { useNativeDriver: true }
+            )}
             showsHorizontalScrollIndicator={false}
             horizontal
             pagingEnabled
@@ -281,11 +399,19 @@ const HomeScreen = ({ navigation, route }) => {
                 <View
                   key={index}
                   style={{
-                    // width: WIDTH * 0.9,
-                    // marginHorizontal: 10,
+                    width: WIDTH * 0.9,
+                    marginHorizontal: 5,
+                    marginTop: HEIGHT / 15,
                     justifyContent: "center",
                     marginBottom: 35,
                     alignItems: "center",
+                    shadowColor: "#333sss",
+                    shadowOpacity: 0.5,
+                    shadowRadius: 60,
+                    shadowOffset: {
+                      width: 10,
+                      height: 10,
+                    },
                   }}
                 >
                   <TouchableOpacity onPress={() => openWhatsApp()}>
@@ -294,11 +420,9 @@ const HomeScreen = ({ navigation, route }) => {
                         width: WIDTH * 0.8,
                         height: HEIGHT / 2,
                         borderRadius: 10,
-                        marginHorizontal: 20,
+                        // marginHorizontal: 20,
                       }}
-                      source={{
-                        uri: item.testImage,
-                      }}
+                      source={{ uri: item.testImage }}
                     />
                   </TouchableOpacity>
                 </View>
@@ -352,66 +476,22 @@ const HomeScreen = ({ navigation, route }) => {
             }}
           />
           <ContentList
-            // route={"CountryHome"}
             navigation={navigation}
             title={"Our Travellers"}
             more={""}
             content={""}
           />
-          <FlatList
-            data={testMonials}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            // pagingEnabled
-            keyExtractor={(d) => d.tourPlace}
-            renderItem={({ item, index }) => {
-              return (
-                <View
-                  style={{
-                    width: WIDTH * 0.9,
-                    // backgroundColor: "#02B290",
-                    marginHorizontal: 20,
-                    // flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 10,
-                    // height: WIDTH / 2,
-                  }}
-                >
-                  <Image
-                    source={require("../../../assets/1.jpeg")}
-                    resizeMode="cover"
-                    style={{
-                      width: WIDTH * 0.9,
-                      height: WIDTH * 0.55,
-                      // borderRadius: 50,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginHorizontal: 20,
-                    }}
-                  />
-                  <View
-                    style={{
-                      width: WIDTH * 0.9,
-                      marginTop: 20,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        // paddingTop: 20,
-                        paddingLeft: 10,
-                        color: "#FF6263",
-                        fontWeight: "bold",
-                        fontFamily: "Avenir",
-                      }}
-                    >
-                      {item.name},{""} {item.tourPlace}
-                    </Text>
-                    <Text style={{ paddingLeft: 10 }}>{item.comment}</Text>
-                  </View>
-                </View>
-              );
+          <Carousel
+            layout="tinder"
+            // layoutCardOffset={1}
+
+            ref={(c) => {
+              carousel = c;
             }}
+            data={testMonials}
+            renderItem={_renderItem}
+            sliderWidth={WIDTH * 0.9}
+            itemWidth={WIDTH * 0.9}
           />
 
           <ContentList
@@ -448,37 +528,7 @@ const HomeScreen = ({ navigation, route }) => {
                 );
             }}
           />
-          {/* <ContentList
-            route={"Promotion"}
-            navigation={navigation}
-            title={"Hot Deals"}
-            more={""}
-            content={"Content Goes Here"}
-          />
-          <FlatList
-            data={banner}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(d) => d._id}
-            renderItem={({ item, index }) => {
-              console.log(item._id, "datataatt");
-              return (
-                <TouchableOpacity onPress={() => openWhatsApp()}>
-                  <View style={styles.tileStyle}>
-                    <Image
-                      fadeDuration={1000}
-                      style={styles.bannerImage}
-                      source={{
-                        uri:
-                          "data:image/jpeg;base64," +
-                          arrayBufferToBase64(item.photo.data.data), //data.data in your case
-                      }}
-                    />
-                  </View>
-                </TouchableOpacity>
-              );
-            }}
-          /> */}
+
           <ContentList
             route={"TourHome"}
             navigation={navigation}

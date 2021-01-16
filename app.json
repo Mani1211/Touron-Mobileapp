@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -34,15 +32,17 @@
       "icon": "./assets/playstore.png",
       "color": "#2ECC71"
     },
+    "updates": {
+      "enabled": false
+    },
     "ios": {
       "bundleIdentifier": "com.touron.travelapp",
       "buildNumber": "1.0.0",
       "usesIcloudStorage": true,
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to take photos to upload profile pictures.",
-        "NSPhotoLibraryAddUsageDescription":"This app uses photo bibrary to pick and save photos",
-        "NSPhotoLibraryUsageDescription":"This app uses photo bibrary to pick and save photos"
-
+        "NSPhotoLibraryAddUsageDescription": "This app uses photo bibrary to pick and save photos",
+        "NSPhotoLibraryUsageDescription": "This app uses photo bibrary to pick and save photos"
       }
     },
     "android": {
@@ -51,9 +51,7 @@
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json"
     },
-    "assetBundlePatterns": [
-      "./assets/*/*"
-    ]
+    "assetBundlePatterns": ["./assets/*/*"]
   },
   "splash": {
     "image": "./assets/logo.jpeg",
@@ -64,4 +62,3 @@
     "translucent": false
   }
 }
-

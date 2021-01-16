@@ -22,7 +22,8 @@ import Travelmode from "./Reusable components/Travelmode";
 import Touristnumber from "./Reusable components/Touristnumber";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
-
+import NationalPark from "./Reusable components/NationalPark";
+import { getExpoToken, sendPushNotification } from "./utils/PushNotification";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -33,9 +34,9 @@ const WildLife = ({ navigation, route }) => {
   const [children, setChildren] = React.useState(0);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [nationalPark, setNationalPark] = useState("");
   const [travelMode, setTravelMode] = React.useState("");
   const [preferanece, setPreferanece] = React.useState("");
-  const [destination, setDestination] = useState("");
   const [startPoint, setStartPoint] = useState("");
   const [name, setName] = useState("");
   const [budget, setBudget] = useState("");
@@ -48,10 +49,11 @@ const WildLife = ({ navigation, route }) => {
   const [dates, setDates] = useState("");
   const [years, setYears] = useState("");
   const [months, setMonths] = useState("");
+  const [destination, setDestination] = useState(nationalPark);
   console.log(dates, months, years, "mok");
   let random;
   let formatedMonth;
-  console.log(user, "plannkwfed");
+  console.log("nationalPark", nationalPark);
 
   const [userInfo, setUserInfo] = useState({});
 
@@ -142,7 +144,16 @@ const WildLife = ({ navigation, route }) => {
         );
 
       case 2:
-        return <Text>Wildlife</Text>;
+        return (
+          <NationalPark
+            nationalPark={nationalPark}
+            setNationalPark={(name) => {
+              setNationalPark(name);
+              setDestination(name);
+              setStep(step + 1);
+            }}
+          />
+        );
 
       case 3:
         return (
@@ -368,6 +379,7 @@ const WildLife = ({ navigation, route }) => {
       tourCategory: "Wildlife",
       travellerType: travellerType,
       fromDate: fromDate,
+      nationalPark: nationalPark,
       adult: adult,
       children: children,
       travelMode: travelMode,
@@ -389,7 +401,17 @@ const WildLife = ({ navigation, route }) => {
       .ref(`requests`)
       .push(data)
       .then((data) => {
+        const token = getExpoToken(userID);
+
+        const message = {
+          to: token,
+          sound: "default",
+          title: `Request Status Changed`,
+          body: `Request for wildlife received `,
+          // data: plan,
+        };
         console.log(data);
+        sendPushNotification(message);
         nextStep();
       })
       .catch((err) => console.log(err));

@@ -17,21 +17,16 @@ import Tourname from "./Reusable components/Tourname";
 import Checkout from "./Reusable components/Checkout";
 import Destination from "./Reusable components/Destination";
 import Tourtype from "./Reusable components/Tourtype";
-import Travellertype from "./Reusable components/Travellertype";
 import Travelmode from "./Reusable components/Travelmode";
-import Touristnumber from "./Reusable components/Touristnumber";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
-
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 const Honeymoon = ({ navigation, route }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [travellerType, setTravellerType] = React.useState("");
-  const [adult, setAdult] = React.useState(0);
-  const [children, setChildren] = React.useState(0);
   const [fromDate, setFromDate] = useState("");
+  const [tourType, setTourType] = React.useState("");
   const [toDate, setToDate] = useState("");
   const [travelMode, setTravelMode] = React.useState("");
   const [preferanece, setPreferanece] = React.useState("");
@@ -142,52 +137,18 @@ const Honeymoon = ({ navigation, route }) => {
         );
 
       case 2:
-        return <Text>Wildlife</Text>;
+        return (
+          <Tourtype
+            imgSrc1={require("../../../assets/planned-tour/india.png")}
+            imgScr2={require("../../../assets/planned-tour/International.png")}
+            nextStep={() => nextStep()}
+            tourType={tourType}
+            setDomestic={() => setTourType("Domestic")}
+            setInternational={() => setTourType("International")}
+          />
+        );
 
       case 3:
-        return (
-          <Travellertype
-            imgSrc1={
-              "https://image.freepik.com/free-vector/local-tourism-concept_23-2148606915.jpg"
-            }
-            imgSrc2={
-              "https://image.freepik.com/free-vector/big-happy-family-with-flat-design_23-2147834774.jpg"
-            }
-            imgSrc3={
-              "https://image.freepik.com/free-vector/group-happy-students-with-backpacks-books-stand-together_131590-216.jpg"
-            }
-            imgScr4={
-              "https://image.freepik.com/free-vector/couple-celebrating-valentine-s-day_23-2148538999.jpg"
-            }
-            travellerType={travellerType}
-            nextStep={() => nextStep()}
-            setSolo={() => {
-              setTravellerType("Solo");
-              setStep(5);
-            }}
-            setFamily={() => setTravellerType("Family")}
-            setFriends={() => setTravellerType("Friends")}
-            setHoneymoon={() => setTravellerType("Honeymoon")}
-          />
-        );
-
-      case 4:
-        return (
-          <Touristnumber
-            imgSrc1={
-              "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg"
-            }
-            imgScr2={
-              "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg"
-            }
-            nextStep={() => nextStep()}
-            adult={adult}
-            children={children}
-            setChildren={(value) => setChildren(value)}
-            setAdult={(value) => setAdult(value)}
-          />
-        );
-      case 5:
         return (
           <Travelmode
             imgSrc1={
@@ -204,7 +165,8 @@ const Honeymoon = ({ navigation, route }) => {
             setFlight={() => setTravelMode("Flight")}
           />
         );
-      case 6:
+
+      case 4:
         return (
           <View style={{ alignItems: "center" }}>
             <View style={styles.imageContainer}>
@@ -285,7 +247,7 @@ const Honeymoon = ({ navigation, route }) => {
             </View>
           </View>
         );
-      case 7:
+      case 5:
         return (
           <Destination
             imgSrc={
@@ -299,7 +261,7 @@ const Honeymoon = ({ navigation, route }) => {
             setPreferanece={(value) => setPreferanece(value)}
           />
         );
-      case 8:
+      case 6:
         return (
           <Checkout
             imgSrc={
@@ -315,7 +277,7 @@ const Honeymoon = ({ navigation, route }) => {
           />
         );
 
-      case 9:
+      case 7:
         return (
           <View
             style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
@@ -365,11 +327,8 @@ const Honeymoon = ({ navigation, route }) => {
 
     const data = {
       requestID: `T0-${date}${formatedMonth}${year}-${random}`,
-      tourCategory: "Wildlife",
-      travellerType: travellerType,
+      tourCategory: "Honeymoon Trip",
       fromDate: fromDate,
-      adult: adult,
-      children: children,
       travelMode: travelMode,
       startPoint: startPoint,
       toDate: toDate,
@@ -398,7 +357,7 @@ const Honeymoon = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        {step == 9 ? null : (
+        {step == 7 ? null : (
           <View style={styles.arrowsContainer}>
             {step == 1 ? (
               <TouchableOpacity
@@ -426,7 +385,7 @@ const Honeymoon = ({ navigation, route }) => {
                 marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
               }}
             >
-              Honeymoon Santuary
+              Honeymoon Trip
             </Text>
 
             <TouchableOpacity
@@ -434,7 +393,7 @@ const Honeymoon = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step !== 8 && step !== 2 && step !== 3 && step !== 5 ? (
+              {step !== 8 && step !== 2 && step !== 3 && step !== 6 ? (
                 <View>
                   <AntDesign name="arrowright" size={28} />
                 </View>
@@ -442,7 +401,7 @@ const Honeymoon = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         )}
-        {step == 1 || step == 9 ? null : (
+        {step == 1 || step == 7 ? null : (
           <View style={styles.progressContainer}>
             <View
               style={{
@@ -451,7 +410,7 @@ const Honeymoon = ({ navigation, route }) => {
                 borderWidth: 2,
                 borderColor: "#a2cffe",
                 paddingVertical: 1,
-                width: WIDTH == 360 ? 38.5 * step : 45 * step,
+                width: WIDTH == 360 ? 38.5 * step : 60 * step,
                 overflow: "hidden",
                 backgroundColor: "#a2cffe",
               }}
