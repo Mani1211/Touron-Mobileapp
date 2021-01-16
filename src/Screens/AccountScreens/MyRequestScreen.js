@@ -9,9 +9,8 @@ import {
   Platform,
   ScrollView,
   TouchableOpacity,
-  Picker,
-  FlatList,
 } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
 import { AuthContext } from "../../context/AuthContext";
 import { DataTable } from "react-native-paper";
 import { Avatar } from "react-native-paper";
@@ -21,17 +20,14 @@ const HEIGHT = Dimensions.get("window").height;
 import * as firebase from "firebase";
 const MyRequestScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(true);
-  const [surpriseTour, setSurpriseTour] = useState([]);
-  const [plannedTour, setPlannedTour] = useState([]);
-  const [roadTrip, setRoadTrip] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const { user, userInfo } = useContext(AuthContext);
-  const fullData = [...surpriseTour, ...plannedTour, ...roadTrip];
   const [allRequest, setAllRequest] = useState([]);
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
   const itemsPerPage = 5;
   const [page, setPage] = useState(0);
+  const [userRequest, setUserRequest] = useState([]);
   const from = page * itemsPerPage;
   const to = (page + 1) * itemsPerPage;
   // console.log("status", status);
@@ -54,18 +50,16 @@ const MyRequestScreen = ({ navigation }) => {
       .database()
       .ref(`requests`)
       .on("value", (data) => {
-        let newReq = {}
-        if(data !== null && data !== undefined){
-          let revReq = Object.keys(data.val()).reverse()
-          revReq.forEach(i=>{
-            newReq[i] = data.val()[i]
-          })
+        let newReq = {};
+        if (data !== null && data !== undefined) {
+          let revReq = Object.keys(data.val()).reverse();
+          revReq.forEach((i) => {
+            newReq[i] = data.val()[i];
+          });
           setAllRequest({
-            ...newReq
+            ...newReq,
           });
         }
-
-      
       });
   };
 
@@ -105,51 +99,15 @@ const MyRequestScreen = ({ navigation }) => {
       .ref(`requests`)
       .on("value", (data) => {
         if (data) {
-          let pT = [];
-          data.forEach((c) => {
-            if (
-              c.val().userID === user.uid &&
-              c.val().tourCategory === "Planned Tour"
-            ) {
-              pT.push(c.val());
-            }
-          });
-          setPlannedTour(pT.reverse());
-        }
-      });
-
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        if (data) {
-          let rT = [];
-          data.forEach((c) => {
-            if (
-              c.val().userID === user.uid &&
-              c.val().tourCategory === "Road Trip"
-            ) {
-              rT.push(c.val());
-            }
-          });
-          setRoadTrip(rT.reverse());
-        }
-      });
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        if (data) {
           let sT = [];
           data.forEach((c) => {
-            if (
-              c.val().userID === user.uid &&
-              c.val().tourCategory === "Surprise Tour"
-            ) {
+            console.log("c.val()", c.val().userID, user.uid);
+            if (c.val().userID == user.uid) {
               sT.push(c.val());
             }
           });
-          setSurpriseTour(sT.reverse());
+          setUserRequest(sT.reverse());
+          console.log("userRequest", userRequest);
         }
       });
   };
@@ -205,6 +163,57 @@ const MyRequestScreen = ({ navigation }) => {
     {
       name: "Completed",
       color: "#55efc4",
+    },
+  ];
+
+  const queryStatus = [
+    {
+      label: "All",
+      value: "",
+    },
+    {
+      label: "Query Received",
+      value: "Query Received",
+    },
+    {
+      label: "Plan Shared",
+      value: "Plan Shared",
+    },
+    {
+      label: "On Progress",
+      value: "On Progress",
+    },
+    {
+      label: "Cancelled",
+      value: "Cancelled",
+    },
+    {
+      label: "On Hold",
+      value: "On Hold",
+    },
+    {
+      label: "Duplicate Query",
+      value: "Duplicate Query",
+    },
+    {
+      label: "Tour Booked",
+      value: "Tour Booked",
+    },
+    {
+      label: "Awaiting Payment",
+      value: "Awaiting Payment",
+    },
+    {
+      label: "Cancellation Requested",
+      value: "Cancellation Requested",
+    },
+    {
+      label: "Estimated",
+      value: "Estimated",
+    },
+    {
+      label: "Completed",
+      value: "Completed",
     },
   ];
 
@@ -306,53 +315,45 @@ const MyRequestScreen = ({ navigation }) => {
                 <Text style={{ fontSize: 20, marginHorizontal: 20 }}>
                   Filter :
                 </Text>
-                <Picker
-                  selectedValue={category}
-                  style={{ height: 50, width: WIDTH / 3 }}
-                  onValueChange={(itemValue, itemIndex) => {
-                    // console.log(itemValue, "ko");
-                    setCategory(itemValue);
+                <DropDownPicker
+                  items={[
+                    { label: "All", value: "" },
+                    { label: "Planned Tour", value: "Planned Tour" },
+                    { label: "Road Trip", value: "Road Trip" },
+                    { label: "Surprise Tour", value: "Surprise Tour" },
+                  ]}
+                  defaultValue={category}
+                  containerStyle={{
+                    height: 40,
+                    width: WIDTH / 3,
+                    marginRight: 10,
+                  }}
+                  // style={{ backgroundColor: "#fafafa" }}
+                  itemStyle={{
+                    justifyContent: "flex-start",
+                  }}
+                  // dropDownStyle={{ backgroundColor: "#fafafa" }}
+                  onChangeItem={(item) => {
+                    setCategory(item.value);
                     setStatus("");
                     filterDataByType();
                   }}
-                >
-                  <Picker.Item label="All" value="" />
-                  <Picker.Item label="Planned Tour" value="Planned Tour" />
-                  <Picker.Item label="Road Trip" value="Road Trip" />
-                  <Picker.Item label="Surprise Tour" value="Surprise Tour" />
-                </Picker>
-                <Picker
-                  selectedValue={status}
-                  style={{ height: 50, width: WIDTH / 3 }}
-                  onValueChange={(itemValue, itemIndex) => {
-                    // console.log(itemValue, "ko");
-                    setStatus(itemValue);
+                />
+                <DropDownPicker
+                  items={queryStatus}
+                  defaultValue={status}
+                  containerStyle={{ height: 40, width: WIDTH / 3 }}
+                  // style={{ backgroundColor: "#fafafa" }}
+                  itemStyle={{
+                    justifyContent: "flex-start",
+                  }}
+                  // dropDownStyle={{ backgroundColor: "#fafafa" }}
+                  onChangeItem={(item) => {
+                    setStatus(item.value);
                     setCategory("");
                     filterDataByType();
                   }}
-                >
-                  <Picker.Item label="All" value="" />
-                  <Picker.Item
-                    label="Duplicate Query"
-                    value="Duplicate Query"
-                  />
-                  <Picker.Item label="Estimated" value="Estimated" />
-                  <Picker.Item label="Query Received" value="Query Received" />
-                  <Picker.Item label="On Hold" value="On Hold" />
-                  <Picker.Item label="On Progress" value="On Progress" />
-                  <Picker.Item label="Plan Shared" value="Plan Shared" />
-                  <Picker.Item
-                    label="Awaiting Payment"
-                    value="Awaiting Payment"
-                  />
-                  <Picker.Item label="Tour Booked" value="Tour Booked" />
-                  <Picker.Item label="Completed" value="Completed" />
-                  <Picker.Item label="Cancelled" value="Cancelled" />
-                  <Picker.Item
-                    label="Cancellation Requested"
-                    value="Cancellation Requested"
-                  />
-                </Picker>
+                />
               </View>
               <DataTable>
                 <DataTable.Header>
@@ -361,57 +362,64 @@ const MyRequestScreen = ({ navigation }) => {
                   <DataTable.Title numeric>Request Status</DataTable.Title>
                 </DataTable.Header>
 
-{Object.keys(filterDataByType()).map((item,index)=>{
-  return (
-    <TouchableOpacity
-    key={index}
-    onPress={() => {
-      navigation.navigate("RequestInner", {
-        planned:
-          allRequest[item].tourCategory === "Planned Tour"
-            ? allRequest[item]
-            : null,
-        road:
-          allRequest[item].tourCategory === "Road Trip"
-            ? allRequest[item]
-            : null,
-        surprise:
-          allRequest[item].tourCategory === "Surprise Tour"
-            ? allRequest[item]
-            : null,
-        key: item,
-      });
-    }}
-  >
-    <DataTable.Row>
-      <DataTable.Cell>
-        {allRequest[item].requestID}
-      </DataTable.Cell>
-      <DataTable.Cell numeric>
-        {allRequest[item].tourCategory}
-      </DataTable.Cell>
-      <DataTable.Cell numeric style={{ padding: 10 }}>
-        <Text
-          style={{
-            backgroundColor: `${getColor(
-              allRequest[item].status
-            )}`,
-            margin: 5,
-            borderRadius: 50,
-            fontSize: 15,
-            fontFamily: "Andika",
-            padding: 10,
-            color: "white",
-          }}
-        >
-          {allRequest[item].status}
-        </Text>
-      </DataTable.Cell>
-    </DataTable.Row>
-  </TouchableOpacity>
-  )
-})}
-              
+                {Object.keys(filterDataByType()).map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        navigation.navigate("RequestInner", {
+                          higher: allRequest[item],
+                          // planned:
+                          //   allRequest[item].tourCategory === "Planned Tour"
+                          //     ? allRequest[item]
+                          //     : null,
+                          // road:
+                          //   allRequest[item].tourCategory === "Road Trip"
+                          //     ? allRequest[item]
+                          //     : null,
+                          // surprise:
+                          //   allRequest[item].tourCategory === "Surprise Tour"
+                          //     ? allRequest[item]
+                          //     : null,
+                          // higher:
+                          //   allRequest[item].tourCategory ===
+                          //     "Honeymoon Trip" ||
+                          //   "Luxury Tour" ||
+                          //   'Wildlife"'
+                          //     ? allRequest[item]
+                          //     : null,
+                          key: item,
+                        });
+                      }}
+                    >
+                      <DataTable.Row>
+                        <DataTable.Cell>
+                          {allRequest[item].requestID}
+                        </DataTable.Cell>
+                        <DataTable.Cell numeric>
+                          {allRequest[item].tourCategory}
+                        </DataTable.Cell>
+                        <DataTable.Cell numeric style={{ padding: 10 }}>
+                          <Text
+                            style={{
+                              backgroundColor: `${getColor(
+                                allRequest[item].status
+                              )}`,
+                              margin: 5,
+                              borderRadius: 50,
+                              fontSize: 15,
+                              fontFamily: "Andika",
+                              padding: 10,
+                              color: "white",
+                            }}
+                          >
+                            {allRequest[item].status}
+                          </Text>
+                        </DataTable.Cell>
+                      </DataTable.Row>
+                    </TouchableOpacity>
+                  );
+                })}
 
                 <DataTable.Pagination
                   page={page}
@@ -457,7 +465,7 @@ const MyRequestScreen = ({ navigation }) => {
                   </Text>
                 </View>
               </View>
-              {fullData.length == 0 ? (
+              {userRequest.length == 0 ? (
                 <View
                   style={{
                     alignItems: "center",
@@ -496,17 +504,30 @@ const MyRequestScreen = ({ navigation }) => {
                 </View>
               ) : (
                 <View>
-                  {plannedTour.length == 0 ? null : (
-                    <View>
-                      {plannedTour.map((item,index)=>{
-                        return (
-                          <View key={index}>
+                  <View>
+                    {userRequest.map((item, index) => {
+                      return (
+                        <View key={index}>
                           <TouchableOpacity
                             onPress={() =>
                               navigation.navigate("RequestInner", {
-                                planned: item,
-                                road: null,
-                                surprise: null,
+                                planned:
+                                  item.tourCategory === "Planned Tour"
+                                    ? item
+                                    : null,
+                                road:
+                                  item.tourCategory === "Road Trip"
+                                    ? item
+                                    : null,
+                                surprise:
+                                  item.tourCategory === "Surprise Tour"
+                                    ? item
+                                    : null,
+                                higher:
+                                  item.tourCategory === "Honeymoon Trip" ||
+                                  "Luxury Tour"
+                                    ? item
+                                    : null,
                               })
                             }
                           >
@@ -542,113 +563,9 @@ const MyRequestScreen = ({ navigation }) => {
                             </View>
                           </TouchableOpacity>
                         </View>
-                        )
-                      })}
-                     
-                    </View>
-                  )}
-                  {roadTrip.length == 0 ? null : (
-                    <View>
-                      {roadTrip.map((item,index)=>{
-                        return (
-                          <View key={index}>
-                          <TouchableOpacity
-                            onPress={() =>
-                              navigation.navigate("RequestInner", {
-                                road: item,
-                                planned: null,
-                                surprise: null,
-                              })
-                            }
-                          >
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                marginTop: 20,
-                                justifyContent: "space-between",
-                              }}
-                            >
-                              <View style={{ flex: 0.3 }}>
-                                <Avatar.Text
-                                  label="R"
-                                  style={{
-                                    backgroundColor: "#DBE8EB",
-                                    marginLeft: 20,
-                                  }}
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  flex: 0.7,
-                                  justifyContent: "center",
-                                }}
-                              >
-                                <Text style={{ fontSize: 20 }}>
-                                  {item.tourCategory}
-                                </Text>
-                                <Text style={{ fontSize: 14 }}>
-                                  Status: {item.status}
-                                </Text>
-                              </View>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
-                        )
-                      })}
-                     
-                    </View>
-                  )}
-                  {surpriseTour.length == 0 ? null : (
-                    <View>
-                      {surpriseTour.map((item,index)=>{
-                        return (
-                          <View key={index}>
-                          <TouchableOpacity
-                            onPress={() =>
-                              navigation.navigate("RequestInner", {
-                                surprise: item,
-                                road: null,
-                                planned: null,
-                              })
-                            }
-                          >
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                marginTop: 20,
-                                justifyContent: "space-between",
-                              }}
-                            >
-                              <View style={{ flex: 0.3 }}>
-                                <Avatar.Text
-                                  label="S"
-                                  style={{
-                                    backgroundColor: "#DBE8EB",
-                                    marginLeft: 20,
-                                  }}
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  flex: 0.7,
-                                  justifyContent: "center",
-                                }}
-                              >
-                                <Text style={{ fontSize: 20 }}>
-                                  {item.tourCategory}
-                                </Text>
-                                <Text style={{ fontSize: 14 }}>
-                                  Status: {item.status}
-                                </Text>
-                              </View>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
-                        )
-                      })}
-                     
-                    </View>
-                  )}
+                      );
+                    })}
+                  </View>
                 </View>
               )}
             </View>
@@ -664,7 +581,6 @@ export default MyRequestScreen;
 const styles = new StyleSheet.create({
   modalView: {
     margin: 20,
-
     backgroundColor: "#fff",
     borderRadius: 20,
     shadowColor: "#000",

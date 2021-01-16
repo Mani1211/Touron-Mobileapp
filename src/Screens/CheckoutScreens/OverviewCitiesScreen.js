@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
-import { DatePicker } from "native-base";
+// import { DatePicker } from "native-base";
+import DatePicker from "react-native-datepicker";
+
 import {
   StyleSheet,
   TouchableOpacity,
@@ -18,28 +20,23 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
   const { details, setDetails } = useContext(SelfTourContext);
   const cities = route.params.cities;
   const selectedCity = route.params.selectedCity;
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [date, setDate] = useState("");
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
+
   const [cityDetails, setCityDetails] = useState([...cities]);
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
-  const handleToDate = (date) => {
-    setDatePickerVisibility(false);
-    const updatedDate = date.toDateString();
-    setToDate(updatedDate);
-  };
+
   const handleFromDate = (date) => {
-    console.log("date", date);
-    setDatePickerVisibility(false);
     setFromDate(date);
-    setDate(date.getDate());
-    setMonth(date.getMonth());
-    setYear(date.getFullYear());
-    console.log(date.getFullYear(), "op");
+
+    setToDate(
+      new Date(
+        date.slice(0, 4),
+        date.slice(5, 7) - 1,
+        date.slice(8, 11) * 1 + totalDays - 1
+      )
+    );
   };
 
   const getCurrentCity = (item) => {
@@ -137,16 +134,7 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
             </View>
           </Surface>
         ))}
-        {/* <FlatList
-          data={cities}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item.name}
-          renderItem={({ item }) => {
-            return (
-             
-            );
-          }}
-        /> */}
+
         <View style={{ width: WIDTH, marginLeft: -20 }}>
           <Image
             style={styles.calendarImage}
@@ -171,19 +159,28 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
             </View>
             <View style={styles.picker}>
               <DatePicker
-                locale={"en"}
-                modalTransparent={true}
-                animationType={"fade"}
-                minimumDate={new Date()}
-                textStyle={{ fontFamily: "Andika" }}
-                androidMode={"spinner"}
-                onDateChange={(date) => handleFromDate(date)}
+                style={{ width: 200 }}
+                date={fromDate}
+                mode="date"
+                placeholder=""
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                onDateChange={(date) => {
+                  handleFromDate(date);
+                }}
+                showIcon={false}
+                customStyles={{
+                  dateInput: {
+                    borderWidth: 0,
+                  },
+                }}
               />
+
               <Image
-                style={{ width: 20, height: 20, marginRight: 5 }}
+                style={{ width: 20, height: 20, marginLeft: 5 }}
                 source={require("../../../assets/c.png")}
               />
-              <Text>{fromDate.toString()}</Text>
             </View>
           </View>
           <View style={styles.planeContainer}>
@@ -197,22 +194,30 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
               <Text style={{ fontSize: 20, color: "#fff" }}>To</Text>
             </View>
             <View style={styles.picker}>
-              {/* <DatePicker
-                textStyle={{ color: "#FFF", fontFamily: "Andika" }}
-                minimumDate={new Date(year, month, date * 1 + totalDays - 1)}
-                maximumDate={new Date(year, month, date * 1 + totalDays - 1)}
-                animationType={"fade"}
-                textStyle={{ fontFamily: "Andika" }}
-                androidMode={"spinner"}
-                onDateChange={handleToDate}
-              /> */}
-              {/* <Image
-                style={{ width: 20, height: 20, marginRight: 5 }}
+              {fromDate === "" ? (
+                <Text>Select Date</Text>
+              ) : (
+                <DatePicker
+                  style={{ width: 200 }}
+                  date={toDate}
+                  mode="date"
+                  placeholder=""
+                  format="YYYY-MM-DD"
+                  maxDate="2021-06-01"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  showIcon={false}
+                  customStyles={{
+                    dateInput: {
+                      borderWidth: 0,
+                    },
+                  }}
+                />
+              )}
+              <Image
+                style={{ width: 20, height: 20, marginLeft: 5 }}
                 source={require("../../../assets/c.png")}
-              /> */}
-              <Text>
-                {new Date(year, month, date * 1 + totalDays - 1).toDateString()}
-              </Text>
+              />
             </View>
           </View>
 

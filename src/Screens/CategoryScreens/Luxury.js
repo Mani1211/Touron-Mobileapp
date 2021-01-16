@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { DatePicker } from "native-base";
+
+import DatePicker from "react-native-datepicker";
+
 import {
   View,
   StyleSheet,
@@ -26,7 +27,8 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 const Luxury = ({ navigation, route }) => {
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [adult, setAdult] = React.useState(0);
+  const [children, setChildren] = React.useState(0);
   const [tourType, setTourType] = React.useState("");
   const [travellerType, setTravellerType] = React.useState("");
   const [fromDate, setFromDate] = useState("");
@@ -42,13 +44,9 @@ const Luxury = ({ navigation, route }) => {
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  const [dates, setDates] = useState("");
-  const [years, setYears] = useState("");
-  const [months, setMonths] = useState("");
-  console.log(dates, months, years, "mok");
+
   let random;
   let formatedMonth;
-  console.log(user, "plannkwfed");
 
   const [userInfo, setUserInfo] = useState({});
 
@@ -94,26 +92,12 @@ const Luxury = ({ navigation, route }) => {
     }
   });
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
   const handleFromDate = (date) => {
-    setDatePickerVisibility(false);
-
-    setFromDate(date.toLocaleDateString("en-GB"));
-    setDates(date.getDate());
-    setMonths(date.getMonth());
-    setYears[date.getFullYear()];
+    setFromDate(date);
   };
 
   const handleToDate = (date) => {
-    setDatePickerVisibility(false);
-    setToDate(date.toLocaleDateString("en-GB"));
+    setToDate(date);
   };
 
   const nextStep = () => {
@@ -223,33 +207,21 @@ const Luxury = ({ navigation, route }) => {
                   </Text>
                 </View>
                 <View style={styles.dateContainer}>
-                  <View>
-                    <TouchableOpacity onPress={showDatePicker}>
-                      {fromDate == "" ? (
-                        <Text
-                          style={{
-                            fontSize: 16,
-                            marginRight: 15,
-                          }}
-                        >
-                          Select date
-                        </Text>
-                      ) : (
-                        <Text style={{ fontSize: 16, marginRight: 25 }}>
-                          {fromDate}
-                        </Text>
-                      )}
-                    </TouchableOpacity>
-                  </View>
+                  <View></View>
                 </View>
-
-                <DateTimePickerModal
-                  isVisible={isDatePickerVisible}
-                  // mode="date"
-                  value={fromDate}
-                  onConfirm={handleFromDate}
-                  onCancel={hideDatePicker}
-                  display="spinner"
+                <DatePicker
+                  style={{ width: 200 }}
+                  date={fromDate}
+                  mode="date"
+                  placeholder="select date"
+                  format="YYYY-MM-DD"
+                  // minDate="2016-05-01"
+                  maxDate="2021-06-01"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  onDateChange={(date) => {
+                    handleFromDate(date);
+                  }}
                 />
               </View>
               <View style={styles.dateContainer}>
@@ -265,11 +237,18 @@ const Luxury = ({ navigation, route }) => {
                   </Text>
                 </View>
                 <DatePicker
-                  locale={"en"}
-                  minimumDate={new Date(2020, months, dates)}
-                  animationType={"fade"}
-                  androidMode={"spinner"}
-                  onDateChange={handleToDate}
+                  style={{ width: 200 }}
+                  date={toDate}
+                  mode="date"
+                  placeholder="select date"
+                  format="YYYY-MM-DD"
+                  // minDate="2016-05-01"
+                  maxDate="2021-06-01"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  onDateChange={(date) => {
+                    handleToDate(date);
+                  }}
                 />
               </View>
             </View>
@@ -356,7 +335,8 @@ const Luxury = ({ navigation, route }) => {
     const data = {
       requestID: `T0-${date}${formatedMonth}${year}-${random}`,
       tourCategory: "Luxury Tour",
-
+      adult: adult,
+      children: children,
       travellerType: travellerType,
       fromDate: fromDate,
       startPoint: startPoint,
@@ -386,7 +366,7 @@ const Luxury = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        {step == 7 ? null : (
+        {step == 8 ? null : (
           <View style={styles.arrowsContainer}>
             {step == 1 ? (
               <TouchableOpacity
@@ -422,7 +402,7 @@ const Luxury = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step !== 8 && step !== 2 && step !== 3 && step !== 6 ? (
+              {step !== 8 && step !== 2 && step !== 3 && step !== 7 ? (
                 <View>
                   <AntDesign name="arrowright" size={28} />
                 </View>
@@ -430,7 +410,7 @@ const Luxury = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         )}
-        {step == 1 || step == 7 ? null : (
+        {step == 1 || step == 8 ? null : (
           <View style={styles.progressContainer}>
             <View
               style={{
@@ -439,7 +419,7 @@ const Luxury = ({ navigation, route }) => {
                 borderWidth: 2,
                 borderColor: "#a2cffe",
                 paddingVertical: 1,
-                width: WIDTH == 360 ? 38.5 * step : 60 * step,
+                width: WIDTH == 360 ? 45 * step : 50 * step,
                 overflow: "hidden",
                 backgroundColor: "#a2cffe",
               }}

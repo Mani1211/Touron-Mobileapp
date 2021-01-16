@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { DatePicker } from "native-base";
+import DatePicker from "react-native-datepicker";
 import {
   View,
   StyleSheet,
@@ -27,7 +26,6 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 const PlannedTourScreen = ({ navigation, route }) => {
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [tourType, setTourType] = React.useState("");
   const [travellerType, setTravellerType] = React.useState("");
   const [adult, setAdult] = React.useState(0);
@@ -49,10 +47,9 @@ const PlannedTourScreen = ({ navigation, route }) => {
   const [dates, setDates] = useState("");
   const [years, setYears] = useState("");
   const [months, setMonths] = useState("");
-  console.log(dates, months, years, "mok");
   let random;
   let formatedMonth;
-  console.log(user, "plannkwfed");
+  // console.log(user, "plannkwfed");
 
   const [userInfo, setUserInfo] = useState({});
 
@@ -98,26 +95,12 @@ const PlannedTourScreen = ({ navigation, route }) => {
     }
   });
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
   const handleFromDate = (date) => {
-    setDatePickerVisibility(false);
-
-    setFromDate(date.toLocaleDateString("en-GB"));
-    setDates(date.getDate());
-    setMonths(date.getMonth());
-    setYears[date.getFullYear()];
+    setFromDate(date);
   };
 
   const handleToDate = (date) => {
-    setDatePickerVisibility(false);
-    setToDate(date.toLocaleDateString("en-GB"));
+    setToDate(date);
   };
 
   const nextStep = () => {
@@ -243,33 +226,21 @@ const PlannedTourScreen = ({ navigation, route }) => {
                   </Text>
                 </View>
                 <View style={styles.dateContainer}>
-                  <View>
-                    <TouchableOpacity onPress={showDatePicker}>
-                      {fromDate == "" ? (
-                        <Text
-                          style={{
-                            fontSize: 16,
-                            marginRight: 15,
-                          }}
-                        >
-                          Select date
-                        </Text>
-                      ) : (
-                        <Text style={{ fontSize: 16, marginRight: 25 }}>
-                          {fromDate}
-                        </Text>
-                      )}
-                    </TouchableOpacity>
-                  </View>
+                  <View></View>
                 </View>
-
-                <DateTimePickerModal
-                  isVisible={isDatePickerVisible}
-                  // mode="date"
-                  value={fromDate}
-                  onConfirm={handleFromDate}
-                  onCancel={hideDatePicker}
-                  display="spinner"
+                <DatePicker
+                  style={{ width: 200 }}
+                  date={fromDate}
+                  mode="date"
+                  placeholder="select date"
+                  format="YYYY-MM-DD"
+                  // minDate="2016-05-01"
+                  maxDate="2021-06-01"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  onDateChange={(date) => {
+                    handleFromDate(date);
+                  }}
                 />
               </View>
               <View style={styles.dateContainer}>
@@ -285,11 +256,18 @@ const PlannedTourScreen = ({ navigation, route }) => {
                   </Text>
                 </View>
                 <DatePicker
-                  locale={"en"}
-                  minimumDate={new Date(2020, months, dates)}
-                  animationType={"fade"}
-                  androidMode={"spinner"}
-                  onDateChange={handleToDate}
+                  style={{ width: 200 }}
+                  date={toDate}
+                  mode="date"
+                  placeholder="select date"
+                  format="YYYY-MM-DD"
+                  // minDate="2016-05-01"
+                  maxDate="2021-06-01"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  onDateChange={(date) => {
+                    handleToDate(date);
+                  }}
                 />
               </View>
             </View>
