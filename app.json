@@ -11,7 +11,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "enabled": true
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -20,8 +21,10 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": ""
+    "description": "",
+    "schema": "touron"
   },
+
   "expo": {
     "name": "tour On",
     "icon": "./assets/playstore.png",
@@ -32,9 +35,8 @@
       "icon": "./assets/playstore.png",
       "color": "#2ECC71"
     },
-    "updates": {
-      "enabled": false
-    },
+    "scheme": "touron",
+
     "ios": {
       "bundleIdentifier": "com.touron.travelapp",
       "buildNumber": "1.0.0",

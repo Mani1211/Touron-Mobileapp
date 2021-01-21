@@ -37,10 +37,12 @@ const BlogInnerScreen = ({ navigation, route }) => {
       <StatusBar />
       <View
         style={{
-          height: HEIGHT / 10,
+          // height: HEIGHT / 10,
+          position: "absolute",
+          zIndex: 2,
           alignItems: "center",
           flexDirection: "row",
-          marginTop: Platform.OS === "ios" ? 20 : 0,
+          marginTop: Platform.OS === "ios" ? 20 : 25,
         }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("BlogHome")}>
@@ -49,27 +51,9 @@ const BlogInnerScreen = ({ navigation, route }) => {
               paddingHorizontal: 30,
             }}
           >
-            <AntDesign name="arrowleft" size={24} color="black" />
+            <AntDesign name="arrowleft" size={24} color="#fff" />
           </View>
         </TouchableOpacity>
-        <View
-          style={{
-            paddingHorizontal: 50,
-            paddingVertical: Platform.OS === "ios" ? 20 : 0,
-          }}
-        >
-          <Text
-            style={{
-              color: "black",
-              fontSize: 30,
-              fontFamily: "WSans",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {item.countryName}
-          </Text>
-        </View>
       </View>
       <View>
         <Image
@@ -159,7 +143,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
         )}
       </View>
 
-      <Text style={{ fontFamily: "NewYorkl", fontSize: 30, margin: 10 }}>
+      <Text style={{ fontFamily: "Avenir", fontSize: 26, margin: 10 }}>
         {item.blogTitle}
       </Text>
       <View style={{ flexDirection: "row", alignItems: "center" }}>

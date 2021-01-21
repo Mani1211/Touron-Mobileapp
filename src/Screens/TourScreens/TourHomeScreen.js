@@ -672,6 +672,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                       flexDirection: "row",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      paddingLeft: 20, 
                     }}
                   >
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -679,7 +680,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                     </TouchableOpacity>
 
                     <View>
-                      <Text style={{ fontSize: 23, fontFamily: "NewYorkl" }}>
+                      <Text style={{ fontSize: 23, fontFamily: "Avenir" }}>
                         Tours
                       </Text>
                     </View>
@@ -692,6 +693,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                       />
                     </TouchableOpacity>
                   </View>
+
                   <View style={styles.background}>
                     <Feather name="search" style={styles.iconStyle}></Feather>
                     <TextInput
@@ -977,7 +979,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                                         alignItems: "center",
                                       }}
                                     >
-                                      <View
+                                      {/* <View
                                         style={{
                                           padding: 8,
                                           marginTop: 4,
@@ -1026,9 +1028,9 @@ const TourHomeScreen = ({ navigation, route }) => {
                                             ₹ - Very Low
                                           </Text>
                                         )}
-                                      </View>
+                                      </View> */}
 
-                                      <View
+                                      {/* <View
                                         style={{
                                           flexDirection: "row",
                                           justifyContent: "space-between",
@@ -1051,7 +1053,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                                         >
                                           {item.ratings}/5
                                         </Text>
-                                      </View>
+                                      </View> */}
                                     </View>
                                   </View>
                                 </View>
@@ -1350,15 +1352,17 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   background: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     height: HEIGHT / 15,
-    borderRadius: 20,
     flexDirection: "row",
-    width: WIDTH * 0.9,
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 30,
+    marginHorizontal: 10,
+    borderRadius: 20,
+    borderWidth: 1,
   },
   inputStyle: {
-    fontSize: 18,
+    fontSize: 16,
     flex: 1,
   },
   iconStyle: {

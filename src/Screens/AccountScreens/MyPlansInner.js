@@ -23,10 +23,10 @@ const MyPlansInner = ({ navigation, route }) => {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor="#28C9E1" />
+      <StatusBar backgroundColor="black" />
       <View
         style={{
-          backgroundColor: "#28C9E1",
+          backgroundColor: "black",
           height: Platform.OS === "ios" ? HEIGHT / 2.12 : HEIGHT / 1.93,
         }}
       >
@@ -44,16 +44,18 @@ const MyPlansInner = ({ navigation, route }) => {
               size={28}
               style={{
                 paddingHorizontal: 20,
+                color: "#FFF",
               }}
             />
           </TouchableOpacity>
           <Text
             style={{
-              fontFamily: "NewYorkl",
+              fontFamily: "Avenir",
               fontSize: 20,
+              color: "#FFF",
             }}
           >
-            Self Planned Tours{" "}
+            Self Planned Tours
           </Text>
         </View>
         <View
@@ -172,49 +174,48 @@ const MyPlansInner = ({ navigation, route }) => {
             marginVertical: 10,
           }}
         >
-          {item.tourDetails.map((item,index)=>{
+          {item.tourDetails.map((item, index) => {
             return (
               <View
-              key={index}
-              style={{
-                marginHorizontal: 15,
-                height: HEIGHT / 10,
-                justifyContent: "center",
-                paddingVertical: 10,
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => navigation.navigate("MyPlanInner")}
+                key={index}
+                style={{
+                  marginHorizontal: 15,
+                  height: HEIGHT / 10,
+                  justifyContent: "center",
+                  paddingVertical: 10,
+                }}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("MyPlanInner")}
                 >
-                  <Image
-                    source={{ uri: item.imageUrl }}
-                    style={{
-                      height: WIDTH / 8,
-                      width: WIDTH / 8,
-                      borderRadius: 5,
-                      marginRight: 10,
-                    }}
-                  />
                   <View
                     style={{
-                      justifyContent: "center",
+                      flexDirection: "row",
+                      alignItems: "center",
                     }}
                   >
-                    <Text style={{ fontSize: 15 }}>{item.tourName}</Text>
-                    {/* <Text style={{ fontSize: 14 }}>{item.cityName}</Text> */}
+                    <Image
+                      source={{ uri: item.imageUrl }}
+                      style={{
+                        height: WIDTH / 8,
+                        width: WIDTH / 8,
+                        borderRadius: 5,
+                        marginRight: 10,
+                      }}
+                    />
+                    <View
+                      style={{
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text style={{ fontSize: 15 }}>{item.tourName}</Text>
+                      {/* <Text style={{ fontSize: 14 }}>{item.cityName}</Text> */}
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-            )
+                </TouchableOpacity>
+              </View>
+            );
           })}
-        
         </View>
       </View>
     </ScrollView>

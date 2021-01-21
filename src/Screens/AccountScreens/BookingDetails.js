@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import PDFReader from "rn-pdf-reader-js";
+// import PDFReader from "rn-pdf-reader-js";
 import * as DocumentPicker from "expo-document-picker";
 import { AuthContext } from "../../context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
@@ -71,15 +71,15 @@ const BookingDetails = ({ navigation }) => {
       </TouchableOpacity>
       <Button title="Download" onPress={() => setShow(true)} />
 
-      <PDFReader
+      {/* <PDFReader
         withPinchZoom={true}
         onError={(err) => console.log(err, "err")}
         style={{ height: 500, width: WIDTH }}
         noLoader={true}
         source={{
           uri: uri,
-        }}
-      />
+        }} */}
+      {/* /> */}
     </ScrollView>
   );
 };

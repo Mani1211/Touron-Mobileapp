@@ -19,7 +19,7 @@ const NationalPark = ({ nationalPark, setNationalPark }) => {
     };
     await axios
       .post(
-        `https://us-central1-touronapp-248e4.cloudfunctions.net/sendMail?dest=manivasagam.shanmugam@touron.in&details=${details}`
+        `https://us-central1-touronapp-248e4.cloudfunctions.net/sendMail?dest=touronholidayz@gmail.com&countryName=Maldives`
       )
       .then((d) => console.log("d", d))
       .catch((err) => console.log("err", err))

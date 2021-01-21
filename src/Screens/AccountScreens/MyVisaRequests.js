@@ -6,6 +6,7 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
+  StatusBar,
   StyleSheet,
 } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
@@ -53,7 +54,7 @@ const MyVisaRequestsScreen = ({ navigation }) => {
             <View
               style={{
                 backgroundColor: "#28C9E1",
-                height: HEIGHT / 8,
+                height: HEIGHT / 10,
                 alignItems: "center",
                 flexDirection: "row",
               }}
@@ -64,7 +65,7 @@ const MyVisaRequestsScreen = ({ navigation }) => {
                     name="arrow-left"
                     size={28}
                     color="black"
-                    style={{ paddingHorizontal: 20, paddingTop: -10 }}
+                    style={{ paddingHorizontal: 20 }}
                   />
                 </View>
               </TouchableOpacity>
@@ -73,7 +74,6 @@ const MyVisaRequestsScreen = ({ navigation }) => {
                   flex: 0.8,
                   alignItems: "center",
                   justifyContent: "center",
-                  paddingTop: 15,
                 }}
               >
                 <Text style={{ color: "white", fontSize: 20 }}>
@@ -169,7 +169,6 @@ const MyVisaRequestsScreen = ({ navigation }) => {
       <View
         style={{
           alignItems: "center",
-
           justifyContent: "center",
           flex: 1,
           backgroundColor: "#34495e",
@@ -218,7 +217,16 @@ const MyVisaRequestsScreen = ({ navigation }) => {
       </View>
     );
   };
-  return <>{renderScreen()}</>;
+  return (
+    <>
+      <StatusBar
+        backgroundColor="#28C9E1"
+
+        // animated={true}
+      />
+      {renderScreen()}
+    </>
+  );
 };
 
 export default MyVisaRequestsScreen;

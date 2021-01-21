@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
+  StatusBar,
   Image,
   Platform,
 } from "react-native";
@@ -16,6 +17,7 @@ import touron from "../../api/touron";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
 import * as firebase from "firebase";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 const HEIGHT = Dimensions.get("window").height;
 const VisaDetailsScreen = ({ navigation }) => {
   const [visa, setVisa] = useState([]);
@@ -336,8 +338,11 @@ const VisaDetailsScreen = ({ navigation }) => {
   };
   return (
     <>
-      {isAdmin ? (
-        <>{renderVisaForm()}</>
+      {!isAdmin ? (
+        <>
+          <StatusBar backgroundColor="#FFF" />
+          {renderVisaForm()}
+        </>
       ) : (
         <View
           animation="bounceIn"
@@ -349,6 +354,8 @@ const VisaDetailsScreen = ({ navigation }) => {
             backgroundColor: "white",
           }}
         >
+          <StatusBar backgroundColor="transparent" />
+
           <View
             style={{
               marginTop: HEIGHT / 14,
@@ -378,6 +385,7 @@ const VisaDetailsScreen = ({ navigation }) => {
               style={{
                 fontSize: 16,
                 flex: 1,
+                fontFamily: "Avenir",
               }}
             >
               Select the Country you are Travelling
@@ -409,7 +417,7 @@ const VisaDetailsScreen = ({ navigation }) => {
                         navigation.navigate("VisaInner", { item: item })
                       }
                     >
-                      <Image
+                      <ProgressiveImage
                         style={styles.cityImage}
                         source={{ uri: item.imageUrl }}
                       />
@@ -439,10 +447,11 @@ const styles = new StyleSheet.create({
   background: {
     backgroundColor: "#fff",
     height: HEIGHT / 15,
-    borderRadius: 20,
     flexDirection: "row",
     marginTop: 20,
     marginHorizontal: WIDTH / 18,
+    borderRadius: 20,
+    borderWidth: 1,
   },
   inputStyle: {
     fontSize: 18,

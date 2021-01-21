@@ -384,8 +384,8 @@ const WildLife = ({ navigation, route }) => {
         const message = {
           to: token,
           sound: "default",
-          title: `Request Status Changed`,
-          body: `Request for wildlife received `,
+          title: `Query Received`,
+          body: `Congratulations! You are one step closer to your dream tour. Your query is under review and tour On will contact you with more details and suggestions. The booking process will start after your confirmation. Please check the My Requests tab for updates.`,
           // data: plan,
         };
         console.log(data);
@@ -434,11 +434,16 @@ const WildLife = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step !== 8 && step !== 2 && step !== 3 && step !== 5 ? (
-                <View>
-                  <AntDesign name="arrowright" size={28} />
-                </View>
-              ) : null}
+              {/* {step !== 8 &&
+              step !== 2 &&
+              step !== 4 &&
+              step !== 5 &&
+              step == 6 &&
+              step == 0 ? ( */}
+              <View>
+                <AntDesign name="arrowright" size={28} />
+              </View>
+              {/* ) : null} */}
             </TouchableOpacity>
           </View>
         )}
@@ -451,7 +456,7 @@ const WildLife = ({ navigation, route }) => {
                 borderWidth: 2,
                 borderColor: "#a2cffe",
                 paddingVertical: 1,
-                width: WIDTH == 360 ? 38.5 * step : 45 * step,
+                width: WIDTH <= 360 ? 38.5 * step : 45 * step,
                 overflow: "hidden",
                 backgroundColor: "#a2cffe",
               }}
@@ -470,13 +475,12 @@ const styles = StyleSheet.create({
   progressContainer: {
     height: 10,
     marginHorizontal: 25,
-    bottom: 0,
-    justifyContent: "flex-start",
+    // bottom: 0,
+    // justifyContent: "flex-start",
     borderWidth: 2,
     borderColor: "#f0f8ff",
     borderRadius: 20,
     marginTop: 20,
-    bottom: 0,
   },
   dateContainer: {
     justifyContent: "space-evenly",

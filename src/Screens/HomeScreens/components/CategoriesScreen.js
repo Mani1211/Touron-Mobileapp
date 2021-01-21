@@ -151,7 +151,7 @@ export default Categories;
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    marginBottom: 20,
+    marginVertical: 20,
   },
   iconContainer: {
     flexDirection: "row",

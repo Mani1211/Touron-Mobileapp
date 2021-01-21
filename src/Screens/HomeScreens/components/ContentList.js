@@ -19,11 +19,10 @@ const ContentList = ({ title, more, navigation, route, data, content }) => {
       {content === "" ? null : (
         <Text
           style={{
-            marginTop: 5,
-            marginBottom: 10,
-            fontFamily: "WSansl",
+            fontSize: 12,
             fontStyle: "normal",
             fontWeight: "900",
+            marginTop: 5,
           }}
         >
           {content}
@@ -38,13 +37,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: 15,
+    // marginVertical: 15,
   },
   titleStyle: {
     fontSize: 18,
     marginLeft: 0,
-    // marginTop: 10,
-    fontFamily: "NewYorkl",
+    marginBottom: 1,
+    fontFamily: "Avenir",
     fontStyle: "normal",
   },
   more: {

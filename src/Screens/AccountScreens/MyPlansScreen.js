@@ -4,6 +4,7 @@ import {
   Image,
   View,
   Dimensions,
+  StatusBar,
   TouchableOpacity,
   FlatList,
   Platform,
@@ -66,10 +67,12 @@ const MyPlansScreen = ({ navigation }) => {
       duration={3000}
       style={{ flex: 1, backgroundColor: "white" }}
     >
+      <StatusBar backgroundColor="#28C9E1" />
+
       <View
         style={{
           backgroundColor: "#28C9E1",
-          height: HEIGHT / 7,
+          height: HEIGHT / 9,
           alignItems: "center",
           flexDirection: "row",
         }}
@@ -82,7 +85,7 @@ const MyPlansScreen = ({ navigation }) => {
               color="black"
               style={{
                 paddingHorizontal: 20,
-                paddingTop: Platform.OS === "ios" ? -20 : 10,
+                paddingTop: Platform.OS === "ios" ? -20 : 0,
               }}
             />
           </View>
@@ -92,7 +95,6 @@ const MyPlansScreen = ({ navigation }) => {
             flex: 0.8,
             alignItems: "center",
             justifyContent: "center",
-            paddingTop: 15,
           }}
         >
           <Text style={{ color: "white", fontSize: 20 }}>My Plans</Text>

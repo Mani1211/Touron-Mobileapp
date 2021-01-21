@@ -4,6 +4,7 @@ import {
   View,
   ActivityIndicator,
   Image,
+  Text,
   StatusBar,
   TouchableOpacity,
 } from "react-native";
@@ -32,6 +33,8 @@ import MyVisaRequestsScreen from "./src/Screens/AccountScreens/MyVisaRequests";
 import * as Network from "expo-network";
 import { Surface } from "react-native-paper";
 import MyPlansInner from "./src/Screens/AccountScreens/MyPlansInner";
+// Install this package with `expo install expo-linking`
+import * as Linking from "expo-linking";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
@@ -51,6 +54,8 @@ if (!firebase.apps.length) {
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+  const prefix = Linking.makeUrl("/");
+
   const [user, setUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -61,6 +66,10 @@ const App = () => {
   const [networkLoader, setNetworkLoader] = useState(false);
   const [cities, setCities] = useState([]);
   const [userInfo, setUserInfo] = useState({});
+
+  const linking = {
+    prefixes: [prefix],
+  };
 
   useEffect(() => {
     getNetwork();
@@ -215,7 +224,10 @@ const App = () => {
             isAdmin,
           }}
         >
-          <NavigationContainer>
+          <NavigationContainer
+            linking={linking}
+            fallback={<Text>Loading...</Text>}
+          >
             <Drawer.Navigator
               drawerType="slides"
               screenOptions={{

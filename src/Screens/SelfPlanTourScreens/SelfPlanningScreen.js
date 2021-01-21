@@ -11,6 +11,7 @@ import {
 import * as firebase from "firebase";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
+import { LinearGradient } from "expo-linear-gradient";
 
 import { AuthContext } from "../../context/AuthContext";
 const SelfPlanningScreen = ({ navigation }) => {
@@ -56,7 +57,12 @@ const SelfPlanningScreen = ({ navigation }) => {
 
         <TouchableOpacity onPress={() => navigation.navigate("SelfPlanForm")}>
           <View style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Get Started</Text>
+            <LinearGradient
+              colors={["#9EB19E", "#9EB19E"]}
+              style={styles.buttonContainer}
+            >
+              <Text style={styles.buttonText}>Get Started</Text>
+            </LinearGradient>
           </View>
         </TouchableOpacity>
       </View>
@@ -79,12 +85,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 15,
+    borderRadius: 10,
   },
   buttonText: {
-    borderWidth: 2,
-    borderColor: "black",
-    padding: 10,
-    borderRadius: 20,
+    padding: 15,
     fontSize: 18,
   },
 });

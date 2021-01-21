@@ -6,6 +6,7 @@ import {
   Dimensions,
   ActivityIndicator,
   Image,
+  StatusBar,
   Platform,
   ScrollView,
   TouchableOpacity,
@@ -236,6 +237,12 @@ const MyRequestScreen = ({ navigation }) => {
         <View>
           {isAdmin ? (
             <View>
+              <StatusBar
+                barStyle="dark-content"
+                backgroundColor="#FFF"
+
+                // animated={true}
+              />
               <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
                 <View>
                   <Feather
@@ -431,6 +438,11 @@ const MyRequestScreen = ({ navigation }) => {
             </View>
           ) : (
             <View>
+              <StatusBar
+                backgroundColor="#28C9E1"
+
+                // animated={true}
+              />
               <View
                 style={{
                   backgroundColor: "#28C9E1",

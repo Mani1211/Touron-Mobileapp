@@ -15,6 +15,7 @@ import {
 import touron from "../../api/touron";
 import { Surface } from "react-native-paper";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
+import { Feather } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 const BlogHomeScreen = ({ navigation }) => {
@@ -43,11 +44,26 @@ const BlogHomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        animated={true}
-      />
+      <StatusBar barStyle="dark-content" />
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 30,
+          marginLeft: 20,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Feather name="arrow-left" style={{ fontSize: 30 }} />
+        </TouchableOpacity>
+
+        <View>
+          <Text style={{ fontSize: 23, fontFamily: "Avenir", paddingLeft: 20 }}>
+            Blogs
+          </Text>
+        </View>
+      </View>
       {loaded ? (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}

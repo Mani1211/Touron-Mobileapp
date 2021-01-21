@@ -458,7 +458,11 @@ const RoadTripScreen = ({ navigation }) => {
               nextStep();
             }}
           >
-            {step !== 9 && step !== 2 && step !== 3 && step !== 8 ? (
+            {step !== 9 &&
+            step !== 2 &&
+            step !== 3 &&
+            step !== 8 &&
+            step == 0 ? (
               <View>
                 <AntDesign name="arrowright" size={28} />
               </View>

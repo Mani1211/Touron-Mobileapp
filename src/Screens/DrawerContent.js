@@ -12,6 +12,7 @@ import * as firebase from "firebase";
 import AsyncStorage from "@react-native-community/async-storage";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
 import { FontAwesome5, Fontisto, Feather, AntDesign } from "@expo/vector-icons";
+import { Thumbnail } from "native-base";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -22,7 +23,9 @@ const DrawerContent = (props) => {
   const { user, isLoggedIn, setIsLoggedIn, setUser } = useContext(AuthContext);
   useEffect(() => {
     getUserData();
-  });
+  }, []);
+
+  const [userInfo, setUserInfo] = useState({});
 
   const [isAdmin, setIsAdmin] = useState(false);
   const getUserData = () => {
@@ -34,6 +37,7 @@ const DrawerContent = (props) => {
           if (data.val() !== null) {
             let val = data.val();
             setIsAdmin(val.admin);
+            setUserInfo(val);
           }
         });
     }
@@ -71,6 +75,45 @@ const DrawerContent = (props) => {
             position: "absolute",
           }}
         >
+          <View
+            style={{
+              alignItems: "center",
+              // justifyContent: "center",
+              flexDirection: "row",
+              paddingHorizontal: 20,
+              paddingVertical: 20,
+              borderBottomColor: "#FFF",
+              borderWidth: 2,
+            }}
+          >
+            {userInfo.photoURL === "" ? (
+              <Thumbnail
+                source={{
+                  uri:
+                    "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
+                }}
+                style={{ height: 50, width: 50 }}
+              />
+            ) : (
+              <Thumbnail
+                source={{ uri: userInfo.photoURL }}
+                style={{ height: 55, width: 55 }}
+              />
+            )}
+            <View>
+              <Text
+                style={{ paddingHorizontal: 20, color: "#FFF", fontSize: 20 }}
+              >
+                {userInfo.name}
+              </Text>
+              <Text
+                style={{ paddingHorizontal: 20, color: "#FFF", fontSize: 20 }}
+              >
+                {userInfo.phoneNumber}
+              </Text>
+            </View>
+          </View>
+
           <DrawerContentScrollView {...props}>
             <View style={{ marginVertical: 40 }}>
               {isAdmin ? (
