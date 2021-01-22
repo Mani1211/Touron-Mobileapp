@@ -6,15 +6,12 @@ import {
   StatusBar,
   Linking,
   Animated,
-  Alert,
   Modal,
   FlatList,
   ScrollView,
   Platform,
-  ActivityIndicator,
   Dimensions,
   TouchableOpacity,
-  TouchableHighlight,
   Image,
 } from "react-native";
 import HTMLView from "react-native-htmlview";
@@ -33,7 +30,6 @@ import { Portal, Provider } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 import touron from "../../api/touron";
 import { AppLoading } from "expo";
-import Faq from "../AccountScreens/utilities/Faq";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import * as firebase from "firebase";
 const HomeScreen = ({ navigation, route }) => {
@@ -45,7 +41,6 @@ const HomeScreen = ({ navigation, route }) => {
   const [networkLoader, setNetworkLoader] = useState(false);
   const [tour, setTour] = useState([]);
   const [countries, setCountries] = useState([]);
-  const [banner, setBanner] = useState([]);
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedPromotion, setSelectedPromotion] = useState({});
 
@@ -158,12 +153,7 @@ const HomeScreen = ({ navigation, route }) => {
     setNetworkLoader(false);
   };
 
-  const getImage = async () => {
-    const photo = await touron.get("/banner");
-    setBanner(photo.data);
-  };
   useEffect(() => {
-    getImage();
     getNetwork();
   }, []);
   useEffect(() => {

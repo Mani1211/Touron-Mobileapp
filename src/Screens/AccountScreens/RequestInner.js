@@ -3,19 +3,21 @@ import {
   View,
   Text,
   Dimensions,
+  TextInput,
   TouchableOpacity,
+  ScrollView,
   StyleSheet,
   Platform,
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import * as Notifications from "expo-notifications";
-import { Feather, AntDesign, Entypo } from "@expo/vector-icons";
-import { Surface, TextInput } from "react-native-paper";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { Feather } from "@expo/vector-icons";
+import { Surface } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 import * as firebase from "firebase";
 import DropDownPicker from "react-native-dropdown-picker";
+import { Snackbar } from "react-native-paper";
 
 import {
   getExpoToken,
@@ -23,6 +25,11 @@ import {
 } from "./../CategoryScreens/utils/PushNotification";
 
 const RequestInner = ({ navigation, route }) => {
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
   const { user } = useContext(AuthContext);
   // const plan = route.params.planned;
   // const road = route.params.road;
@@ -101,6 +108,7 @@ const RequestInner = ({ navigation, route }) => {
       .child(key)
       .set(null)
       .then(() => {
+        // setVisible(true);
         console.log("success :>> ");
         navigation.navigate("MyRequest");
       })
@@ -131,10 +139,6 @@ const RequestInner = ({ navigation, route }) => {
   };
 
   const queryStatus = [
-    {
-      label: "All",
-      value: "",
-    },
     {
       label: "Query Received",
       value: "Query Received",
@@ -191,6 +195,18 @@ const RequestInner = ({ navigation, route }) => {
           flexDirection: "row",
         }}
       >
+        <Snackbar
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          action={{
+            label: "Undo",
+            onPress: () => {
+              // Do something
+            },
+          }}
+        >
+          Deleted
+        </Snackbar>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View style={{ flex: 0.2 }}>
             <Feather

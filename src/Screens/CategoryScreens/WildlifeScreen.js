@@ -24,7 +24,11 @@ import Touristnumber from "./Reusable components/Touristnumber";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import NationalPark from "./Reusable components/NationalPark";
-import { getExpoToken, sendPushNotification } from "./utils/PushNotification";
+import {
+  getExpoToken,
+  sendPushNotification,
+  sendEmail,
+} from "./utils/PushNotification";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -52,6 +56,7 @@ const WildLife = ({ navigation, route }) => {
   let formatedMonth;
 
   const [userInfo, setUserInfo] = useState({});
+  // console.log("user.email", user.email);
 
   useEffect(() => {
     random = Math.floor((Math.random() + 4) * 345334 * Math.random());
@@ -69,6 +74,10 @@ const WildLife = ({ navigation, route }) => {
         .database()
         .ref(`userGeneralInfo/${user.uid}`)
         .on("value", (data) => {
+          // console.log("data", data);s
+          if (data === null) {
+            return;
+          }
           setUserInfo(data.val());
           setName(data.val().name);
           setNumber(data.val().phoneNumber);
@@ -380,15 +389,13 @@ const WildLife = ({ navigation, route }) => {
       .push(data)
       .then((data) => {
         const token = getExpoToken(userID);
-
+        sendEmail(user.email, destination);
         const message = {
           to: token,
           sound: "default",
           title: `Query Received`,
           body: `Congratulations! You are one step closer to your dream tour. Your query is under review and tour On will contact you with more details and suggestions. The booking process will start after your confirmation. Please check the My Requests tab for updates.`,
-          // data: plan,
         };
-        console.log(data);
         sendPushNotification(message);
         nextStep();
       })
@@ -440,9 +447,14 @@ const WildLife = ({ navigation, route }) => {
               step !== 5 &&
               step == 6 &&
               step == 0 ? ( */}
-              <View>
+              {step == 0 || step == 2 || step == 3 || step == 8 ? null : (
+                <View>
+                  <AntDesign name="arrowright" size={28} />
+                </View>
+              )}
+              {/* <View>
                 <AntDesign name="arrowright" size={28} />
-              </View>
+              </View> */}
               {/* ) : null} */}
             </TouchableOpacity>
           </View>

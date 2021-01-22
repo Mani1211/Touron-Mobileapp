@@ -99,7 +99,7 @@ function SignInScreen({ navigation }) {
       })
       .catch((err) => {
         setLoaded(false);
-        console.log(err.message, "po");
+        console.log(err.message, "pcco");
         setErr(err.message);
       });
   };
@@ -141,25 +141,30 @@ function SignInScreen({ navigation }) {
   };
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => setExpoToken(token));
-    // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current = Notifications.addNotificationReceivedListener(
-      (notification) => {
-        setNotification(notification);
-      }
-    );
+    let mounted = true;
+    if (mounted) {
+      registerForPushNotificationsAsync().then((token) => setExpoToken(token));
+      // This listener is fired whenever a notification is received while the app is foregrounded
+      notificationListener.current = Notifications.addNotificationReceivedListener(
+        (notification) => {
+          setNotification(notification);
+        }
+      );
 
-    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(
-      (response) => {
-        console.log(response);
-      }
-    );
+      // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+      responseListener.current = Notifications.addNotificationResponseReceivedListener(
+        (response) => {
+          console.log(response);
+        }
+      );
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener);
-      Notifications.removeNotificationSubscription(responseListener);
-    };
+      return () => {
+        Notifications.removeNotificationSubscription(notificationListener);
+        Notifications.removeNotificationSubscription(responseListener);
+      };
+    }
+
+    return () => (mounted = false);
   }, []);
 
   const renderForm = () => {
@@ -201,7 +206,7 @@ function SignInScreen({ navigation }) {
                     placeholder="Password"
                     keyboardType="visible-password"
                     keyboardAppearance="dark"
-                    keyboardType="email-address"
+                    keyboardType="visible-password"
                     onChangeText={(value) => setPassword(value)}
                     passwordRules={true}
                     secureTextEntry={true}

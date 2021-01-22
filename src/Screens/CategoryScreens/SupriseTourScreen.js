@@ -22,6 +22,11 @@ import Expediture from "./Reusable components/Expediture";
 import Tourpreferance from "./Reusable components/Tourpreferance";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
+import {
+  getExpoToken,
+  sendEmail,
+  sendPushNotification,
+} from "./utils/PushNotification";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -387,6 +392,15 @@ const SurpriseTourScreen = ({ navigation }) => {
       .push(tourData)
       .then((data) => {
         console.log(data);
+        const token = getExpoToken(userID);
+        sendEmail(user.email, "Surprise trip");
+        const message = {
+          to: token,
+          sound: "default",
+          title: `Query Received`,
+          body: `Congratulations! You are one step closer to your dream tour. Your query is under review and tour On will contact you with more details and suggestions. The booking process will start after your confirmation. Please check the My Requests tab for updates.`,
+        };
+        sendPushNotification(message);
         nextStep();
       })
       .catch((err) => console.log(err));
@@ -430,16 +444,11 @@ const SurpriseTourScreen = ({ navigation }) => {
               nextStep();
             }}
           >
-            {step !== 9 &&
-            step !== 2 &&
-            step !== 3 &&
-            step !== 5 &&
-            step !== 6 &&
-            step == 0 ? (
+            {step == 0 || step == 2 || step == 3 || step == 6 ? null : (
               <View>
                 <AntDesign name="arrowright" size={28} />
               </View>
-            ) : null}
+            )}
           </TouchableOpacity>
         </View>
       )}

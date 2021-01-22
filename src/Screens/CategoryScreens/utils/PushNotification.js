@@ -1,4 +1,5 @@
 import * as firebase from "firebase";
+import axios from "axios";
 
 export const getExpoToken = (userId) => {
   let token = "";
@@ -32,4 +33,16 @@ export const sendPushNotification = async (message) => {
     },
     body: JSON.stringify(messages),
   });
+};
+
+export const sendEmail = async (email, countryname) => {
+  console.log("email,countryname", email, countryname);
+
+  await axios
+    .post(
+      `https://us-central1-touronapp-248e4.cloudfunctions.net/sendMail?dest=${email}&countryName=${countryname}`
+    )
+    .then((d) => console.log("d", d))
+    .catch((err) => console.log("err", err))
+    .catch((err) => console.log("err", err));
 };

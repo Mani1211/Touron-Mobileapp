@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { DatePicker } from "native-base";
+import DatePicker from "react-native-datepicker";
+
 import {
   View,
   StyleSheet,
@@ -20,6 +20,11 @@ import Tourtype from "./Reusable components/Tourtype";
 import Travelmode from "./Reusable components/Travelmode";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
+import {
+  sendEmail,
+  sendPushNotification,
+  getExpoToken,
+} from "./utils/PushNotification";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -195,33 +200,21 @@ const Honeymoon = ({ navigation, route }) => {
                   </Text>
                 </View>
                 <View style={styles.dateContainer}>
-                  <View>
-                    <TouchableOpacity onPress={showDatePicker}>
-                      {fromDate == "" ? (
-                        <Text
-                          style={{
-                            fontSize: 16,
-                            marginRight: 15,
-                          }}
-                        >
-                          Select date
-                        </Text>
-                      ) : (
-                        <Text style={{ fontSize: 16, marginRight: 25 }}>
-                          {fromDate}
-                        </Text>
-                      )}
-                    </TouchableOpacity>
-                  </View>
+                  <View></View>
                 </View>
-
-                <DateTimePickerModal
-                  isVisible={isDatePickerVisible}
-                  // mode="date"
-                  value={fromDate}
-                  onConfirm={handleFromDate}
-                  onCancel={hideDatePicker}
-                  display="spinner"
+                <DatePicker
+                  style={{ width: 200 }}
+                  date={fromDate}
+                  mode="date"
+                  placeholder="select date"
+                  format="YYYY-MM-DD"
+                  // minDate="2016-05-01"
+                  maxDate="2021-06-01"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  onDateChange={(date) => {
+                    handleFromDate(date);
+                  }}
                 />
               </View>
               <View style={styles.dateContainer}>
@@ -237,11 +230,18 @@ const Honeymoon = ({ navigation, route }) => {
                   </Text>
                 </View>
                 <DatePicker
-                  locale={"en"}
-                  minimumDate={new Date(2020, months, dates)}
-                  animationType={"fade"}
-                  androidMode={"spinner"}
-                  onDateChange={handleToDate}
+                  style={{ width: 200 }}
+                  date={toDate}
+                  mode="date"
+                  placeholder="select date"
+                  format="YYYY-MM-DD"
+                  // minDate="2016-05-01"
+                  maxDate="2021-06-01"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  onDateChange={(date) => {
+                    handleToDate(date);
+                  }}
                 />
               </View>
             </View>
@@ -349,6 +349,15 @@ const Honeymoon = ({ navigation, route }) => {
       .push(data)
       .then((data) => {
         console.log(data);
+        const token = getExpoToken(userID);
+        sendEmail(user.email, destination);
+        const message = {
+          to: token,
+          sound: "default",
+          title: `Query Received`,
+          body: `Congratulations! You are one step closer to your dream tour. Your query is under review and tour On will contact you with more details and suggestions. The booking process will start after your confirmation. Please check the My Requests tab for updates.`,
+        };
+        sendPushNotification(message);
         nextStep();
       })
       .catch((err) => console.log(err));
@@ -393,15 +402,11 @@ const Honeymoon = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step !== 8 &&
-              step !== 2 &&
-              step !== 3 &&
-              step !== 6 &&
-              step == 0 ? (
+              {step == 0 || step == 2 || step == 3 || step == 6 ? null : (
                 <View>
                   <AntDesign name="arrowright" size={28} />
                 </View>
-              ) : null}
+              )}
             </TouchableOpacity>
           </View>
         )}

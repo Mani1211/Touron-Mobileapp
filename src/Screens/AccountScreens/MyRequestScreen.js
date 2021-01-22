@@ -409,15 +409,12 @@ const MyRequestScreen = ({ navigation }) => {
                         <DataTable.Cell numeric style={{ padding: 10 }}>
                           <Text
                             style={{
-                              backgroundColor: `${getColor(
-                                allRequest[item].status
-                              )}`,
+                              color: `${getColor(allRequest[item].status)}`,
                               margin: 5,
                               borderRadius: 50,
                               fontSize: 15,
                               fontFamily: "Andika",
                               padding: 10,
-                              color: "white",
                             }}
                           >
                             {allRequest[item].status}

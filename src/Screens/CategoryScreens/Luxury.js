@@ -22,7 +22,11 @@ import Travellertype from "./Reusable components/Travellertype";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import Touristnumber from "./Reusable components/Touristnumber";
-
+import {
+  sendEmail,
+  sendPushNotification,
+  getExpoToken,
+} from "./utils/PushNotification";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -358,6 +362,15 @@ const Luxury = ({ navigation, route }) => {
       .push(data)
       .then((data) => {
         console.log(data);
+        const token = getExpoToken(userID);
+        sendEmail(user.email, destination);
+        const message = {
+          to: token,
+          sound: "default",
+          title: `Query Received`,
+          body: `Congratulations! You are one step closer to your dream tour. Your query is under review and tour On will contact you with more details and suggestions. The booking process will start after your confirmation. Please check the My Requests tab for updates.`,
+        };
+        sendPushNotification(message);
         nextStep();
       })
       .catch((err) => console.log(err));
@@ -402,15 +415,11 @@ const Luxury = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step !== 8 &&
-              step !== 2 &&
-              step !== 3 &&
-              step !== 7 &&
-              step == 0 ? (
+              {step == 0 || step == 2 || step == 3 || step == 7 ? null : (
                 <View>
                   <AntDesign name="arrowright" size={28} />
                 </View>
-              ) : null}
+              )}
             </TouchableOpacity>
           </View>
         )}

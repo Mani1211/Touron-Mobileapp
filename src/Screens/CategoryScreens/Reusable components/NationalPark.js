@@ -12,11 +12,6 @@ import {
 
 const NationalPark = ({ nationalPark, setNationalPark }) => {
   const sendEmail = async () => {
-    const details = {
-      name: "Mani",
-      requestID: "T0-140121-989898",
-      destination: nationalPark,
-    };
     await axios
       .post(
         `https://us-central1-touronapp-248e4.cloudfunctions.net/sendMail?dest=touronholidayz@gmail.com&countryName=Maldives`
