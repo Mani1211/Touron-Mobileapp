@@ -22,6 +22,8 @@ import Travellertype from "./Reusable components/Travellertype";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import Touristnumber from "./Reusable components/Touristnumber";
+
+import SubmittedQuery from "./Reusable components/SubmittedQuery";
 import {
   sendEmail,
   sendPushNotification,
@@ -111,7 +113,10 @@ const Luxury = ({ navigation, route }) => {
     setStep(step - 1);
   };
 
-  const description = `This tour is perfect for all busy-bee travel enthusiasts! Our itinerary completely depends on you and your preferences and wepersonalize the whole tour accordingly We offer you a complete list ofthings to do, places to visit, etc. and further prepare an appropriate itinerary for you within your budget and according to your travel preferences, making the experience worth every penny!`;
+  const description = `In this tour, we make sure the no element of lavishness is missed!
+
+Luxury tours are tailor made to individual requirements. Be it India or abroad, we make sure to deliver way beyond your expectations. So do you love the finest dining experiences and the classiest stays? This is the tour choice made for you! We provide you with a complete list of high-end resorts, hotels and luxury travel choices along with an appropriate itinerary. You then get to make the choice which is perfect for you and enjoy your perfect Vacay!
+`;
 
   const renderForm = (step) => {
     switch (step) {
@@ -120,7 +125,7 @@ const Luxury = ({ navigation, route }) => {
           <Tourname
             step={() => nextStep()}
             imgSrc={
-              "https://www.udaipurblog.com/wp-content/uploads/2018/04/travel-triangle.jpg"
+              "https://image.freepik.com/free-vector/global-travelling-abstract-concept-vector-illustration-global-insurance-world-trip-international-tourism-travel-agency-working-holiday-luxury-vacation-resort-chain-abstract-metaphor_335657-2953.jpg"
             }
             description={description}
           />
@@ -289,45 +294,8 @@ const Luxury = ({ navigation, route }) => {
         );
 
       case 8:
-        return (
-          <View
-            style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
-          >
-            <View
-              style={{
-                height: HEIGHT * 0.8,
-                alignItems: "center",
-                justifyContent: "center",
-                width: WIDTH,
-              }}
-            >
-              <Image
-                style={{ height: HEIGHT / 3, width: WIDTH * 0.7 }}
-                source={{
-                  uri:
-                    "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
-                }}
-              />
-            </View>
+        return <SubmittedQuery navigation={navigation} />;
 
-            <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-              <View style={{ alignItems: "center", margin: 10 }}>
-                <Text
-                  style={{
-                    // backgroundColor: "red",
-                    textAlign: "center",
-                    padding: 8,
-                    borderWidth: 1,
-                    borderColor: "black",
-                    borderRadius: 20,
-                  }}
-                >
-                  Back to Home
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        );
       default:
         break;
     }
@@ -415,7 +383,7 @@ const Luxury = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step == 0 || step == 2 || step == 3 || step == 7 ? null : (
+              {step == 1 || step == 2 || step == 3 || step == 7 ? null : (
                 <View>
                   <AntDesign name="arrowright" size={28} />
                 </View>

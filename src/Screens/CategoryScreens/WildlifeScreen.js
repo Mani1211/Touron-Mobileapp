@@ -24,6 +24,7 @@ import Touristnumber from "./Reusable components/Touristnumber";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import NationalPark from "./Reusable components/NationalPark";
+import SubmittedQuery from "./Reusable components/SubmittedQuery";
 import {
   getExpoToken,
   sendPushNotification,
@@ -119,7 +120,10 @@ const WildLife = ({ navigation, route }) => {
     setStep(step - 1);
   };
 
-  const description = `This tour is perfect for all busy-bee travel enthusiasts! Our itinerary completely depends on you and your preferences and wepersonalize the whole tour accordingly We offer you a complete list ofthings to do, places to visit, etc. and further prepare an appropriate itinerary for you within your budget and according to your travel preferences, making the experience worth every penny!`;
+  const description = `Are you a complete animal lover, have a fondness of forests and love a little rendezvous in to the beauty of nature? Destinations for this tour includes all the National Parks within India.
+
+Come and explore with tour On, India’s amazing National Parks and wildlife sanctuaries which are home to rich flora and fauna. Get up close and personal with nature and leave with a rejuvenation that isn’t found elsewhere. For all the wildlife enthusiasts, we offer you a wide range of experiences and a variety of adrenaline-pumping activities to make your trip all the more adventurous. You can have your pick from the list of activities and destinations and have a magnificent wildlife adventure that you will never forget!
+`;
 
   const renderForm = (step) => {
     switch (step) {
@@ -128,7 +132,7 @@ const WildLife = ({ navigation, route }) => {
           <Tourname
             step={() => nextStep()}
             imgSrc={
-              "https://www.udaipurblog.com/wp-content/uploads/2018/04/travel-triangle.jpg"
+              "https://image.freepik.com/free-vector/wild-animals-protection-abstract-concept-illustration-wildlife-preservation-biodiversity-protection-save-wild-animals-population-control-prevent-species-extinction_335657-3435.jpg"
             }
             description={description}
           />
@@ -313,45 +317,7 @@ const WildLife = ({ navigation, route }) => {
         );
 
       case 9:
-        return (
-          <View
-            style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
-          >
-            <View
-              style={{
-                height: HEIGHT * 0.8,
-                alignItems: "center",
-                justifyContent: "center",
-                width: WIDTH,
-              }}
-            >
-              <Image
-                style={{ height: HEIGHT / 3, width: WIDTH * 0.7 }}
-                source={{
-                  uri:
-                    "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
-                }}
-              />
-            </View>
-
-            <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-              <View style={{ alignItems: "center", margin: 10 }}>
-                <Text
-                  style={{
-                    // backgroundColor: "red",
-                    textAlign: "center",
-                    padding: 8,
-                    borderWidth: 1,
-                    borderColor: "black",
-                    borderRadius: 20,
-                  }}
-                >
-                  Back to Home
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        );
+        return <SubmittedQuery navigation={navigation} />;
       default:
         break;
     }
@@ -447,7 +413,7 @@ const WildLife = ({ navigation, route }) => {
               step !== 5 &&
               step == 6 &&
               step == 0 ? ( */}
-              {step == 0 || step == 2 || step == 3 || step == 8 ? null : (
+              {step == 1 || step == 2 || step == 3 || step == 8 ? null : (
                 <View>
                   <AntDesign name="arrowright" size={28} />
                 </View>

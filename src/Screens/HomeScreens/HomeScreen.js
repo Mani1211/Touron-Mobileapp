@@ -34,7 +34,7 @@ import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import * as firebase from "firebase";
 const HomeScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { user, userInfo } = useContext(AuthContext);
+  const { user, userInfo, setUserInfo, isLoggedIn } = useContext(AuthContext);
   const [fontLoaded, setFont] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [status, setStatus] = useState(true);
@@ -42,14 +42,31 @@ const HomeScreen = ({ navigation, route }) => {
   const [tour, setTour] = useState([]);
   const [countries, setCountries] = useState([]);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activePromoSlide, setActivePromoSlide] = useState(0);
   const [selectedPromotion, setSelectedPromotion] = useState({});
-
+  const [testimonials, setTestimonials] = useState([]);
+  const [promotions, setPromotions] = useState([]);
+  console.log("isLoggedIn", isLoggedIn);
   const [cities, setCities] = useState([]);
+  const getUserData = () => {
+    if (user !== null) {
+      firebase
+        .database()
+        .ref(`userGeneralInfo/${user.uid}`)
+        .on("value", (data) => {
+          if (data.val() !== null) {
+            let val = data.val();
+            setUserInfo(val);
+          }
+        });
+    } else setUserInfo({});
+  };
 
   useEffect(() => {
     getCounries();
     getCities();
     getTours();
+    getUserData();
   }, []);
 
   const fetchFont = async () => {
@@ -79,59 +96,77 @@ const HomeScreen = ({ navigation, route }) => {
       });
   };
 
-  const testMonials = [
-    {
-      name: "Vikash",
-      comment:
-        "We really had a great time in dubai,Vikas from tour on hosted uh and done all the arrangements perfectly from his end.we will never forget our trip with tour my next trip with tour on",
-      testImage:
-        "https://images.pexels.com/photos/3556116/pexels-photo-3556116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      tourPlace: "Dubai",
-    },
-    {
-      name: "Vikash",
-      comment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, at.dolor sit, amet consectetur adipisicing elit. Similique, at.",
-      testImage:
-        "https://images.pexels.com/photos/3215476/pexels-photo-3215476.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      tourPlace: "Maldives",
-    },
-    {
-      name: "Vikash",
-      comment:
-        "Lorem ipsum dolor sit, amet conseor sit, amet consectetur adipisicing elit. Similique, at..",
-      testImage:
-        "https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      tourPlace: "Singapore",
-    },
+  // const testMonials = [
+  //   {
+  //     name: "Vikash",
+  //     comment:
+  //       "We really had a great time in dubai,Vikas from tour on hosted uh and done all the arrangements perfectly from his end.we will never forget our trip with tour my next trip with tour on",
+  //     testImage:
+  //       "https://images.pexels.com/photos/3556116/pexels-photo-3556116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  //     tourPlace: "Dubai",
+  //   },
+  //   {
+  //     name: "Vikash",
+  //     comment:
+  //       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, at.dolor sit, amet consectetur adipisicing elit. Similique, at.",
+  //     testImage:
+  //       "https://images.pexels.com/photos/3215476/pexels-photo-3215476.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  //     tourPlace: "Maldives",
+  //   },
+  //   {
+  //     name: "Vikash",
+  //     comment:
+  //       "Lorem ipsum dolor sit, amet conseor sit, amet consectetur adipisicing elit. Similique, at..",
+  //     testImage:
+  //       "https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  //     tourPlace: "Singapore",
+  //   },
 
-    {
-      name: "Vikash",
-      comment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique dolor sit, amet consectetur adipisicing elit. Similique, at., at.",
-      testImage:
-        "https://www.seekpng.com/png/detail/60-604032_face-businessman-png-dummy-images-for-testimonials.png",
-      tourPlace: "Bali",
-    },
-  ];
-  // const getTestimonial = () => {
-  //   firebase
-  //     .database()
-  //     .ref("testimonials")
-  //     .on("value", (data) => {
-  //       if (data !== null) {
-  //         let req = [];
-  //         data.forEach((d) => {
-  //           req.push(d.val());
-  //         });
+  //   {
+  //     name: "Vikash",
+  //     comment:
+  //       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique dolor sit, amet consectetur adipisicing elit. Similique, at., at.",
+  //     testImage:
+  //       "https://www.seekpng.com/png/detail/60-604032_face-businessman-png-dummy-images-for-testimonials.png",
+  //     tourPlace: "Bali",
+  //   },
+  // ];
+  const getTestimonial = () => {
+    firebase
+      .database()
+      .ref("testimonials")
+      .on("value", (data) => {
+        console.log("data", data);
+        if (data !== null) {
+          let req = [];
+          data.forEach((d) => {
+            req.push(d.val());
+          });
 
-  //         console.log("req", req);
-  //       }
-  //     });
-  // };
+          setTestimonials(req);
+        }
+      });
+  };
+  const getPromotions = () => {
+    firebase
+      .database()
+      .ref("promotion")
+      .on("value", (data) => {
+        console.log("data", data);
+        if (data !== null) {
+          let req = [];
+          data.forEach((d) => {
+            req.push(d.val());
+          });
+
+          setPromotions(req);
+        }
+      });
+  };
 
   useEffect(() => {
-    // getTestimonial();
+    getTestimonial();
+    getPromotions();
   }, []);
 
   const getTours = async () => {
@@ -216,13 +251,11 @@ const HomeScreen = ({ navigation, route }) => {
           style={{
             borderColor: "#00000008",
             borderWidth: 0.5,
-            backgroundColor: "#6A1B4D",
+            backgroundColor: "#03C6C7",
             borderRadius: 10,
             paddingBottom: 20,
             elevation: 2,
             marginTop: 20,
-            // marginBottom: 20,
-            // height: HEIGHT / 3.5,
           }}
         >
           <View
@@ -245,7 +278,7 @@ const HomeScreen = ({ navigation, route }) => {
             <View style={{ paddingHorizontal: 15 }}>
               <Text
                 style={{
-                  color: "#333",
+                  color: "#FFF",
                   fontSize: 20,
                   fontFamily: "NewYorkl",
                 }}
@@ -255,10 +288,12 @@ const HomeScreen = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 16,
+                  color: "#FFF",
+
                   fontFamily: "Andika",
                 }}
               >
-                {item.tourPlace}
+                Travelled to {item.tourPlace}
               </Text>
             </View>
           </View>
@@ -268,17 +303,46 @@ const HomeScreen = ({ navigation, route }) => {
               padding: 10,
             }}
           >
-            <Text style={{ paddingLeft: 10 }}>{item.comment}</Text>
+            <Text style={{ paddingLeft: 10, color: "#FFF" }}>
+              {item.comment}
+            </Text>
           </View>
         </View>
       </>
     );
   };
-  const htmlContent = `<ul>
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ul>`;
+
+  const _renderPromo = ({ item, index }) => {
+    return (
+      <View
+        key={index}
+        style={{
+          width: WIDTH * 0.9,
+          marginHorizontal: 5,
+          marginTop: 20,
+          justifyContent: "center",
+          // marginBottom: 35,
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setSelectedPromotion(item);
+            setModalVisible(true);
+          }}
+        >
+          <Image
+            style={{
+              width: WIDTH * 0.8,
+              height: HEIGHT / 2,
+              borderRadius: 10,
+            }}
+            source={{ uri: item.image }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <Provider>
@@ -288,20 +352,7 @@ const HomeScreen = ({ navigation, route }) => {
             style={{ backgroundColor: "#fff" }}
             showsVerticalScrollIndicator={false}
           >
-            <StatusBar
-              barStyle="dark-content"
-              backgroundColor="#FFF"
-
-              // animated={true}
-            />
-            {/* <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              setModalVisible(false);
-            }}
-          > */}
+            <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
 
             <View style={styles.container}>
               <>
@@ -309,20 +360,39 @@ const HomeScreen = ({ navigation, route }) => {
                   <ScrollView>
                     <View style={styles.centeredView}>
                       <View style={styles.modalView}>
-                        <View>
+                        <View style={{ position: "relative" }}>
+                          <TouchableOpacity
+                            style={{
+                              alignSelf: "flex-end",
+                              position: "absolute",
+                              top: 10,
+                              right: 10,
+                              // zIndex: 20,
+                            }}
+                            onPress={() => setModalVisible(false)}
+                          >
+                            <View>
+                              <FontAwesome
+                                name="close"
+                                size={30}
+                                color="black"
+                              />
+                            </View>
+                          </TouchableOpacity>
                           <Image
-                            source={{ uri: selectedPromotion.testImage }}
+                            source={{ uri: selectedPromotion.image }}
                             style={{
                               width: WIDTH * 0.91,
                               height: HEIGHT / 3,
                               borderRadius: 20,
+                              zIndex: -2,
                             }}
                           />
                         </View>
                         <Text style={{ fontFamily: "Andika", padding: 15 }}>
                           {selectedPromotion.comment}
                         </Text>
-                        <HTMLView value={htmlContent} />
+                        <HTMLView value={selectedPromotion.content} />
 
                         <TouchableOpacity
                           style={styles.openButton}
@@ -333,7 +403,6 @@ const HomeScreen = ({ navigation, route }) => {
                           <View
                             style={{
                               flexDirection: "row",
-                              // backgroundColor: "green",
                               padding: 10,
                               borderRadius: 20,
                               marginBottom: 20,
@@ -346,25 +415,8 @@ const HomeScreen = ({ navigation, route }) => {
                               color="green"
                             />
                             <Text style={{ paddingHorizontal: 5 }}>
-                              Reach us on Whatsapp
+                              Click to reach us on Whatsapp
                             </Text>
-                          </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => setModalVisible(false)}
-                        >
-                          <View
-                            style={{
-                              // left: WIDTH * 0.6,
-                              alignSelf: "flex-end",
-                              // paddingTop: 20,
-                              paddingLeft: 10,
-                              // position: "absolute",
-                              bottom: -10,
-                              zIndex: 10,
-                            }}
-                          >
-                            <FontAwesome name="close" size={30} color="black" />
                           </View>
                         </TouchableOpacity>
                       </View>
@@ -406,71 +458,86 @@ const HomeScreen = ({ navigation, route }) => {
                       tour on
                     </Text>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("Profile")}
-                    style={{
-                      paddingTop: Platform.OS === "ios" ? 20 : 5,
-                      flex: 0.1,
-                    }}
-                  >
-                    <Thumbnail
-                      source={{
-                        uri:
-                          "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
+
+                  {Object.keys(userInfo).length === 0 &&
+                  userInfo.constructor === Object ? (
+                    <TouchableOpacity
+                      style={{
+                        paddingTop: Platform.OS === "ios" ? 20 : 5,
+                        flex: 0.1,
                       }}
-                      style={{ height: 25, width: 25 }}
-                    />
-                  </TouchableOpacity>
+                      onPress={() => {
+                        if (!isLoggedIn) {
+                          navigation.replace("SignInScreen");
+                        } else {
+                          navigation.navigate("Profile");
+                        }
+                      }}
+                    >
+                      <Thumbnail
+                        source={{
+                          uri:
+                            "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+                        }}
+                        style={{ height: 25, width: 25 }}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("Profile")}
+                      style={{
+                        paddingTop: Platform.OS === "ios" ? 20 : 5,
+                        flex: 0.1,
+                      }}
+                    >
+                      {userInfo.photoURL === "" ? (
+                        <Thumbnail
+                          source={{
+                            uri:
+                              "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+                          }}
+                          style={{ height: 25, width: 25 }}
+                        />
+                      ) : (
+                        <Thumbnail
+                          source={{
+                            uri: userInfo.photoURL,
+                          }}
+                          style={{ height: 25, width: 25 }}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  )}
                 </View>
 
-                <Animated.FlatList
-                  data={testMonials}
-                  onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-                    { useNativeDriver: true }
-                  )}
-                  showsHorizontalScrollIndicator={false}
-                  horizontal
-                  pagingEnabled
-                  keyExtractor={(d) => d.tourPlace}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <View
-                        key={index}
-                        style={{
-                          width: WIDTH * 0.9,
-                          marginHorizontal: 5,
-                          marginTop: 20,
-                          justifyContent: "center",
-                          marginBottom: 35,
-                          alignItems: "center",
-                          shadowColor: "#333sss",
-                          shadowOpacity: 0.5,
-                          shadowRadius: 60,
-                          shadowOffset: {
-                            width: 10,
-                            height: 10,
-                          },
-                        }}
-                      >
-                        <TouchableOpacity
-                          onPress={() => {
-                            setSelectedPromotion(item);
-                            setModalVisible(true);
-                          }}
-                        >
-                          <Image
-                            style={{
-                              width: WIDTH * 0.8,
-                              height: HEIGHT / 2,
-                              borderRadius: 10,
-                              // marginHorizontal: 20,
-                            }}
-                            source={{ uri: item.testImage }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    );
+                <Carousel
+                  layout="default"
+                  // layoutCardOffset={1}
+                  autoplay={true}
+                  lockScrollWhileSnapping={true}
+                  enableMomentum={false}
+                  autoplayInterval={1000}
+                  autoplayDelay={1000}
+                  loop={true}
+                  ref={(c) => {
+                    carousel = c;
+                  }}
+                  data={promotions}
+                  renderItem={_renderPromo}
+                  sliderWidth={WIDTH * 0.9}
+                  onSnapToItem={(index) => setActivePromoSlide(index)}
+                  itemWidth={WIDTH * 0.9}
+                />
+                <Pagination
+                  dotsLength={promotions.length}
+                  activeDotIndex={activePromoSlide}
+                  dotStyle={{
+                    width: 30,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    height: 7,
+                    // borderRadius: 5,
+                    backgroundColor: "rgba(0, 0, 0, 0.75)",
                   }}
                 />
                 <ContentList
@@ -595,37 +662,47 @@ const HomeScreen = ({ navigation, route }) => {
                       );
                   }}
                 />
-                <ContentList
-                  navigation={navigation}
-                  title={"Our Travellers"}
-                  more={""}
-                  content={""}
-                />
-                <Carousel
-                  layout="tinder"
-                  // layoutCardOffset={1}
+                {testimonials.length === 0 ? null : (
+                  <>
+                    <ContentList
+                      navigation={navigation}
+                      title={"Our Travellers"}
+                      more={""}
+                      content={""}
+                    />
 
-                  ref={(c) => {
-                    carousel = c;
-                  }}
-                  data={testMonials}
-                  renderItem={_renderItem}
-                  sliderWidth={WIDTH * 0.9}
-                  onSnapToItem={(index) => setActiveSlide(index)}
-                  itemWidth={WIDTH * 0.9}
-                />
-                <Pagination
-                  dotsLength={testMonials.length}
-                  activeDotIndex={activeSlide}
-                  // containerStyle={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
-                  dotStyle={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 5,
-                    marginHorizontal: 8,
-                    backgroundColor: "rgba(0, 0, 0, 0.75)",
-                  }}
-                />
+                    <Carousel
+                      layout="default"
+                      // layoutCardOffset={1}
+                      autoplay={true}
+                      lockScrollWhileSnapping={true}
+                      loop={true}
+                      enableMomentum={false}
+                      autoplayInterval={1000}
+                      autoplayDelay={4500}
+                      ref={(c) => {
+                        carousel = c;
+                      }}
+                      data={testimonials}
+                      renderItem={_renderItem}
+                      sliderWidth={WIDTH * 0.9}
+                      onSnapToItem={(index) => setActiveSlide(index)}
+                      itemWidth={WIDTH * 0.9}
+                    />
+                    <Pagination
+                      dotsLength={testimonials.length}
+                      activeDotIndex={activeSlide}
+                      // containerStyle={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
+                      dotStyle={{
+                        width: 30,
+                        marginTop: 0,
+                        paddingTop: 0,
+                        height: 7,
+                        backgroundColor: "rgba(0, 0, 0, 0.75)",
+                      }}
+                    />
+                  </>
+                )}
               </>
             </View>
           </ScrollView>
@@ -836,7 +913,8 @@ const styles = StyleSheet.create({
   tileStyle: {
     flexDirection: "column",
     position: "relative",
-    marginVertical: 15,
+    marginTop: 15,
+    marginBottom: 40,
   },
   name: {
     fontSize: 17,
@@ -884,6 +962,59 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+{
+  /* <Animated.FlatList
+                  data={testMonials}
+                  onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                    { useNativeDriver: true }
+                  )}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                  pagingEnabled
+                  keyExtractor={(d) => d.tourPlace}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <View
+                        key={index}
+                        style={{
+                          width: WIDTH * 0.9,
+                          marginHorizontal: 5,
+                          marginTop: 20,
+                          justifyContent: "center",
+                          marginBottom: 35,
+                          alignItems: "center",
+                          shadowColor: "#333sss",
+                          shadowOpacity: 0.5,
+                          shadowRadius: 60,
+                          shadowOffset: {
+                            width: 10,
+                            height: 10,
+                          },
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => {
+                            setSelectedPromotion(item);
+                            setModalVisible(true);
+                          }}
+                        >
+                          <Image
+                            style={{
+                              width: WIDTH * 0.8,
+                              height: HEIGHT / 2,
+                              borderRadius: 10,
+                              // marginHorizontal: 20,
+                            }}
+                            source={{ uri: item.testImage }}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  }}
+                /> */
+}
 {
   /* <View
               style={{

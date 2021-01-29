@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   StatusBar,
 } from "react-native";
+
 import { AntDesign } from "@expo/vector-icons";
 import Tourname from "./Reusable components/Tourname";
 import Travellertype from "./Reusable components/Travellertype";
@@ -23,6 +24,7 @@ import Roadtripques2 from "./Reusable components/Roadtripques2";
 import Drivetype from "./Reusable components/Drivetype";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
+import SubmittedQuery from "./Reusable components/SubmittedQuery";
 import {
   getExpoToken,
   sendEmail,
@@ -342,44 +344,8 @@ const RoadTripScreen = ({ navigation }) => {
         );
 
       case 10:
-        return (
-          <View
-            style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
-          >
-            <View
-              style={{
-                height: HEIGHT * 0.8,
-                alignItems: "center",
-                justifyContent: "center",
-                width: WIDTH,
-              }}
-            >
-              <Image
-                style={{ height: HEIGHT / 3, width: WIDTH * 0.7 }}
-                source={{
-                  uri:
-                    "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
-                }}
-              />
-            </View>
+        return <SubmittedQuery navigation={navigation} />;
 
-            <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-              <View style={{ alignItems: "center", margin: 10 }}>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    padding: 8,
-                    borderWidth: 1,
-                    borderColor: "black",
-                    borderRadius: 20,
-                  }}
-                >
-                  Back to Home
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        );
       default:
         break;
     }
@@ -472,7 +438,7 @@ const RoadTripScreen = ({ navigation }) => {
               nextStep();
             }}
           >
-            {step == 0 || step == 2 || step == 3 || step == 8 ? null : (
+            {step == 1 || step == 2 || step == 3 || step == 8 ? null : (
               <View>
                 <AntDesign name="arrowright" size={28} />
               </View>

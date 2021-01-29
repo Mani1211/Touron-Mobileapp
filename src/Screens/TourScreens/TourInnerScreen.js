@@ -23,14 +23,20 @@ import * as Animatable from "react-native-animatable";
 const HEIGHT = Dimensions.get("window").height;
 
 const TourInnerScreen = ({ route }) => {
-  const suggestion = [
-    "Get to know more about the fascinating locations and activities which awaits you on this tour!",
-    "Here are the magnificent places you will visit and things you get to do on the tour.",
-    "This tour will take you to breathtaking places and give you the experience of a lifetime. Learn more about the tour below.",
-    "Learn more about the exhilarating activities awaiting you when you embark on this journey!",
-    "What are the most thrilling experiences you get to enjoy on this trip? More tour details below!",
-    "This getaway is going to be everything you dreamed of and more! Read on to know the details.",
-  ];
+  const header = () => {
+    const random = Math.floor(Math.random() * 6);
+    console.log("random", random);
+    const suggestion = [
+      "Get to know more about the fascinating locations and activities which awaits you on this tour!",
+      "Here are the magnificent places you will visit and things you get to do on the tour.",
+      "This tour will take you to breathtaking places and give you the experience of a lifetime. Learn more about the tour below.",
+      "Learn more about the exhilarating activities awaiting you when you embark on this journey!",
+      "What are the most thrilling experiences you get to enjoy on this trip? More tour details below!",
+      "This getaway is going to be everything you dreamed of and more! Read on to know the details.",
+    ];
+    return suggestion[random];
+  };
+
   const item = route.params.item;
   return (
     <ScrollView>
@@ -74,13 +80,18 @@ const TourInnerScreen = ({ route }) => {
             }}
           >
             <Text style={styles.tourName}>{item.tourName}</Text>
-            {suggestion.map((s, index) => {
-              console.log("index,", index, Math.floor(Math.random() * 6));
-              if (index === Math.floor(Math.random() * 6))
-                return <Text key={index}>{s}</Text>;
-            })}
             <Text style={styles.tourCategory}>
               Tour Type : {item.tourCategory.join(",")}
+            </Text>
+            <Text
+              style={{
+                lineHeight: 25,
+                marginLeft: 8,
+                marginTop: 0,
+                fontFamily: "Andika",
+              }}
+            >
+              {header()}
             </Text>
           </View>
         </View>

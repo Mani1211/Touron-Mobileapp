@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React from "react";
 import {
   Text,
   Image,
@@ -10,15 +10,14 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import { AuthContext } from "../../context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import * as firebase from "firebase";
+import Carousel, { Pagination } from "react-native-snap-carousel";
 import { Feather } from "@expo/vector-icons";
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const MyPlansInner = ({ navigation, route }) => {
   const item = route.params.item;
-  console.log(item, "item");
   const ln = item.cityDetails.length;
 
   return (
@@ -99,7 +98,7 @@ const MyPlansInner = ({ navigation, route }) => {
 
         <View
           style={{
-            marginHorizontal: 20,
+            marginHorizontal: 10,
             borderRadius: 20,
           }}
         >
@@ -112,7 +111,7 @@ const MyPlansInner = ({ navigation, route }) => {
               return (
                 <View
                   style={{
-                    width: ln == 1 ? WIDTH * 0.9 : WIDTH / 2,
+                    width: ln == 1 ? WIDTH * 0.9 : WIDTH / 2.2,
                     height: 100,
                     backgroundColor: "#fff",
                     marginRight: 10,
@@ -122,7 +121,7 @@ const MyPlansInner = ({ navigation, route }) => {
                     borderRadius: 10,
                   }}
                 >
-                  <Image
+                  <ProgressiveImage
                     source={{ uri: item.imageUrl }}
                     style={{
                       height: WIDTH / 7,
@@ -147,6 +146,18 @@ const MyPlansInner = ({ navigation, route }) => {
                   </View>
                 </View>
               );
+            }}
+          />
+          <Pagination
+            dotsLength={item.cityDetails.length}
+            activeDotIndex={1}
+            dotStyle={{
+              width: 30,
+              marginTop: 0,
+              paddingTop: 0,
+              height: 7,
+              // borderRadius: 5,
+              backgroundColor: "rgba(0, 0, 0, 0.75)",
             }}
           />
         </View>
@@ -194,7 +205,7 @@ const MyPlansInner = ({ navigation, route }) => {
                       alignItems: "center",
                     }}
                   >
-                    <Image
+                    <ProgressiveImage
                       source={{ uri: item.imageUrl }}
                       style={{
                         height: WIDTH / 8,

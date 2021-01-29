@@ -160,7 +160,7 @@ const VisaDetailsScreen = ({ navigation }) => {
               <Text
                 style={{ marginTop: 20, fontSize: 16, fontFamily: "Avenir" }}
               >
-                Admin : {user.email}
+                Admin : {user.email === null || undefined ? " " : user.email}
               </Text>
               <View
                 style={{
@@ -203,37 +203,31 @@ const VisaDetailsScreen = ({ navigation }) => {
                 <DataTable.Title>Name</DataTable.Title>
                 <DataTable.Title numeric>Phone Number</DataTable.Title>
               </DataTable.Header>
-
-              <FlatList
-                data={visaRequest}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => {
-                  return (
-                    <TouchableOpacity
-                      onPress={() => {
-                        setVisaData(item);
-                        setStep(1);
-                      }}
-                    >
-                      <DataTable.Row>
-                        <DataTable.Cell>{item.countryName}</DataTable.Cell>
-                        <DataTable.Cell>{item.name}</DataTable.Cell>
-                        <DataTable.Cell numeric>
-                          <Text
-                            style={{
-                              fontSize: 15,
-                              fontFamily: "Andika",
-                              // color: "black",
-                            }}
-                          >
-                            {item.phoneNumber}
-                          </Text>
-                        </DataTable.Cell>
-                      </DataTable.Row>
-                    </TouchableOpacity>
-                  );
-                }}
-              />
+              {visaRequest.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    setVisaData(item);
+                    setStep(1);
+                  }}
+                >
+                  <DataTable.Row>
+                    <DataTable.Cell>{item.countryName}</DataTable.Cell>
+                    <DataTable.Cell>{item.name}</DataTable.Cell>
+                    <DataTable.Cell numeric>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          fontFamily: "Andika",
+                          // color: "black",
+                        }}
+                      >
+                        {item.phoneNumber}
+                      </Text>
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                </TouchableOpacity>
+              ))}
 
               <DataTable.Pagination
                 page={1}

@@ -20,28 +20,14 @@ import { AuthContext } from "../context/AuthContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const DrawerContent = (props) => {
-  const { user, isLoggedIn, setIsLoggedIn, setUser } = useContext(AuthContext);
+  const { user, isLoggedIn, setIsLoggedIn, setUser, userInfo } = useContext(
+    AuthContext
+  );
   useEffect(() => {
-    getUserData();
+    // getUserData();
   }, []);
 
-  const [userInfo, setUserInfo] = useState({});
-
-  const [isAdmin, setIsAdmin] = useState(false);
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          if (data.val() !== null) {
-            let val = data.val();
-            setIsAdmin(val.admin);
-            setUserInfo(val);
-          }
-        });
-    }
-  };
+  const [isAdmin, setIsAdmin] = useState(userInfo.admin);
 
   const removeToken = async () => {
     try {
@@ -359,7 +345,7 @@ const DrawerContent = (props) => {
                       props.navigation.navigate("Visa");
                     }}
                   />
-                  <DrawerItem
+                  {/* <DrawerItem
                     label={() => <Text style={styles.label}>Support</Text>}
                     icon={() => (
                       <Image
@@ -371,7 +357,7 @@ const DrawerContent = (props) => {
                       />
                     )}
                     onPress={() => {}}
-                  />
+                  /> */}
 
                   <DrawerItem
                     label={() => <Text style={styles.label}>About Us</Text>}

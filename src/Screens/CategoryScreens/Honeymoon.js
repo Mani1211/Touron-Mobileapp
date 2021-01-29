@@ -20,6 +20,7 @@ import Tourtype from "./Reusable components/Tourtype";
 import Travelmode from "./Reusable components/Travelmode";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
+import SubmittedQuery from "./Reusable components/SubmittedQuery";
 import {
   sendEmail,
   sendPushNotification,
@@ -126,7 +127,10 @@ const Honeymoon = ({ navigation, route }) => {
     setStep(step - 1);
   };
 
-  const description = `This tour is perfect for all busy-bee travel enthusiasts! Our itinerary completely depends on you and your preferences and wepersonalize the whole tour accordingly We offer you a complete list ofthings to do, places to visit, etc. and further prepare an appropriate itinerary for you within your budget and according to your travel preferences, making the experience worth every penny!`;
+  const description = `Are you the newly-wed, blissed-out couple looking for a perfect romantic getaway? Then look no further! tour On will help you plan the magical Honeymoon of your dreams. 
+
+This tour is exclusively for honeymooners and we provide you with suggestions of the most beautiful places with moonlight walks on magnificent riverbanks, candlelit dinners within the beauty of nature and the perfect tour spots for you and your better half. We provide you all the suggestions but the decision of what to choose and where to go is completely up to you. You dream, we make it happen!
+`;
 
   const renderForm = (step) => {
     switch (step) {
@@ -135,7 +139,7 @@ const Honeymoon = ({ navigation, route }) => {
           <Tourname
             step={() => nextStep()}
             imgSrc={
-              "https://www.udaipurblog.com/wp-content/uploads/2018/04/travel-triangle.jpg"
+              "https://image.freepik.com/free-vector/newlywed-couple-is-driving-car-their-honeymoon_3446-291.jpg"
             }
             description={description}
           />
@@ -278,45 +282,7 @@ const Honeymoon = ({ navigation, route }) => {
         );
 
       case 7:
-        return (
-          <View
-            style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
-          >
-            <View
-              style={{
-                height: HEIGHT * 0.8,
-                alignItems: "center",
-                justifyContent: "center",
-                width: WIDTH,
-              }}
-            >
-              <Image
-                style={{ height: HEIGHT / 3, width: WIDTH * 0.7 }}
-                source={{
-                  uri:
-                    "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
-                }}
-              />
-            </View>
-
-            <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-              <View style={{ alignItems: "center", margin: 10 }}>
-                <Text
-                  style={{
-                    // backgroundColor: "red",
-                    textAlign: "center",
-                    padding: 8,
-                    borderWidth: 1,
-                    borderColor: "black",
-                    borderRadius: 20,
-                  }}
-                >
-                  Back to Home
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        );
+        return <SubmittedQuery navigation={navigation} />;
       default:
         break;
     }
@@ -402,7 +368,7 @@ const Honeymoon = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step == 0 || step == 2 || step == 3 || step == 6 ? null : (
+              {step == 1 || step == 2 || step == 3 || step == 6 ? null : (
                 <View>
                   <AntDesign name="arrowright" size={28} />
                 </View>

@@ -48,10 +48,10 @@ const BlogInnerScreen = ({ navigation, route }) => {
         <TouchableOpacity onPress={() => navigation.navigate("BlogHome")}>
           <View
             style={{
-              paddingHorizontal: 30,
+              paddingLeft: 16,
             }}
           >
-            <AntDesign name="arrowleft" size={24} color="#fff" />
+            <AntDesign name="arrowleft" size={30} color="#fff" />
           </View>
         </TouchableOpacity>
       </View>

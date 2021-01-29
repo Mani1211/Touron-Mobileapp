@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "900",
     justifyContent: "space-evenly",
-    marginBottom: 20,
+    marginVertical: 20,
     marginHorizontal: 5,
     fontFamily: "WSansl",
   },

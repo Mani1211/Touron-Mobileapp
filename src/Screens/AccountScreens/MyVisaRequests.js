@@ -119,41 +119,39 @@ const MyVisaRequestsScreen = ({ navigation }) => {
               </View>
             ) : (
               <View>
-                <FlatList
-                  data={visaRequest}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setStep(1);
-                          setVisaData(item);
-                        }}
-                      >
-                        <List.Section>
-                          <List.Item
-                            title={item.countryName}
-                            style={{ margin: 10 }}
-                            left={(props) => (
-                              <View
-                                style={{
-                                  marginHorizontal: 5,
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}
-                              >
-                                <FontAwesome5
-                                  name="passport"
-                                  size={23}
-                                  color="#C1C5C6"
-                                />
-                              </View>
-                            )}
-                          />
-                        </List.Section>
-                      </TouchableOpacity>
-                    );
-                  }}
-                />
+                {visaRequest.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        setStep(1);
+                        setVisaData(item);
+                      }}
+                    >
+                      <List.Section>
+                        <List.Item
+                          title={item.countryName}
+                          style={{ margin: 10 }}
+                          left={(props) => (
+                            <View
+                              style={{
+                                marginHorizontal: 5,
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <FontAwesome5
+                                name="passport"
+                                size={23}
+                                color="#C1C5C6"
+                              />
+                            </View>
+                          )}
+                        />
+                      </List.Section>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             )}
           </View>

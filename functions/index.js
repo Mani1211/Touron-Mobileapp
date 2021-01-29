@@ -26,7 +26,7 @@ exports.sendMail = functions.https.onRequest((req, res) => {
     const mailOptions = {
       from: "tour on <hello@touron.in>", // Something like: Jane Doe <janedoe@gmail.com>
       to: dest,
-      subject: `Your ${countryName} Query received !!`, // email subject
+      subject: `Your ${countryName}  Dream Tour loading in 1.. 2.. 3.. !!`,
       html: `
                 
                 <p margin-bottom='20px';>Congratulations! You are about to embark on a wonderful journey and tour

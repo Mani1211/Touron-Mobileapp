@@ -91,7 +91,7 @@ function SignInScreen({ navigation }) {
         setUser(user);
         setLoaded(false);
         storeToken(user.user);
-        updateUserToken(user.user);
+        // updateUserToken(user.user);
         setEmail("");
         setPassword("");
         setIsLoggedIn(true);

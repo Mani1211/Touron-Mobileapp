@@ -26,6 +26,7 @@ import {
   sendEmail,
   sendPushNotification,
 } from "./utils/PushNotification";
+import SubmittedQuery from "./Reusable components/SubmittedQuery";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -309,45 +310,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
         );
 
       case 9:
-        return (
-          <View
-            style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
-          >
-            <View
-              style={{
-                height: HEIGHT * 0.8,
-                alignItems: "center",
-                justifyContent: "center",
-                width: WIDTH,
-              }}
-            >
-              <Image
-                style={{ height: HEIGHT / 3, width: WIDTH * 0.7 }}
-                source={{
-                  uri:
-                    "https://image.freepik.com/free-vector/thank-you-with-character-vector_2029-149.jpg",
-                }}
-              />
-            </View>
-
-            <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-              <View style={{ alignItems: "center", margin: 10 }}>
-                <Text
-                  style={{
-                    // backgroundColor: "red",
-                    textAlign: "center",
-                    padding: 8,
-                    borderWidth: 1,
-                    borderColor: "black",
-                    borderRadius: 20,
-                  }}
-                >
-                  Back to Home
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        );
+        return <SubmittedQuery navigation={navigation} />;
       default:
         break;
     }
@@ -437,7 +400,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
                 nextStep();
               }}
             >
-              {step == 0 ||
+              {step == 1 ||
               step == 2 ||
               step == 3 ||
               step == 5 ||
