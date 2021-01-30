@@ -515,7 +515,6 @@ const HomeScreen = ({ navigation, route }) => {
                   <>
                     <Carousel
                       layout="default"
-                      // layoutCardOffset={1}
                       autoplay={true}
                       lockScrollWhileSnapping={true}
                       enableMomentum={false}
