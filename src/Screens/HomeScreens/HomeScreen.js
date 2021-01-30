@@ -26,7 +26,6 @@ import * as Font from "expo-font";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { Portal, Provider } from "react-native-paper";
-
 import { AuthContext } from "../../context/AuthContext";
 import touron from "../../api/touron";
 import { AppLoading } from "expo";
@@ -37,6 +36,7 @@ const HomeScreen = ({ navigation, route }) => {
   const { user, userInfo, setUserInfo, isLoggedIn } = useContext(AuthContext);
   const [fontLoaded, setFont] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [promoLoaded, setPromoLoaded] = useState(false);
   const [status, setStatus] = useState(true);
   const [networkLoader, setNetworkLoader] = useState(false);
   const [tour, setTour] = useState([]);
@@ -46,7 +46,6 @@ const HomeScreen = ({ navigation, route }) => {
   const [selectedPromotion, setSelectedPromotion] = useState({});
   const [testimonials, setTestimonials] = useState([]);
   const [promotions, setPromotions] = useState([]);
-  console.log("isLoggedIn", isLoggedIn);
   const [cities, setCities] = useState([]);
   const getUserData = () => {
     if (user !== null) {
@@ -142,12 +141,13 @@ const HomeScreen = ({ navigation, route }) => {
           data.forEach((d) => {
             req.push(d.val());
           });
-
+          console.log(req);
           setTestimonials(req);
         }
       });
   };
   const getPromotions = () => {
+    setPromoLoaded(true);
     firebase
       .database()
       .ref("promotion")
@@ -160,6 +160,7 @@ const HomeScreen = ({ navigation, route }) => {
           });
 
           setPromotions(req);
+          setPromoLoaded(false);
         }
       });
   };
@@ -510,36 +511,62 @@ const HomeScreen = ({ navigation, route }) => {
                   )}
                 </View>
 
-                <Carousel
-                  layout="default"
-                  // layoutCardOffset={1}
-                  autoplay={true}
-                  lockScrollWhileSnapping={true}
-                  enableMomentum={false}
-                  autoplayInterval={1000}
-                  autoplayDelay={1000}
-                  loop={true}
-                  ref={(c) => {
-                    carousel = c;
-                  }}
-                  data={promotions}
-                  renderItem={_renderPromo}
-                  sliderWidth={WIDTH * 0.9}
-                  onSnapToItem={(index) => setActivePromoSlide(index)}
-                  itemWidth={WIDTH * 0.9}
-                />
-                <Pagination
-                  dotsLength={promotions.length}
-                  activeDotIndex={activePromoSlide}
-                  dotStyle={{
-                    width: 30,
-                    marginTop: 0,
-                    paddingTop: 0,
-                    height: 7,
-                    // borderRadius: 5,
-                    backgroundColor: "rgba(0, 0, 0, 0.75)",
-                  }}
-                />
+                {!promoLoaded ? (
+                  <>
+                    <Carousel
+                      layout="default"
+                      // layoutCardOffset={1}
+                      autoplay={true}
+                      lockScrollWhileSnapping={true}
+                      enableMomentum={false}
+                      autoplayInterval={1000}
+                      autoplayDelay={1000}
+                      loop={true}
+                      ref={(c) => {
+                        carousel = c;
+                      }}
+                      data={promotions}
+                      renderItem={_renderPromo}
+                      sliderWidth={WIDTH * 0.9}
+                      onSnapToItem={(index) => setActivePromoSlide(index)}
+                      itemWidth={WIDTH * 0.9}
+                    />
+                    <Pagination
+                      dotsLength={promotions.length}
+                      activeDotIndex={activePromoSlide}
+                      dotStyle={{
+                        width: 30,
+                        marginTop: 0,
+                        paddingTop: 0,
+                        height: 7,
+                        // borderRadius: 5,
+                        backgroundColor: "rgba(0, 0, 0, 0.75)",
+                      }}
+                    />
+                  </>
+                ) : (
+                  <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        marginHorizontal: 5,
+                        marginTop: 20,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: WIDTH * 0.8,
+                          height: HEIGHT / 2,
+                          marginVertical: 10,
+                          borderRadius: 10,
+                        }}
+                      />
+                    </View>
+                  </SkeletonPlaceholder>
+                )}
+
                 <ContentList
                   route={"CountryHome"}
                   navigation={navigation}

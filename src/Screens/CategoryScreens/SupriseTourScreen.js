@@ -350,6 +350,7 @@ const SurpriseTourScreen = ({ navigation }) => {
       userID: userID,
       status: "Query Received",
       tourCost: 0,
+      requestDate: new Date().toDateString(),
     };
     firebase
       .database()

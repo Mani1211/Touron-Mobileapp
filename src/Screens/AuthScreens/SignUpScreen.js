@@ -40,7 +40,7 @@ function SignUpScreen({ navigation }) {
   const [code, setCode] = useState(0);
   const [sessionID, setSessionID] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const { isLoggedIn, setIsLoggedIn, user, setUser } = useContext(AuthContext);
+  const { setIsLoggedIn, user, setUser } = useContext(AuthContext);
   const [err, setErr] = useState("");
   const [numerr, setNumErr] = useState(false);
   const [emailerr, setEmailErr] = useState(false);
@@ -97,8 +97,10 @@ function SignUpScreen({ navigation }) {
             aboutMe: "",
             travellerType: "",
             admin: false,
-            pushNotificationToken: expoToken,
+            pushNotificationToken: "",
             photoURL: "",
+            email: email,
+            profession: "",
           });
           user.user
             .updateProfile({

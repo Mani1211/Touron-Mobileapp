@@ -1,14 +1,7 @@
 import React from "react";
 import ProgressiveImage from "./../../../Reusable Components/ProgressiveImage";
 import axios from "axios";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 const NationalPark = ({ nationalPark, setNationalPark }) => {
   const sendEmail = async () => {
@@ -126,7 +119,7 @@ const NationalPark = ({ nationalPark, setNationalPark }) => {
             {nationalPark === item.name ? (
               // <TouchableOpacity onPress={() => setNationalPark(item.name)}>
               <TouchableOpacity onPress={sendEmail}>
-                <Image
+                <ProgressiveImage
                   style={styles.cityImage}
                   source={require("../../../../assets/ticks.png")}
                 />

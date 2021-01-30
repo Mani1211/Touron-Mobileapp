@@ -339,6 +339,8 @@ const PlannedTourScreen = ({ navigation, route }) => {
       userID: userID,
       plans: "",
       reports: "",
+      requestDate: new Date().toDateString(),
+
       tourCost: 0,
     };
     firebase

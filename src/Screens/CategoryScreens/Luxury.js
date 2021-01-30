@@ -323,6 +323,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       plans: "",
       reports: "",
       tourCost: 0,
+      requestDate: new Date().toDateString(),
     };
     firebase
       .database()

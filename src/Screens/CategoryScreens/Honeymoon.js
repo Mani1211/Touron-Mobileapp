@@ -307,6 +307,8 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       userID: userID,
       plans: "",
       reports: "",
+      requestDate: new Date().toDateString(),
+
       tourCost: 0,
     };
     firebase

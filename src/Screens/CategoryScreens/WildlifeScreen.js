@@ -332,7 +332,6 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       tourCategory: "Wildlife",
       travellerType: travellerType,
       fromDate: fromDate,
-      nationalPark: nationalPark,
       adult: adult,
       children: children,
       travelMode: travelMode,
@@ -348,6 +347,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       plans: "",
       reports: "",
       tourCost: 0,
+      requestDate: new Date().toDateString(),
     };
     firebase
       .database()
