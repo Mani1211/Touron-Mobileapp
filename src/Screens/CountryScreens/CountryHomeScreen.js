@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: WIDTH * 0.9,
     marginVertical: 20,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
   },
   inputStyle: {
     fontSize: 18,

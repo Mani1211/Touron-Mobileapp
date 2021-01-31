@@ -424,12 +424,12 @@ const ProfileScreen = ({ navigation }) => {
                       navigation.toggleDrawer();
                     }}
                   >
-                    <View style={{ flex: 0.2, zIndex: 2 }}>
+                    <View>
                       <AntDesign
                         name="left"
                         size={28}
                         color="black"
-                        style={{ paddingHorizontal: 20, paddingTop: 10 }}
+                        style={{ paddingHorizontal: 20, paddingTop: 35 }}
                         onPress={() => prevStep()}
                       />
                     </View>
@@ -439,10 +439,15 @@ const ProfileScreen = ({ navigation }) => {
                       flex: 0.8,
                       alignItems: "center",
                       justifyContent: "center",
-                      paddingTop: 15,
+                      paddingTop: 35,
                     }}
                   >
-                    <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontFamily: "NewYorkl",
+                      }}
+                    >
                       Profile
                     </Text>
                   </View>
@@ -453,7 +458,7 @@ const ProfileScreen = ({ navigation }) => {
                     style={{
                       width: WIDTH,
                       alignItems: "center",
-                      marginTop: HEIGHT / 4,
+                      marginTop: 20,
                     }}
                   >
                     <View style={styles.inputContainer}>
@@ -608,21 +613,16 @@ const styles = new StyleSheet.create({
     width: WIDTH * 0.8,
     height: 60,
     color: "#333",
-    fontWeight: "bold",
     fontFamily: "Andika",
     fontSize: 18,
   },
   inputContainer: {
     height: HEIGHT / 15,
     borderRadius: 10,
-    // backgroundColor: "#0009",
     marginBottom: 20,
     borderBottomColor: "grey",
-    // borderWidth: 2,
-    // borderBottomWidth: 2,
   },
   otpButton: {
-    // marginTop: HEIGHT / 25,
     marginBottom: 85,
     backgroundColor: "black",
     borderRadius: 10,

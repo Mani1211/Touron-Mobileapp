@@ -8,6 +8,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Dimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
   Text,
   Image,
   Platform,
@@ -155,8 +157,8 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
             imgSrc3={
               "https://image.freepik.com/free-vector/group-happy-students-with-backpacks-books-stand-together_131590-216.jpg"
             }
-            imgScr4={
-              "https://image.freepik.com/free-vector/couple-celebrating-valentine-s-day_23-2148538999.jpg"
+            imgSrc4={
+              "https://image.freepik.com/free-vector/people-holding-travel-related-icons_53876-64662.jpg"
             }
             travellerType={travellerType}
             nextStep={() => nextStep()}
@@ -166,7 +168,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
             }}
             setFamily={() => setTravellerType("Family")}
             setFriends={() => setTravellerType("Friends")}
-            setHoneymoon={() => setTravellerType("Honeymoon")}
+            setHoneymoon={() => setTravellerType("Group")}
           />
         );
 
@@ -346,71 +348,70 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
   };
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }}>
-      <ScrollView style={styles.container}>
-        {step == 8 ? null : (
-          <View style={styles.arrowsContainer}>
-            {step == 1 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack("Home");
-                  //   console.log("logged");
-                }}
-              >
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => prevStep()}>
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            )}
-
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: "NewYorkl",
-                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
-              }}
-            >
-              Luxury
-            </Text>
-
+    <ScrollView style={styles.container}>
+      {step == 8 ? null : (
+        <View style={styles.arrowsContainer}>
+          {step == 1 ? (
             <TouchableOpacity
               onPress={() => {
-                nextStep();
+                navigation.goBack("Home");
+                //   console.log("logged");
               }}
             >
-              {step == 1 || step == 2 || step == 3 || step == 7 ? null : (
-                <View>
-                  <AntDesign name="arrowright" size={28} />
-                </View>
-              )}
+              <View>
+                <AntDesign name="arrowleft" size={28} />
+              </View>
             </TouchableOpacity>
-          </View>
-        )}
-        {step == 1 || step == 8 ? null : (
-          <View style={styles.progressContainer}>
-            <View
-              style={{
-                borderRadius: 20,
-                height: 6.5,
-                borderWidth: 2,
-                borderColor: "#a2cffe",
-                paddingVertical: 1,
-                width: WIDTH == 360 ? 45 * step : 50 * step,
-                overflow: "hidden",
-                backgroundColor: "#a2cffe",
-              }}
-            ></View>
-          </View>
-        )}
-        {renderForm(step)}
-      </ScrollView>
-    </KeyboardAvoidingView>
+          ) : (
+            <TouchableOpacity onPress={() => prevStep()}>
+              <View>
+                <AntDesign name="arrowleft" size={28} />
+              </View>
+            </TouchableOpacity>
+          )}
+
+          <Text
+            style={{
+              fontSize: 20,
+              fontFamily: "NewYorkl",
+              marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            }}
+          >
+            Luxury
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => {
+              nextStep();
+            }}
+          >
+            {step == 1 || step == 2 || step == 3 || step == 7 ? null : (
+              <View>
+                <AntDesign name="arrowright" size={28} />
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
+      )}
+      {step == 1 || step == 8 ? null : (
+        <View style={styles.progressContainer}>
+          <View
+            style={{
+              borderRadius: 20,
+              height: 6.5,
+              borderWidth: 2,
+              borderColor: "#a2cffe",
+              paddingVertical: 1,
+              width: WIDTH == 360 ? 45 * step : 50 * step,
+              overflow: "hidden",
+              backgroundColor: "#a2cffe",
+            }}
+          ></View>
+        </View>
+      )}
+
+      {renderForm(step)}
+    </ScrollView>
   );
 };
 

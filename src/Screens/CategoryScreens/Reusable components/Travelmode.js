@@ -30,9 +30,9 @@ const Travelmode = ({
         }}
       >
         <Text
-          style={{ fontSize: 15, textAlign: "center", fontFamily: "NewYorkl" }}
+          style={{ fontSize: 20, textAlign: "center", fontFamily: "NewYorkl" }}
         >
-          It’s all about the journey! Select your preferred mode of travel
+          Preferred mode of travel
         </Text>
       </View>
 

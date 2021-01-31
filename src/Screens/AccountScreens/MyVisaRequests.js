@@ -4,7 +4,6 @@ import {
   Image,
   View,
   Dimensions,
-  TextInput,
   TouchableOpacity,
   StatusBar,
   StyleSheet,
@@ -15,13 +14,13 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import * as firebase from "firebase";
 import { List, Surface } from "react-native-paper";
-import { FlatList } from "react-native-gesture-handler";
 
 const MyVisaRequestsScreen = ({ navigation }) => {
   const [visaRequest, setVisaRequest] = useState([]);
   const { user } = useContext(AuthContext);
   const [step, setStep] = useState(0);
   const [visaData, setVisaData] = useState({});
+  console.log("visaRequest", visaRequest);
   const getUserVisaRequest = () => {
     const request = [];
     firebase
@@ -54,18 +53,21 @@ const MyVisaRequestsScreen = ({ navigation }) => {
             <View
               style={{
                 backgroundColor: "#28C9E1",
-                height: HEIGHT / 10,
+                height: HEIGHT / 8,
                 alignItems: "center",
                 flexDirection: "row",
               }}
             >
               <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                <View style={{ flex: 0.2 }}>
+                <View>
                   <Feather
                     name="arrow-left"
                     size={28}
                     color="black"
-                    style={{ paddingHorizontal: 20 }}
+                    style={{
+                      paddingHorizontal: 20,
+                      paddingTop: Platform.OS === "ios" ? 25 : 0,
+                    }}
                   />
                 </View>
               </TouchableOpacity>
@@ -74,6 +76,7 @@ const MyVisaRequestsScreen = ({ navigation }) => {
                   flex: 0.8,
                   alignItems: "center",
                   justifyContent: "center",
+                  paddingTop: 25,
                 }}
               >
                 <Text style={{ color: "white", fontSize: 20 }}>

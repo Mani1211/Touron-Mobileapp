@@ -74,8 +74,8 @@ const CountryInnerScreen = ({ navigation, route }) => {
           style={{
             padding: 10,
             lineHeight: 18,
-            fontSize: 13,
-            fontWeight: "500",
+            fontSize: 15,
+            fontFamily: "Andika",
           }}
         >
           {item.aboutCountry}
@@ -138,17 +138,17 @@ const CountryInnerScreen = ({ navigation, route }) => {
                 marginTop: 30,
               }}
             >
-              <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
-                {item.visa.onArrival}
-              </Text>
               <Text
                 style={{
                   color: "black",
                   fontSize: 14,
-                  fontFamily: "WSansl",
+                  fontFamily: "Andika",
                 }}
               >
                 Eligible for Visa On Arrival
+              </Text>
+              <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
+                {item.visa.onArrival}
               </Text>
             </View>
 
@@ -159,19 +159,19 @@ const CountryInnerScreen = ({ navigation, route }) => {
                 marginTop: 30,
               }}
             >
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                  textAlign: "center",
+                  fontFamily: "Andika",
+                }}
+              >
+                Weather throughout the Year
+              </Text>
               <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
                 {item.weather} ° C
               </Text>
-              <Text
-                style={{
-                  color: "black",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontFamily: "WSansl",
-                }}
-              >
-                Average Weather throughout the Year
-              </Text>
             </View>
             <View
               style={{
@@ -180,19 +180,19 @@ const CountryInnerScreen = ({ navigation, route }) => {
                 marginTop: 30,
               }}
             >
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                  textAlign: "center",
+                  fontFamily: "Andika",
+                }}
+              >
+                Time Difference From India
+              </Text>
               <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
                 {item.general.timeZone}
               </Text>
-              <Text
-                style={{
-                  color: "black",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontFamily: "WSansl",
-                }}
-              >
-                Average Time Difference From India
-              </Text>
             </View>
             <View
               style={{
@@ -201,18 +201,24 @@ const CountryInnerScreen = ({ navigation, route }) => {
                 marginTop: 30,
               }}
             >
-              <Text style={{ fontSize: 12, fontFamily: "NewYorkl" }}>
-                {item.general.bestTimeToVisit.join("/")}
-              </Text>
               <Text
                 style={{
                   color: "black",
                   fontSize: 14,
                   textAlign: "center",
-                  fontFamily: "WSansl",
+                  fontFamily: "Andika",
                 }}
               >
                 Best Time to Visit
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: "NewYorkl",
+                  textAlign: "center",
+                }}
+              >
+                {item.general.bestTimeToVisit.join("/")}
               </Text>
             </View>
           </View>

@@ -148,8 +148,9 @@ const Travellertype = ({
                 <Image
                   style={{
                     height: HEIGHT / 6,
-                    width: 130,
+                    width: 180,
                     marginVertical: 10,
+                    resizeMode: "center",
                   }}
                   source={{ uri: imgSrc4 }}
                 />
@@ -161,7 +162,7 @@ const Travellertype = ({
                     fontFamily: "Andika",
                   }}
                 >
-                  Honeymoon
+                  Group
                 </Text>
               </View>
             </View>

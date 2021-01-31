@@ -19,10 +19,11 @@ const ContentList = ({ title, more, navigation, route, data, content }) => {
       {content === "" ? null : (
         <Text
           style={{
-            fontSize: 12,
-            fontStyle: "normal",
-            fontWeight: "900",
-            marginTop: 5,
+            fontSize: 14,
+            // fontWeight: "900",
+            marginTop: 10,
+            fontFamily: "Andika",
+            lineHeight: 20,
           }}
         >
           {content}
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 0,
     marginBottom: 1,
-    fontFamily: "Avenir",
+    fontFamily: "NewYorkl",
     fontStyle: "normal",
   },
   more: {

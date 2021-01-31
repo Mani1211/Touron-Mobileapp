@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  KeyboardAvoidingView,
   Text,
   TextInput,
   Dimensions,
@@ -26,89 +27,105 @@ const Checkout = ({
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <View
-          style={{
-            height: HEIGHT / 2.5,
-            width: WIDTH,
-            alignItems: "center",
-            marginTop: 10,
-          }}
-        >
-          <Image
-            style={{ height: HEIGHT / 2.5, width: 300 }}
-            source={{ uri: imgSrc }}
-          />
-        </View>
-        <View
-          style={{
-            height: HEIGHT / 2.65,
-            width: WIDTH * 0.9,
-            marginHorizontal: 40,
-          }}
-        >
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="position">
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
           <View
             style={{
-              height: HEIGHT / 13,
-              flexDirection: "row",
-              width: WIDTH * 0.9,
-              justifyContent: "space-around",
+              height: HEIGHT / 2.5,
+              width: WIDTH,
               alignItems: "center",
+              marginTop: 10,
             }}
           >
-            <View>
-              <Text style={{ fontSize: 20, fontFamily: "Andika" }}>Name:</Text>
-            </View>
-            <View>
+            <Image
+              style={{ height: HEIGHT / 2.5, width: 300 }}
+              source={{ uri: imgSrc }}
+            />
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                height: HEIGHT / 13,
+                flexDirection: "row",
+                width: WIDTH * 0.9,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Andika",
+                  width: WIDTH / 2,
+                  textAlign: "left",
+                }}
+              >
+                Name:
+              </Text>
               <TextInput
                 onChangeText={(value) => setName(value)}
                 placeholder="Vikash"
                 value={name}
                 maxLength={10}
+                style={{ width: 80 }}
               />
             </View>
-          </View>
-          <View
-            style={{
-              height: HEIGHT / 13,
-              flexDirection: "row",
-              width: WIDTH * 0.9,
-              justifyContent: "space-around",
-              alignItems: "center",
-            }}
-          >
-            <View>
-              <Text style={{ fontSize: 20, fontFamily: "Andika" }}>
+            <View
+              style={{
+                height: HEIGHT / 13,
+                flexDirection: "row",
+                width: WIDTH * 0.9,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Andika",
+                  paddingRight: 100,
+                  width: WIDTH / 2,
+                  textAlign: "left",
+                }}
+              >
                 Budget:
               </Text>
-            </View>
-            <View>
               <TextInput
                 onChangeText={(value) => setBudget(value)}
                 keyboardType="number-pad"
                 value={budget}
+                style={{ width: 80 }}
                 placeholder="250000"
               />
             </View>
-          </View>
-          <View
-            style={{
-              height: HEIGHT / 13,
-              flexDirection: "row",
-              width: WIDTH * 0.9,
-              justifyContent: "space-around",
-              alignItems: "center",
-            }}
-          >
-            <View>
-              <Text style={{ fontSize: 18, fontFamily: "Andika" }}>
+            <View
+              style={{
+                height: HEIGHT / 13,
+                flexDirection: "row",
+                width: WIDTH * 0.9,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: "Andika",
+                  width: WIDTH / 2,
+                  textAlign: "left",
+                }}
+              >
                 Whatsapp Number:
               </Text>
-            </View>
-            <View>
               <TextInput
                 value={number}
                 keyboardType="number-pad"
+                style={{ width: 85 }}
                 onChangeText={(value) => {
                   setVal(value);
                   setNumber(value);
@@ -116,40 +133,40 @@ const Checkout = ({
                 placeholder="8986754345"
               />
             </View>
-          </View>
-          <View
-            style={{
-              height: HEIGHT / 13,
-              width: WIDTH * 0.9,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <TouchableOpacity onPress={() => submitData()}>
-              <View
-                style={{
-                  borderColor: "black",
-                  borderWidth: 1,
-                  borderRadius: 20,
-                  marginTop: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Text
+            <View
+              style={{
+                height: HEIGHT / 13,
+                width: WIDTH * 0.9,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity onPress={() => submitData()}>
+                <View
                   style={{
-                    textAlign: "center",
-                    fontSize: 18,
-                    padding: 10,
+                    borderColor: "black",
+                    borderWidth: 1,
+                    borderRadius: 20,
+                    marginTop: 10,
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  Submit
-                </Text>
-              </View>
-            </TouchableOpacity>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 18,
+                      padding: 10,
+                    }}
+                  >
+                    Submit
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };

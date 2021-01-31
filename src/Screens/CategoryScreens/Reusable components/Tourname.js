@@ -23,11 +23,11 @@ const Tourname = ({ imgSrc, step, description }) => {
       >
         <Image
           source={{ uri: imgSrc }}
-          style={{ height: HEIGHT / 3, width: 230, marginTop: 20 }}
+          style={{ height: HEIGHT / 3.5, width: 230, marginTop: 20 }}
         />
       </View>
 
-      <View style={{ marginHorizontal: WIDTH / 9, marginTop: WIDTH / 10 }}>
+      <View style={{ marginHorizontal: WIDTH / 9 }}>
         <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
           {description}
         </Text>
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     padding: 15,
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: "Andika",
   },
 });
 

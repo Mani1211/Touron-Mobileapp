@@ -59,6 +59,7 @@ const DrawerContent = (props) => {
             width: WIDTH * 0.75,
             height: HEIGHT + 30,
             position: "absolute",
+            paddingTop: Platform.OS === "ios " ? 200 : 20,
           }}
         >
           <View
@@ -67,7 +68,7 @@ const DrawerContent = (props) => {
               // justifyContent: "center",
               flexDirection: "row",
               paddingHorizontal: 20,
-              paddingVertical: 20,
+              paddingVertical: Platform.OS === "ios " ? 180 : 20,
               borderBottomColor: "#FFF",
               borderWidth: 2,
             }}
@@ -101,7 +102,7 @@ const DrawerContent = (props) => {
           </View>
 
           <DrawerContentScrollView {...props}>
-            <View style={{ marginVertical: 40 }}>
+            <View style={{ marginBottom: 40 }}>
               {isAdmin ? (
                 <>
                   <DrawerItem

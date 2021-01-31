@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: WIDTH * 0.9,
     marginVertical: 20,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
   },
   inputStyle: {
     fontSize: 18,
@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
   countryGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "center",
+    // justifyContent: "center",
     marginBottom: 30,
+    marginHorizontal: 10,
   },
 });

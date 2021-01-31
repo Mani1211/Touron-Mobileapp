@@ -199,13 +199,17 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
               </Text>
               <View style={styles.dateContainer}>
                 <View style={{ width: WIDTH / 3.8 }}>
-                  <Text style={{ fontSize: 20, fontFamily: "Andika" }}>
-                    From:
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontFamily: "Andika",
+                      paddingLeft: 5,
+                    }}
+                  >
+                    Start Date
                   </Text>
                 </View>
-                <View style={styles.dateContainer}>
-                  <View></View>
-                </View>
+
                 <DatePicker
                   style={{ width: 200 }}
                   date={fromDate}
@@ -222,15 +226,15 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                 />
               </View>
               <View style={styles.dateContainer}>
-                <View style={{ width: WIDTH / 4 }}>
+                <View style={{ width: WIDTH / 3.8 }}>
                   <Text
                     style={{
                       fontSize: 20,
-                      marginRight: 0,
                       fontFamily: "Andika",
+                      paddingLeft: 15,
                     }}
                   >
-                    To:
+                    End Date
                   </Text>
                 </View>
                 <DatePicker
@@ -362,7 +366,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                 marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
               }}
             >
-              Honeymoon Trip
+              Honeymoon Tour
             </Text>
 
             <TouchableOpacity
@@ -415,7 +419,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   dateContainer: {
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     marginVertical: 20,

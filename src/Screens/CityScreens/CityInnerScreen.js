@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   about: {
     marginTop: 10,
-    fontSize: 17,
+    fontSize: 15,
     marginHorizontal: 30,
     fontFamily: "Andika",
   },

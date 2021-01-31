@@ -22,7 +22,7 @@ const Tourtype = ({
   return (
     <View style={{ alignItems: "center" }}>
       <View style={{ marginTop: HEIGHT / 20 }}>
-        <Text style={{ fontSize: 22, fontFamily: "NewYorkl" }}>
+        <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
           Pick the type of tour!{" "}
         </Text>
       </View>

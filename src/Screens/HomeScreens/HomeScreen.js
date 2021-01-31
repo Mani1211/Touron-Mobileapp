@@ -47,6 +47,7 @@ const HomeScreen = ({ navigation, route }) => {
   const [testimonials, setTestimonials] = useState([]);
   const [promotions, setPromotions] = useState([]);
   const [cities, setCities] = useState([]);
+  console.log("testimonials", testimonials);
   const getUserData = () => {
     if (user !== null) {
       firebase
@@ -141,7 +142,6 @@ const HomeScreen = ({ navigation, route }) => {
           data.forEach((d) => {
             req.push(d.val());
           });
-          console.log(req);
           setTestimonials(req);
         }
       });
@@ -430,12 +430,13 @@ const HomeScreen = ({ navigation, route }) => {
                     flexDirection: "row",
                     alignContent: "center",
                     justifyContent: "space-between",
+                    paddingTop: Platform.OS === "ios" ? 15 : 0,
                   }}
                 >
                   <TouchableOpacity
                     onPress={() => navigation.toggleDrawer()}
                     style={{
-                      paddingTop: Platform.OS === "ios" ? 20 : 5,
+                      // paddingTop: Platform.OS === "ios" ? 5 : 5,
                       flex: 0.1,
                     }}
                   >
@@ -444,6 +445,8 @@ const HomeScreen = ({ navigation, route }) => {
                       color="#000"
                       style={{
                         fontSize: 30,
+                        paddingTop: Platform.OS === "ios" ? 10 : 10,
+
                         fontWeight: "bold",
                       }}
                     />
@@ -456,7 +459,7 @@ const HomeScreen = ({ navigation, route }) => {
                         color: "#263768",
                       }}
                     >
-                      tour on
+                      tour On
                     </Text>
                   </View>
 
@@ -464,7 +467,10 @@ const HomeScreen = ({ navigation, route }) => {
                   userInfo.constructor === Object ? (
                     <TouchableOpacity
                       style={{
-                        paddingTop: Platform.OS === "ios" ? 20 : 5,
+                        // paddingTop: Platform.OS === "ios" ? 20 : 5,
+                        paddingTop: Platform.OS === "ios" ? 10 : 10,
+                        paddingRight: 10,
+
                         flex: 0.1,
                       }}
                       onPress={() => {
@@ -487,7 +493,11 @@ const HomeScreen = ({ navigation, route }) => {
                     <TouchableOpacity
                       onPress={() => navigation.navigate("Profile")}
                       style={{
-                        paddingTop: Platform.OS === "ios" ? 20 : 5,
+                        paddingRight: 10,
+
+                        // paddingTop: Platform.OS === "ios" ? 20 : 5,
+                        paddingTop: Platform.OS === "ios" ? 10 : 10,
+
                         flex: 0.1,
                       }}
                     >
@@ -497,28 +507,49 @@ const HomeScreen = ({ navigation, route }) => {
                             uri:
                               "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
                           }}
-                          style={{ height: 25, width: 25 }}
+                          style={{ height: 35, width: 35 }}
                         />
                       ) : (
                         <Thumbnail
                           source={{
                             uri: userInfo.photoURL,
                           }}
-                          style={{ height: 25, width: 25 }}
+                          style={{ height: 35, width: 35 }}
                         />
                       )}
                     </TouchableOpacity>
                   )}
                 </View>
 
-                {!promoLoaded ? (
+                {promoLoaded ? (
+                  <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        marginHorizontal: 5,
+                        marginTop: 20,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: WIDTH * 0.8,
+                          height: HEIGHT / 2,
+                          marginVertical: 10,
+                          borderRadius: 10,
+                        }}
+                      />
+                    </View>
+                  </SkeletonPlaceholder>
+                ) : (
                   <>
                     <Carousel
                       layout="default"
-                      autoplay={true}
+                      // autoplay={true}
                       lockScrollWhileSnapping={true}
                       enableMomentum={false}
-                      autoplayInterval={1000}
+                      autoplayInterval={500}
                       autoplayDelay={1000}
                       loop={true}
                       ref={(c) => {
@@ -543,27 +574,6 @@ const HomeScreen = ({ navigation, route }) => {
                       }}
                     />
                   </>
-                ) : (
-                  <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
-                    <View
-                      style={{
-                        width: WIDTH * 0.9,
-                        marginHorizontal: 5,
-                        marginTop: 20,
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <View
-                        style={{
-                          width: WIDTH * 0.8,
-                          height: HEIGHT / 2,
-                          marginVertical: 10,
-                          borderRadius: 10,
-                        }}
-                      />
-                    </View>
-                  </SkeletonPlaceholder>
                 )}
 
                 <ContentList
@@ -688,47 +698,47 @@ const HomeScreen = ({ navigation, route }) => {
                       );
                   }}
                 />
-                {testimonials.length === 0 ? null : (
-                  <>
-                    <ContentList
-                      navigation={navigation}
-                      title={"Our Travellers"}
-                      more={""}
-                      content={""}
-                    />
+                {/* {testimonials.length === 0 ? null : ( */}
+                <>
+                  <ContentList
+                    navigation={navigation}
+                    title={"Our Travellers"}
+                    more={""}
+                    content={""}
+                  />
 
-                    <Carousel
-                      layout="default"
-                      // layoutCardOffset={1}
-                      autoplay={true}
-                      lockScrollWhileSnapping={true}
-                      loop={true}
-                      enableMomentum={false}
-                      autoplayInterval={1000}
-                      autoplayDelay={4500}
-                      ref={(c) => {
-                        carousel = c;
-                      }}
-                      data={testimonials}
-                      renderItem={_renderItem}
-                      sliderWidth={WIDTH * 0.9}
-                      onSnapToItem={(index) => setActiveSlide(index)}
-                      itemWidth={WIDTH * 0.9}
-                    />
-                    <Pagination
-                      dotsLength={testimonials.length}
-                      activeDotIndex={activeSlide}
-                      // containerStyle={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
-                      dotStyle={{
-                        width: 30,
-                        marginTop: 0,
-                        paddingTop: 0,
-                        height: 7,
-                        backgroundColor: "rgba(0, 0, 0, 0.75)",
-                      }}
-                    />
-                  </>
-                )}
+                  <Carousel
+                    layout="default"
+                    // layoutCardOffset={1}
+                    autoplay={true}
+                    lockScrollWhileSnapping={true}
+                    loop={true}
+                    enableMomentum={false}
+                    autoplayInterval={1000}
+                    autoplayDelay={4500}
+                    ref={(c) => {
+                      carousel = c;
+                    }}
+                    data={testimonials}
+                    renderItem={_renderItem}
+                    sliderWidth={WIDTH * 0.9}
+                    onSnapToItem={(index) => setActiveSlide(index)}
+                    itemWidth={WIDTH * 0.9}
+                  />
+                  <Pagination
+                    dotsLength={testimonials.length}
+                    activeDotIndex={activeSlide}
+                    // containerStyle={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
+                    dotStyle={{
+                      width: 30,
+                      marginTop: 0,
+                      paddingTop: 0,
+                      height: 7,
+                      backgroundColor: "rgba(0, 0, 0, 0.75)",
+                    }}
+                  />
+                </>
+                {/* )} */}
               </>
             </View>
           </ScrollView>
@@ -945,10 +955,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 17,
     zIndex: 1,
-    bottom: 15,
+    bottom: 23,
     position: "absolute",
     color: "white",
     fontWeight: "300",
+    fontFamily: "Andika",
     padding: 0,
     left: 10,
     margin: 0,

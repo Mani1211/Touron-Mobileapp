@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   categoryImage: {
     height: WIDTH / 4.3,
-    borderRadius: Platform.OS === "ios" ? 40 : 50,
+    borderRadius: 50,
     width: WIDTH / 4.3,
     marginTop: 5,
   },

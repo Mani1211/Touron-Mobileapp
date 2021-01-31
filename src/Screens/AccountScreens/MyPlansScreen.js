@@ -72,20 +72,20 @@ const MyPlansScreen = ({ navigation }) => {
       <View
         style={{
           backgroundColor: "#28C9E1",
-          height: HEIGHT / 9,
+          height: HEIGHT / 8,
           alignItems: "center",
           flexDirection: "row",
         }}
       >
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <View style={{ flex: 0.2 }}>
+          <View>
             <Feather
-              name="menu"
+              name="arrow-left"
               size={28}
               color="black"
               style={{
                 paddingHorizontal: 20,
-                paddingTop: Platform.OS === "ios" ? -20 : 0,
+                paddingTop: Platform.OS === "ios" ? 25 : 0,
               }}
             />
           </View>
@@ -95,12 +95,12 @@ const MyPlansScreen = ({ navigation }) => {
             flex: 0.8,
             alignItems: "center",
             justifyContent: "center",
+            paddingTop: 25,
           }}
         >
           <Text style={{ color: "white", fontSize: 20 }}>My Plans</Text>
         </View>
       </View>
-
       {selfPlans.length == 0 ? (
         <View
           style={{

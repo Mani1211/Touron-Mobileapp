@@ -81,7 +81,7 @@ const TourInnerScreen = ({ route }) => {
           >
             <Text style={styles.tourName}>{item.tourName}</Text>
             <Text style={styles.tourCategory}>
-              Tour Type : {item.tourCategory.join(",")}
+              Tour Type : {item.tourCategory.join(", ")}
             </Text>
             <Text
               style={{
