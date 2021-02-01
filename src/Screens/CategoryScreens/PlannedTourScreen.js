@@ -50,17 +50,14 @@ const PlannedTourScreen = ({ navigation, route }) => {
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  const [dates, setDates] = useState("");
-  const [years, setYears] = useState("");
-  const [months, setMonths] = useState("");
+
   let random;
   let formatedMonth;
-  // console.log(user, "plannkwfed");
 
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    random = Math.floor((Math.random() + 4) * 345334 * Math.random());
+    random = Math.floor((Math.random() + 4) * 345334);
     const requestDate = new Date();
     let currentYear = requestDate.getFullYear();
     setDate(requestDate.getDate());

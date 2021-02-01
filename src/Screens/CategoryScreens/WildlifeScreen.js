@@ -60,7 +60,7 @@ const WildLife = ({ navigation, route }) => {
   // console.log("user.email", user.email);
 
   useEffect(() => {
-    random = Math.floor((Math.random() + 4) * 345334 * Math.random());
+    random = Math.floor((Math.random() + 4) * 345334);
     const requestDate = new Date();
     let currentYear = requestDate.getFullYear();
     setDate(requestDate.getDate());

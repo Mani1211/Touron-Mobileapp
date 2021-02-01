@@ -86,7 +86,7 @@ const RoadTripScreen = ({ navigation }) => {
     }
   });
   useEffect(() => {
-    random = Math.floor((Math.random() + 4) * 345334 * Math.random());
+    random = Math.floor((Math.random() + 4) * 345334);
     const requestDate = new Date();
     let currentYear = requestDate.getFullYear();
     setDate(requestDate.getDate());

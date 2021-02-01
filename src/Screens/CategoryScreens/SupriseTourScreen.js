@@ -57,7 +57,6 @@ const SurpriseTourScreen = ({ navigation }) => {
   let formatedMonth;
 
   const [userInfo, setUserInfo] = useState({});
-  console.log(userInfo.phoneNumber, "ijnfo");
 
   const getUserData = () => {
     if (user !== null) {
@@ -81,7 +80,7 @@ const SurpriseTourScreen = ({ navigation }) => {
     }
   });
   useEffect(() => {
-    random = Math.floor((Math.random() + 4) * 345334 * Math.random());
+    random = Math.floor(Math.random() + 4);
     const requestDate = new Date();
     let currentYear = requestDate.getFullYear();
     setDate(requestDate.getDate());

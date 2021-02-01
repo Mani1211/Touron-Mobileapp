@@ -195,18 +195,6 @@ const RequestInner = ({ navigation, route }) => {
           flexDirection: "row",
         }}
       >
-        <Snackbar
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          action={{
-            label: "Undo",
-            onPress: () => {
-              // Do something
-            },
-          }}
-        >
-          Deleted
-        </Snackbar>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View style={{ flex: 0.2 }}>
             <Feather
@@ -215,7 +203,6 @@ const RequestInner = ({ navigation, route }) => {
               color="black"
               style={{
                 paddingHorizontal: 20,
-                paddingTop: Platform.OS === "ios" ? 0 : 20,
               }}
             />
           </View>

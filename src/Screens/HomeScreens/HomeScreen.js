@@ -521,7 +521,7 @@ const HomeScreen = ({ navigation, route }) => {
                   )}
                 </View>
 
-                {promoLoaded ? (
+                {/* {promoLoaded ? (
                   <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
                     <View
                       style={{
@@ -543,38 +543,38 @@ const HomeScreen = ({ navigation, route }) => {
                     </View>
                   </SkeletonPlaceholder>
                 ) : (
-                  <>
-                    <Carousel
-                      layout="default"
-                      // autoplay={true}
-                      lockScrollWhileSnapping={true}
-                      enableMomentum={false}
-                      autoplayInterval={500}
-                      autoplayDelay={1000}
-                      loop={true}
-                      ref={(c) => {
-                        carousel = c;
-                      }}
-                      data={promotions}
-                      renderItem={_renderPromo}
-                      sliderWidth={WIDTH * 0.9}
-                      onSnapToItem={(index) => setActivePromoSlide(index)}
-                      itemWidth={WIDTH * 0.9}
-                    />
-                    <Pagination
-                      dotsLength={promotions.length}
-                      activeDotIndex={activePromoSlide}
-                      dotStyle={{
-                        width: 30,
-                        marginTop: 0,
-                        paddingTop: 0,
-                        height: 7,
-                        // borderRadius: 5,
-                        backgroundColor: "rgba(0, 0, 0, 0.75)",
-                      }}
-                    />
-                  </>
-                )}
+                  <> */}
+                <Carousel
+                  layout="default"
+                  // autoplay={true}
+                  lockScrollWhileSnapping={true}
+                  enableMomentum={false}
+                  autoplayInterval={500}
+                  autoplayDelay={1000}
+                  loop={true}
+                  ref={(c) => {
+                    carousel = c;
+                  }}
+                  data={promotions}
+                  renderItem={_renderPromo}
+                  sliderWidth={WIDTH * 0.9}
+                  onSnapToItem={(index) => setActivePromoSlide(index)}
+                  itemWidth={WIDTH * 0.9}
+                />
+                <Pagination
+                  dotsLength={promotions.length}
+                  activeDotIndex={activePromoSlide}
+                  dotStyle={{
+                    width: 30,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    height: 7,
+                    // borderRadius: 5,
+                    backgroundColor: "rgba(0, 0, 0, 0.75)",
+                  }}
+                />
+                {/* </>
+                )} */}
 
                 <ContentList
                   route={"CountryHome"}

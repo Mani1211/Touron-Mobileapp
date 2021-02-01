@@ -4,6 +4,7 @@ import DatePicker from "react-native-datepicker";
 import {
   View,
   StyleSheet,
+  Animated,
   ScrollView,
   KeyboardAvoidingView,
   Dimensions,
@@ -30,7 +31,6 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 const Honeymoon = ({ navigation, route }) => {
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [fromDate, setFromDate] = useState("");
   const [tourType, setTourType] = React.useState("");
   const [toDate, setToDate] = useState("");
@@ -46,18 +46,12 @@ const Honeymoon = ({ navigation, route }) => {
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  const [dates, setDates] = useState("");
-  const [years, setYears] = useState("");
-  const [months, setMonths] = useState("");
-  console.log(dates, months, years, "mok");
+
   let random;
   let formatedMonth;
-  console.log(user, "plannkwfed");
-
-  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    random = Math.floor((Math.random() + 4) * 345334 * Math.random());
+    random = Math.floor((Math.random() + 4) * 345334);
     const requestDate = new Date();
     let currentYear = requestDate.getFullYear();
     setDate(requestDate.getDate());
@@ -72,7 +66,6 @@ const Honeymoon = ({ navigation, route }) => {
         .database()
         .ref(`userGeneralInfo/${user.uid}`)
         .on("value", (data) => {
-          setUserInfo(data.val());
           setName(data.val().name);
           setNumber(data.val().phoneNumber);
         });
@@ -98,26 +91,12 @@ const Honeymoon = ({ navigation, route }) => {
     }
   });
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
   const handleFromDate = (date) => {
-    setDatePickerVisibility(false);
-
-    setFromDate(date.toLocaleDateString("en-GB"));
-    setDates(date.getDate());
-    setMonths(date.getMonth());
-    setYears[date.getFullYear()];
+    setFromDate(date);
   };
 
   const handleToDate = (date) => {
-    setDatePickerVisibility(false);
-    setToDate(date.toLocaleDateString("en-GB"));
+    setToDate(date);
   };
 
   const nextStep = () => {
@@ -201,7 +180,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                 <View style={{ width: WIDTH / 3.8 }}>
                   <Text
                     style={{
-                      fontSize: 20,
+                      fontSize: 18,
                       fontFamily: "Andika",
                       paddingLeft: 5,
                     }}
@@ -211,6 +190,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                 </View>
 
                 <DatePicker
+                  onOpenModal={{ useNativeDriver: true }}
                   style={{ width: 200 }}
                   date={fromDate}
                   mode="date"
@@ -231,7 +211,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                     style={{
                       fontSize: 20,
                       fontFamily: "Andika",
-                      paddingLeft: 15,
+                      paddingLeft: Platform.OS === "ios" ? 15 : 10,
                     }}
                   >
                     End Date

@@ -8,6 +8,8 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
+import HTMLView from "react-native-htmlview";
+
 import {
   AntDesign,
   MaterialCommunityIcons,
@@ -318,15 +320,35 @@ const TourInnerScreen = ({ route }) => {
                 borderColor: "#fff",
               }}
             >
-              <Text
-                style={{
-                  marginLeft: 20,
-                  marginTop: 15,
-                  fontFamily: "Andika",
-                }}
-              >
-                {item.itinerary}
-              </Text>
+              {item.itinerary.startsWith("<") ? (
+                <HTMLView
+                  value={item.itinerary}
+                  stylesheet={{
+                    p: {
+                      marginLeft: 20,
+                      // marginTop: 15,
+                      padding: 0,
+                      fontFamily: "Andika",
+                    },
+                    ul: {
+                      marginLeft: 20,
+                      // marginTop: 15,
+                      padding: 0,
+                      fontFamily: "Andika",
+                    },
+                  }}
+                />
+              ) : (
+                <Text
+                  style={{
+                    marginLeft: 20,
+                    marginTop: 15,
+                    fontFamily: "Andika",
+                  }}
+                >
+                  {item.itinerary}
+                </Text>
+              )}
             </View>
           </View>
         )}
@@ -360,37 +382,39 @@ const TourInnerScreen = ({ route }) => {
                 borderColor: "#fff",
               }}
             >
-              <Text
-                style={{
-                  lineHeight: 20,
-                  marginLeft: 20,
-                  marginTop: 15,
-                  fontFamily: "Andika",
-                }}
-              >
-                {item.additionalInformation}
-              </Text>
+              {item.additionalInformation.startsWith("<") ? (
+                <HTMLView
+                  value={item.additionalInformation}
+                  stylesheet={{
+                    p: {
+                      marginLeft: 20,
+                      // marginTop: 15,
+                      padding: 0,
+                      fontFamily: "Andika",
+                    },
+                    ul: {
+                      marginLeft: 20,
+                      // marginTop: 15,
+                      padding: 0,
+                      fontFamily: "Andika",
+                    },
+                  }}
+                />
+              ) : (
+                <Text
+                  style={{
+                    lineHeight: 20,
+                    marginLeft: 20,
+                    marginTop: 15,
+                    fontFamily: "Andika",
+                  }}
+                >
+                  {item.additionalInformation}
+                </Text>
+              )}
             </View>
           </View>
         )}
-
-        {/* Button */}
-        {/* <View style={{ marginHorizontal: 20 }}>
-          <LinearGradient
-            colors={["#626E7B", "#626E7B"]}
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 20,
-              padding: 10,
-              marginBottom: 10,
-            }}
-          >
-            <Text style={{ fontSize: 20, color: "#FFF" }}>
-              Select this Tour
-            </Text>
-          </LinearGradient>
-        </View> */}
       </View>
     </ScrollView>
   );

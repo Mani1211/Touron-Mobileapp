@@ -66,7 +66,7 @@ const MyVisaRequestsScreen = ({ navigation }) => {
                     color="black"
                     style={{
                       paddingHorizontal: 20,
-                      paddingTop: Platform.OS === "ios" ? 25 : 0,
+                      paddingTop: 25,
                     }}
                   />
                 </View>
