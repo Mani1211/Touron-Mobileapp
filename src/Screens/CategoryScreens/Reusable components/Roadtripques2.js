@@ -33,14 +33,14 @@ const Roadtripques2 = ({
         <View style={{ alignItems: "center" }}>
           <View
             style={{
-              height: HEIGHT / 2.9,
+              height: HEIGHT / 3.3,
               width: WIDTH,
               alignItems: "center",
               marginTop: 30,
             }}
           >
             <Image
-              style={{ height: HEIGHT / 2.9, width: WIDTH * 0.8 }}
+              style={{ height: "100%", width: WIDTH * 0.8 }}
               source={{ uri: imgSrc }}
             />
           </View>

@@ -17,7 +17,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Tourname from "./Reusable components/Tourname";
 import Checkout from "./Reusable components/Checkout";
 import Destination from "./Reusable components/Destination";
-import Tourtype from "./Reusable components/Tourtype";
 import Travellertype from "./Reusable components/Travellertype";
 import Travelmode from "./Reusable components/Travelmode";
 import Touristnumber from "./Reusable components/Touristnumber";
@@ -57,7 +56,6 @@ const WildLife = ({ navigation, route }) => {
   let formatedMonth;
 
   const [userInfo, setUserInfo] = useState({});
-  // console.log("user.email", user.email);
 
   useEffect(() => {
     random = Math.floor((Math.random() + 4) * 345334);
@@ -153,18 +151,6 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 3:
         return (
           <Travellertype
-            imgSrc1={
-              "https://image.freepik.com/free-vector/local-tourism-concept_23-2148606915.jpg"
-            }
-            imgSrc2={
-              "https://image.freepik.com/free-vector/big-happy-family-with-flat-design_23-2147834774.jpg"
-            }
-            imgSrc3={
-              "https://image.freepik.com/free-vector/group-happy-students-with-backpacks-books-stand-together_131590-216.jpg"
-            }
-            imgScr4={
-              "https://image.freepik.com/free-vector/couple-celebrating-valentine-s-day_23-2148538999.jpg"
-            }
             travellerType={travellerType}
             nextStep={() => nextStep()}
             setSolo={() => {

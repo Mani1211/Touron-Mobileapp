@@ -33,14 +33,14 @@ const Roadtripques = ({
         <View style={{ alignItems: "center" }}>
           <View
             style={{
-              height: HEIGHT / 2.5,
+              height: HEIGHT / 3,
               width: WIDTH,
               alignItems: "center",
               marginTop: 30,
             }}
           >
             <Image
-              style={{ height: HEIGHT / 2.7, width: WIDTH * 0.8 }}
+              style={{ height: "100%", width: WIDTH * 0.8 }}
               source={{ uri: imgSrc }}
             />
           </View>
@@ -58,7 +58,6 @@ const Roadtripques = ({
             <View
               style={{
                 height: HEIGHT / 3,
-                marginTop: 20,
                 width: WIDTH * 0.9,
                 marginHorizontal: 40,
                 justifyContent: "space-around",
@@ -67,7 +66,33 @@ const Roadtripques = ({
             >
               <View
                 style={{
-                  height: HEIGHT / 13,
+                  flexDirection: "row",
+                  width: WIDTH * 0.9,
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ width: WIDTH / 2 }}>
+                  <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
+                    {que3}
+                  </Text>
+                </View>
+                <View style={{ width: WIDTH / 3 }}>
+                  <TextInput
+                    placeholder={placeholder3}
+                    multiline
+                    style={{
+                      fontSize: 14,
+                      textAlign: "center",
+                      fontWeight: "bold",
+                    }}
+                    value={attr3}
+                    onChangeText={(value) => func3(value)}
+                  />
+                </View>
+              </View>
+              <View
+                style={{
                   flexDirection: "row",
                   width: WIDTH * 0.9,
                   justifyContent: "space-evenly",
@@ -96,7 +121,6 @@ const Roadtripques = ({
               </View>
               <View
                 style={{
-                  height: HEIGHT / 13,
                   flexDirection: "row",
                   width: WIDTH * 0.9,
                   justifyContent: "space-evenly",
@@ -119,35 +143,6 @@ const Roadtripques = ({
                     multiline
                     value={attr2}
                     onChangeText={(value) => func2(value)}
-                  />
-                </View>
-              </View>
-
-              <View
-                style={{
-                  height: HEIGHT / 13,
-                  flexDirection: "row",
-                  width: WIDTH * 0.9,
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ width: WIDTH / 2 }}>
-                  <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
-                    {que3}
-                  </Text>
-                </View>
-                <View style={{ width: WIDTH / 3 }}>
-                  <TextInput
-                    placeholder={placeholder3}
-                    multiline
-                    style={{
-                      fontSize: 14,
-                      textAlign: "center",
-                      fontWeight: "bold",
-                    }}
-                    value={attr3}
-                    onChangeText={(value) => func3(value)}
                   />
                 </View>
               </View>

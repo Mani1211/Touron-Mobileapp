@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: 20,
     color: "#fff",
-    fontWeight: "bold",
+    fontFamily: "Andika",
     zIndex: 1,
     top: 10,
     left: 20,

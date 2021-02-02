@@ -26,7 +26,9 @@ const Tourpreferance = ({
   return (
     <View>
       <View style={{ marginVertical: HEIGHT / 20, marginHorizontal: 5 }}>
-        <Text style={{ fontSize: 18, textAlign: "center" }}>
+        <Text
+          style={{ fontSize: 18, textAlign: "center", fontFamily: "NewYorkl" }}
+        >
           When you travel,you prefer?
         </Text>
       </View>
@@ -58,6 +60,7 @@ const Tourpreferance = ({
                     textAlign: "center",
                     fontSize: 20,
                     marginVertical: 10,
+                    fontFamily: "Andika",
                   }}
                 >
                   Action
@@ -89,6 +92,7 @@ const Tourpreferance = ({
                     textAlign: "center",
                     fontSize: 20,
                     marginVertical: 10,
+                    fontFamily: "Andika",
                   }}
                 >
                   Relaxation
@@ -127,6 +131,7 @@ const Tourpreferance = ({
                     textAlign: "center",
                     fontSize: 20,
                     marginVertical: 10,
+                    fontFamily: "Andika",
                   }}
                 >
                   Cultural
@@ -158,6 +163,7 @@ const Tourpreferance = ({
                     textAlign: "center",
                     fontSize: 20,
                     marginVertical: 10,
+                    fontFamily: "Andika",
                   }}
                 >
                   Explore

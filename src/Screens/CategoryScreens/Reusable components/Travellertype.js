@@ -12,10 +12,6 @@ const HEIGHT = Dimensions.get("window").height;
 
 import Checked from "./Checked";
 const Travellertype = ({
-  imgSrc1,
-  imgSrc2,
-  imgSrc3,
-  imgSrc4,
   travellerType,
   nextStep,
   setSolo,
@@ -51,7 +47,10 @@ const Travellertype = ({
                     width: 100,
                     marginVertical: 10,
                   }}
-                  source={{ uri: imgSrc1 }}
+                  source={{
+                    uri:
+                      "https://image.freepik.com/free-vector/local-tourism-concept_23-2148606915.jpg",
+                  }}
                 />
                 <Text
                   style={{
@@ -83,7 +82,10 @@ const Travellertype = ({
                     width: 130,
                     marginVertical: 10,
                   }}
-                  source={{ uri: imgSrc2 }}
+                  source={{
+                    uri:
+                      "https://image.freepik.com/free-vector/big-happy-family-with-flat-design_23-2147834774.jpg",
+                  }}
                 />
                 <Text
                   style={{
@@ -119,7 +121,10 @@ const Travellertype = ({
                     width: 130,
                     marginVertical: 10,
                   }}
-                  source={{ uri: imgSrc3 }}
+                  source={{
+                    uri:
+                      "https://image.freepik.com/free-vector/group-happy-students-with-backpacks-books-stand-together_131590-216.jpg",
+                  }}
                 />
                 <Text
                   style={{
@@ -152,7 +157,10 @@ const Travellertype = ({
                     marginVertical: 10,
                     resizeMode: "center",
                   }}
-                  source={{ uri: imgSrc4 }}
+                  source={{
+                    uri:
+                      "https://image.freepik.com/free-vector/people-holding-travel-related-icons_53876-64662.jpg",
+                  }}
                 />
                 <Text
                   style={{

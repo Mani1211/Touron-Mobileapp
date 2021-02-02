@@ -14,7 +14,6 @@ const HEIGHT = Dimensions.get("window").height;
 const Touristnumber = ({
   imgSrc1,
   imgScr2,
-  nextStep,
   adult,
   children,
   setAdult,
@@ -24,7 +23,7 @@ const Touristnumber = ({
     <View style={{ alignItems: "center" }}>
       <View style={{ marginTop: HEIGHT / 20 }}>
         <Text style={{ fontSize: 22, fontFamily: "NewYorkl" }}>
-          No of Persons{" "}
+          No of Persons
         </Text>
       </View>
 
@@ -59,6 +58,7 @@ const Touristnumber = ({
                   paddingVertical: 10,
                   paddingHorizontal: 15,
                   borderRadius: 100,
+                  marginTop: 10,
                 }}
               >
                 -
@@ -78,6 +78,7 @@ const Touristnumber = ({
                   backgroundColor: "#9EB19E",
                   padding: 10,
                   borderRadius: 100,
+                  marginTop: 10,
                 }}
               >
                 +
@@ -121,6 +122,7 @@ const Touristnumber = ({
                   paddingVertical: 10,
                   paddingHorizontal: 15,
                   borderRadius: 100,
+                  marginTop: 10,
                 }}
               >
                 -
@@ -140,6 +142,7 @@ const Touristnumber = ({
                   backgroundColor: "#9EB19E",
                   padding: 10,
                   borderRadius: 100,
+                  marginTop: 10,
                 }}
               >
                 +

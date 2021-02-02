@@ -5,7 +5,6 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-  FlatList,
   Platform,
   Dimensions,
   ScrollView,
@@ -14,7 +13,6 @@ import { AntDesign } from "@expo/vector-icons";
 import touron from "../../api/touron";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import { Surface } from "react-native-paper";
 const BlogInnerScreen = ({ navigation, route }) => {
   const item = route.params.item;
   const [click, setClick] = useState(false);
@@ -143,7 +141,14 @@ const BlogInnerScreen = ({ navigation, route }) => {
         )}
       </View>
 
-      <Text style={{ fontFamily: "Avenir", fontSize: 26, margin: 10 }}>
+      <Text
+        style={{
+          fontFamily: "NewYorkl",
+
+          fontSize: 26,
+          margin: 10,
+        }}
+      >
         {item.blogTitle}
       </Text>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -166,6 +171,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
         style={{
           marginVertical: 10,
           marginHorizontal: 15,
+          fontFamily: "Andika",
           fontSize: 15,
           lineHeight: HEIGHT / 40,
         }}
@@ -194,6 +200,8 @@ const BlogInnerScreen = ({ navigation, route }) => {
             marginVertical: 10,
             marginHorizontal: 15,
             fontSize: 15,
+            fontFamily: "Andika",
+
             lineHeight: HEIGHT / 40,
           }}
         >
@@ -222,6 +230,8 @@ const BlogInnerScreen = ({ navigation, route }) => {
             marginVertical: 10,
             marginHorizontal: 15,
             fontSize: 15,
+            fontFamily: "Andika",
+
             lineHeight: HEIGHT / 40,
           }}
         >
@@ -250,6 +260,8 @@ const BlogInnerScreen = ({ navigation, route }) => {
             marginVertical: 10,
             marginHorizontal: 15,
             fontSize: 15,
+            fontFamily: "Andika",
+
             lineHeight: HEIGHT / 40,
           }}
         >
@@ -278,6 +290,8 @@ const BlogInnerScreen = ({ navigation, route }) => {
             marginVertical: 10,
             marginHorizontal: 15,
             fontSize: 15,
+            fontFamily: "Andika",
+
             lineHeight: HEIGHT / 40,
           }}
         >
@@ -306,6 +320,8 @@ const BlogInnerScreen = ({ navigation, route }) => {
             marginVertical: 10,
             marginHorizontal: 15,
             fontSize: 15,
+            fontFamily: "Andika",
+
             lineHeight: HEIGHT / 40,
           }}
         >

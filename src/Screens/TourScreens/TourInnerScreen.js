@@ -27,7 +27,6 @@ const HEIGHT = Dimensions.get("window").height;
 const TourInnerScreen = ({ route }) => {
   const header = () => {
     const random = Math.floor(Math.random() * 6);
-    console.log("random", random);
     const suggestion = [
       "Get to know more about the fascinating locations and activities which awaits you on this tour!",
       "Here are the magnificent places you will visit and things you get to do on the tour.",

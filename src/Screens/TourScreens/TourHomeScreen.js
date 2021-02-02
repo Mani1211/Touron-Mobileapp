@@ -79,7 +79,7 @@ const TourHomeScreen = ({ navigation, route }) => {
         return c.tourName
           .trim()
           .toUpperCase()
-          .includes(tourName.trim().toUpperCase().trim());
+          .includes(tourName.trim().toUpperCase());
       });
       return d;
     }
@@ -672,7 +672,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                       flexDirection: "row",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      paddingLeft: 20, 
+                      paddingLeft: 20,
                     }}
                   >
                     <TouchableOpacity onPress={() => navigation.goBack()}>

@@ -146,18 +146,6 @@ const RoadTripScreen = ({ navigation }) => {
       case 3:
         return (
           <Travellertype
-            imgSrc1={
-              "https://image.freepik.com/free-vector/local-tourism-concept_23-2148606915.jpg"
-            }
-            imgSrc2={
-              "https://image.freepik.com/free-vector/big-happy-family-with-flat-design_23-2147834774.jpg"
-            }
-            imgSrc3={
-              "https://image.freepik.com/free-vector/group-happy-students-with-backpacks-books-stand-together_131590-216.jpg"
-            }
-            imgSrc4={
-              "https://image.freepik.com/free-vector/couple-celebrating-valentine-s-day_23-2148538999.jpg"
-            }
             travellerType={travellerType}
             nextStep={() => nextStep()}
             setSolo={() => {

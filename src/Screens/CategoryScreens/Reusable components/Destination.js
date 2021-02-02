@@ -4,6 +4,7 @@ import {
   Image,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Platform,
   Keyboard,
   Text,
   TextInput,
@@ -110,22 +111,19 @@ const Destination = ({
                 style={{
                   height: HEIGHT / 13,
                   width: WIDTH * 0.9,
-                  justifyContent: "center",
-                  alignItems: "center",
                   marginTop: 10,
+                  alignItems: "center",
                 }}
               >
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      marginLeft: 10,
-                      fontFamily: "Andika",
-                    }}
-                  >
-                    Your preferences when you travel (Optional):
-                  </Text>
-                </View>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Andika",
+                    paddingRight: Platform.OS === "ios" ? 23 : 5,
+                  }}
+                >
+                  Your preferences when you travel (Optional):
+                </Text>
                 <View style={{ alignItems: "center", marginTop: 10 }}>
                   <TextInput
                     style={{

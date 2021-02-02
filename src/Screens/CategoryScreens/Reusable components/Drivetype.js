@@ -27,7 +27,9 @@ const Drivetype = ({
   return (
     <View>
       <View style={{ width: WIDTH, marginHorizontal: 30, marginVertical: 30 }}>
-        <Text style={{ fontSize: 20 }}>1.Would you Prefer ?</Text>
+        <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
+          1.Would you Prefer ?
+        </Text>
       </View>
       <View>
         <View style={styles.travelTypeContainer}>
@@ -43,16 +45,21 @@ const Drivetype = ({
                 </View>
                 <Image
                   style={{
-                    height: HEIGHT / 6,
-                    width: 150,
-                    marginVertical: 10,
+                    height: HEIGHT / 8,
+                    width: WIDTH / 2.4,
+                    marginTop: 40,
                   }}
-                  source={{ uri: imgSrc1 }}
+                  source={{
+                    uri:
+                      "https://thumbs.dreamstime.com/b/vintage-car-sketch-coloring-book-black-white-drawing-monochrome-retro-cartoon-transport-vector-illustration-78499966.jpg",
+                  }}
                 />
                 <Text
                   style={{
                     textAlign: "center",
                     fontSize: 20,
+                    fontFamily: "Andika",
+
                     marginVertical: 10,
                   }}
                 >
@@ -74,9 +81,9 @@ const Drivetype = ({
                 </View>
                 <Image
                   style={{
-                    height: HEIGHT / 6,
-                    width: WIDTH / 3,
-                    marginVertical: 10,
+                    height: HEIGHT / 8,
+                    width: WIDTH / 2.4,
+                    marginTop: 40,
                   }}
                   source={{ uri: imgSrc2 }}
                 />
@@ -85,6 +92,7 @@ const Drivetype = ({
                     textAlign: "center",
                     fontSize: 20,
                     marginVertical: 10,
+                    fontFamily: "Andika",
                   }}
                 >
                   Own Bike/Car
@@ -98,7 +106,9 @@ const Drivetype = ({
       {driveType == "Rented Bike/Car" ? (
         <View>
           <View style={{ width: WIDTH, marginHorizontal: 30, marginTop: 20 }}>
-            <Text style={{ fontSize: 20 }}>2.If rented Car/Bike ?</Text>
+            <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
+              2.If rented Car/Bike ?
+            </Text>
           </View>
           <View style={styles.travelTypeContainer}>
             <TouchableOpacity
@@ -114,17 +124,21 @@ const Drivetype = ({
                   </View>
                   <Image
                     style={{
-                      height: HEIGHT / 6,
-                      width: 130,
-                      marginVertical: 10,
+                      height: HEIGHT / 8,
+                      width: WIDTH / 2.4,
+                      marginTop: 40,
                     }}
-                    source={{ uri: imgSrc3 }}
+                    source={{
+                      uri:
+                        "https://thumbs.dreamstime.com/b/vintage-car-sketch-coloring-book-black-white-drawing-monochrome-retro-cartoon-transport-vector-illustration-78499966.jpg",
+                    }}
                   />
                   <Text
                     style={{
                       textAlign: "center",
                       fontSize: 20,
                       marginVertical: 10,
+                      fontFamily: "Andika",
                     }}
                   >
                     Self Drive
@@ -146,9 +160,9 @@ const Drivetype = ({
                   </View>
                   <Image
                     style={{
-                      height: HEIGHT / 6,
-                      width: 130,
-                      marginVertical: 10,
+                      height: HEIGHT / 8,
+                      width: WIDTH / 2.4,
+                      marginTop: 40,
                     }}
                     source={{ uri: imgSrc4 }}
                   />
@@ -157,6 +171,7 @@ const Drivetype = ({
                       textAlign: "center",
                       fontSize: 20,
                       marginVertical: 10,
+                      fontFamily: "Andika",
                     }}
                   >
                     Driver needed

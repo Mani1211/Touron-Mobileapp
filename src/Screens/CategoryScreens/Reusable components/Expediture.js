@@ -29,20 +29,25 @@ const Expediture = ({
         <View style={{ alignItems: "center" }}>
           <View
             style={{
-              height: HEIGHT / 2.8,
+              height: HEIGHT / 2.9,
               width: WIDTH,
               alignItems: "center",
-              paddingTop: 10,
             }}
           >
             <Image
-              style={{ height: HEIGHT / 3, width: WIDTH * 0.8 }}
+              style={{ height: "100%", width: WIDTH * 0.7 }}
               source={{ uri: imgSrc }}
             />
           </View>
 
           <View>
-            <Text style={{ fontSize: 20, textAlign: "center" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                textAlign: "center",
+                fontFamily: "NewYorkl",
+              }}
+            >
               List your last three expeditions
             </Text>
             <View

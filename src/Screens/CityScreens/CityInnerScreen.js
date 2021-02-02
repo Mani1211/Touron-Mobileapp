@@ -5,6 +5,7 @@ import {
   Button,
   Image,
   Linking,
+  Alert,
   View,
   Dimensions,
 } from "react-native";
@@ -15,7 +16,6 @@ const HEIGHT = Dimensions.get("window").height;
 
 const CityInnerScreen = ({ navigation, route }) => {
   const item = route.params.item;
-  console.log(item, "TEM");
   const openWhatsApp = (name) => {
     let url = `whatsapp://send?text=Hi,I would like to go ${name} help me to plan on that &phone= +91 8667801206`;
 
@@ -148,7 +148,11 @@ const CityInnerScreen = ({ navigation, route }) => {
             marginVertical: 10,
           }}
         >
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert("Coming soon");
+            }}
+          >
             <View
               style={{
                 alignItems: "center",

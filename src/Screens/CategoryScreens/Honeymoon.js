@@ -4,7 +4,6 @@ import DatePicker from "react-native-datepicker";
 import {
   View,
   StyleSheet,
-  Animated,
   ScrollView,
   KeyboardAvoidingView,
   Dimensions,
@@ -343,7 +342,8 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
               style={{
                 fontSize: 20,
                 fontFamily: "NewYorkl",
-                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                marginTop: Platform.OS == "android" ? 30 : 80,
+                // marginTop: 30,
               }}
             >
               Honeymoon Tour

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 const WIDTH = Dimensions.get("window").width;
@@ -28,7 +29,12 @@ const Tourname = ({ imgSrc, step, description }) => {
       </View>
 
       <View style={{ marginHorizontal: WIDTH / 9 }}>
-        <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
+        <Text
+          style={{
+            fontSize: Platform.OS === "ios" ? 14 : 13,
+            fontFamily: "Andika",
+          }}
+        >
           {description}
         </Text>
       </View>
