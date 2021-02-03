@@ -212,14 +212,19 @@ const PlannedTourScreen = ({ navigation, route }) => {
               </Text>
               <View style={styles.dateContainer}>
                 <View style={{ width: WIDTH / 3.8 }}>
-                  <Text style={{ fontSize: 20, fontFamily: "Andika" }}>
-                    From:
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontFamily: "Andika",
+                      paddingLeft: 5,
+                    }}
+                  >
+                    Start Date
                   </Text>
                 </View>
-                <View style={styles.dateContainer}>
-                  <View></View>
-                </View>
+
                 <DatePicker
+                  onOpenModal={{ useNativeDriver: true }}
                   style={{ width: 200 }}
                   date={fromDate}
                   mode="date"
@@ -235,15 +240,15 @@ const PlannedTourScreen = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.dateContainer}>
-                <View style={{ width: WIDTH / 4 }}>
+                <View style={{ width: WIDTH / 3.8 }}>
                   <Text
                     style={{
                       fontSize: 20,
-                      marginRight: 0,
                       fontFamily: "Andika",
+                      paddingLeft: Platform.OS === "ios" ? 15 : 10,
                     }}
                   >
-                    To:
+                    End Date
                   </Text>
                 </View>
                 <DatePicker

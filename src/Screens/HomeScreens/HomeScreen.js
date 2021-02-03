@@ -304,9 +304,15 @@ const HomeScreen = ({ navigation, route }) => {
               padding: 10,
             }}
           >
-            <Text style={{ paddingLeft: 10, color: "#FFF" }}>
+            {/* <Text style={{ paddingLeft: 10, color: "#FFF" }}>
               {item.comment}
-            </Text>
+            </Text> */}
+            <HTMLView
+              value={item.comment}
+              stylesheet={{
+                p: { paddingLeft: 10, color: "#FFF", fontFamily: "Andika" },
+              }}
+            />
           </View>
         </View>
       </>
