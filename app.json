@@ -20,8 +20,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "",
-    "schema": "touron"
+    "description": ""
   },
 
   "expo": {
@@ -34,7 +33,6 @@
       "icon": "./assets/playstore.png",
       "color": "#2ECC71"
     },
-    "scheme": "touron",
 
     "ios": {
       "bundleIdentifier": "com.touron.travelapp",
