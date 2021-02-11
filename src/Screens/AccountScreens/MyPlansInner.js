@@ -138,7 +138,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         fontSize: 16,
                       }}
                     >
-                      {item.name}
+                      {item.cityName}
                     </Text>
                     <Text style={{ color: "black", fontFamily: "Andika" }}>
                       {item.days} Days

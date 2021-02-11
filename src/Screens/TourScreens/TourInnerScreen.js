@@ -87,7 +87,7 @@ const TourInnerScreen = ({ route }) => {
             <Text
               style={{
                 lineHeight: 25,
-                marginLeft: 8,
+                marginLeft: 10,
                 marginTop: 0,
                 fontFamily: "Andika",
               }}
@@ -106,6 +106,7 @@ const TourInnerScreen = ({ route }) => {
               backgroundColor: "#d5e1d9ff",
               fontFamily: "NewYorkl",
               padding: 5,
+              marginLeft: 10,
               borderRadius: 10,
             }}
           >
@@ -305,6 +306,8 @@ const TourInnerScreen = ({ route }) => {
                 fontSize: 20,
                 backgroundColor: "#d5e1d9ff",
                 padding: 5,
+                marginLeft: 10,
+
                 fontFamily: "NewYorkl",
                 borderRadius: 10,
               }}
@@ -366,6 +369,7 @@ const TourInnerScreen = ({ route }) => {
                 fontSize: 20,
                 backgroundColor: "#d5e1d9ff",
                 fontFamily: "NewYorkl",
+                marginLeft: 10,
 
                 padding: 5,
                 borderRadius: 10,
@@ -387,13 +391,14 @@ const TourInnerScreen = ({ route }) => {
                   stylesheet={{
                     p: {
                       marginLeft: 20,
-                      // marginTop: 15,
+                      marginVertical: 0,
                       padding: 0,
                       fontFamily: "Andika",
                     },
                     ul: {
                       marginLeft: 20,
-                      // marginTop: 15,
+                      marginVertical: 0,
+
                       padding: 0,
                       fontFamily: "Andika",
                     },
@@ -427,9 +432,9 @@ const styles = StyleSheet.create({
   },
   image: {
     height: HEIGHT / 1.8,
-    borderBottomLeftRadius: 40,
+    // borderBottomLeftRadius: 60,
     resizeMode: "cover",
-    borderBottomRightRadius: 40,
+    borderBottomRightRadius: 60,
     position: "relative",
     width: WIDTH,
     shadowColor: "#333",
@@ -446,7 +451,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   tourName: {
-    fontSize: 28,
+    fontSize: 25,
     marginHorizontal: 10,
     fontFamily: "NewYorkl",
     // color: "#fff",
@@ -457,12 +462,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   tourCategory: {
-    fontSize: 20,
+    fontSize: 16,
     marginVertical: 10,
-    marginHorizontal: 5,
-
-    // fontFamily: "NewYorkl",
-    fontFamily: "WSansl",
+    marginLeft: 10,
+    // color: "red",
+    fontFamily: "NewYorkl",
+    // fontFamily: "Andika",
   },
   features: {
     justifyContent: "center",

@@ -173,9 +173,21 @@ const MyPlansScreen = ({ navigation }) => {
                           justifyContent: "center",
                         }}
                       >
-                        <Text style={{ fontSize: 18 }}>
-                          {item.selectedCities.join(",")}
-                        </Text>
+                        <View
+                          style={{
+                            flex: 0.7,
+                            // justifyContent: "center",
+                            flexDirection: "row",
+                          }}
+                        >
+                          {/* <Text style={{ fontSize: 18 }}> */}
+                          {item.selectedCities.map((c, index) => (
+                            <Text style={{ fontSize: 18 }} key={index}>
+                              {c.cityName},
+                            </Text>
+                          ))}
+                        </View>
+                        {/* </Text> */}
                         <Text style={{ fontSize: 14 }}>
                           Request Id: {item.requestID}
                         </Text>

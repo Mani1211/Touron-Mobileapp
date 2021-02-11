@@ -65,8 +65,6 @@ if (!firebase.apps.length) {
 const Drawer = createDrawerNavigator();
 
 const App = () => {
-  const prefix = Linking.makeUrl("/");
-
   const [user, setUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -77,10 +75,6 @@ const App = () => {
   const [networkLoader, setNetworkLoader] = useState(false);
   const [cities, setCities] = useState([]);
   const [userInfo, setUserInfo] = useState({});
-
-  const linking = {
-    prefixes: [prefix],
-  };
 
   useEffect(() => {
     getNetwork();
@@ -236,10 +230,7 @@ const App = () => {
             isAdmin,
           }}
         >
-          <NavigationContainer
-            linking={linking}
-            fallback={<Text>Loading...</Text>}
-          >
+          <NavigationContainer>
             <Drawer.Navigator
               drawerType="slides"
               screenOptions={{

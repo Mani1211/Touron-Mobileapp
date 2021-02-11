@@ -18,7 +18,6 @@ const ProgressScreen = ({ navigation, route }) => {
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
   const [userInfo, setUserInfo] = useState({});
-  console.log(userInfo, "ijnfo");
   let random;
   let formatedMonth;
   useEffect(() => {
@@ -38,14 +37,11 @@ const ProgressScreen = ({ navigation, route }) => {
     }
   };
 
-  console.log(cityDetails, "tour");
   const cityTourNames = [];
-  console.log(user, "pl");
-
   finalTour.forEach((tour) => {
     cityTourNames.push(tour);
   });
-
+  console.log("ctn", cityTourNames);
   useEffect(() => {
     random = Math.floor((Math.random() + 4) * 345334 * Math.random());
     const requestDate = new Date();
@@ -58,7 +54,7 @@ const ProgressScreen = ({ navigation, route }) => {
 
   let selectedCityNames = [];
   let specificCityTours = [];
-
+  console.log("cityDetails", cityDetails);
   cityDetails.forEach((city) => {
     selectedCityNames.push(city.name);
     const CITYNAME = city.name;
@@ -72,6 +68,7 @@ const ProgressScreen = ({ navigation, route }) => {
   });
 
   console.log(selectedCityNames, "names");
+  console.log("specificCityTours ", specificCityTours);
 
   // calculating specific city tours duratiom
 
@@ -112,7 +109,7 @@ const ProgressScreen = ({ navigation, route }) => {
     cityTourDetails.push(city);
   });
 
-  //  console.log(cityTourDetails, "KKKKKvhjgvgvgv");
+  console.log(cityTourDetails, "KKKKKvhjgvgvgv");
   return (
     <ScrollView>
       <View
