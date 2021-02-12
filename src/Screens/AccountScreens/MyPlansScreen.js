@@ -15,14 +15,11 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import * as firebase from "firebase";
 import { Feather } from "@expo/vector-icons";
-
 const MyPlansScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   const [selfPlans, setSelfPlans] = useState([]);
-  console.log(selfPlans, "lp");
 
   const [isAdmin, setIsAdmin] = useState(false);
-  console.log(isAdmin, "ko");
 
   const getUserData = () => {
     if (user !== null) {
@@ -41,7 +38,7 @@ const MyPlansScreen = ({ navigation }) => {
   const getUserPlans = () => {
     firebase
       .database()
-      .ref(`self-planned-tours/`)
+      .ref(`self-planned-tours-international`)
       .on("value", (data) => {
         let plans = [];
         data.forEach((c) => {
@@ -200,45 +197,6 @@ const MyPlansScreen = ({ navigation }) => {
           />
         </View>
       )}
-      {/* {plannedTours.length == 0 ? (
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            style={{
-              height: HEIGHT / 2,
-              width: WIDTH * 0.7,
-              marginTop: WIDTH / 10,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            source={require("../../../assets/myplans.png")}
-          />
-          <Text
-            style={{
-              fontFamily: "Avenir",
-              fontSize: 20,
-              marginTop: WIDTH / 10,
-            }}
-          >
-            No Tour Plans Yet
-          </Text>
-          <Text
-            style={{
-              fontFamily: "WSansl",
-              fontSize: 20,
-              textAlign: "center",
-            }}
-          >
-            Go to Home and start planning
-          </Text>
-        </View>
-      ) : (
-        <View>n</View>
-      )} */}
     </View>
   );
 };
