@@ -13,7 +13,9 @@ const ProgressScreen = ({ navigation, route }) => {
   const { details } = useContext(SelfTourContext);
   const { user } = useContext(AuthContext);
   const finalTour = route.params.selectedTours;
-  const cityDetails = route.params.cityDetails;
+  console.log("details", details);
+  const selectedCity = route.params.selectedCity;
+
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
@@ -41,7 +43,7 @@ const ProgressScreen = ({ navigation, route }) => {
   finalTour.forEach((tour) => {
     cityTourNames.push(tour);
   });
-  console.log("ctn", cityTourNames);
+  // console.log("ctn", cityTourNames);
   useEffect(() => {
     random = Math.floor((Math.random() + 4) * 345334 * Math.random());
     const requestDate = new Date();
@@ -54,21 +56,20 @@ const ProgressScreen = ({ navigation, route }) => {
 
   let selectedCityNames = [];
   let specificCityTours = [];
-  console.log("cityDetails", cityDetails);
-  cityDetails.forEach((city) => {
-    selectedCityNames.push(city.name);
-    const CITYNAME = city.name;
+  selectedCity.forEach((city) => {
+    selectedCityNames.push(city.cityName);
+    const CITYNAME = city.cityName;
     const arr3 = finalTour.filter((tour) => {
       return CITYNAME.includes(tour.cityName);
     });
     specificCityTours.push({
-      cityName: city.name,
+      cityName: city.cityName,
       tours: arr3,
     });
   });
 
-  console.log(selectedCityNames, "names");
-  console.log("specificCityTours ", specificCityTours);
+  // console.log(selectedCityNames, "names");
+  // console.log("specificCityTours ", specificCityTours);
 
   // calculating specific city tours duratiom
 
@@ -95,11 +96,11 @@ const ProgressScreen = ({ navigation, route }) => {
   let cityTourDetails = [];
   cityTourDurations.forEach((c) => {
     let city = {};
-    cityDetails.forEach((t) => {
+    selectedCity.forEach((t) => {
       // console.log(t.name, c.cityName);
-      if (t.name == c.cityName) {
+      if (t.cityName == c.cityName) {
         city = {
-          cityName: t.name,
+          cityName: t.cityName,
           tourDurations: c.tourDurations,
           cityDays: t.days,
         };
@@ -109,7 +110,7 @@ const ProgressScreen = ({ navigation, route }) => {
     cityTourDetails.push(city);
   });
 
-  console.log(cityTourDetails, "KKKKKvhjgvgvgv");
+  // console.log(cityTourDetails, "KKKKKvhjgvgvgv");
   return (
     <ScrollView>
       <View
@@ -529,10 +530,15 @@ const ProgressScreen = ({ navigation, route }) => {
                 fromData: details.fromDate,
                 toData: details.toDate,
                 tourDetails: cityTourNames,
-                selectedCities: selectedCityNames,
-                cityDetails: cityDetails,
+                selectedCities: selectedCity,
                 name: userInfo.name,
                 phoneNumber: userInfo.phoneNumber,
+                hotelType: "",
+                travelmode: "",
+                flightType: "",
+                selectedState: "",
+                // totalDays: details.totalDays,
+                tourType: "International",
               })
               .then((data) => console.log(data))
               .catch((err) => console.log(err));

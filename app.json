@@ -4,7 +4,7 @@
     "slug": "touron",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/playstore.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -13,29 +13,9 @@
     "updates": {
       "enabled": true
     },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "description": ""
-  },
-
-  "expo": {
-    "name": "tour On",
-    "icon": "./assets/playstore.png",
-    "orientation": "portrait",
-    "version": "1.1.1",
-    "slug": "touron",
-    "notification": {
-      "icon": "./assets/playstore.png",
-      "color": "#2ECC71"
-    },
-
     "ios": {
       "bundleIdentifier": "com.touron.travelapp",
+      "supportsTablet": false,
       "buildNumber": "1.0.1",
       "usesIcloudStorage": true,
       "infoPlist": {
@@ -50,14 +30,15 @@
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json"
     },
-    "assetBundlePatterns": ["./assets/*/*"]
-  },
-  "splash": {
-    "image": "./assets/logo.jpeg",
-    "resizeMode": "cover"
-  },
-  "androidStatusBar": {
-    "backgroundColor": "#C2185B",
-    "translucent": false
+    "assetBundlePatterns": ["./assets/*/*"],
+
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": "",
+    "androidStatusBar": {
+      "backgroundColor": "#C2185B",
+      "translucent": false
+    }
   }
 }

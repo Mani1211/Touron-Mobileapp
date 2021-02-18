@@ -65,12 +65,9 @@ const DrawerContent = (props) => {
           <View
             style={{
               alignItems: "center",
-              // justifyContent: "center",
               flexDirection: "row",
               paddingHorizontal: 20,
               paddingVertical: Platform.OS === "ios " ? 180 : 20,
-              borderBottomColor: "#FFF",
-              borderWidth: 2,
             }}
           >
             {userInfo.photoURL === "" ? (

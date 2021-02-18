@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Text, StyleSheet, Button } from "react-native";
+import { Button } from "react-native";
 
 import HomeScreen from "./HomeScreens/HomeScreen";
 import PlannedTourScreen from "./CategoryScreens/PlannedTourScreen";

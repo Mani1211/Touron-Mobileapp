@@ -119,7 +119,7 @@ const App = () => {
       const data = await AsyncStorage.getItem("userToken");
       const userToken = JSON.parse(data);
       if (userToken !== null) {
-        console.log(userToken, "lo");
+        // console.log(userToken, "lo");
         setUser(userToken);
         setIsLoggedIn(true);
       }

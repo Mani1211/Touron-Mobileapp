@@ -38,7 +38,7 @@ const MyPlansScreen = ({ navigation }) => {
   const getUserPlans = () => {
     firebase
       .database()
-      .ref(`self-planned-tours-international`)
+      .ref(`self-planned-tours`)
       .on("value", (data) => {
         let plans = [];
         data.forEach((c) => {

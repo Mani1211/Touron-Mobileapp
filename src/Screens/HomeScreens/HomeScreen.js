@@ -47,7 +47,7 @@ const HomeScreen = ({ navigation, route }) => {
   const [testimonials, setTestimonials] = useState([]);
   const [promotions, setPromotions] = useState([]);
   const [cities, setCities] = useState([]);
-  console.log("testimonials", testimonials);
+  // console.log("testimonials", testimonials);
   const getUserData = () => {
     if (user !== null) {
       firebase
@@ -96,47 +96,12 @@ const HomeScreen = ({ navigation, route }) => {
       });
   };
 
-  // const testMonials = [
-  //   {
-  //     name: "Vikash",
-  //     comment:
-  //       "We really had a great time in dubai,Vikas from tour on hosted uh and done all the arrangements perfectly from his end.we will never forget our trip with tour my next trip with tour on",
-  //     testImage:
-  //       "https://images.pexels.com/photos/3556116/pexels-photo-3556116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  //     tourPlace: "Dubai",
-  //   },
-  //   {
-  //     name: "Vikash",
-  //     comment:
-  //       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, at.dolor sit, amet consectetur adipisicing elit. Similique, at.",
-  //     testImage:
-  //       "https://images.pexels.com/photos/3215476/pexels-photo-3215476.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  //     tourPlace: "Maldives",
-  //   },
-  //   {
-  //     name: "Vikash",
-  //     comment:
-  //       "Lorem ipsum dolor sit, amet conseor sit, amet consectetur adipisicing elit. Similique, at..",
-  //     testImage:
-  //       "https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  //     tourPlace: "Singapore",
-  //   },
-
-  //   {
-  //     name: "Vikash",
-  //     comment:
-  //       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique dolor sit, amet consectetur adipisicing elit. Similique, at., at.",
-  //     testImage:
-  //       "https://www.seekpng.com/png/detail/60-604032_face-businessman-png-dummy-images-for-testimonials.png",
-  //     tourPlace: "Bali",
-  //   },
-  // ];
   const getTestimonial = () => {
     firebase
       .database()
       .ref("testimonials")
       .on("value", (data) => {
-        console.log("data", data);
+        // console.log("data", data);
         if (data !== null) {
           let req = [];
           data.forEach((d) => {
@@ -152,7 +117,7 @@ const HomeScreen = ({ navigation, route }) => {
       .database()
       .ref("promotion")
       .on("value", (data) => {
-        console.log("data", data);
+        // console.log("data", data);
         if (data !== null) {
           let req = [];
           data.forEach((d) => {

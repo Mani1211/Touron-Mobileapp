@@ -16,7 +16,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 const OverviewToursScreen = ({ navigation, route }) => {
   const selectedTours = route.params.selectedTours;
-  const cityDetails = route.params.cityDetails;
+  const selectedCity = route.params.selectedCity;
   const [finalTour, setFinalTour] = useState([...selectedTours]);
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
@@ -133,7 +133,7 @@ const OverviewToursScreen = ({ navigation, route }) => {
               navigation.navigate("Progress", {
                 selectedTours: selectedTours,
                 finalTour: finalTour,
-                cityDetails: cityDetails,
+                selectedCity: selectedCity,
               });
             }}
           >

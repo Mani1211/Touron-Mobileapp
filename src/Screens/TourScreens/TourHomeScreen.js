@@ -255,7 +255,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                         width: WIDTH / 2.6,
                       }}
                     >
-                      {idealType === item.name ? (
+                      {idealType === item.queryName ? (
                         <View
                           style={{
                             top: 0,

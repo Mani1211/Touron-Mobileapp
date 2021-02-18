@@ -27,7 +27,6 @@ const Categories = ({ navigation }) => {
   }, []);
 
   if (!fontLoaded) {
-    console.log("not");
     return <AppLoading />;
   }
   return (

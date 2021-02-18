@@ -7,18 +7,25 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  StatusBar,
   Platform,
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import * as Notifications from "expo-notifications";
-import { Feather } from "@expo/vector-icons";
 import { Surface } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 import * as firebase from "firebase";
 import DropDownPicker from "react-native-dropdown-picker";
-import { Snackbar } from "react-native-paper";
+import { Container, Header, Tab, Tabs, Icon, TabHeading } from "native-base";
+import Carousel, { Pagination } from "react-native-snap-carousel";
+import {
+  MaterialIcons,
+  Feather,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
+import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import {
   getExpoToken,
   sendPushNotification,
@@ -26,14 +33,14 @@ import {
 
 const RequestInner = ({ navigation, route }) => {
   const [visible, setVisible] = React.useState(false);
-
+  const item = route.params.item;
+  console.log("item", item);
+  const [plannedDetails, setPlannedDetails] = useState({});
   const onToggleSnackBar = () => setVisible(!visible);
 
   const onDismissSnackBar = () => setVisible(false);
   const { user } = useContext(AuthContext);
-  // const plan = route.params.planned;
-  // const road = route.params.road;
-  // const surprise = route.params.surprise;
+
   const higher = route.params.higher;
   const key = route.params.key;
   const [loaded, setLoaded] = useState(true);
@@ -41,8 +48,6 @@ const RequestInner = ({ navigation, route }) => {
   const [status, setStatus] = useState("");
   const [cost, setCost] = useState(0);
   const [progress, setProgress] = useState(0);
-  console.log("key", key);
-  console.log("higher", higher);
 
   const getUserData = () => {
     if (user !== null) {
@@ -187,7 +192,1030 @@ const RequestInner = ({ navigation, route }) => {
 
   return (
     <ScrollView>
-      <View
+      <Container>
+        <Header hasTabs style={{ backgroundColor: "#FFF" }}>
+          <View
+            style={{
+              width: WIDTH,
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View>
+                <Feather
+                  name="arrow-left"
+                  size={28}
+                  color="#333"
+                  style={{
+                    paddingHorizontal: 20,
+                    paddingTop: -20,
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+            <View
+              style={{
+                flex: 0.8,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ color: "#333", fontSize: 20 }}>Details</Text>
+            </View>
+          </View>
+        </Header>
+        <Tabs
+          tabBarUnderlineStyle={{
+            backgroundColor: "#333",
+          }}
+        >
+          <Tab
+            heading={
+              <TabHeading style={{ backgroundColor: "#fff" }}>
+                {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
+                <Text>General</Text>
+              </TabHeading>
+            }
+          >
+            <StatusBar backgroundColor="black" />
+            <ScrollView>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Surface
+                  style={{
+                    width: WIDTH * 0.9,
+                    margin: 10,
+                    elevation: 10,
+                    borderRadius: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      alignItems: "center",
+                      borderBottomColor: "#f1f2f1",
+                      borderBottomWidth: 1,
+                      backgroundColor: "#f1f2f1",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        paddingVertical: 10,
+                      }}
+                    >
+                      Basic details
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      marginVertical: 10,
+                      padding: 20,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Andika",
+                          paddingBottom: 15,
+                        }}
+                      >
+                        Adults : {item.adult}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Andika",
+                        }}
+                      >
+                        Children : {item.children}
+                      </Text>
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: "Andika",
+                        paddingBottom: 15,
+                      }}
+                    >
+                      Phone Number : {item.number}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: "Andika",
+                        paddingBottom: 15,
+                      }}
+                    >
+                      Onward : {item.fromDate}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: "Andika",
+                        paddingBottom: 15,
+                      }}
+                    >
+                      Return :{item.toDate}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: "Andika",
+                        paddingBottom: 15,
+                      }}
+                    >
+                      Request Id :{item.requestID}
+                    </Text>
+                    <Text style={{ fontSize: 16, fontFamily: "Andika" }}>
+                      Status : {item.status}
+                    </Text>
+                  </View>
+                </Surface>
+                <Surface
+                  style={{
+                    width: WIDTH * 0.9,
+                    margin: 10,
+                    height: HEIGHT / 3.2,
+                    elevation: 10,
+                    alignItems: "center",
+                    borderRadius: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      alignItems: "center",
+                      borderBottomColor: "#f1f2f1",
+                      borderBottomWidth: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        paddingVertical: 10,
+                      }}
+                    >
+                      Travel Preferance
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      padding: 20,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <View
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                        borderRightWidth: 2,
+                        borderRightColor: "#f1f2f1",
+                        height: HEIGHT / 4.8,
+                        flexBasis: "33%",
+                      }}
+                    >
+                      <Text>Traveller Type</Text>
+                      <MaterialCommunityIcons
+                        name="map-marker-distance"
+                        size={24}
+                        color="black"
+                      />
+                      <Text> {item.travellerType}</Text>
+                    </View>
+                    <View
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                        borderRightWidth: 2,
+                        borderRightColor: "#f1f2f1",
+                        height: HEIGHT / 4.8,
+                        flexBasis: "33%",
+                      }}
+                    >
+                      <Text>Travel Mode </Text>
+                      {item.travelmode === "Train" ? (
+                        <MaterialIcons name="train" size={24} color="black" />
+                      ) : (
+                        <MaterialIcons name="flight" size={24} color="black" />
+                      )}
+                      <Text> {item.travelMode}</Text>
+                    </View>
+                    <View
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                        flexBasis: "33%",
+                      }}
+                    >
+                      <Text>Tour Cost</Text>
+                      <MaterialIcons name="today" size={24} color="black" />
+
+                      <Text> {item.tourCost}</Text>
+                    </View>
+                  </View>
+                </Surface>
+
+                {/* <Surface
+                  style={{
+                    width: WIDTH * 0.9,
+                    margin: 10,
+                    elevation: 10,
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    borderRadius: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      alignItems: "center",
+                      borderBottomColor: "#f1f2f1",
+                      borderBottomWidth: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        paddingVertical: 10,
+                      }}
+                    >
+                      Selected Cities
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      width: WIDTH * 0.9,
+                      paddingVertical: 10,
+                    }}
+                  >
+                    {item.selectedCities.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          style={{
+                            width: ln == 1 ? WIDTH * 0.9 : WIDTH / 2.2,
+                            flexBasis: ln == 1 ? "100%" : "50%",
+                            backgroundColor: "#fff",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: 10,
+                          }}
+                        >
+                          <ProgressiveImage
+                            source={{ uri: item.imageUrl }}
+                            style={{
+                              height: WIDTH / 7,
+                              width: WIDTH / 7,
+                              borderRadius: 100,
+                              margin: 10,
+                            }}
+                          />
+                          <View style={{ padding: 5, alignItems: "center" }}>
+                            <Text
+                              style={{
+                                color: "black",
+                                fontFamily: "NewYorkl",
+                                fontSize: 16,
+                              }}
+                            >
+                              {item.cityName}
+                            </Text>
+                            <Text
+                              style={{ color: "black", fontFamily: "Andika" }}
+                            >
+                              {item.days} Days
+                            </Text>
+                          </View>
+                        </View>
+                      );
+                    })}
+                  </View>
+                </Surface> */}
+                {/* {item.tourType === "Domestic" ? (
+                  <Surface
+                    style={{
+                      width: WIDTH * 0.9,
+                      margin: 10,
+                      height: HEIGHT / 3.2,
+                      elevation: 10,
+                      alignItems: "center",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        alignItems: "center",
+                        borderBottomColor: "#f1f2f1",
+                        borderBottomWidth: 1,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          paddingVertical: 10,
+                        }}
+                      >
+                        Travel Preferance
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        padding: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          borderRightWidth: 2,
+                          borderRightColor: "#f1f2f1",
+                          height: HEIGHT / 4.8,
+                          flexBasis: "33%",
+                        }}
+                      >
+                        <Text>Hotel Type</Text>
+                        <MaterialCommunityIcons
+                          name="map-marker-distance"
+                          size={24}
+                          color="black"
+                        />
+                        <Text> {item.hotelType}</Text>
+                      </View>
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          borderRightWidth: 2,
+                          borderRightColor: "#f1f2f1",
+                          height: HEIGHT / 4.8,
+                          flexBasis: "33%",
+                        }}
+                      >
+                        <Text>Travel Type </Text>
+                        {item.travelmode === "Train" ? (
+                          <MaterialIcons name="train" size={24} color="black" />
+                        ) : (
+                          <MaterialIcons
+                            name="flight"
+                            size={24}
+                            color="black"
+                          />
+                        )}
+                        <Text> {item.travelmode}</Text>
+                      </View>
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          flexBasis: "33%",
+                        }}
+                      >
+                        <Text>Total Days</Text>
+                        <MaterialIcons name="today" size={24} color="black" />
+
+                        <Text> {item.totalDays}</Text>
+                      </View>
+                    </View>
+                  </Surface>
+                ) : (
+                  <Surface
+                    style={{
+                      width: WIDTH * 0.9,
+                      margin: 10,
+                      elevation: 10,
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        alignItems: "center",
+                        borderBottomColor: "#f1f2f1",
+                        borderBottomWidth: 1,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          paddingVertical: 10,
+                        }}
+                      >
+                        Selected Tours
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        borderRadius: 20,
+                        marginHorizontal: 20,
+                        marginVertical: 10,
+                      }}
+                    >
+                      {item.tourDetails.map((item, index) => {
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexBasis: "100%",
+                              flexWrap: "wrap",
+                              height: HEIGHT / 10,
+                              paddingVertical: 10,
+                            }}
+                          >
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                // flexWrap: "wrap",
+                                flexBasis: "100%",
+                              }}
+                            >
+                              <ProgressiveImage
+                                source={{ uri: item.imageUrl }}
+                                style={{
+                                  height: WIDTH / 8,
+                                  width: WIDTH / 8,
+                                  borderRadius: 5,
+                                  marginRight: 10,
+                                }}
+                              />
+                              <View>
+                                <Text
+                                  style={{
+                                    fontSize: 15,
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  {item.tourName}
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  </Surface>
+                )} */}
+              </View>
+            </ScrollView>
+          </Tab>
+          <Tab
+            heading={
+              <TabHeading style={{ backgroundColor: "#fff" }}>
+                {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
+                <Text>Transport</Text>
+              </TabHeading>
+            }
+          >
+            {Object.keys(plannedDetails).length === 0 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: HEIGHT / 1.2,
+                }}
+              >
+                <ProgressiveImage
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
+                  source={{
+                    uri:
+                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
+                  }}
+                />
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: HEIGHT * 0.85,
+                }}
+              >
+                <Surface
+                  style={{
+                    width: WIDTH * 0.9,
+                    margin: 10,
+                    height: HEIGHT / 3.2,
+                    elevation: 10,
+                    alignItems: "center",
+                    borderRadius: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      alignItems: "center",
+                      borderBottomColor: "#f1f2f1",
+                      borderBottomWidth: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        paddingVertical: 10,
+                      }}
+                    >
+                      Onward Flight
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      justifyContent: "space-between",
+                      padding: 20,
+                    }}
+                  >
+                    <View style={{ alignItems: "center" }}>
+                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
+                        Kiv
+                      </Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.onward.depatureTime}
+                      </Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.onward.depatureDate}
+                      </Text>
+                    </View>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Text>------------</Text>
+                      <MaterialIcons
+                        name="flight-takeoff"
+                        size={34}
+                        color="#23C4ED"
+                      />
+                      <Text>------------</Text>
+                    </View>
+                    <View style={{ alignItems: "center" }}>
+                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
+                        Kiv
+                      </Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.onward.arrivalTime}
+                      </Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.onward.arrivalDate}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      alignItems: "center",
+                      borderTopColor: "#f1f2f1",
+                      borderTopWidth: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        paddingVertical: 10,
+                      }}
+                    >
+                      {plannedDetails.flightDetails.onward.flightName}
+                    </Text>
+                  </View>
+                </Surface>
+                <Surface
+                  style={{
+                    width: WIDTH * 0.9,
+                    margin: 10,
+                    height: HEIGHT / 3.2,
+                    elevation: 10,
+                    alignItems: "center",
+                    borderRadius: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      alignItems: "center",
+                      borderBottomColor: "#f1f2f1",
+                      borderBottomWidth: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        paddingVertical: 10,
+                      }}
+                    >
+                      Return Flight
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      justifyContent: "space-between",
+                      padding: 20,
+                    }}
+                  >
+                    <View style={{ alignItems: "center" }}>
+                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
+                        Kiv
+                      </Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.return.depatureTime}
+                      </Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.return.depatureDate}
+                      </Text>
+                    </View>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Text>------------</Text>
+                      <MaterialIcons
+                        name="flight-takeoff"
+                        size={34}
+                        color="#23C4ED"
+                      />
+                      <Text>------------</Text>
+                    </View>
+                    <View style={{ alignItems: "center" }}>
+                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
+                        Kiv
+                      </Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.return.arrivalTime}
+                      </Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.return.arrivalDate}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      width: WIDTH * 0.9,
+                      alignItems: "center",
+                      borderTopColor: "#f1f2f1",
+                      borderTopWidth: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        paddingVertical: 10,
+                      }}
+                    >
+                      {plannedDetails.flightDetails.return.flightName}
+                    </Text>
+                  </View>
+                </Surface>
+              </View>
+            )}
+          </Tab>
+
+          <Tab
+            heading={
+              <TabHeading style={{ backgroundColor: "#fff" }}>
+                {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
+                <Text>Hotels</Text>
+              </TabHeading>
+            }
+          >
+            {Object.keys(plannedDetails).length === 0 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: HEIGHT / 1.2,
+                }}
+              >
+                <ProgressiveImage
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
+                  source={{
+                    uri:
+                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
+                  }}
+                />
+              </View>
+            ) : (
+              <ScrollView>
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {plannedDetails.hotels.map((i, index) => {
+                    if (i.cityName !== "")
+                      return (
+                        <Surface
+                          key={index}
+                          style={{
+                            width: WIDTH * 0.9,
+                            margin: 10,
+                            elevation: 10,
+                            alignItems: "center",
+                            borderRadius: 10,
+                          }}
+                        >
+                          <View
+                            style={{
+                              width: WIDTH * 0.9,
+                              alignItems: "center",
+                              borderTopColor: "#f1f2f1",
+                              borderTopWidth: 1,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                paddingVertical: 5,
+                                fontSize: 20,
+                                fontFamily: "Andika",
+                              }}
+                            >
+                              {i.cityName}
+                            </Text>
+                          </View>
+                          <Carousel
+                            layout="default"
+                            autoplay={true}
+                            lockScrollWhileSnapping={true}
+                            enableMomentum={false}
+                            loop={true}
+                            ref={(c) => {
+                              carousel = c;
+                            }}
+                            data={i.hotelPicture}
+                            renderItem={_renderPromo}
+                            sliderWidth={WIDTH * 0.9}
+                            onSnapToItem={(index) => setActivePromoSlide(index)}
+                            itemWidth={WIDTH * 0.9}
+                          />
+                          {/* <Pagination
+                  dotsLength={taxi.length}
+                  activeDotIndex={activePromoSlide}
+                  dotStyle={{
+                    width: 30,
+                    height: 7,
+                    backgroundColor: "rgba(0, 0, 0, 0.75)",
+                  }}
+                /> */}
+                          <View
+                            style={{
+                              width: WIDTH * 0.9,
+                              alignItems: "center",
+                              borderTopColor: "#f1f2f1",
+                              borderTopWidth: 1,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                paddingVertical: 5,
+                                fontSize: 20,
+                                fontFamily: "Andika",
+                              }}
+                            >
+                              {i.hotelName}
+                            </Text>
+                          </View>
+                        </Surface>
+                      );
+                  })}
+                </View>
+              </ScrollView>
+            )}
+          </Tab>
+          <Tab
+            heading={
+              <TabHeading style={{ backgroundColor: "#fff" }}>
+                {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
+                <Text>Taxi</Text>
+              </TabHeading>
+            }
+          >
+            {Object.keys(plannedDetails).length === 0 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: HEIGHT / 1.2,
+                }}
+              >
+                <ProgressiveImage
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
+                  source={{
+                    uri:
+                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
+                  }}
+                />
+              </View>
+            ) : (
+              <ScrollView>
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Surface
+                    style={{
+                      width: WIDTH * 0.9,
+                      margin: 10,
+                      elevation: 10,
+                      alignItems: "center",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <Carousel
+                      layout="default"
+                      autoplay={true}
+                      lockScrollWhileSnapping={true}
+                      enableMomentum={false}
+                      loop={true}
+                      ref={(c) => {
+                        carousel = c;
+                      }}
+                      data={plannedDetails.taxiDetails.taxiPicture}
+                      renderItem={_renderPromo}
+                      sliderWidth={WIDTH * 0.9}
+                      onSnapToItem={(index) => setActivePromoSlide(index)}
+                      itemWidth={WIDTH * 0.9}
+                    />
+                    {/* <Pagination
+                    dotsLength={taxi.length}
+                    activeDotIndex={activePromoSlide}
+                    dotStyle={{
+                      width: 30,
+                      height: 7,
+                      backgroundColor: "rgba(0, 0, 0, 0.75)",
+                    }}
+                  /> */}
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        alignItems: "center",
+                        borderTopColor: "#f1f2f1",
+                        borderTopWidth: 1,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          paddingVertical: 5,
+                          fontSize: 20,
+                          fontFamily: "Andika",
+                        }}
+                      >
+                        {plannedDetails.taxiDetails.taxiName}
+                      </Text>
+                    </View>
+                  </Surface>
+                  <Surface
+                    style={{
+                      width: WIDTH * 0.9,
+                      margin: 10,
+                      height: HEIGHT / 3.2,
+                      elevation: 10,
+                      alignItems: "center",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        alignItems: "center",
+                        borderBottomColor: "#f1f2f1",
+                        borderBottomWidth: 1,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          paddingVertical: 10,
+                        }}
+                      >
+                        Taxi Informations
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        padding: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          borderRightWidth: 2,
+                          borderRightColor: "#f1f2f1",
+                          height: HEIGHT / 4.8,
+                          flexBasis: "33%",
+                        }}
+                      >
+                        <Text>Distance</Text>
+                        <MaterialCommunityIcons
+                          name="map-marker-distance"
+                          size={24}
+                          color="black"
+                        />
+                        <Text>
+                          {plannedDetails.basicDetails.kilometers} kms
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          borderRightWidth: 2,
+                          borderRightColor: "#f1f2f1",
+                          height: HEIGHT / 4.8,
+                          flexBasis: "33%",
+                        }}
+                      >
+                        <Text> Days </Text>
+                        <MaterialIcons name="today" size={24} color="black" />
+                        <Text>{plannedDetails.basicDetails.days} Days</Text>
+                      </View>
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          flexBasis: "33%",
+                        }}
+                      >
+                        <Text>Days Limit </Text>
+                        <MaterialIcons name="restore" size={24} color="black" />
+                        <Text>{plannedDetails.basicDetails.daysLimit} kms</Text>
+                      </View>
+                    </View>
+                  </Surface>
+                  <Surface
+                    style={{
+                      width: WIDTH * 0.9,
+                      margin: 10,
+                      elevation: 10,
+                      alignItems: "center",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: WIDTH * 0.9,
+                        alignItems: "center",
+                        borderBottomColor: "#f1f2f1",
+                        borderBottomWidth: 1,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          paddingVertical: 10,
+                        }}
+                      >
+                        Terms & Conditions
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: 20,
+                      }}
+                    >
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.basicDetails.termsConditions}
+                      </Text>
+                    </View>
+                  </Surface>
+                </View>
+              </ScrollView>
+            )}
+          </Tab>
+        </Tabs>
+      </Container>
+      {/* <View
         style={{
           backgroundColor: "#28C9E1",
           height: HEIGHT / 8,
@@ -218,423 +1246,7 @@ const RequestInner = ({ navigation, route }) => {
           <Text style={{ color: "white", fontSize: 20 }}>My Requests</Text>
         </View>
       </View>
-      {/* {plan ? (
-        <View>
-          <Surface style={{ marginHorizontal: 20, marginVertical: 10 }}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={{ fontFamily: "Andika", fontSize: 30 }}>
-                {plan.tourCategory}
-              </Text>
-            </View>
-            <View style={{ marginHorizontal: WIDTH / 10 }}>
-              <Text style={styles.text}>Request Id :{plan.requestID}</Text>
-              {isAdmin ? (
-                <View style={styles.statusContainer}>
-                  <Text style={styles.text}>Status: </Text>
-                  <Picker
-                    selectedValue={status}
-                    style={{ height: 50, width: 200, marginTop: 10 }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      setStatus(itemValue);
-                    }}
-                  >
-                    <Picker.Item
-                      label="Query Received"
-                      value="Query Received"
-                    />
-                    <Picker.Item
-                      label="Duplicate Query"
-                      value="Duplicate Query"
-                    />
-                    <Picker.Item label="Estimated" value="Estimated" />
-                    <Picker.Item label="On Hold" value="On Hold" />
-                    <Picker.Item label="On Progress" value="On Progress" />
-                    <Picker.Item label="Plan Shared" value="Plan Shared" />
-                    <Picker.Item
-                      label="Awaiting Payment"
-                      value="Awaiting Payment"
-                    />
-                    <Picker.Item label="Tour Booked" value="Tour Booked" />
-                    <Picker.Item label="Completed" value="Completed" />
-                    <Picker.Item label="Cancelled" value="Cancelled" />
-                    <Picker.Item
-                      label="Cancellation Requested"
-                      value="Cancellation Requested"
-                    />
-                  </Picker>
-                </View>
-              ) : (
-                <Text style={styles.text}>Status: {plan.status}</Text>
-              )}
-              <Text style={styles.text}>Name: {plan.name}</Text>
-              <Text style={styles.text}>Number: {plan.number}</Text>
-              <Text style={styles.text}>Budget: {plan.budget}</Text>
-              <Text style={styles.text}>Adult: {plan.adult}</Text>
-              <Text style={styles.text}>Children : {plan.children}</Text>
-              <Text style={styles.text}>From Date: {plan.fromDate}</Text>
-              <Text style={styles.text}>To Date: {plan.toDate}</Text>
-              <Text style={styles.text}>Destination: {plan.destination}</Text>
-              <Text style={styles.text}>Preferance: {plan.preferanece}</Text>
-              <Text style={styles.text}>Start Point: {plan.startPoint}</Text>
-              <Text style={styles.text}>Tour Type: {plan.tourType}</Text>
-              <Text style={styles.text}>Travel Mode: {plan.travelMode}</Text>
-              <Text style={styles.text}>
-                Traveller Type: {plan.travellerType}
-              </Text>
-            </View>
-
-            {isAdmin ? (
-              <TouchableOpacity
-                onPress={() => {
-                  updateStatus(plan);
-                }}
-              >
-                <View style={{ alignItems: "center", margin: 10 }}>
-                  <Text style={styles.updateStatus}>Update Status</Text>
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("MyRequest")}
-              >
-                <View style={{ alignItems: "center", margin: 10 }}>
-                  <Text style={styles.back}>Back</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          </Surface>
-
-          {plan.tourCost === 0 && !isAdmin ? null : (
-            <Surface style={styles.paymentContainer}>
-              <View>
-                <Text style={styles.payment}>Payment</Text>
-              </View>
-
-              {isAdmin ? (
-                <View>
-                  <View style={styles.estimatedBudgetContainer}>
-                    <Text style={styles.estimatedBudget}>
-                      Estimated Budget:
-                    </Text>
-                    <TextInput
-                      style={styles.estimatedBudgetInput}
-                      value={cost.toString()}
-                      onChangeText={(value) => setCost(value)}
-                    />
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      updateCost(plan);
-                    }}
-                  >
-                    <View style={{ alignItems: "center", margin: 10 }}>
-                      <Text style={styles.updateCost}>Update Cost</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <View>
-                  <Text style={styles.estimatedBudget}>
-                    Estimated Budget: {plan.tourCost}
-                  </Text>
-                  <TouchableOpacity>
-                    <View style={{ alignItems: "center", margin: 10 }}>
-                      <Text style={styles.payNow}>Pay Now</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </Surface>
-          )}
-        </View>
-      ) : null}
-      {road ? (
-        <View>
-          <Surface style={{ marginHorizontal: 20, marginVertical: 10 }}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={{ fontFamily: "Andika", fontSize: 30 }}>
-                {road.tourCategory}
-              </Text>
-            </View>
-            <View style={{ marginHorizontal: WIDTH / 10 }}>
-              <Text style={styles.text}>Request Id :{road.requestID}</Text>
-              {isAdmin ? (
-                <View style={styles.statusContainer}>
-                  <Text style={styles.text}>Status: </Text>
-                  <Picker
-                    selectedValue={status}
-                    style={{ height: 50, width: 200, marginTop: 10 }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      setStatus(itemValue);
-                    }}
-                  >
-                    <Picker.Item
-                      label="Query Received"
-                      value="Query Received"
-                    />
-                    <Picker.Item
-                      label="Duplicate Query"
-                      value="Duplicate Query"
-                    />
-                    <Picker.Item label="Estimated" value="Estimated" />
-                    <Picker.Item label="On Hold" value="On Hold" />
-                    <Picker.Item label="On Progress" value="On Progress" />
-                    <Picker.Item label="Plan Shared" value="Plan Shared" />
-                    <Picker.Item
-                      label="Awaiting Payment"
-                      value="Awaiting Payment"
-                    />
-                    <Picker.Item label="Tour Booked" value="Tour Booked" />
-                    <Picker.Item label="Completed" value="Completed" />
-                    <Picker.Item label="Cancelled" value="Cancelled" />
-                    <Picker.Item
-                      label="Cancellation Requested"
-                      value="Cancellation Requested"
-                    />
-                  </Picker>
-                </View>
-              ) : (
-                <Text style={styles.text}>Status: {road.status}</Text>
-              )}
-              <Text style={styles.text}>Name: {road.name}</Text>
-              <Text style={styles.text}>Number: {road.number}</Text>
-              <Text style={styles.text}>Budget: {road.budget}</Text>
-              <Text style={styles.text}>Adult: {road.adult}</Text>
-              <Text style={styles.text}>Children : {road.children}</Text>
-              <Text style={styles.text}>From Date: {road.fromDate}</Text>
-              <Text style={styles.text}>To Date: {road.toDate}</Text>
-              <Text style={styles.text}>Start Point: {road.startPoint}</Text>
-
-              <Text style={styles.text}>Travel Mode: {road.travelMode}</Text>
-              <Text style={styles.text}>
-                Car Rent: {road.carRent ? "Needed" : "No Need"}
-              </Text>
-              <Text style={styles.text}>
-                Additional Beds: {road.additionalInfo ? "Needed" : "No Need"}
-              </Text>
-              <Text style={styles.text}>
-                Drive Duration: {road.driveDuration}
-              </Text>
-              <Text style={styles.text}>
-                Drive Restriction: {road.driveRestriction}
-              </Text>
-              <Text style={styles.text}>Drive Type: {road.driveType}</Text>
-              <Text style={styles.text}>Driver Type: {road.driverType}</Text>
-              <Text style={styles.text}>Stops: {road.stops}</Text>
-              <Text style={styles.text}>Travel Mode: {road.travelMode}</Text>
-              <Text style={styles.text}>
-                Traveller Type: {road.travellerType}
-              </Text>
-            </View>
-            {isAdmin ? (
-              <TouchableOpacity
-                onPress={() => {
-                  updateStatus(road);
-                }}
-              >
-                <View style={{ alignItems: "center", margin: 10 }}>
-                  <Text style={styles.updateStatus}>Update Status</Text>
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("MyRequest")}
-              >
-                <View style={{ alignItems: "center", margin: 10 }}>
-                  <Text style={styles.back}>Back</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          </Surface>
-          {road.tourCost === 0 && !isAdmin ? null : (
-            <Surface style={styles.paymentContainer}>
-              <View>
-                <Text style={styles.payment}>Payment</Text>
-              </View>
-
-              {isAdmin ? (
-                <View>
-                  <View style={styles.estimatedBudgetContainer}>
-                    <Text style={styles.estimatedBudget}>
-                      Estimated Budget:
-                    </Text>
-                    <TextInput
-                      style={styles.estimatedBudgetInput}
-                      value={cost}
-                      onChangeText={(value) => setCost(value)}
-                    />
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      updateCost(road);
-                    }}
-                  >
-                    <View style={{ alignItems: "center", margin: 10 }}>
-                      <Text style={styles.updateCost}>Update Cost</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <View>
-                  <Text style={styles.estimatedBudget}>
-                    Estimated Budget: {road.tourCost}
-                  </Text>
-                  <TouchableOpacity>
-                    <View style={{ alignItems: "center", margin: 10 }}>
-                      <Text style={styles.payNow}>Pay Now</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </Surface>
-          )}
-        </View>
-      ) : null}
-      {surprise ? (
-        <View>
-          <Surface style={{ marginHorizontal: 20, marginVertical: 10 }}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={{ fontFamily: "Andika", fontSize: 30 }}>
-                {surprise.tourCategory}
-              </Text>
-            </View>
-
-            <View style={{ marginHorizontal: WIDTH / 10 }}>
-              <Text style={styles.text}>Request Id :{surprise.requestID}</Text>
-              {isAdmin ? (
-                <View style={styles.statusContainer}>
-                  <Text style={styles.text}>Status: </Text>
-                  <Picker
-                    selectedValue={surprise.status}
-                    style={{ height: 50, width: 200, marginTop: 10 }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      setStatus(itemValue);
-                    }}
-                  >
-                    <Picker.Item
-                      label="Query Received"
-                      value="Query Received"
-                    />
-                    <Picker.Item
-                      label="Duplicate Query"
-                      value="Duplicate Query"
-                    />
-                    <Picker.Item label="Estimated" value="Estimated" />
-                    <Picker.Item label="On Hold" value="On Hold" />
-                    <Picker.Item label="On Progress" value="On Progress" />
-                    <Picker.Item label="Plan Shared" value="Plan Shared" />
-                    <Picker.Item
-                      label="Awaiting Payment"
-                      value="Awaiting Payment"
-                    />
-                    <Picker.Item label="Tour Booked" value="Tour Booked" />
-                    <Picker.Item label="Completed" value="Completed" />
-                    <Picker.Item label="Cancelled" value="Cancelled" />
-                    <Picker.Item
-                      label="Cancellation Requested"
-                      value="Cancellation Requested"
-                    />
-                  </Picker>
-                </View>
-              ) : (
-                <Text style={styles.text}>Status: {surprise.status}</Text>
-              )}
-              <Text style={styles.text}>Name: {surprise.name}</Text>
-              <Text style={styles.text}>Number: {surprise.number}</Text>
-              <Text style={styles.text}>Budget: {surprise.budget}</Text>
-              <Text style={styles.text}>Adult: {surprise.adult}</Text>
-              <Text style={styles.text}>Children : {surprise.children}</Text>
-              <Text style={styles.text}>From Date: {surprise.fromDate}</Text>
-              <Text style={styles.text}>To Date: {surprise.toDate}</Text>
-              <Text style={styles.text}>
-                Expediture1: {surprise.expediture1}
-              </Text>
-              <Text style={styles.text}>
-                Expediture1: {surprise.expediture2}
-              </Text>
-              <Text style={styles.text}>
-                Expediture1: {surprise.expediture3}
-              </Text>
-              <Text style={styles.text}>
-                Start Point: {surprise.startPoint}
-              </Text>
-              <Text style={styles.text}>
-                Preferance: {surprise.tourPreferance}
-              </Text>
-              <Text style={styles.text}>Tour Type: {surprise.tourType}</Text>
-              <Text style={styles.text}>
-                Travel Mode: {surprise.travelMode}
-              </Text>
-              <Text style={styles.text}>
-                Traveller Type: {surprise.travellerType}
-              </Text>
-            </View>
-            {isAdmin ? (
-              <TouchableOpacity
-                onPress={() => {
-                  updateStatus(surprise);
-                }}
-              >
-                <View style={{ alignItems: "center", margin: 10 }}>
-                  <Text style={styles.updateStatus}>Update Status</Text>
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("MyRequest")}
-              >
-                <View style={{ alignItems: "center", margin: 10 }}>
-                  <Text style={styles.back}>Back</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          </Surface>
-          {surprise.tourCost === 0 && !isAdmin ? null : (
-            <Surface style={styles.paymentContainer}>
-              <View>
-                <Text style={styles.payment}>Payment</Text>
-              </View>
-
-              {isAdmin ? (
-                <View>
-                  <View style={styles.estimatedBudgetContainer}>
-                    <Text style={styles.estimatedBudget}>
-                      Estimated Budget:
-                    </Text>
-                    <TextInput
-                      style={styles.estimatedBudgetInput}
-                      value={cost}
-                      onChangeText={(value) => setCost(value)}
-                    />
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      updateCost(surprise);
-                    }}
-                  >
-                    <View style={{ alignItems: "center", margin: 10 }}>
-                      <Text style={styles.updateCost}>Update Cost</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <View>
-                  <Text style={styles.estimatedBudget}>
-                    Estimated Budget: {surprise.tourCost}
-                  </Text>
-                  <TouchableOpacity>
-                    <View style={{ alignItems: "center", margin: 10 }}>
-                      <Text style={styles.payNow}>Pay Now</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </Surface>
-          )}
-        </View>
-      ) : null} */}
-
-      {/* Honeymoon luxury */}
+   
 
       {higher ? (
         <View>
@@ -654,7 +1266,6 @@ const RequestInner = ({ navigation, route }) => {
                     items={queryStatus}
                     defaultValue={higher.status}
                     containerStyle={{ height: 40, width: WIDTH / 1.7 }}
-                    // style={{ backgroundColor: "#fafafa" }}
                     itemStyle={{
                       justifyContent: "flex-start",
                     }}
@@ -763,7 +1374,7 @@ const RequestInner = ({ navigation, route }) => {
             </Surface>
           )}
         </View>
-      ) : null}
+      ) : null} */}
     </ScrollView>
   );
 };

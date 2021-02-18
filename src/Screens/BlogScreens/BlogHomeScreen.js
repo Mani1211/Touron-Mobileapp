@@ -12,10 +12,11 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+import moment from "moment";
 import touron from "../../api/touron";
 import { Surface } from "react-native-paper";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
-import { Feather } from "@expo/vector-icons";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 const BlogHomeScreen = ({ navigation }) => {
@@ -23,7 +24,7 @@ const BlogHomeScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(true);
   const [blogloaded, setBlogLoaded] = useState(true);
   const [page, setPage] = useState(1);
-  const [pageSize, setpageSize] = useState(10);
+  const [pageSize, setpageSize] = useState(40);
   const getBlog = async () => {
     setBlogLoaded(true);
     try {
@@ -43,7 +44,7 @@ const BlogHomeScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <ScrollView>
+    <View style={{ backgroundColor: "#FFF", flex: 1 }}>
       <StatusBar barStyle="dark-content" />
       <View
         style={{
@@ -77,73 +78,217 @@ const BlogHomeScreen = ({ navigation }) => {
             flexWrap: "wrap",
             justifyContent: "center",
             marginVertical: 30,
+            paddingLeft: 20,
           }}
         >
-          {blog.map((item, index) => (
-            <TouchableWithoutFeedback
-              key={index}
-              onPress={() => navigation.navigate("BlogInner", { item: item })}
-            >
-              <Surface
-                style={{
-                  width: WIDTH / 2.2,
-                  marginHorizontal: 3,
-                  marginVertical: 5,
-                  borderRadius: 20,
-                  elevation: 5,
-                  height: HEIGHT / 2.5,
-                }}
-              >
-                <View>
-                  <ProgressiveImage
-                    style={{
-                      height: HEIGHT / 4.8,
-                      width: WIDTH / 2.2,
-                      borderRadius: 15,
-                    }}
-                    resizeMode="cover"
-                    source={{ uri: item.imageSrc }}
-                  />
-                  {/* <Image
-
-
-
-                    style={{
-                      height: HEIGHT / 4.8,
-                      width: WIDTH / 2.2,
-                      borderRadius: 15,
-                    }}
-                    source={{ uri: item.imageSrc }}
-                  /> */}
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontFamily: "NewYorkl",
-                      marginHorizontal: 10,
-                      marginTop: 4,
-                    }}
+          <FlatList
+            data={blog}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item, index }) => {
+              if (index < 11)
+                return (
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      navigation.navigate("BlogInner", { item: item })
+                    }
                   >
-                    {item.blogTitle}
-                  </Text>
-                </View>
-                <View style={{ marginHorizontal: 10 }}>
-                  {Platform.OS === "ios" ? (
-                    <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
-                      {item.content.slice(0, 100)}...
-                    </Text>
-                  ) : (
-                    <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
-                      {item.content.slice(0, 45)}...
-                    </Text>
-                  )}
-                </View>
-              </Surface>
-            </TouchableWithoutFeedback>
-          ))}
+                    <Surface
+                      style={{
+                        width: WIDTH * 0.8,
+                        marginHorizontal: 10,
+                        marginVertical: 5,
+                        borderRadius: 20,
+                        elevation: 5,
+                        height: HEIGHT / 2.5,
+                      }}
+                    >
+                      <View style={{ position: "relative" }}>
+                        <ProgressiveImage
+                          style={{
+                            height: HEIGHT / 2.5,
+                            width: WIDTH * 0.8,
+                            borderRadius: 15,
+                          }}
+                          resizeMode="cover"
+                          source={{ uri: item.imageSrc }}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          position: "absolute",
+                          bottom: 0,
+                          backgroundColor: "#0006",
+                          borderBottomRightRadius: 15,
+                          borderBottomLeftRadius: 15,
+                          width: WIDTH * 0.8,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            fontFamily: "NewYorkl",
+                            marginHorizontal: 10,
+                            color: "#fff",
+                            marginTop: 4,
+                          }}
+                        >
+                          {item.blogTitle}
+                        </Text>
+                        <View style={{ marginHorizontal: 10 }}>
+                          {Platform.OS === "ios" ? (
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                fontFamily: "Andika",
+                                color: "#fff",
+                              }}
+                            >
+                              {item.content.slice(0, 100)}...
+                            </Text>
+                          ) : (
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                fontFamily: "Andika",
+                                color: "#fff",
+                              }}
+                            >
+                              {item.content.slice(0, 45)}...
+                            </Text>
+                          )}
+                        </View>
+                      </View>
+                    </Surface>
+                  </TouchableWithoutFeedback>
+                );
+            }}
+          />
         </View>
       )}
+      <View style={{ paddingHorizontal: 25 }}>
+        <Text
+          style={{ fontFamily: "Avenir", fontSize: 25, paddingVertical: 10 }}
+        >
+          Popular
+        </Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {blog.map((item, index) => {
+            if (index > 11)
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() =>
+                    navigation.navigate("BlogInner", { item: item })
+                  }
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 20,
+                      // justifyContent: "space-between",
+                      alignItems: "center",
+                      borderBottomColor: "#f2f2f2",
+                      borderBottomWidth: 2,
+                      paddingBottom: 20,
+                    }}
+                  >
+                    <View>
+                      <Image
+                        style={{
+                          width: 75,
+                          height: 75,
+                          borderRadius: 10,
+                          marginRight: 20,
+                        }}
+                        source={{ uri: item.imageSrc }}
+                      />
+                    </View>
+                    <View>
+                      <Text style={{ fontSize: 18 }}>{item.blogTitle}</Text>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <MaterialIcons name="timer" size={24} color="black" />
+                        <Text
+                          style={{
+                            fontFamily: "Andika",
+                            fontSize: 16,
+                            paddingHorizontal: 5,
+                          }}
+                        >
+                          {item.createdAt.slice(0, 10)}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        paddingRight: 40,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text style={{ fontFamily: "Andika", fontSize: 20 }}>
+                        {/* {item.data.length} */}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                // <TouchableWithoutFeedback
+                //   key={index}
+                //   onPress={() => navigation.navigate("BlogInner", { item: item })}
+                // >
+                //   <Surface
+                //     style={{
+                //       width: WIDTH * 0.9,
+                //       marginHorizontal: 3,
+                //       marginVertical: 5,
+                //       borderRadius: 20,
+                //       elevation: 5,
+                //       height: HEIGHT / 2.5,
+                //     }}
+                //   >
+                //     <View>
+                //       <ProgressiveImage
+                //         style={{
+                //           height: HEIGHT / 4.8,
+                //           width: WIDTH / 2.2,
+                //           borderRadius: 15,
+                //         }}
+                //         resizeMode="cover"
+                //         source={{ uri: item.imageSrc }}
+                //       />
+                //     </View>
+                //     <View>
+                //       <Text
+                //         style={{
+                //           fontSize: 15,
+                //           fontFamily: "NewYorkl",
+                //           marginHorizontal: 10,
+                //           marginTop: 4,
+                //         }}
+                //       >
+                //         {item.blogTitle}
+                //       </Text>
+                //     </View>
+                //     <View style={{ marginHorizontal: 10 }}>
+                //       {Platform.OS === "ios" ? (
+                //         <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
+                //           {item.content.slice(0, 100)}...
+                //         </Text>
+                //       ) : (
+                //         <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
+                //           {item.content.slice(0, 45)}...
+                //         </Text>
+                //       )}
+                //     </View>
+                //   </Surface>
+                // </TouchableWithoutFeedback>
+              );
+          })}
+        </ScrollView>
+      </View>
 
       {loaded ? null : (
         <TouchableOpacity
@@ -180,7 +325,7 @@ const BlogHomeScreen = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       )}
-    </ScrollView>
+    </View>
   );
 };
 

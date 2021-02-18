@@ -23,7 +23,6 @@ export const RootStackScreen = () => {
           component={GettingStartedScreen}
         />
       )}
-
       <RootStack.Screen name="Main" component={MainTabScreen} />
       <RootStack.Screen name="SignInScreen" component={SignInScreen} />
       <RootStack.Screen name="SignUpScreen" component={SignUpScreen} />

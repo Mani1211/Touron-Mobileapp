@@ -27,12 +27,13 @@ const SelfTourHome = ({ navigation, route }) => {
   const [error, setErrorMessage] = useState();
   const [loader, setLoader] = useState(true);
   const selectedCity = route.params.selectedCity;
-  const cityDetails = route.params.cityDetails;
+  const selectedCityNames = route.params.selectedCityNames;
   const [active, setActive] = useState(0);
   const cityLength = selectedCity.length - 1;
   const [selectedTours, setSelectedTours] = useState([]);
   const [selectedTourNames, setSelectedTourNames] = useState([]);
-
+  // console.log("route.params.selectedCityNames", route.params.selectedCityNames);
+  // console.log("selectedTours", selectedTours);
   const showLoader = () => {
     setTimeout(() => {
       setLoader(false);
@@ -40,9 +41,7 @@ const SelfTourHome = ({ navigation, route }) => {
   };
   const getTour = async (city) => {
     try {
-      // console.log(city, "cotty");
       const tourResponse = await touron.get(`/tour/cityname/${city}`);
-      // console.log(tourResponse.data.length, "length");
       setTour(tourResponse.data);
       setLoader(false);
     } catch (err) {
@@ -52,7 +51,7 @@ const SelfTourHome = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    getTour(selectedCity[active]);
+    getTour(selectedCityNames[active]);
     showLoader();
   }, []);
 
@@ -69,7 +68,7 @@ const SelfTourHome = ({ navigation, route }) => {
               fontFamily: "Avenir",
             }}
           >
-            Select Your Tours for {selectedCity[active]}
+            Select Your Tours for {selectedCityNames[active]}
           </Text>
         </View>
         <SearchBar />
@@ -249,11 +248,11 @@ const SelfTourHome = ({ navigation, route }) => {
             <TouchableOpacity
               style={{ flex: 0.5 }}
               onPress={() => {
-                const cityLength = selectedCity.length - 1;
+                const cityLength = selectedCityNames.length - 1;
 
                 //  console.log(active);
                 if (active <= cityLength) {
-                  getTour(selectedCity[active - 1]);
+                  getTour(selectedCityNames[active - 1]);
                   setActive(active - 1);
                 }
                 setLoader(true);
@@ -268,19 +267,19 @@ const SelfTourHome = ({ navigation, route }) => {
             <TouchableOpacity
               style={{ flex: 1.5 }}
               onPress={() => {
-                const cityLength = selectedCity.length - 1;
+                const cityLength = selectedCityNames.length - 1;
 
                 //   console.log(active);
                 if (active <= cityLength) {
                   setActive(active + 1);
-                  getTour(selectedCity[active + 1]);
+                  getTour(selectedCityNames[active + 1]);
                 }
                 setLoader(true);
               }}
             >
               <View style={styles.button}>
                 <Text style={styles.buttonText}>
-                  Proceed to {selectedCity[active + 1]}
+                  Proceed to {selectedCityNames[active + 1]}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -291,7 +290,7 @@ const SelfTourHome = ({ navigation, route }) => {
               onPress={() => {
                 navigation.navigate("OverviewTours", {
                   selectedTours: selectedTours,
-                  cityDetails: cityDetails,
+                  selectedCity: selectedCity,
                 });
               }}
             >
