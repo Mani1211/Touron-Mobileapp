@@ -31,7 +31,7 @@ const BlogHomeScreen = ({ navigation }) => {
       const blogResponse = await touron.get(
         `/blog?page=1&pageSize=${pageSize}`
       );
-      setBlog(blogResponse.data);
+      setBlog(blogResponse.data.reverse());
       setBlogLoaded(false);
       setLoaded(false);
     } catch (err) {
@@ -218,73 +218,12 @@ const BlogHomeScreen = ({ navigation }) => {
                             paddingHorizontal: 5,
                           }}
                         >
-                          {item.createdAt.slice(0, 10)}
+                          Read More
                         </Text>
                       </View>
                     </View>
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        paddingRight: 40,
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text style={{ fontFamily: "Andika", fontSize: 20 }}>
-                        {/* {item.data.length} */}
-                      </Text>
-                    </View>
                   </View>
                 </TouchableOpacity>
-                // <TouchableWithoutFeedback
-                //   key={index}
-                //   onPress={() => navigation.navigate("BlogInner", { item: item })}
-                // >
-                //   <Surface
-                //     style={{
-                //       width: WIDTH * 0.9,
-                //       marginHorizontal: 3,
-                //       marginVertical: 5,
-                //       borderRadius: 20,
-                //       elevation: 5,
-                //       height: HEIGHT / 2.5,
-                //     }}
-                //   >
-                //     <View>
-                //       <ProgressiveImage
-                //         style={{
-                //           height: HEIGHT / 4.8,
-                //           width: WIDTH / 2.2,
-                //           borderRadius: 15,
-                //         }}
-                //         resizeMode="cover"
-                //         source={{ uri: item.imageSrc }}
-                //       />
-                //     </View>
-                //     <View>
-                //       <Text
-                //         style={{
-                //           fontSize: 15,
-                //           fontFamily: "NewYorkl",
-                //           marginHorizontal: 10,
-                //           marginTop: 4,
-                //         }}
-                //       >
-                //         {item.blogTitle}
-                //       </Text>
-                //     </View>
-                //     <View style={{ marginHorizontal: 10 }}>
-                //       {Platform.OS === "ios" ? (
-                //         <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
-                //           {item.content.slice(0, 100)}...
-                //         </Text>
-                //       ) : (
-                //         <Text style={{ fontSize: 14, fontFamily: "Andika" }}>
-                //           {item.content.slice(0, 45)}...
-                //         </Text>
-                //       )}
-                //     </View>
-                //   </Surface>
-                // </TouchableWithoutFeedback>
               );
           })}
         </ScrollView>

@@ -576,7 +576,7 @@ const ProfileScreen = ({ navigation }) => {
                           ]}
                         >
                           <Text style={[styles.otpText, { color: "black" }]}>
-                            save
+                            Save
                           </Text>
                         </View>
                       </TouchableOpacity>

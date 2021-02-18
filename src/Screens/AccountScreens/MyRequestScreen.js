@@ -353,11 +353,11 @@ const MyRequestScreen = ({ navigation }) => {
         return (
           <View>
             <View>
-              <StatusBar backgroundColor="#28C9E1" />
+              <StatusBar backgroundColor="#fff" />
               <View
                 style={{
-                  backgroundColor: "#28C9E1",
-                  paddingVertical: 20,
+                  backgroundColor: "#fff",
+                  paddingVertical: 40,
                   alignItems: "center",
                   flexDirection: "row",
                 }}
@@ -376,12 +376,17 @@ const MyRequestScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <View
                   style={{
-                    flex: 0.8,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <Text style={{ color: "white", fontSize: 20 }}>
+                  <Text
+                    style={{
+                      color: "black",
+                      fontSize: 25,
+                      fontFamily: "NewYorkl",
+                    }}
+                  >
                     My Requests
                   </Text>
                 </View>
@@ -446,13 +451,13 @@ const MyRequestScreen = ({ navigation }) => {
       case 2: {
         return (
           <View>
-            <StatusBar backgroundColor="#28C9E1" />
+            <StatusBar backgroundColor="#fff" />
             <View
               style={{
-                backgroundColor: "#28C9E1",
+                backgroundColor: "#fff",
                 alignItems: "center",
                 flexDirection: "row",
-                paddingVertical: 20,
+                paddingVertical: 40,
               }}
             >
               <TouchableOpacity onPress={() => setStep(1)}>
@@ -469,12 +474,16 @@ const MyRequestScreen = ({ navigation }) => {
               </TouchableOpacity>
               <View
                 style={{
-                  flex: 0.8,
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Text style={{ color: "white", fontSize: 20 }}>
+                <Text
+                  style={{
+                    fontSize: 25,
+                    fontFamily: "NewYorkl",
+                  }}
+                >
                   {requests[0].tourCategory}
                 </Text>
               </View>

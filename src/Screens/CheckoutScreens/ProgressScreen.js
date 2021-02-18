@@ -537,7 +537,9 @@ const ProgressScreen = ({ navigation, route }) => {
                 travelmode: "",
                 flightType: "",
                 selectedState: "",
-                // totalDays: details.totalDays,
+                tourCategory: "Self Plan Tour",
+                status: "Query Received",
+                tourCost: 0,
                 tourType: "International",
               })
               .then((data) => console.log(data))

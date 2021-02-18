@@ -153,6 +153,9 @@ const SelfPlanForm = ({ navigation }) => {
         flightType: flightType,
         selectedState: selectedState,
         tourDetails: [],
+        tourCategory: "Self Plan Tour",
+        status: "Query Received",
+        tourCost: 0,
       })
       .then((data) => {
         closeModal();
@@ -782,10 +785,16 @@ const SelfPlanForm = ({ navigation }) => {
                   marginHorizontal: WIDTH / 15,
                 }}
               >
-                <TouchableOpacity onPress={() => setStep(step - 1)}>
-                  <View>
-                    <AntDesign name="arrowleft" size={28} />
-                  </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (step > 2) setStep(step - 1);
+                  }}
+                >
+                  {step === 1 ? null : (
+                    <View>
+                      <AntDesign name="arrowleft" size={28} />
+                    </View>
+                  )}
                 </TouchableOpacity>
 
                 <Text

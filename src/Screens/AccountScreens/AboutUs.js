@@ -33,6 +33,36 @@ const AboutUs = ({ navigation }) => {
   return (
     <ScrollView style={{ backgroundColor: "#fff", flex: 1 }}>
       <View
+        style={{
+          backgroundColor: "#fff",
+          alignItems: "center",
+          paddingVertical: 40,
+          flexDirection: "row",
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <View>
+            <Feather
+              name="arrow-left"
+              size={28}
+              color="black"
+              style={{
+                paddingHorizontal: 20,
+                paddingTop: Platform.OS === "ios" ? 25 : 0,
+              }}
+            />
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ fontSize: 25, fontFamily: "NewYorkl" }}>About US</Text>
+        </View>
+      </View>
+      <View
         style={{ justifyContent: "center", alignItems: "center", margin: 10 }}
       >
         <Image
@@ -40,7 +70,7 @@ const AboutUs = ({ navigation }) => {
           source={require("../../../assets/playstore.png")}
         />
       </View>
-      <View style={{ marginHorizontal: 5 }}>
+      <View style={{ marginHorizontal: 15 }}>
         <Text style={{ fontSize: 25, fontFamily: "NewYorkl" }}>
           Travel your dreams today!
         </Text>
@@ -67,9 +97,9 @@ const AboutUs = ({ navigation }) => {
           source={require("../../../assets/stats.jpg")}
         />
       </View>
-      <View style={{ marginHorizontal: 5 }}>
+      <View style={{ marginHorizontal: 15 }}>
         <Text style={{ fontSize: 12, fontFamily: "NewYorkl" }}>WORDS FROM</Text>
-        <Text style={{ fontFamily: "NewYorkl", fontSize: 16, color: "red" }}>
+        <Text style={{ fontFamily: "NewYorkl", fontSize: 16, color: "black" }}>
           MR.VIKASH MANOHARAN CEO, FOUNDER
         </Text>
       </View>

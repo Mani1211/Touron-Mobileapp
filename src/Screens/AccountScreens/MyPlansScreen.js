@@ -68,9 +68,9 @@ const MyPlansScreen = ({ navigation }) => {
 
       <View
         style={{
-          backgroundColor: "#28C9E1",
-          height: HEIGHT / 8,
+          backgroundColor: "#fff",
           alignItems: "center",
+          paddingVertical: 40,
           flexDirection: "row",
         }}
       >
@@ -89,13 +89,11 @@ const MyPlansScreen = ({ navigation }) => {
         </TouchableOpacity>
         <View
           style={{
-            flex: 0.8,
             alignItems: "center",
             justifyContent: "center",
-            paddingTop: 25,
           }}
         >
-          <Text style={{ color: "white", fontSize: 20 }}>My Plans</Text>
+          <Text style={{ fontSize: 25, fontFamily: "NewYorkl" }}>My Plans</Text>
         </View>
       </View>
       {selfPlans.length == 0 ? (
@@ -141,57 +139,61 @@ const MyPlansScreen = ({ navigation }) => {
             keyExtractor={(item) => item.requestID}
             renderItem={({ item }) => {
               return (
-                <View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("MyPlanInner", { item: item })
-                    }
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("MyPlanInner", { item: item })
+                  }
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 20,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderBottomColor: "#fff",
+                      borderTopColor: "#fff",
+                      borderBottomWidth: 4,
+                      paddingVertical: 10,
+                      backgroundColor: "#f1f2f1",
+                      marginHorizontal: 25,
+                      paddingHorizontal: 10,
+                    }}
                   >
                     <View
                       style={{
-                        flexDirection: "row",
-                        marginTop: 20,
-                        justifyContent: "space-between",
+                        justifyContent: "center",
+                        paddingHorizontal: 20,
                         alignItems: "center",
                       }}
                     >
-                      <View style={{ flex: 0.2 }}>
-                        <Avatar.Text
-                          label="P"
-                          style={{
-                            backgroundColor: "#DBE8EB",
-                            marginLeft: 20,
-                          }}
-                        />
-                      </View>
-                      <View
-                        style={{
-                          flex: 0.7,
-                          justifyContent: "center",
-                        }}
-                      >
-                        <View
-                          style={{
-                            flex: 0.7,
-                            // justifyContent: "center",
-                            flexDirection: "row",
-                          }}
-                        >
-                          {/* <Text style={{ fontSize: 18 }}> */}
-                          {item.selectedCities.map((c, index) => (
-                            <Text style={{ fontSize: 18 }} key={index}>
-                              {c.cityName},
+                      <Text style={{ fontSize: 14, paddingBottom: 20 }}>
+                        Request ID: {item.requestID}
+                      </Text>
+                      <View style={{ flexDirection: "row" }}>
+                        {item.selectedCities.map((c, index) => {
+                          if (index === item.selectedCities.length - 1) {
+                            return (
+                              <Text
+                                style={{ fontSize: 18, fontFamily: "NewYorkl" }}
+                                key={index}
+                              >
+                                {c.cityName}
+                              </Text>
+                            );
+                          }
+                          return (
+                            <Text
+                              style={{ fontSize: 18, fontFamily: "NewYorkl" }}
+                              key={index}
+                            >
+                              {c.cityName},{"  "}
                             </Text>
-                          ))}
-                        </View>
-                        {/* </Text> */}
-                        <Text style={{ fontSize: 14 }}>
-                          Request Id: {item.requestID}
-                        </Text>
+                          );
+                        })}
                       </View>
                     </View>
-                  </TouchableOpacity>
-                </View>
+                  </View>
+                </TouchableOpacity>
               );
             }}
           />

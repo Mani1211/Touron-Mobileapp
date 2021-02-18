@@ -1,10 +1,12 @@
 import React from "react";
+import { Feather } from "@expo/vector-icons";
 import {
   Text,
   Image,
   View,
   Dimensions,
   Linking,
+  TouchableOpacity,
   ScrollView,
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
@@ -13,6 +15,44 @@ const HEIGHT = Dimensions.get("window").height;
 const ContactUs = ({ navigation }) => {
   return (
     <ScrollView style={{ backgroundColor: "#fff", flex: 1 }}>
+      <View
+        style={{
+          backgroundColor: "#fff",
+          alignItems: "center",
+          paddingVertical: 40,
+          flexDirection: "row",
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <View>
+            <Feather
+              name="arrow-left"
+              size={28}
+              color="black"
+              style={{
+                paddingHorizontal: 20,
+                paddingTop: Platform.OS === "ios" ? 25 : 0,
+              }}
+            />
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 25,
+              fontFamily: "NewYorkl",
+              paddingHorizontal: 15,
+            }}
+          >
+            Contact Us
+          </Text>
+        </View>
+      </View>
       <View
         style={{ justifyContent: "center", alignItems: "center", margin: 10 }}
       >

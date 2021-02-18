@@ -51,34 +51,34 @@ const WishListScreen = ({ navigation }) => {
         <View>
           <View
             style={{
-              backgroundColor: "#28C9E1",
-              height: HEIGHT / 8,
+              backgroundColor: "#fff",
               alignItems: "center",
+              paddingVertical: 40,
               flexDirection: "row",
             }}
           >
             <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <View style={{ flex: 0.2 }}>
+              <View>
                 <Feather
                   name="arrow-left"
                   size={28}
                   color="black"
                   style={{
                     paddingHorizontal: 20,
-                    paddingTop: Platform.OS === "ios" ? 0 : 0,
+                    paddingTop: Platform.OS === "ios" ? 25 : 0,
                   }}
                 />
               </View>
             </TouchableOpacity>
             <View
               style={{
-                flex: 0.8,
                 alignItems: "center",
                 justifyContent: "center",
-                paddingTop: 15,
               }}
             >
-              <Text style={{ color: "white", fontSize: 20 }}>Saved Tours</Text>
+              <Text style={{ fontSize: 25, fontFamily: "NewYorkl" }}>
+                Saved Tours
+              </Text>
             </View>
           </View>
 

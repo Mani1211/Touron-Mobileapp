@@ -3,6 +3,7 @@ import {
   Text,
   View,
   StatusBar,
+  FlatList,
   Image,
   TouchableOpacity,
   Platform,
@@ -336,7 +337,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
           </Text>
         </View>
       )}
-      {/* {item.imageSrc6 == "" ? null : (
+      {item.imageSrc6 == "" ? null : (
         <View>
           <Image
             style={{ width: WIDTH, height: HEIGHT / 3 }}
@@ -355,8 +356,8 @@ const BlogInnerScreen = ({ navigation, route }) => {
         >
           {item.content6}
         </Text>
-      )} */}
-      {/* 
+      )}
+
       <View
         style={{
           padding: 5,
@@ -422,7 +423,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
             );
           }}
         />
-      </View> */}
+      </View>
     </ScrollView>
   );
 };

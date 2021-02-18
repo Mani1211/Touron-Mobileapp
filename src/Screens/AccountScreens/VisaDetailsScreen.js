@@ -332,7 +332,7 @@ const VisaDetailsScreen = ({ navigation }) => {
   };
   return (
     <>
-      {!isAdmin ? (
+      {isAdmin ? (
         <>
           <StatusBar backgroundColor="#FFF" />
           {renderVisaForm()}

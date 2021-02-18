@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Dimensions, StatusBar, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  Dimensions,
+  StatusBar,
+  ScrollView,
+  Button,
+  Linking,
+} from "react-native";
 import {
   Container,
   Header,
@@ -41,7 +49,6 @@ const MyPlansInner = ({ navigation, route }) => {
         if (data.val() !== null) {
           data.forEach((d) => {
             if (d.val().requestID === item.requestID) {
-              // console.log("object", d.val().requestID, item.requestID);
               setPlannedDetails(d.val());
             }
           });
@@ -61,37 +68,69 @@ const MyPlansInner = ({ navigation, route }) => {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
-      <Container style={{ paddingHorizontal: 10 }}>
-        <Header hasTabs style={{ backgroundColor: "#FFF" }}>
+      <Container>
+        <Header hasTabs style={{ backgroundColor: "#FFF", height: 80 }}>
           <View
             style={{
               width: WIDTH,
               alignItems: "center",
               flexDirection: "row",
+              paddingVertical: 20,
+              justifyContent: "space-between",
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <View>
-                <Feather
-                  name="arrow-left"
-                  size={28}
-                  color="#333"
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View>
+                  <Feather
+                    name="arrow-left"
+                    size={28}
+                    color="#333"
+                    style={{
+                      paddingHorizontal: 20,
+                      paddingTop: -20,
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+              <View
+                style={{
+                  justifyContent: "center",
+                }}
+              >
+                <Text
                   style={{
-                    paddingHorizontal: 20,
-                    paddingTop: -20,
+                    color: "#333",
+                    fontSize: 20,
+                    fontFamily: "NewYorkl",
                   }}
-                />
+                >
+                  Self Planning
+                </Text>
               </View>
-            </TouchableOpacity>
-            <View
-              style={{
-                flex: 0.8,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={{ color: "#333", fontSize: 20 }}>Plan</Text>
             </View>
+            {Object.keys(plannedDetails).length === 0 ||
+            plannedDetails.paymentLink === "" ? null : (
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(plannedDetails.paymentLink);
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#333",
+                    marginRight: 10,
+                    padding: 10,
+                    borderRadius: 10,
+                    fontSize: 16,
+                    fontFamily: "NewYorkl",
+                    backgroundColor: "#ffeaa7",
+                  }}
+                >
+                  Pay Now
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </Header>
         <Tabs
@@ -107,7 +146,7 @@ const MyPlansInner = ({ navigation, route }) => {
                   type="FontAwesome"
                   style={{ fontSize: 23 }}
                 /> */}
-                <Text>General</Text>
+                <Text style={{ fontFamily: "NewYorkl" }}>General</Text>
               </TabHeading>
             }
           >
@@ -129,40 +168,43 @@ const MyPlansInner = ({ navigation, route }) => {
                 >
                   <View
                     style={{
-                      width: WIDTH * 0.9,
-                      alignItems: "center",
-                      borderBottomColor: "#f1f2f1",
-                      borderBottomWidth: 1,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        paddingVertical: 10,
-                      }}
-                    >
-                      Basic Details
-                    </Text>
-                  </View>
-                  <View
-                    style={{
                       marginVertical: 10,
                       padding: 20,
                     }}
                   >
-                    {/* <Text style={{ fontSize: 20, fontFamily: "Avenir" }}>
-                      {item.name}
-                    </Text> */}
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: "Andika",
+                        color: "#333",
+                        paddingVertical: 10,
+                        backgroundColor: "#ffeaa7",
+                        borderRadius: 5,
+                        borderColor: "#333",
+                        marginBottom: 20,
+                        textAlign: "center",
+                      }}
+                    >
+                      Request ID : {item.requestID}
+                    </Text>
                     <View
                       style={{
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
+                        paddingLeft: 24,
+                        marginBottom: 20,
                       }}
                     >
                       <Text
                         style={{
                           fontSize: 16,
                           fontFamily: "Andika",
-                          paddingBottom: 15,
+                          color: "#333",
+                          padding: 10,
+                          backgroundColor: "#f1f2f1",
+                          borderRadius: 5,
+                          borderColor: "#333",
+                          marginRight: 20,
                         }}
                       >
                         Adults : {item.adult}
@@ -171,41 +213,80 @@ const MyPlansInner = ({ navigation, route }) => {
                         style={{
                           fontSize: 16,
                           fontFamily: "Andika",
+                          color: "#333",
+                          padding: 10,
+                          backgroundColor: "#f1f2f1",
+                          borderRadius: 5,
+                          borderColor: "#333",
                         }}
                       >
                         Children : {item.children}
                       </Text>
                     </View>
-                    <Text
+
+                    <View
                       style={{
-                        fontSize: 16,
-                        fontFamily: "Andika",
-                        paddingBottom: 15,
+                        flexDirection: "row",
+                        justifyContent: "center",
                       }}
                     >
-                      Phone Number : {item.phoneNumber}
-                    </Text>
-                    <Text
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Andika",
+                          color: "#333",
+                          paddingVertical: 10,
+                          paddingHorizontal: 9,
+                          backgroundColor: "#f1f2f1",
+                          borderRadius: 5,
+                          borderColor: "#333",
+                          marginRight: 20,
+                        }}
+                      >
+                        Onward : {item.fromData}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Andika",
+                          color: "#333",
+                          paddingVertical: 10,
+                          paddingHorizontal: 9,
+                          backgroundColor: "#f1f2f1",
+                          borderRadius: 5,
+                          borderColor: "#333",
+                        }}
+                      >
+                        Return : {item.toData}
+                      </Text>
+                    </View>
+                    <View
                       style={{
-                        fontSize: 16,
-                        fontFamily: "Andika",
-                        paddingBottom: 15,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "row",
                       }}
                     >
-                      Onward : {item.fromData}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: "Andika",
-                        paddingBottom: 15,
-                      }}
-                    >
-                      Return :{item.toData}
-                    </Text>
-                    <Text style={{ fontSize: 16, fontFamily: "Andika" }}>
-                      Request Id :{item.requestID}
-                    </Text>
+                      <Feather
+                        name="phone"
+                        size={24}
+                        color="black"
+                        style={{ paddingRight: 5, marginTop: 10 }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontFamily: "Andika",
+                          color: "#333",
+                          paddingVertical: 10,
+                          paddingHorizontal: 9,
+                          textAlign: "center",
+                          marginTop: 10,
+                        }}
+                      >
+                        {item.phoneNumber}
+                      </Text>
+                    </View>
                   </View>
                 </Surface>
 
@@ -231,6 +312,7 @@ const MyPlansInner = ({ navigation, route }) => {
                     <Text
                       style={{
                         paddingVertical: 10,
+                        fontFamily: "NewYorkl",
                       }}
                     >
                       Selected Cities
@@ -309,6 +391,7 @@ const MyPlansInner = ({ navigation, route }) => {
                       <Text
                         style={{
                           paddingVertical: 10,
+                          fontFamily: "NewYorkl",
                         }}
                       >
                         Travel Preferance
@@ -352,7 +435,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         }}
                       >
                         <Text>Travel Type </Text>
-                        {item.travelmode === "Train" ? (
+                        {item.travelmode !== "Train" ? (
                           <MaterialIcons name="train" size={24} color="black" />
                         ) : (
                           <MaterialIcons
@@ -399,6 +482,7 @@ const MyPlansInner = ({ navigation, route }) => {
                       <Text
                         style={{
                           paddingVertical: 10,
+                          fontFamily: "NewYorkl",
                         }}
                       >
                         Selected Tours
@@ -458,6 +542,12 @@ const MyPlansInner = ({ navigation, route }) => {
                   </Surface>
                 )}
               </View>
+              <Button
+                title="pay"
+                onPress={() => {
+                  Linking.openURL("https://rzp.io/i/9wMkoCu");
+                }}
+              />
             </ScrollView>
           </Tab>
           <Tab
@@ -469,7 +559,7 @@ const MyPlansInner = ({ navigation, route }) => {
                   style={{ fontSize: 23 }}
                   color="#333"
                 /> */}
-                <Text>Travel</Text>
+                <Text style={{ fontFamily: "NewYorkl" }}>Travel</Text>
               </TabHeading>
             }
           >
@@ -478,16 +568,24 @@ const MyPlansInner = ({ navigation, route }) => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  height: HEIGHT / 1.2,
+                  padding: 30,
+                  // height: HEIGHT / 1.2,
                 }}
               >
                 <ProgressiveImage
-                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
-                  source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
-                  }}
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.5 }}
+                  source={require("../../../assets/Finish/4.png")}
                 />
+                <Text
+                  style={{
+                    fontFamily: "Andika",
+                    fontSize: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  You better get packing now, 'cause our experts have already
+                  started working their magic into your plan!"{" "}
+                </Text>
               </View>
             ) : (
               <View
@@ -518,6 +616,7 @@ const MyPlansInner = ({ navigation, route }) => {
                     <Text
                       style={{
                         paddingVertical: 10,
+                        fontFamily: "NewYorkl",
                       }}
                     >
                       Onward Flight
@@ -608,6 +707,7 @@ const MyPlansInner = ({ navigation, route }) => {
                     <Text
                       style={{
                         paddingVertical: 10,
+                        fontFamily: "NewYorkl",
                       }}
                     >
                       Return Flight
@@ -689,7 +789,7 @@ const MyPlansInner = ({ navigation, route }) => {
                   type="MaterialIcons"
                   style={{ fontSize: 23 }}
                 /> */}
-                <Text>Hotels</Text>
+                <Text style={{ fontFamily: "NewYorkl" }}>Hotels</Text>
               </TabHeading>
             }
           >
@@ -698,16 +798,24 @@ const MyPlansInner = ({ navigation, route }) => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  height: HEIGHT / 1.2,
+                  padding: 30,
+                  // height: HEIGHT / 1.2,
                 }}
               >
                 <ProgressiveImage
-                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
-                  source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
-                  }}
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.5 }}
+                  source={require("../../../assets/Finish/4.png")}
                 />
+                <Text
+                  style={{
+                    fontFamily: "Andika",
+                    fontSize: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  You better get packing now, 'cause our experts have already
+                  started working their magic into your plan!"{" "}
+                </Text>
               </View>
             ) : (
               <ScrollView>
@@ -742,7 +850,7 @@ const MyPlansInner = ({ navigation, route }) => {
                               style={{
                                 paddingVertical: 5,
                                 fontSize: 20,
-                                fontFamily: "Andika",
+                                fontFamily: "NewYorkl",
                               }}
                             >
                               {i.cityName}
@@ -784,7 +892,7 @@ const MyPlansInner = ({ navigation, route }) => {
                               style={{
                                 paddingVertical: 5,
                                 fontSize: 20,
-                                fontFamily: "Andika",
+                                fontFamily: "NewYorkl",
                               }}
                             >
                               {i.hotelName}
@@ -801,7 +909,7 @@ const MyPlansInner = ({ navigation, route }) => {
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
                 {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
-                <Text>Taxi</Text>
+                <Text style={{ fontFamily: "NewYorkl" }}>Taxi</Text>
               </TabHeading>
             }
           >
@@ -810,16 +918,24 @@ const MyPlansInner = ({ navigation, route }) => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  height: HEIGHT / 1.2,
+                  padding: 30,
+                  // height: HEIGHT / 1.2,
                 }}
               >
                 <ProgressiveImage
-                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
-                  source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
-                  }}
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.5 }}
+                  source={require("../../../assets/Finish/4.png")}
                 />
+                <Text
+                  style={{
+                    fontFamily: "Andika",
+                    fontSize: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  You better get packing now, 'cause our experts have already
+                  started working their magic into your plan!"{" "}
+                </Text>
               </View>
             ) : (
               <ScrollView>
@@ -840,12 +956,10 @@ const MyPlansInner = ({ navigation, route }) => {
                   >
                     <Carousel
                       layout="default"
-                      autoplay={true}
+                      autoplay={false}
                       lockScrollWhileSnapping={true}
-                      enableMomentum={false}
-                      // autoplayInterval={5000}
-                      // autoplayDelay={9000}
-                      loop={true}
+                      enableMomentum={true}
+                      loop={false}
                       ref={(c) => {
                         carousel = c;
                       }}
@@ -855,15 +969,15 @@ const MyPlansInner = ({ navigation, route }) => {
                       onSnapToItem={(index) => setActivePromoSlide(index)}
                       itemWidth={WIDTH * 0.9}
                     />
-                    {/* <Pagination
-                    dotsLength={taxi.length}
-                    activeDotIndex={activePromoSlide}
-                    dotStyle={{
-                      width: 30,
-                      height: 7,
-                      backgroundColor: "rgba(0, 0, 0, 0.75)",
-                    }}
-                  /> */}
+                    <Pagination
+                      dotsLength={3}
+                      activeDotIndex={activePromoSlide}
+                      dotStyle={{
+                        width: 30,
+                        height: 7,
+                        backgroundColor: "rgba(0, 0, 0, 0.75)",
+                      }}
+                    />
                     <View
                       style={{
                         width: WIDTH * 0.9,
@@ -876,7 +990,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         style={{
                           paddingVertical: 5,
                           fontSize: 20,
-                          fontFamily: "Andika",
+                          fontFamily: "NewYorkl",
                         }}
                       >
                         {plannedDetails.taxiDetails.taxiName}
@@ -904,6 +1018,7 @@ const MyPlansInner = ({ navigation, route }) => {
                       <Text
                         style={{
                           paddingVertical: 10,
+                          fontFamily: "NewYorkl",
                         }}
                       >
                         Taxi Informations
@@ -928,14 +1043,14 @@ const MyPlansInner = ({ navigation, route }) => {
                           flexBasis: "33%",
                         }}
                       >
-                        <Text>Distance</Text>
+                        <Text>Limit</Text>
                         <MaterialCommunityIcons
                           name="map-marker-distance"
                           size={24}
                           color="black"
                         />
                         <Text>
-                          {plannedDetails.basicDetails.kilometers} kms
+                          {plannedDetails.basicDetails.kilometers} KMS
                         </Text>
                       </View>
                       <View
@@ -961,7 +1076,7 @@ const MyPlansInner = ({ navigation, route }) => {
                       >
                         <Text>Days Limit </Text>
                         <MaterialIcons name="restore" size={24} color="black" />
-                        <Text>{plannedDetails.basicDetails.daysLimit} kms</Text>
+                        <Text>{plannedDetails.basicDetails.daysLimit} KMS</Text>
                       </View>
                     </View>
                   </Surface>
@@ -985,6 +1100,7 @@ const MyPlansInner = ({ navigation, route }) => {
                       <Text
                         style={{
                           paddingVertical: 10,
+                          fontFamily: "NewYorkl",
                         }}
                       >
                         Terms & Conditions

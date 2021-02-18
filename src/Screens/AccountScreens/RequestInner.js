@@ -3,12 +3,10 @@ import {
   View,
   Text,
   Dimensions,
-  TextInput,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
   StatusBar,
-  Platform,
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -16,7 +14,7 @@ import * as Notifications from "expo-notifications";
 import { Surface } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 import * as firebase from "firebase";
-import DropDownPicker from "react-native-dropdown-picker";
+// import DropDownPicker from "react-native-dropdown-picker";
 import { Container, Header, Tab, Tabs, Icon, TabHeading } from "native-base";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import {
@@ -26,19 +24,17 @@ import {
 } from "@expo/vector-icons";
 
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
-import {
-  getExpoToken,
-  sendPushNotification,
-} from "./../CategoryScreens/utils/PushNotification";
+// import {
+//   getExpoToken,
+//   sendPushNotification,
+// } from "./../CategoryScreens/utils/PushNotification";
 
 const RequestInner = ({ navigation, route }) => {
   const [visible, setVisible] = React.useState(false);
   const item = route.params.item;
-  console.log("item", item);
   const [plannedDetails, setPlannedDetails] = useState({});
-  const onToggleSnackBar = () => setVisible(!visible);
-
-  const onDismissSnackBar = () => setVisible(false);
+  // const onToggleSnackBar = () => setVisible(!visible);
+  // const onDismissSnackBar = () => setVisible(false);
   const { user } = useContext(AuthContext);
 
   const higher = route.params.higher;
@@ -88,60 +84,59 @@ const RequestInner = ({ navigation, route }) => {
     }, 1500);
   }, []);
 
-  const updateStatus = (plan) => {
-    firebase.database().ref(`requests`).child(key).child("status").set(status);
+  // const updateStatus = (plan) => {
+  //   firebase.database().ref(`requests`).child(key).child("status").set(status);
 
-    const token = getExpoToken(plan.userID);
+  //   const token = getExpoToken(plan.userID);
 
-    const message = {
-      to: token,
-      sound: "default",
-      title: `Request Status Changed`,
-      body: `Request Status Changed for your ${plan.tourCategory} of id ${plan.requestID} has been changed to  ${status}`,
-      data: plan,
-    };
-    sendPushNotification(message);
+  //   const message = {
+  //     to: token,
+  //     sound: "default",
+  //     title: `Request Status Changed`,
+  //     body: `Request Status Changed for your ${plan.tourCategory} of id ${plan.requestID} has been changed to  ${status}`,
+  //     data: plan,
+  //   };
+  //   sendPushNotification(message);
 
-    navigation.navigate("MyRequest");
-  };
+  //   navigation.navigate("MyRequest");
+  // };
 
-  const deleteRequest = () => {
-    console.log("key", key);
-    firebase
-      .database()
-      .ref(`requests`)
-      .child(key)
-      .set(null)
-      .then(() => {
-        // setVisible(true);
-        console.log("success :>> ");
-        navigation.navigate("MyRequest");
-      })
-      .catch((err) => console.log("err :>> ", err));
-  };
+  // const deleteRequest = () => {
+  //   console.log("key", key);
+  //   firebase
+  //     .database()
+  //     .ref(`requests`)
+  //     .child(key)
+  //     .set(null)
+  //     .then(() => {
+  //       console.log("success :>> ");
+  //       navigation.navigate("MyRequest");
+  //     })
+  //     .catch((err) => console.log("err :>> ", err));
+  // };
 
-  const updateCost = (plan) => {
-    const ref = firebase
-      .database()
-      .ref(`requests`)
-      .child(key)
-      .child("tourCost")
-      .set(cost);
-    console.log(ref, "ref");
+  // const updateCost = (plan) => {
+  //   const ref = firebase
+  //     .database()
+  //     .ref(`requests`)
+  //     .child(key)
+  //     .child("tourCost")
+  //     .set(cost);
+  //   console.log(ref, "ref");
 
-    const token = getExpoToken(plan.userID);
+  //   const token = getExpoToken(plan.userID);
 
-    const message = {
-      to: token,
-      sound: "default",
-      title: `Payment Updated`,
-      body: `Final payment for your  ${plan.tourCategory} of id ${plan.requestID} has been updated ,go and check your payment in My Request Section ${cost}`,
-      data: plan,
-    };
-    sendPushNotification(message);
+  //   const message = {
+  //     to: token,
+  //     sound: "default",
+  //     title: `Payment Updated`,
+  //     body: `Final payment for your  ${plan.tourCategory} of id ${plan.requestID} has been updated ,go and check your payment in My Request Section ${cost}`,
+  //     data: plan,
+  //   };
+  //   sendPushNotification(message);
 
-    navigation.navigate("MyRequest");
-  };
+  //   navigation.navigate("MyRequest");
+  // };
 
   const queryStatus = [
     {
@@ -193,36 +188,68 @@ const RequestInner = ({ navigation, route }) => {
   return (
     <ScrollView>
       <Container>
-        <Header hasTabs style={{ backgroundColor: "#FFF" }}>
+        <Header hasTabs style={{ backgroundColor: "#FFF", height: 80 }}>
           <View
             style={{
               width: WIDTH,
               alignItems: "center",
               flexDirection: "row",
+              paddingVertical: 20,
+              justifyContent: "space-between",
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <View>
-                <Feather
-                  name="arrow-left"
-                  size={28}
-                  color="#333"
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View>
+                  <Feather
+                    name="arrow-left"
+                    size={28}
+                    color="#333"
+                    style={{
+                      paddingHorizontal: 20,
+                      paddingTop: -20,
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+              <View
+                style={{
+                  justifyContent: "center",
+                }}
+              >
+                <Text
                   style={{
-                    paddingHorizontal: 20,
-                    paddingTop: -20,
+                    color: "#333",
+                    fontSize: 20,
+                    fontFamily: "NewYorkl",
                   }}
-                />
+                >
+                  {item.tourCategory}
+                </Text>
               </View>
-            </TouchableOpacity>
-            <View
-              style={{
-                flex: 0.8,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={{ color: "#333", fontSize: 20 }}>Details</Text>
             </View>
+            {Object.keys(plannedDetails).length === 0 ||
+            plannedDetails.paymentLink === "" ? null : (
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(plannedDetails.paymentLink);
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#333",
+                    marginRight: 10,
+                    padding: 10,
+                    borderRadius: 10,
+                    fontSize: 16,
+                    fontFamily: "NewYorkl",
+                    backgroundColor: "#ffeaa7",
+                  }}
+                >
+                  Pay Now
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </Header>
         <Tabs
@@ -234,7 +261,7 @@ const RequestInner = ({ navigation, route }) => {
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
                 {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
-                <Text>General</Text>
+                <Text style={{ fontFamily: "NewYorkl" }}>General</Text>
               </TabHeading>
             }
           >
@@ -256,38 +283,43 @@ const RequestInner = ({ navigation, route }) => {
                 >
                   <View
                     style={{
-                      width: WIDTH * 0.9,
-                      alignItems: "center",
-                      borderBottomColor: "#f1f2f1",
-                      borderBottomWidth: 1,
-                      backgroundColor: "#f1f2f1",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        paddingVertical: 10,
-                      }}
-                    >
-                      Basic details
-                    </Text>
-                  </View>
-                  <View
-                    style={{
                       marginVertical: 10,
                       padding: 20,
                     }}
                   >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: "Andika",
+                        color: "#333",
+                        paddingVertical: 10,
+                        backgroundColor: "#ffeaa7",
+                        borderRadius: 5,
+                        borderColor: "#333",
+                        marginBottom: 20,
+                        textAlign: "center",
+                      }}
+                    >
+                      Request ID : {item.requestID}
+                    </Text>
                     <View
                       style={{
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
+                        paddingLeft: 24,
+                        marginBottom: 20,
                       }}
                     >
                       <Text
                         style={{
                           fontSize: 16,
                           fontFamily: "Andika",
-                          paddingBottom: 15,
+                          color: "#333",
+                          padding: 10,
+                          backgroundColor: "#f1f2f1",
+                          borderRadius: 5,
+                          borderColor: "#333",
+                          marginRight: 20,
                         }}
                       >
                         Adults : {item.adult}
@@ -296,52 +328,83 @@ const RequestInner = ({ navigation, route }) => {
                         style={{
                           fontSize: 16,
                           fontFamily: "Andika",
+                          color: "#333",
+                          padding: 10,
+                          backgroundColor: "#f1f2f1",
+                          borderRadius: 5,
+                          borderColor: "#333",
                         }}
                       >
                         Children : {item.children}
                       </Text>
                     </View>
-                    <Text
+
+                    <View
                       style={{
-                        fontSize: 16,
-                        fontFamily: "Andika",
-                        paddingBottom: 15,
+                        flexDirection: "row",
+                        justifyContent: "center",
                       }}
                     >
-                      Phone Number : {item.number}
-                    </Text>
-                    <Text
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Andika",
+                          color: "#333",
+                          paddingVertical: 10,
+                          paddingHorizontal: 9,
+                          backgroundColor: "#f1f2f1",
+                          borderRadius: 5,
+                          borderColor: "#333",
+                          marginRight: 20,
+                        }}
+                      >
+                        Onward : {item.fromData}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Andika",
+                          color: "#333",
+                          paddingVertical: 10,
+                          paddingHorizontal: 9,
+                          backgroundColor: "#f1f2f1",
+                          borderRadius: 5,
+                          borderColor: "#333",
+                        }}
+                      >
+                        Return : {item.toData}
+                      </Text>
+                    </View>
+                    <View
                       style={{
-                        fontSize: 16,
-                        fontFamily: "Andika",
-                        paddingBottom: 15,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "row",
                       }}
                     >
-                      Onward : {item.fromDate}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: "Andika",
-                        paddingBottom: 15,
-                      }}
-                    >
-                      Return :{item.toDate}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: "Andika",
-                        paddingBottom: 15,
-                      }}
-                    >
-                      Request Id :{item.requestID}
-                    </Text>
-                    <Text style={{ fontSize: 16, fontFamily: "Andika" }}>
-                      Status : {item.status}
-                    </Text>
+                      <Feather
+                        name="phone"
+                        size={24}
+                        color="black"
+                        style={{ paddingRight: 5, marginTop: 10 }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontFamily: "Andika",
+                          color: "#333",
+                          paddingVertical: 10,
+                          paddingHorizontal: 9,
+                          textAlign: "center",
+                          marginTop: 10,
+                        }}
+                      >
+                        {item.phoneNumber}
+                      </Text>
+                    </View>
                   </View>
                 </Surface>
+
                 <Surface
                   style={{
                     width: WIDTH * 0.9,
@@ -682,7 +745,7 @@ const RequestInner = ({ navigation, route }) => {
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
                 {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
-                <Text>Transport</Text>
+                <Text style={{ fontFamily: "NewYorkl" }}>Transport</Text>
               </TabHeading>
             }
           >
@@ -691,16 +754,24 @@ const RequestInner = ({ navigation, route }) => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  height: HEIGHT / 1.2,
+                  padding: 30,
+                  // height: HEIGHT / 1.2,
                 }}
               >
                 <ProgressiveImage
-                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
-                  source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
-                  }}
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.5 }}
+                  source={require("../../../assets/Finish/4.png")}
                 />
+                <Text
+                  style={{
+                    fontFamily: "Andika",
+                    fontSize: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  You better get packing now, 'cause our experts have already
+                  started working their magic into your plan!"{" "}
+                </Text>
               </View>
             ) : (
               <View
@@ -898,7 +969,7 @@ const RequestInner = ({ navigation, route }) => {
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
                 {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
-                <Text>Hotels</Text>
+                <Text style={{ fontFamily: "NewYorkl" }}>Hotels</Text>
               </TabHeading>
             }
           >
@@ -907,16 +978,24 @@ const RequestInner = ({ navigation, route }) => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  height: HEIGHT / 1.2,
+                  padding: 30,
+                  // height: HEIGHT / 1.2,
                 }}
               >
                 <ProgressiveImage
-                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
-                  source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
-                  }}
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.5 }}
+                  source={require("../../../assets/Finish/4.png")}
                 />
+                <Text
+                  style={{
+                    fontFamily: "Andika",
+                    fontSize: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  You better get packing now, 'cause our experts have already
+                  started working their magic into your plan!"{" "}
+                </Text>
               </View>
             ) : (
               <ScrollView>
@@ -1010,7 +1089,7 @@ const RequestInner = ({ navigation, route }) => {
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
                 {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
-                <Text>Taxi</Text>
+                <Text style={{ fontFamily: "NewYorkl" }}>Taxi</Text>
               </TabHeading>
             }
           >
@@ -1019,16 +1098,24 @@ const RequestInner = ({ navigation, route }) => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  height: HEIGHT / 1.2,
+                  padding: 30,
+                  // height: HEIGHT / 1.2,
                 }}
               >
                 <ProgressiveImage
-                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.7 }}
-                  source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg",
-                  }}
+                  style={{ width: WIDTH * 0.9, height: HEIGHT * 0.5 }}
+                  source={require("../../../assets/Finish/4.png")}
                 />
+                <Text
+                  style={{
+                    fontFamily: "Andika",
+                    fontSize: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  You better get packing now, 'cause our experts have already
+                  started working their magic into your plan!"{" "}
+                </Text>
               </View>
             ) : (
               <ScrollView>

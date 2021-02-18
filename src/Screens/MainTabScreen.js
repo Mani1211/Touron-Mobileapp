@@ -176,7 +176,7 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         options={{
           title: "About Us",
-          headerShown: true,
+          headerShown: false,
           headerTransparent: false,
         }}
         name="AboutUs"
@@ -185,7 +185,7 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         options={{
           title: "Contact Us",
-          headerShown: true,
+          headerShown: false,
           headerTransparent: false,
         }}
         name="ContactUs"
