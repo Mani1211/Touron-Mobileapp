@@ -220,6 +220,7 @@ const DrawerContent = (props) => {
                     )}
                     onPress={() => {
                       firebase.auth().signOut();
+                      s;
                       setUser(null);
                       removeToken();
                       setUserInfo({});
