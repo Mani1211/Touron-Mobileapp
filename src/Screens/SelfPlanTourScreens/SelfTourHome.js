@@ -32,8 +32,8 @@ const SelfTourHome = ({ navigation, route }) => {
   const cityLength = selectedCity.length - 1;
   const [selectedTours, setSelectedTours] = useState([]);
   const [selectedTourNames, setSelectedTourNames] = useState([]);
-  // console.log("route.params.selectedCityNames", route.params.selectedCityNames);
-  // console.log("selectedTours", selectedTours);
+  console.log("selectedTours", selectedTours);
+  console.log("selectedTours", selectedTourNames);
   const showLoader = () => {
     setTimeout(() => {
       setLoader(false);
@@ -103,8 +103,8 @@ const SelfTourHome = ({ navigation, route }) => {
                 data={tour}
                 renderItem={({ item }) => {
                   return (
-                    <View style={{ position: "relative" }}>
-                      {selectedTourNames.includes(item.tourName) ? (
+                    <View>
+                      {!selectedTourNames.includes(item.tourName) ? null : (
                         <TouchableOpacity
                           style={styles.tickImageContainer}
                           onPress={() => {
@@ -124,7 +124,7 @@ const SelfTourHome = ({ navigation, route }) => {
                             source={require("../../../assets/tick.png")}
                           />
                         </TouchableOpacity>
-                      ) : null}
+                      )}
 
                       <View style={styles.imageContainer}>
                         <View style={styles.shadow}>
@@ -418,17 +418,21 @@ const styles = StyleSheet.create({
     fontFamily: "Andika",
   },
   tickImageContainer: {
-    position: "relative",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 1,
     position: "absolute",
     top: 30,
-    left: WIDTH / 2 - WIDTH / 6,
+    // left: WIDTH / 2 - WIDTH / 6,
+    zIndex: 1,
+    left: 0,
+
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
   tickImage: {
-    width: 100,
-    height: 100,
+    width: 140,
+    height: 140,
     margin: 10,
     borderRadius: 100,
   },

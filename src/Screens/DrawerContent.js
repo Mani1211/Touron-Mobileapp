@@ -20,9 +20,14 @@ import { AuthContext } from "../context/AuthContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const DrawerContent = (props) => {
-  const { user, isLoggedIn, setIsLoggedIn, setUser, userInfo } = useContext(
-    AuthContext
-  );
+  const {
+    user,
+    isLoggedIn,
+    setIsLoggedIn,
+    setUser,
+    userInfo,
+    setUserInfo,
+  } = useContext(AuthContext);
   useEffect(() => {
     // getUserData();
   }, []);
@@ -74,7 +79,7 @@ const DrawerContent = (props) => {
               <Thumbnail
                 source={{
                   uri:
-                    "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
+                    "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
                 }}
                 style={{ height: 50, width: 50 }}
               />
@@ -217,6 +222,7 @@ const DrawerContent = (props) => {
                       firebase.auth().signOut();
                       setUser(null);
                       removeToken();
+                      setUserInfo({});
                       setIsLoggedIn(false);
                       props.navigation.navigate("Home");
                     }}

@@ -32,6 +32,8 @@ import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 const RequestInner = ({ navigation, route }) => {
   const [visible, setVisible] = React.useState(false);
   const item = route.params.item;
+  const [activePromoSlide, setActivePromoSlide] = useState(0);
+
   const [plannedDetails, setPlannedDetails] = useState({});
   // const onToggleSnackBar = () => setVisible(!visible);
   // const onDismissSnackBar = () => setVisible(false);
@@ -77,12 +79,57 @@ const RequestInner = ({ navigation, route }) => {
     });
   };
 
+  const _renderPromo = ({ item, index }) => {
+    return (
+      <ProgressiveImage
+        source={{ uri: item }}
+        resizeMode="cover"
+        style={{ width: WIDTH * 0.9, height: HEIGHT / 4 }}
+      />
+    );
+  };
+
   useEffect(() => {
     getUserData();
     setTimeout(() => {
       setLoaded(false);
     }, 1500);
   }, []);
+
+  useEffect(() => {
+    getPlannedDetails();
+  }, [item]);
+  const getPlannedDetails = () => {
+    setPlannedDetails({});
+    firebase
+      .database()
+      .ref(`plannedDetails`)
+      .on("value", (data) => {
+        if (data.val() !== null) {
+          data.forEach((d) => {
+            if (d.val().requestID === item.requestID) {
+              setPlannedDetails(d.val());
+            }
+          });
+        }
+      });
+  };
+
+  const renderIcon = (name) => {
+    if (name === "Flight")
+      return <MaterialIcons name="flight" size={34} color="black" />;
+    if (name === "Train")
+      return <MaterialIcons name="train" size={24} color="black" />;
+
+    if (name === "Bus")
+      return (
+        <MaterialCommunityIcons
+          name="bus-double-decker"
+          size={24}
+          color="black"
+        />
+      );
+  };
 
   // const updateStatus = (plan) => {
   //   firebase.database().ref(`requests`).child(key).child("status").set(status);
@@ -468,12 +515,8 @@ const RequestInner = ({ navigation, route }) => {
                         flexBasis: "33%",
                       }}
                     >
-                      <Text>Travel Mode </Text>
-                      {item.travelmode === "Train" ? (
-                        <MaterialIcons name="train" size={24} color="black" />
-                      ) : (
-                        <MaterialIcons name="flight" size={24} color="black" />
-                      )}
+                      <Text>Travel Type </Text>
+                      {renderIcon(item.travelMode)}
                       <Text> {item.travelMode}</Text>
                     </View>
                     <View
@@ -802,6 +845,7 @@ const RequestInner = ({ navigation, route }) => {
                     <Text
                       style={{
                         paddingVertical: 10,
+                        fontFamily: "NewYorkl",
                       }}
                     >
                       Onward Flight
@@ -819,7 +863,9 @@ const RequestInner = ({ navigation, route }) => {
                     }}
                   >
                     <View style={{ alignItems: "center" }}>
-                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.onward.from}
+                      </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
                         Kiv
                       </Text>
@@ -834,15 +880,16 @@ const RequestInner = ({ navigation, route }) => {
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
                       <Text>------------</Text>
-                      <MaterialIcons
-                        name="flight-takeoff"
-                        size={34}
-                        color="#23C4ED"
-                      />
+                      {renderIcon(
+                        plannedDetails.flightDetails.onward.onwardTransportMode
+                      )}
+
                       <Text>------------</Text>
                     </View>
                     <View style={{ alignItems: "center" }}>
-                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.onward.to}
+                      </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
                         Kiv
                       </Text>
@@ -892,6 +939,7 @@ const RequestInner = ({ navigation, route }) => {
                     <Text
                       style={{
                         paddingVertical: 10,
+                        fontFamily: "NewYorkl",
                       }}
                     >
                       Return Flight
@@ -909,7 +957,9 @@ const RequestInner = ({ navigation, route }) => {
                     }}
                   >
                     <View style={{ alignItems: "center" }}>
-                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.return.from}
+                      </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
                         Kiv
                       </Text>
@@ -924,15 +974,15 @@ const RequestInner = ({ navigation, route }) => {
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
                       <Text>------------</Text>
-                      <MaterialIcons
-                        name="flight-takeoff"
-                        size={34}
-                        color="#23C4ED"
-                      />
+                      {renderIcon(
+                        plannedDetails.flightDetails.return.returnTransportMode
+                      )}
                       <Text>------------</Text>
                     </View>
                     <View style={{ alignItems: "center" }}>
-                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.return.to}
+                      </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
                         Kiv
                       </Text>

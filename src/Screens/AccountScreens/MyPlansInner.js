@@ -66,6 +66,22 @@ const MyPlansInner = ({ navigation, route }) => {
     );
   };
 
+  const renderIcon = (name) => {
+    if (name === "Flight")
+      return <MaterialIcons name="flight" size={34} color="black" />;
+    if (name === "Train")
+      return <MaterialIcons name="train" size={24} color="black" />;
+
+    if (name === "Bus")
+      return (
+        <MaterialCommunityIcons
+          name="bus-double-decker"
+          size={24}
+          color="black"
+        />
+      );
+  };
+
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
       <Container>
@@ -435,15 +451,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         }}
                       >
                         <Text>Travel Type </Text>
-                        {item.travelmode !== "Train" ? (
-                          <MaterialIcons name="train" size={24} color="black" />
-                        ) : (
-                          <MaterialIcons
-                            name="flight"
-                            size={24}
-                            color="black"
-                          />
-                        )}
+                        {renderIcon(item.travelmode)}
                         <Text> {item.travelmode}</Text>
                       </View>
                       <View
@@ -634,7 +642,9 @@ const MyPlansInner = ({ navigation, route }) => {
                     }}
                   >
                     <View style={{ alignItems: "center" }}>
-                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.onward.from}
+                      </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
                         Kiv
                       </Text>
@@ -649,15 +659,16 @@ const MyPlansInner = ({ navigation, route }) => {
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
                       <Text>------------</Text>
-                      <MaterialIcons
-                        name="flight-takeoff"
-                        size={34}
-                        color="#23C4ED"
-                      />
+                      {renderIcon(
+                        plannedDetails.flightDetails.onward.onwardTransportMode
+                      )}
+
                       <Text>------------</Text>
                     </View>
                     <View style={{ alignItems: "center" }}>
-                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.onward.to}
+                      </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
                         Kiv
                       </Text>
@@ -725,7 +736,9 @@ const MyPlansInner = ({ navigation, route }) => {
                     }}
                   >
                     <View style={{ alignItems: "center" }}>
-                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.return.from}
+                      </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
                         Kiv
                       </Text>
@@ -740,15 +753,15 @@ const MyPlansInner = ({ navigation, route }) => {
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
                       <Text>------------</Text>
-                      <MaterialIcons
-                        name="flight-takeoff"
-                        size={34}
-                        color="#23C4ED"
-                      />
+                      {renderIcon(
+                        plannedDetails.flightDetails.return.returnTransportMode
+                      )}
                       <Text>------------</Text>
                     </View>
                     <View style={{ alignItems: "center" }}>
-                      <Text style={{ fontFamily: "Andika" }}>Chennai</Text>
+                      <Text style={{ fontFamily: "Andika" }}>
+                        {plannedDetails.flightDetails.return.to}
+                      </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
                         Kiv
                       </Text>
@@ -956,10 +969,10 @@ const MyPlansInner = ({ navigation, route }) => {
                   >
                     <Carousel
                       layout="default"
-                      autoplay={false}
+                      autoplay={true}
                       lockScrollWhileSnapping={true}
-                      enableMomentum={true}
-                      loop={false}
+                      enableMomentum={false}
+                      loop={true}
                       ref={(c) => {
                         carousel = c;
                       }}
@@ -969,15 +982,15 @@ const MyPlansInner = ({ navigation, route }) => {
                       onSnapToItem={(index) => setActivePromoSlide(index)}
                       itemWidth={WIDTH * 0.9}
                     />
-                    <Pagination
-                      dotsLength={3}
-                      activeDotIndex={activePromoSlide}
-                      dotStyle={{
-                        width: 30,
-                        height: 7,
-                        backgroundColor: "rgba(0, 0, 0, 0.75)",
-                      }}
-                    />
+                    {/* <Pagination
+                    dotsLength={taxi.length}
+                    activeDotIndex={activePromoSlide}
+                    dotStyle={{
+                      width: 30,
+                      height: 7,
+                      backgroundColor: "rgba(0, 0, 0, 0.75)",
+                    }}
+                  /> */}
                     <View
                       style={{
                         width: WIDTH * 0.9,
@@ -990,7 +1003,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         style={{
                           paddingVertical: 5,
                           fontSize: 20,
-                          fontFamily: "NewYorkl",
+                          fontFamily: "Andika",
                         }}
                       >
                         {plannedDetails.taxiDetails.taxiName}
