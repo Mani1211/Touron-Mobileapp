@@ -36,13 +36,12 @@ export const sendPushNotification = async (message) => {
 };
 
 export const sendEmail = async (email, countryname) => {
-  console.log("email,countryname", email, countryname);
+  // console.log("email,countryname", email, countryname);
 
   await axios
     .post(
       `https://us-central1-touronapp-248e4.cloudfunctions.net/sendMail?dest=${email}&countryName=${countryname}`
     )
     .then((d) => console.log("d", d))
-    .catch((err) => console.log("err", err))
     .catch((err) => console.log("err", err));
 };

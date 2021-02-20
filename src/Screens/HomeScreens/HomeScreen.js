@@ -47,7 +47,6 @@ const HomeScreen = ({ navigation, route }) => {
   const [testimonials, setTestimonials] = useState([]);
   const [promotions, setPromotions] = useState([]);
   const [cities, setCities] = useState([]);
-  // console.log("testimonials", testimonials);
   const getUserData = () => {
     if (user !== null) {
       firebase
@@ -79,9 +78,9 @@ const HomeScreen = ({ navigation, route }) => {
       WSansl: require("../../../assets/fonts/WorkSans-Light.ttf"),
       SFProDisplayRegular: require("../../../assets/fonts/SF-Pro-Display-Regular.otf"),
       SFProTextRegular: require("../../../assets/fonts/SF-Pro-Text-Regular.otf"),
+    }).then(() => {
+      setFont(true);
     });
-
-    setFont(true);
   };
 
   const openWhatsApp = () => {
@@ -101,7 +100,6 @@ const HomeScreen = ({ navigation, route }) => {
       .database()
       .ref("testimonials")
       .on("value", (data) => {
-        // console.log("data", data);
         if (data !== null) {
           let req = [];
           data.forEach((d) => {
@@ -117,13 +115,11 @@ const HomeScreen = ({ navigation, route }) => {
       .database()
       .ref("promotion")
       .on("value", (data) => {
-        // console.log("data", data);
         if (data !== null) {
           let req = [];
           data.forEach((d) => {
             req.push(d.val());
           });
-
           setPromotions(req);
           setPromoLoaded(false);
         }
@@ -131,8 +127,11 @@ const HomeScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    getTestimonial();
     getPromotions();
+  }, []);
+
+  useEffect(() => {
+    getTestimonial();
   }, []);
 
   const getTours = async () => {
@@ -160,10 +159,8 @@ const HomeScreen = ({ navigation, route }) => {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      // getNetwork();
       fetchFont();
     }
-
     return () => (mounted = false);
   }, []);
 

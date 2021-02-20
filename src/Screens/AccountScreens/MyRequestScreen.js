@@ -1,23 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   Dimensions,
   ActivityIndicator,
   Image,
   StatusBar,
-  Platform,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { AuthContext } from "../../context/AuthContext";
-import { DataTable } from "react-native-paper";
-import { Avatar } from "react-native-paper";
-import { Feather, FontAwesome } from "@expo/vector-icons";
-const WIDTH = Dimensions.get("window").width;
-const HEIGHT = Dimensions.get("window").height;
+// import { DataTable } from "react-native-paper";
+// import { Avatar } from "react-native-paper";
+import { Feather } from "@expo/vector-icons";
+// const WIDTH = Dimensions.get("window").width;
+// const HEIGHT = Dimensions.get("window").height;
 import * as firebase from "firebase";
 const MyRequestScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(true);
@@ -26,11 +24,11 @@ const MyRequestScreen = ({ navigation }) => {
   const [allRequest, setAllRequest] = useState([]);
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
-  const itemsPerPage = 5;
-  const [page, setPage] = useState(0);
-  const [userRequest, setUserRequest] = useState([]);
-  const from = page * itemsPerPage;
-  const to = (page + 1) * itemsPerPage;
+  // const itemsPerPage = 5;
+  // const [page, setPage] = useState(0);
+  // const [userRequest, setUserRequest] = useState([]);
+  // const from = page * itemsPerPage;
+  // const to = (page + 1) * itemsPerPage;
   const [planned, setPlanned] = useState([]);
   const [surprise, setSurprise] = useState([]);
   const [road, setRoad] = useState([]);
@@ -105,27 +103,27 @@ const MyRequestScreen = ({ navigation }) => {
     },
   ];
 
-  const filterDataByType = () => {
-    if (status !== "") {
-      let rs = {};
-      const tour = Object.keys(allRequest).map((r) => {
-        if (allRequest[r].status === status) {
-          rs[r] = allRequest[r];
-        }
-      });
-      return rs;
-    } else if (category !== "") {
-      let rs = {};
-      const tour = Object.keys(allRequest).map((r) => {
-        if (allRequest[r].tourCategory === category) {
-          rs[r] = allRequest[r];
-        }
-      });
-      return rs;
-    } else {
-      return allRequest;
-    }
-  };
+  // const filterDataByType = () => {
+  //   if (status !== "") {
+  //     let rs = {};
+  //     const tour = Object.keys(allRequest).map((r) => {
+  //       if (allRequest[r].status === status) {
+  //         rs[r] = allRequest[r];
+  //       }
+  //     });
+  //     return rs;
+  //   } else if (category !== "") {
+  //     let rs = {};
+  //     const tour = Object.keys(allRequest).map((r) => {
+  //       if (allRequest[r].tourCategory === category) {
+  //         rs[r] = allRequest[r];
+  //       }
+  //     });
+  //     return rs;
+  //   } else {
+  //     return allRequest;
+  //   }
+  // };
   useEffect(() => {
     getUserData();
     setCategory("");
@@ -234,11 +232,6 @@ const MyRequestScreen = ({ navigation }) => {
       });
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoaded(false);
-    }, 1500);
-  });
   useEffect(() => getAllRequest(), []);
 
   const colors = [
@@ -288,64 +281,64 @@ const MyRequestScreen = ({ navigation }) => {
     },
   ];
 
-  const queryStatus = [
-    {
-      label: "All",
-      value: "",
-    },
-    {
-      label: "Query Received",
-      value: "Query Received",
-    },
-    {
-      label: "Plan Shared",
-      value: "Plan Shared",
-    },
-    {
-      label: "On Progress",
-      value: "On Progress",
-    },
-    {
-      label: "Cancelled",
-      value: "Cancelled",
-    },
-    {
-      label: "On Hold",
-      value: "On Hold",
-    },
-    {
-      label: "Duplicate Query",
-      value: "Duplicate Query",
-    },
-    {
-      label: "Tour Booked",
-      value: "Tour Booked",
-    },
-    {
-      label: "Awaiting Payment",
-      value: "Awaiting Payment",
-    },
-    {
-      label: "Cancellation Requested",
-      value: "Cancellation Requested",
-    },
-    {
-      label: "Estimated",
-      value: "Estimated",
-    },
-    {
-      label: "Completed",
-      value: "Completed",
-    },
-  ];
+  // const queryStatus = [
+  //   {
+  //     label: "All",
+  //     value: "",
+  //   },
+  //   {
+  //     label: "Query Received",
+  //     value: "Query Received",
+  //   },
+  //   {
+  //     label: "Plan Shared",
+  //     value: "Plan Shared",
+  //   },
+  //   {
+  //     label: "On Progress",
+  //     value: "On Progress",
+  //   },
+  //   {
+  //     label: "Cancelled",
+  //     value: "Cancelled",
+  //   },
+  //   {
+  //     label: "On Hold",
+  //     value: "On Hold",
+  //   },
+  //   {
+  //     label: "Duplicate Query",
+  //     value: "Duplicate Query",
+  //   },
+  //   {
+  //     label: "Tour Booked",
+  //     value: "Tour Booked",
+  //   },
+  //   {
+  //     label: "Awaiting Payment",
+  //     value: "Awaiting Payment",
+  //   },
+  //   {
+  //     label: "Cancellation Requested",
+  //     value: "Cancellation Requested",
+  //   },
+  //   {
+  //     label: "Estimated",
+  //     value: "Estimated",
+  //   },
+  //   {
+  //     label: "Completed",
+  //     value: "Completed",
+  //   },
+  // ];
 
-  const getColor = (status) => {
-    let color = "";
-    colors.filter((c) => {
-      if (c.name === status) color = c.color;
-    });
-    return color;
-  };
+  // const getColor = (status) => {
+  //   let color = "";
+  //   colors.filter((c) => {
+  //     if (c.name === status) color = c.color;
+  //   });
+  //   return color;
+  // };
 
   const renderData = () => {
     switch (step) {

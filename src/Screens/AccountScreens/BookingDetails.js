@@ -1,15 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
-  View,
   Dimensions,
   ScrollView,
-  Image,
   Button,
   Text,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-// import PDFReader from "rn-pdf-reader-js";
 import * as DocumentPicker from "expo-document-picker";
 import { AuthContext } from "../../context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
@@ -20,8 +17,6 @@ const BookingDetails = ({ navigation }) => {
   const [uri, setUri] = useState("");
   const [show, setShow] = useState(false);
   const [fileuri, setfileUri] = useState("");
-  const { user } = useContext(AuthContext);
-  console.log(uri, "uri");
   const _pickImage = async () => {
     setShow(false);
     try {

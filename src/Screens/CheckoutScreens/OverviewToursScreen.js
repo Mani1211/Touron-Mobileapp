@@ -7,11 +7,8 @@ import {
   View,
   ScrollView,
   Dimensions,
-  FlatList,
 } from "react-native";
-import { Surface } from "react-native-paper";
 const WIDTH = Dimensions.get("window").width;
-import { CheckBox } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 
 const OverviewToursScreen = ({ navigation, route }) => {

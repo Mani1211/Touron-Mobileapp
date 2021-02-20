@@ -15,7 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import { AuthContext } from "../../context/AuthContext";
 const SelfPlanningScreen = ({ navigation }) => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  // const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     const user = firebase.auth().currentUser;

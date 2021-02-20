@@ -2,7 +2,6 @@ import React from "react";
 import {
   StyleSheet,
   Text,
-  Button,
   Image,
   Linking,
   Alert,

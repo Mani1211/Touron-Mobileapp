@@ -2,7 +2,6 @@ import React from "react";
 import {
   StyleSheet,
   Text,
-  Button,
   Image,
   View,
   Dimensions,
@@ -15,7 +14,6 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
   Ionicons,
-  FontAwesome5,
 } from "@expo/vector-icons";
 
 const WIDTH = Dimensions.get("window").width;

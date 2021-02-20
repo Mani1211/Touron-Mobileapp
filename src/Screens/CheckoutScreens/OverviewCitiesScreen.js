@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-// import { DatePicker } from "native-base";
 import DatePicker from "react-native-datepicker";
 import moment from "moment";
 
@@ -18,22 +17,22 @@ import { Surface } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { SelfTourContext } from "../../context/ SelfTourContext";
 const OverviewCitiesScreen = ({ navigation, route }) => {
-  const { details, setDetails } = useContext(SelfTourContext);
+  const { setDetails } = useContext(SelfTourContext);
   const [selectedCity, setSelectedCity] = useState(route.params.selectedCity);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
-  console.log("selectedCity", selectedCity);
-  console.log("selectedCity", totalDays);
+  // console.log("selectedCity", selectedCity);
+  // console.log("selectedCity", totalDays);
   const selectedCityNames = route.params.selectedCityNames;
   const calculateTotalDays = () => {
     let count = 0;
     selectedCity.forEach((c) => {
       return (count = count + c.days * 1);
     });
-    console.log("count", count);
+    // console.log("count", count);
     return count;
   };
 

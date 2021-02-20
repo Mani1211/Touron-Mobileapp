@@ -30,7 +30,7 @@ function SignInScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const { isLoggedIn, setIsLoggedIn, user, setUser } = useContext(AuthContext);
+  const { setIsLoggedIn, setUser } = useContext(AuthContext);
   const [step, setStep] = useState(0);
   const [err, setErr] = useState("");
   const [req, setReq] = useState(false);
@@ -38,16 +38,22 @@ function SignInScreen({ navigation }) {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const storeToken = async (value) => {
+  const storeToken = (value) => {
     try {
       const userToken = JSON.stringify(value);
-      await AsyncStorage.setItem("userToken", userToken);
+      AsyncStorage.setItem("userToken", userToken);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const removeToken = (value) => {
+    try {
+      AsyncStorage.removeItem("userToken");
     } catch (e) {
       console.log(e);
     }
   };
   const forgetPassword = () => {
-    console.log(email, "email");
     setLoaded(true);
     firebase
       .auth()
@@ -99,6 +105,8 @@ function SignInScreen({ navigation }) {
       })
       .catch((err) => {
         setLoaded(false);
+        setUser(null);
+        removeToken();
         console.log(err.message, "pcco");
         setErr(err.message);
       });

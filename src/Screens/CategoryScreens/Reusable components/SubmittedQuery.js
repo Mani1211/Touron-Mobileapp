@@ -37,8 +37,11 @@ const SubmittedQuery = ({ navigation, type }) => {
         <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
           <TouchableOpacity
             onPress={() => {
-              if (type === "Self Plan") navigation.navigate("MyPlans");
-              navigation.navigate("MyRequest");
+              if (type === "Self Plan") {
+                navigation.navigate("MyPlans");
+              } else {
+                navigation.navigate("MyRequest");
+              }
             }}
           >
             <View style={{ alignItems: "center", margin: 10 }}>

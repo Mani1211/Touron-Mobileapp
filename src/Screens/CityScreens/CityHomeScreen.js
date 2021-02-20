@@ -4,8 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
-  FlatList,
   ScrollView,
   TextInput,
   ActivityIndicator,
@@ -46,7 +44,7 @@ const CityHomeScreen = ({ navigation, route }) => {
         setErrorMessage("Something went wrong");
       }
     } else {
-      console.log("executed");
+      // console.log("executed");
       setCity(cities);
     }
   };

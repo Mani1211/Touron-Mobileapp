@@ -32,11 +32,11 @@ const DrawerContent = (props) => {
     // getUserData();
   }, []);
 
-  const [isAdmin, setIsAdmin] = useState(userInfo.admin);
+  // const [isAdmin, setIsAdmin] = useState(userInfo.admin);
 
-  const removeToken = async () => {
+  const removeToken = () => {
     try {
-      await AsyncStorage.removeItem("userToken");
+      AsyncStorage.removeItem("userToken");
     } catch (e) {
       console.log(err);
     }
@@ -105,7 +105,7 @@ const DrawerContent = (props) => {
 
           <DrawerContentScrollView {...props}>
             <View style={{ marginBottom: 40 }}>
-              {isAdmin ? (
+              {/* {isAdmin ? (
                 <>
                   <DrawerItem
                     label={() => <Text style={styles.label}>Home</Text>}
@@ -219,12 +219,11 @@ const DrawerContent = (props) => {
                       </Text>
                     )}
                     onPress={() => {
-                      firebase.auth().signOut();
-                      s;
                       setUser(null);
                       removeToken();
                       setUserInfo({});
                       setIsLoggedIn(false);
+                      firebase.auth().signOut();
                       props.navigation.navigate("Home");
                     }}
                     icon={() => (
@@ -239,46 +238,46 @@ const DrawerContent = (props) => {
                     )}
                   />
                 </>
-              ) : (
-                <>
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>Home</Text>}
-                    style={{ color: "white" }}
-                    icon={() => (
-                      <Image
-                        style={{ height: 30, width: 30 }}
-                        source={require("../../assets/houses.png")}
-                      />
-                    )}
-                    onPress={() => props.navigation.navigate("Main")}
-                  />
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>Profile</Text>}
-                    icon={() => (
-                      <Image
-                        style={{
-                          height: 30,
-                          width: 30,
-                        }}
-                        source={require("../../assets/Profiles.png")}
-                      />
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("Profile");
-                    }}
-                  />
+              ) : ( */}
+              <>
+                <DrawerItem
+                  label={() => <Text style={styles.label}>Home</Text>}
+                  style={{ color: "white" }}
+                  icon={() => (
+                    <Image
+                      style={{ height: 30, width: 30 }}
+                      source={require("../../assets/houses.png")}
+                    />
+                  )}
+                  onPress={() => props.navigation.navigate("Main")}
+                />
+                <DrawerItem
+                  label={() => <Text style={styles.label}>Profile</Text>}
+                  icon={() => (
+                    <Image
+                      style={{
+                        height: 30,
+                        width: 30,
+                      }}
+                      source={require("../../assets/Profiles.png")}
+                    />
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("Profile");
+                  }}
+                />
 
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>My Requests</Text>}
-                    icon={() => (
-                      <Image
-                        style={{ height: 30, width: 30 }}
-                        source={require("../../assets/Planes.png")}
-                      />
-                    )}
-                    onPress={() => props.navigation.navigate("MyRequest")}
-                  />
-                  {/* <DrawerItem
+                <DrawerItem
+                  label={() => <Text style={styles.label}>My Requests</Text>}
+                  icon={() => (
+                    <Image
+                      style={{ height: 30, width: 30 }}
+                      source={require("../../assets/Planes.png")}
+                    />
+                  )}
+                  onPress={() => props.navigation.navigate("MyRequest")}
+                />
+                {/* <DrawerItem
                     label={() => <Text style={styles.label}>My Bookings</Text>}
                     icon={() => (
                       <Image
@@ -288,69 +287,61 @@ const DrawerContent = (props) => {
                     )}
                     onPress={() => props.navigation.navigate("Bookings")}
                   /> */}
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>Saved Tours</Text>}
-                    icon={() => (
-                      <Image
-                        style={{ height: 30, width: 30 }}
-                        source={require("../../assets/heart.png")}
-                      />
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("WishList");
-                    }}
-                  />
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>My Plans</Text>}
-                    //   icon={({ color, size }) => <Feather name="menu" />}
-                    icon={() => (
-                      <View style={{ marginHorizontal: 5 }}>
-                        <Fontisto
-                          name="plane-ticket"
-                          size={24}
-                          color="#C1C5C6"
-                        />
-                      </View>
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("MyPlans");
-                    }}
-                  />
+                <DrawerItem
+                  label={() => <Text style={styles.label}>Saved Tours</Text>}
+                  icon={() => (
+                    <Image
+                      style={{ height: 30, width: 30 }}
+                      source={require("../../assets/heart.png")}
+                    />
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("WishList");
+                  }}
+                />
+                <DrawerItem
+                  label={() => <Text style={styles.label}>My Plans</Text>}
+                  //   icon={({ color, size }) => <Feather name="menu" />}
+                  icon={() => (
+                    <View style={{ marginHorizontal: 5 }}>
+                      <Fontisto name="plane-ticket" size={24} color="#C1C5C6" />
+                    </View>
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("MyPlans");
+                  }}
+                />
 
-                  <DrawerItem
-                    label={() => (
-                      <Text style={styles.label}>My Visa Requests</Text>
-                    )}
-                    icon={() => (
-                      <Image
-                        style={{ height: 30, width: 30 }}
-                        source={require("../../assets/heart.png")}
-                      />
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("MyVisaRequestScreen");
-                    }}
-                  />
+                <DrawerItem
+                  label={() => (
+                    <Text style={styles.label}>My Visa Requests</Text>
+                  )}
+                  icon={() => (
+                    <Image
+                      style={{ height: 30, width: 30 }}
+                      source={require("../../assets/heart.png")}
+                    />
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("MyVisaRequestScreen");
+                  }}
+                />
 
-                  <DrawerItem
-                    label={() => (
-                      <Text style={styles.label}>Visa Assistance</Text>
-                    )}
-                    //   icon={({ color, size }) => <Feather name="menu" />}
-                    icon={() => (
-                      <View style={{ marginHorizontal: 5 }}>
-                        <FontAwesome5
-                          name="passport"
-                          size={23}
-                          color="#C1C5C6"
-                        />
-                      </View>
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("Visa");
-                    }}
-                  />
-                  {/* <DrawerItem
+                <DrawerItem
+                  label={() => (
+                    <Text style={styles.label}>Visa Assistance</Text>
+                  )}
+                  //   icon={({ color, size }) => <Feather name="menu" />}
+                  icon={() => (
+                    <View style={{ marginHorizontal: 5 }}>
+                      <FontAwesome5 name="passport" size={23} color="#C1C5C6" />
+                    </View>
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("Visa");
+                  }}
+                />
+                {/* <DrawerItem
                     label={() => <Text style={styles.label}>Support</Text>}
                     icon={() => (
                       <Image
@@ -364,62 +355,62 @@ const DrawerContent = (props) => {
                     onPress={() => {}}
                   /> */}
 
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>About Us</Text>}
-                    //   icon={({ color, size }) => <Feather name="menu" />}
-                    icon={() => (
-                      <View style={{ marginHorizontal: 5 }}>
-                        <AntDesign name="team" size={23} color="#C1C5C6" />
-                      </View>
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("AboutUs");
-                    }}
-                  />
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>Contact Us</Text>}
-                    icon={() => (
-                      <View style={{ marginHorizontal: 5 }}>
-                        <AntDesign name="contacts" size={23} color="#C1C5C6" />
-                      </View>
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("ContactUs");
-                    }}
-                  />
-                  <DrawerItem
-                    label={() => (
-                      <Text
-                        style={{
-                          marginBottom: HEIGHT / 10,
-                          color: "#FFF",
-                          fontWeight: "bold",
-                          fontSize: 16,
-                        }}
-                      >
-                        Log Out
-                      </Text>
-                    )}
-                    onPress={() => {
-                      firebase.auth().signOut();
-                      setUser(null);
-                      removeToken();
-                      setIsLoggedIn(false);
-                      props.navigation.navigate("Home");
-                    }}
-                    icon={() => (
-                      <Image
-                        style={{
-                          height: 30,
-                          width: 30,
-                          marginBottom: HEIGHT / 10,
-                        }}
-                        source={require("../../assets/log-out.png")}
-                      />
-                    )}
-                  />
-                </>
-              )}
+                <DrawerItem
+                  label={() => <Text style={styles.label}>About Us</Text>}
+                  //   icon={({ color, size }) => <Feather name="menu" />}
+                  icon={() => (
+                    <View style={{ marginHorizontal: 5 }}>
+                      <AntDesign name="team" size={23} color="#C1C5C6" />
+                    </View>
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("AboutUs");
+                  }}
+                />
+                <DrawerItem
+                  label={() => <Text style={styles.label}>Contact Us</Text>}
+                  icon={() => (
+                    <View style={{ marginHorizontal: 5 }}>
+                      <AntDesign name="contacts" size={23} color="#C1C5C6" />
+                    </View>
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("ContactUs");
+                  }}
+                />
+                <DrawerItem
+                  label={() => (
+                    <Text
+                      style={{
+                        marginBottom: HEIGHT / 10,
+                        color: "#FFF",
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      Log Out
+                    </Text>
+                  )}
+                  onPress={() => {
+                    firebase.auth().signOut();
+                    setUser(null);
+                    removeToken();
+                    setIsLoggedIn(false);
+                    props.navigation.navigate("Home");
+                  }}
+                  icon={() => (
+                    <Image
+                      style={{
+                        height: 30,
+                        width: 30,
+                        marginBottom: HEIGHT / 10,
+                      }}
+                      source={require("../../assets/log-out.png")}
+                    />
+                  )}
+                />
+              </>
+              {/* )} */}
             </View>
           </DrawerContentScrollView>
         </View>

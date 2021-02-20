@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import moment from "moment";
+// import moment from "moment";
 import touron from "../../api/touron";
 import { Surface } from "react-native-paper";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
@@ -23,7 +23,7 @@ const BlogHomeScreen = ({ navigation }) => {
   const [blog, setBlog] = useState([]);
   const [loaded, setLoaded] = useState(true);
   const [blogloaded, setBlogLoaded] = useState(true);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [pageSize, setpageSize] = useState(40);
   const getBlog = async () => {
     setBlogLoaded(true);

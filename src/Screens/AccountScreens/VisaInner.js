@@ -8,7 +8,6 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
-  Picker,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";

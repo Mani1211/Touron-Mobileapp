@@ -20,7 +20,6 @@ const MyVisaRequestsScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   const [step, setStep] = useState(0);
   const [visaData, setVisaData] = useState({});
-  console.log("visaRequest", visaRequest);
   const getUserVisaRequest = () => {
     const request = [];
     firebase

@@ -18,7 +18,6 @@ const WishListScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   const [loaded, setLoaded] = useState(false);
   const [savedTours, setSavedTours] = useState([]);
-  console.log(user, "saved");
 
   const getSavedTours = () => {
     firebase

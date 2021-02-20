@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
+import { Text, View, TouchableOpacity, Dimensions } from "react-native";
 import * as firebase from "firebase";
 
 import { ScrollView, FlatList } from "react-native-gesture-handler";
@@ -14,7 +14,7 @@ const ProgressScreen = ({ navigation, route }) => {
   const { details } = useContext(SelfTourContext);
   const { user } = useContext(AuthContext);
   const finalTour = route.params.selectedTours;
-  console.log("details", details);
+  // console.log("details", details);
   const selectedCity = route.params.selectedCity;
   const [step, setStep] = useState(1);
   const [date, setDate] = useState();

@@ -5,23 +5,15 @@ import {
   Dimensions,
   StatusBar,
   ScrollView,
-  Button,
+  // Button,
   Linking,
 } from "react-native";
-import {
-  Container,
-  Header,
-  Tab,
-  Tabs,
-  Icon,
-  TabHeading,
-  ScrollableTab,
-} from "native-base";
+import { Container, Header, Tab, Tabs, TabHeading } from "native-base";
 
 import { Surface } from "react-native-paper";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import Carousel, { Pagination } from "react-native-snap-carousel";
+import Carousel from "react-native-snap-carousel";
 import {
   MaterialIcons,
   Feather,
@@ -550,12 +542,12 @@ const MyPlansInner = ({ navigation, route }) => {
                   </Surface>
                 )}
               </View>
-              <Button
+              {/* <Button
                 title="pay"
                 onPress={() => {
                   Linking.openURL("https://rzp.io/i/9wMkoCu");
                 }}
-              />
+              /> */}
             </ScrollView>
           </Tab>
           <Tab
@@ -921,7 +913,6 @@ const MyPlansInner = ({ navigation, route }) => {
           <Tab
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
-                {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
                 <Text style={{ fontFamily: "NewYorkl" }}>Taxi</Text>
               </TabHeading>
             }

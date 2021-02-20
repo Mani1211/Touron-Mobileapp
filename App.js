@@ -1,15 +1,11 @@
 import {
-  YellowBox,
   Dimensions,
   View,
   ActivityIndicator,
   Image,
-  Text,
   StatusBar,
   TouchableOpacity,
 } from "react-native";
-YellowBox.ignoreWarnings(["Remote debugger"]);
-YellowBox.ignoreWarnings(["Setting a timer"]);
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -33,41 +29,27 @@ import MyVisaRequestsScreen from "./src/Screens/AccountScreens/MyVisaRequests";
 import * as Network from "expo-network";
 import { Surface } from "react-native-paper";
 import MyPlansInner from "./src/Screens/AccountScreens/MyPlansInner";
-// Install this package with `expo install expo-linking`
-import * as Linking from "expo-linking";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
-  authDomain: "touronapp-248e4.firebaseapp.com",
-  databaseURL: "https://touronapp-248e4.firebaseio.com",
-  projectId: "touronapp-248e4",
-  storageBucket: "touronapp-248e4.appspot.com",
-  messagingSenderId: "813320271971",
-  appId: "1:813320271971:web:5a10483e3c11bc953aa056",
-  measurementId: "G-KCPSW6WFC9",
-};
 
 // const firebaseConfig = {
-//   apiKey: "AIzaSyBw6zKmzlCTb3_IsSgf8SwrKhcfajFcQas",
-//   authDomain: "touron-mobileapp.firebaseapp.com",
-//   databaseURL: "https://touron-mobileapp.firebaseio.com",
-//   projectId: "touron-mobileapp",
-//   storageBucket: "touron-mobileapp.appspot.com",
-//   messagingSenderId: "1009345966954",
-//   appId: "1:1009345966954:web:bcabf8d980187f03e1eb13",
-//   measurementId: "G-8J2032B9M6",
+//   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
+//   authDomain: "touronapp-248e4.firebaseapp.com",
+//   databaseURL: "https://touronapp-248e4.firebaseio.com",
+//   projectId: "touronapp-248e4",
+//   storageBucket: "touronapp-248e4.appspot.com",
+//   messagingSenderId: "813320271971",
+//   appId: "1:813320271971:web:5a10483e3c11bc953aa056",
+//   measurementId: "G-KCPSW6WFC9",
 // };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
   const [user, setUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [tours, setTour] = useState([]);
   const [countries, setCountries] = useState([]);
   const [appLoading, setAppLoading] = useState(true);
@@ -77,6 +59,10 @@ const App = () => {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
+    firebase.default.auth().onAuthStateChanged((user) => {
+      // console.log(user, "ushgjhggger");
+      setUser(user);
+    });
     getNetwork();
     getUserData();
   }, []);
@@ -85,10 +71,6 @@ const App = () => {
     if (mounted) {
       getTours();
       getCities();
-      // firebase.auth().onAuthStateChanged((user) => {
-      //   setUser(user);
-      //   setIsLoggedIn(true);
-      // });
     }
     return () => (mounted = false);
   }, []);
@@ -119,9 +101,11 @@ const App = () => {
       const data = await AsyncStorage.getItem("userToken");
       const userToken = JSON.parse(data);
       if (userToken !== null) {
-        // console.log(userToken, "lo");
         setUser(userToken);
         setIsLoggedIn(true);
+      } else {
+        setUser({});
+        setUserInfo({});
       }
     } catch (e) {
       console.log(e);
@@ -141,6 +125,7 @@ const App = () => {
         .ref(`userGeneralInfo/${user.uid}`)
         .on("value", (data) => {
           let val = data.val();
+          setUserInfo(val);
         });
     }
   };
@@ -227,7 +212,6 @@ const App = () => {
             tours,
             cities,
             countries,
-            isAdmin,
           }}
         >
           <NavigationContainer>

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Dimensions,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, Image, Dimensions, Text } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;

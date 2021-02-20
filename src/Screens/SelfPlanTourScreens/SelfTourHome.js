@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   StyleSheet,
@@ -18,10 +18,10 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 import SearchBar from "../../Reusable Components/SearchBar";
-import { AuthContext } from "../../context/AuthContext";
+// import { AuthContext } from "../../context/AuthContext";
 
 const SelfTourHome = ({ navigation, route }) => {
-  const { tours } = useContext(AuthContext);
+  // const { tours } = useContext(AuthContext);
 
   const [tour, setTour] = useState([]);
   const [error, setErrorMessage] = useState();
@@ -32,13 +32,9 @@ const SelfTourHome = ({ navigation, route }) => {
   const cityLength = selectedCity.length - 1;
   const [selectedTours, setSelectedTours] = useState([]);
   const [selectedTourNames, setSelectedTourNames] = useState([]);
-  console.log("selectedTours", selectedTours);
-  console.log("selectedTours", selectedTourNames);
-  const showLoader = () => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 1000);
-  };
+  // console.log("selectedTours", selectedTours);
+  // console.log("selectedTours", selectedTourNames);
+
   const getTour = async (city) => {
     try {
       const tourResponse = await touron.get(`/tour/cityname/${city}`);
@@ -52,7 +48,6 @@ const SelfTourHome = ({ navigation, route }) => {
 
   useEffect(() => {
     getTour(selectedCityNames[active]);
-    showLoader();
   }, []);
 
   return (

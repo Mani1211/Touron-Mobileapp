@@ -74,8 +74,6 @@ const ProfileScreen = ({ navigation }) => {
           }
         });
     }
-    // }
-    // });
   };
   useEffect(() => {
     setTimeout(() => {
@@ -111,8 +109,6 @@ const ProfileScreen = ({ navigation }) => {
     });
     prevStep();
   };
-
-  // console.log(image);
 
   const _pickImage = async () => {
     try {
@@ -203,18 +199,13 @@ const ProfileScreen = ({ navigation }) => {
     switch (step) {
       case 1:
         return (
-          <ScrollView
-            animation="bounceIn"
-            duration={3000}
-            // style={{ flex: 1, backgroundColor: "white" }}
-          >
+          <ScrollView animation="bounceIn" duration={3000}>
             {user == null ? null : (
               <>
                 <View
                   style={{
                     flex: 1,
                     zIndex: -2,
-                    // position: "relative",
                   }}
                 >
                   {user.photoURL == "" ? (
@@ -258,17 +249,13 @@ const ProfileScreen = ({ navigation }) => {
 
                 <View
                   style={{
-                    // height: HEIGHT / 12,
                     marginHorizontal: WIDTH / 13,
-
                     justifyContent: "center",
-                    // flexDirection: "row",
                     alignItems: "center",
                   }}
                 >
                   <Text
                     style={{
-                      // marginHorizontal: WIDTH / 10,
                       color: "black",
                       fontFamily: "Andika",
                       marginVertical: 10,

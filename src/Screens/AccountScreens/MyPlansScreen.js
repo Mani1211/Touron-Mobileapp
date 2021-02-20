@@ -9,7 +9,6 @@ import {
   FlatList,
   Platform,
 } from "react-native";
-import { Avatar } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;

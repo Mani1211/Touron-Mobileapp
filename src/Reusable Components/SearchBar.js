@@ -1,6 +1,6 @@
 import React from "react";
 import { Feather } from "@expo/vector-icons";
-import { View, TextInput, Image, StyleSheet, Dimensions } from "react-native";
+import { View, TextInput, StyleSheet, Dimensions } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 const SearchBar = () => {

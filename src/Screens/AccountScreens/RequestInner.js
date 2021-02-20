@@ -16,7 +16,7 @@ import { AuthContext } from "../../context/AuthContext";
 import * as firebase from "firebase";
 // import DropDownPicker from "react-native-dropdown-picker";
 import { Container, Header, Tab, Tabs, Icon, TabHeading } from "native-base";
-import Carousel, { Pagination } from "react-native-snap-carousel";
+import Carousel from "react-native-snap-carousel";
 import {
   MaterialIcons,
   Feather,
@@ -39,13 +39,13 @@ const RequestInner = ({ navigation, route }) => {
   // const onDismissSnackBar = () => setVisible(false);
   const { user } = useContext(AuthContext);
 
-  const higher = route.params.higher;
-  const key = route.params.key;
-  const [loaded, setLoaded] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [status, setStatus] = useState("");
-  const [cost, setCost] = useState(0);
-  const [progress, setProgress] = useState(0);
+  // const higher = route.params.higher;
+  // const key = route.params.key;
+  // const [loaded, setLoaded] = useState(true);
+  // const [isAdmin, setIsAdmin] = useState(false);
+  // const [status, setStatus] = useState("");
+  // const [cost, setCost] = useState(0);
+  // const [progress, setProgress] = useState(0);
 
   const getUserData = () => {
     if (user !== null) {

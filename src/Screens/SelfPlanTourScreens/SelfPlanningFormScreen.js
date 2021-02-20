@@ -7,7 +7,6 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  FlatList,
   ScrollView,
   Dimensions,
 } from "react-native";
@@ -81,12 +80,6 @@ const SelfPlanForm = ({ navigation }) => {
 
     const result = [...c, ...countries];
     return result;
-  };
-
-  const showLoader = () => {
-    setTimeout(() => {
-      setLoader(true);
-    }, 300);
   };
 
   const getStates = async () => {
