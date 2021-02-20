@@ -22,6 +22,7 @@ import { AuthContext } from "../../context/AuthContext";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import touron from "../../api/touron";
 import Tourtype from "./../CategoryScreens/Reusable components/Tourtype";
+import SubmittedQuery from "./../CategoryScreens/Reusable components/SubmittedQuery";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 const SelfPlanForm = ({ navigation }) => {
@@ -36,7 +37,7 @@ const SelfPlanForm = ({ navigation }) => {
   const [toDate, setToDate] = useState("");
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
   const [selectedState, setSelectedState] = useState("");
   const [dcities, setDCities] = useState([]);
   const [states, setStates] = useState([]);
@@ -158,7 +159,7 @@ const SelfPlanForm = ({ navigation }) => {
         tourCost: 0,
       })
       .then((data) => {
-        closeModal();
+        setStep(5);
       })
       .catch((err) => console.log(err));
   };
@@ -758,6 +759,8 @@ const SelfPlanForm = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         );
+      case 5:
+        return <SubmittedQuery navigation={navigation} type={"Self Plan"} />;
     }
   };
 
@@ -776,43 +779,45 @@ const SelfPlanForm = ({ navigation }) => {
         <>
           {tourType === "Domestic" ? (
             <>
-              <View
-                style={{
-                  alignItems: "flex-end",
-                  justifyContent: "center",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginHorizontal: WIDTH / 15,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    if (step > 2) setStep(step - 1);
-                  }}
-                >
-                  {step === 1 ? null : (
-                    <View>
-                      <AntDesign name="arrowleft" size={28} />
-                    </View>
-                  )}
-                </TouchableOpacity>
-
-                <Text
+              {step === 5 ? null : (
+                <View
                   style={{
-                    fontSize: 20,
-                    fontFamily: "NewYorkl",
-                    marginTop: Platform.OS == "android" ? 30 : 80,
+                    alignItems: "flex-end",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginHorizontal: WIDTH / 15,
                   }}
                 >
-                  Domestic
-                </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (step > 1) setStep(step - 1);
+                    }}
+                  >
+                    {step === 1 ? null : (
+                      <View>
+                        <AntDesign name="arrowleft" size={28} />
+                      </View>
+                    )}
+                  </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setStep(step + 1)}>
-                  <View>
-                    <AntDesign name="arrowright" size={28} />
-                  </View>
-                </TouchableOpacity>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontFamily: "NewYorkl",
+                      marginTop: Platform.OS == "android" ? 30 : 80,
+                    }}
+                  >
+                    Domestic
+                  </Text>
+
+                  <TouchableOpacity onPress={() => setStep(step + 1)}>
+                    <View>
+                      <AntDesign name="arrowright" size={28} />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              )}
               {renderDomesticForm()}
             </>
           ) : (

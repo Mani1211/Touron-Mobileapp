@@ -240,7 +240,7 @@ const SelfTourStackScreen = () => {
           name="Progress"
           options={{
             title: "",
-            headerShown: true,
+            headerShown: false,
             headerTransparent: true,
           }}
           component={ProgressScreen}

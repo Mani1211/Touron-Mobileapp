@@ -6,7 +6,14 @@ const HEIGHT = Dimensions.get("window").height;
 
 const SubmittedQuery = ({ navigation, type }) => {
   return (
-    <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+    <View
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+        backgroundColor: "#FFF",
+      }}
+    >
       <View
         style={{
           height: HEIGHT * 0.8,
