@@ -265,7 +265,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
         );
 
       case 7:
-        return <SubmittedQuery navigation={navigation} />;
+        return <SubmittedQuery navigation={navigation} type={"My Request"} />;
       default:
         break;
     }

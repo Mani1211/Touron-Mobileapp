@@ -308,7 +308,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
         );
 
       case 9:
-        return <SubmittedQuery navigation={navigation} />;
+        return <SubmittedQuery navigation={navigation} type={"My Request"} />;
       default:
         break;
     }

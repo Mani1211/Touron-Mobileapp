@@ -289,7 +289,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
         );
 
       case 8:
-        return <SubmittedQuery navigation={navigation} />;
+        return <SubmittedQuery navigation={navigation} type={"My Request"} />;
 
       default:
         break;

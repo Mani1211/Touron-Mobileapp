@@ -45,7 +45,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
   const [name, setName] = useState("");
   const [budget, setBudget] = useState("");
   const [number, setNumber] = useState("");
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(9);
   const { isLoggedIn, user } = useContext(AuthContext);
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
@@ -300,7 +300,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
         );
 
       case 9:
-        return <SubmittedQuery navigation={navigation} />;
+        return <SubmittedQuery navigation={navigation} type={"My Request"} />;
       default:
         break;
     }

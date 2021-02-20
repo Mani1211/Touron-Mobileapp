@@ -337,7 +337,7 @@ const RoadTripScreen = ({ navigation }) => {
         );
 
       case 10:
-        return <SubmittedQuery navigation={navigation} />;
+        return <SubmittedQuery navigation={navigation} type={"My Request"} />;
 
       default:
         break;

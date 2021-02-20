@@ -55,7 +55,7 @@ const BlogHomeScreen = ({ navigation }) => {
           marginLeft: 20,
         }}
       >
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <Feather name="arrow-left" style={{ fontSize: 30 }} />
         </TouchableOpacity>
 
