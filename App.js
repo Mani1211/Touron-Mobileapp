@@ -30,20 +30,20 @@ import * as Network from "expo-network";
 import { Surface } from "react-native-paper";
 import MyPlansInner from "./src/Screens/AccountScreens/MyPlansInner";
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
-//   authDomain: "touronapp-248e4.firebaseapp.com",
-//   databaseURL: "https://touronapp-248e4.firebaseio.com",
-//   projectId: "touronapp-248e4",
-//   storageBucket: "touronapp-248e4.appspot.com",
-//   messagingSenderId: "813320271971",
-//   appId: "1:813320271971:web:5a10483e3c11bc953aa056",
-//   measurementId: "G-KCPSW6WFC9",
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
+  authDomain: "touronapp-248e4.firebaseapp.com",
+  databaseURL: "https://touronapp-248e4.firebaseio.com",
+  projectId: "touronapp-248e4",
+  storageBucket: "touronapp-248e4.appspot.com",
+  messagingSenderId: "813320271971",
+  appId: "1:813320271971:web:5a10483e3c11bc953aa056",
+  measurementId: "G-KCPSW6WFC9",
+};
 
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// }
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const Drawer = createDrawerNavigator();
 
@@ -60,7 +60,6 @@ const App = () => {
 
   useEffect(() => {
     firebase.default.auth().onAuthStateChanged((user) => {
-      // console.log(user, "ushgjhggger");
       setUser(user);
     });
     getNetwork();
@@ -124,8 +123,12 @@ const App = () => {
         .database()
         .ref(`userGeneralInfo/${user.uid}`)
         .on("value", (data) => {
-          let val = data.val();
-          setUserInfo(val);
+          if (data === null) {
+            // setUserInfo({});
+          } else {
+            let val = data.val();
+            // setUserInfo(val);
+          }
         });
     }
   };
