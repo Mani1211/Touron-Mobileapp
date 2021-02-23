@@ -33,7 +33,7 @@ import PromotionPage from "./AccountScreens/PromotionPage";
 import { SelfTourContext } from "../context/ SelfTourContext";
 import AboutUs from "./AccountScreens/AboutUs";
 import ContactUs from "./AccountScreens/ContactUs";
-import BookingDetails from "./AccountScreens/BookingDetails";
+// import BookingDetails from "./AccountScreens/BookingDetails";
 import MyPlansInner from "./AccountScreens/MyPlansInner";
 import WildLife from "./CategoryScreens/WildlifeScreen";
 import Luxury from "./CategoryScreens/Luxury";
@@ -191,7 +191,7 @@ const HomeStackScreen = () => {
         name="ContactUs"
         component={ContactUs}
       />
-      <HomeStack.Screen
+      {/* <HomeStack.Screen
         options={{
           title: "",
           headerShown: true,
@@ -199,7 +199,7 @@ const HomeStackScreen = () => {
         }}
         name="Bookings"
         component={BookingDetails}
-      />
+      /> */}
       {/* <HomeStack.Screen
         options={{
           title: "",

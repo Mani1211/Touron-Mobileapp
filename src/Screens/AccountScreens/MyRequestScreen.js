@@ -67,6 +67,7 @@ const MyRequestScreen = ({ navigation }) => {
             ...newReq,
           });
         }
+        setLoaded(false);
       });
   };
 

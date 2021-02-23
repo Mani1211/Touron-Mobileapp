@@ -32,6 +32,7 @@ const ProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [address, setAddress] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [step, setStep] = useState(1);
   const [aboutMe, setAboutMe] = useState("");

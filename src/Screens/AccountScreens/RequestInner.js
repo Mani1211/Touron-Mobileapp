@@ -55,7 +55,7 @@ const RequestInner = ({ navigation, route }) => {
         .on("value", (data) => {
           if (data.val() !== null) {
             let val = data.val();
-            setIsAdmin(val.admin);
+            // setIsAdmin(val.admin);
           }
         });
     }
@@ -91,9 +91,6 @@ const RequestInner = ({ navigation, route }) => {
 
   useEffect(() => {
     getUserData();
-    setTimeout(() => {
-      setLoaded(false);
-    }, 1500);
   }, []);
 
   useEffect(() => {
@@ -275,28 +272,28 @@ const RequestInner = ({ navigation, route }) => {
                 </Text>
               </View>
             </View>
-            {Object.keys(plannedDetails).length === 0 ||
-            plannedDetails.paymentLink === "" ? null : (
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL(plannedDetails.paymentLink);
+            {/* {Object.keys(plannedDetails).length === 0 ||
+            plannedDetails.paymentLink === "" ? null : ( */}
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(plannedDetails.paymentLink);
+              }}
+            >
+              <Text
+                style={{
+                  color: "#fff",
+                  marginRight: 10,
+                  padding: 10,
+                  borderRadius: 10,
+                  fontSize: 16,
+                  fontFamily: "NewYorkl",
+                  backgroundColor: "#333",
                 }}
               >
-                <Text
-                  style={{
-                    color: "#333",
-                    marginRight: 10,
-                    padding: 10,
-                    borderRadius: 10,
-                    fontSize: 16,
-                    fontFamily: "NewYorkl",
-                    backgroundColor: "#ffeaa7",
-                  }}
-                >
-                  Pay Now
-                </Text>
-              </TouchableOpacity>
-            )}
+                Pay Now
+              </Text>
+            </TouchableOpacity>
+            {/* )} */}
           </View>
         </Header>
         <Tabs
@@ -405,7 +402,7 @@ const RequestInner = ({ navigation, route }) => {
                           marginRight: 20,
                         }}
                       >
-                        Onward : {item.fromData}
+                        Onward : {item.fromDate}
                       </Text>
                       <Text
                         style={{
@@ -419,7 +416,7 @@ const RequestInner = ({ navigation, route }) => {
                           borderColor: "#333",
                         }}
                       >
-                        Return : {item.toData}
+                        Return : {item.toDate}
                       </Text>
                     </View>
                     <View
