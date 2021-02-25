@@ -85,7 +85,7 @@ const AboutUs = ({ navigation }) => {
           and cost-effective manner. In a world filled with options, why should
           you settle for less when we give you more! TourOn’s fully customizable
           travel packages give you a tour that is tailored exactly the way you
-          like it. Leave all the hard work to us! We will make your dream
+          like it. Leave all the hard work to us! We will make your dreams
           vacation a reality. Based on a survey of your tastes and destination
           preferences, TourOn’s algorithm provides a wide range of choices with
           the best prices. All you need to do is pick!
