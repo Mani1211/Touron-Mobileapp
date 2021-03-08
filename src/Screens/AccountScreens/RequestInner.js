@@ -845,7 +845,8 @@ const RequestInner = ({ navigation, route }) => {
                         fontFamily: "NewYorkl",
                       }}
                     >
-                      Onward Flight
+                      Onward{" "}
+                      {plannedDetails.flightDetails.onward.onwardTransportMode}
                     </Text>
                   </View>
 
@@ -864,7 +865,7 @@ const RequestInner = ({ navigation, route }) => {
                         {plannedDetails.flightDetails.onward.from}
                       </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
-                        Kiv
+                        {plannedDetails.flightDetails.onward.onwardFromCityCode}
                       </Text>
                       <Text style={{ fontFamily: "Andika" }}>
                         {plannedDetails.flightDetails.onward.depatureTime}
@@ -888,7 +889,7 @@ const RequestInner = ({ navigation, route }) => {
                         {plannedDetails.flightDetails.onward.to}
                       </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
-                        Kiv
+                        {plannedDetails.flightDetails.onward.onwardToCityCode}
                       </Text>
                       <Text style={{ fontFamily: "Andika" }}>
                         {plannedDetails.flightDetails.onward.arrivalTime}
@@ -939,7 +940,7 @@ const RequestInner = ({ navigation, route }) => {
                         fontFamily: "NewYorkl",
                       }}
                     >
-                      Return Flight
+                      {plannedDetails.flightDetails.return.returnTransportMode}
                     </Text>
                   </View>
 
@@ -958,7 +959,7 @@ const RequestInner = ({ navigation, route }) => {
                         {plannedDetails.flightDetails.return.from}
                       </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
-                        Kiv
+                        {plannedDetails.flightDetails.return.returnFromCityCode}
                       </Text>
                       <Text style={{ fontFamily: "Andika" }}>
                         {plannedDetails.flightDetails.return.depatureTime}
@@ -981,7 +982,7 @@ const RequestInner = ({ navigation, route }) => {
                         {plannedDetails.flightDetails.return.to}
                       </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
-                        Kiv
+                        {plannedDetails.flightDetails.return.returnToCityCode}
                       </Text>
                       <Text style={{ fontFamily: "Andika" }}>
                         {plannedDetails.flightDetails.return.arrivalTime}
