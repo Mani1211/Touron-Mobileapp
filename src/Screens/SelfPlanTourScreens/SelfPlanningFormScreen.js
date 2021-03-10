@@ -131,7 +131,7 @@ const SelfPlanForm = ({ navigation }) => {
       .database()
       .ref(`self-planned-tours`)
       .push({
-        requestID: `T0-${date}${formatedMonth}${year}-${random}`,
+        requestID: `TO-${date}${formatedMonth}${year}-${random}`,
         tourType: tourType,
         userId: user.uid,
         adult: adult,
@@ -468,6 +468,9 @@ const SelfPlanForm = ({ navigation }) => {
                           mode="date"
                           placeholder=""
                           format="YYYY-MM-DD"
+                          minDate={moment()
+                            .add(14, "days")
+                            .format("YYYY-MM-DD")}
                           confirmBtnText="Confirm"
                           cancelBtnText="Cancel"
                           onDateChange={(date) => {
@@ -887,12 +890,12 @@ const SelfPlanForm = ({ navigation }) => {
                               <TouchableWithoutFeedback
                                 onPress={() => {
                                   const filter = selectedCity.filter((sa) => {
-                                    return sa.cityName !== t.cityName;
+                                    return sa.cityName !== item.cityName;
                                   });
                                   setSelectedCity(filter);
                                   const filters = selectedCityNames.filter(
                                     (sa) => {
-                                      return sa !== t.cityName;
+                                      return sa !== item.cityName;
                                     }
                                   );
                                   setSelectedCityNames(filters);

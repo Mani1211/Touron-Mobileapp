@@ -16,6 +16,7 @@ const HEIGHT = Dimensions.get("window").height;
 import { Surface } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { SelfTourContext } from "../../context/ SelfTourContext";
+
 const OverviewCitiesScreen = ({ navigation, route }) => {
   const { setDetails } = useContext(SelfTourContext);
   const [selectedCity, setSelectedCity] = useState(route.params.selectedCity);
@@ -25,7 +26,7 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
   const [children, setChildren] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
   // console.log("selectedCity", selectedCity);
-  // console.log("selectedCity", totalDays);
+  // console.log("selectedCity", totalDays)
   const selectedCityNames = route.params.selectedCityNames;
   const calculateTotalDays = () => {
     let count = 0;
@@ -146,6 +147,7 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
                     style={{ width: 200 }}
                     date={fromDate}
                     mode="date"
+                    minDate={moment().add(14, "days").format("YYYY-MM-DD")}
                     placeholder=""
                     format="YYYY-MM-DD"
                     confirmBtnText="Confirm"

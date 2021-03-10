@@ -9,8 +9,8 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-
 import Checked from "./Checked";
+import { AntDesign } from "@expo/vector-icons";
 const Drivetype = ({
   imgSrc1,
   imgSrc2,
@@ -23,9 +23,62 @@ const Drivetype = ({
   driveType,
   driverType,
   nextStep,
+  prevStep,
 }) => {
   return (
     <View>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+            // navigation.goBack("Home");
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+          }}
+        >
+          Road Trip
+        </Text>
+
+        {driveType !== "" && driverType !== "" ? (
+          <TouchableOpacity
+            onPress={() => {
+              nextStep();
+            }}
+          >
+            <View>
+              <AntDesign name="arrowright" size={28} />
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={() => {
+              nextStep();
+            }}
+          >
+            <View></View>
+          </TouchableOpacity>
+        )}
+      </View>
       <View style={{ width: WIDTH, marginHorizontal: 30, marginVertical: 30 }}>
         <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
           1.Would you Prefer ?
@@ -119,7 +172,7 @@ const Drivetype = ({
             >
               <View style={styles.travelTypeView}>
                 <View styles={[styles.travelTypeView]}>
-                  <View style={{ position: "absolute", top: -30, right: -20 }}>
+                  <View style={{ position: "absolute", top: 0, right: -20 }}>
                     {driverType == "Self Drive" ? <Checked /> : null}
                   </View>
                   <Image
@@ -155,7 +208,7 @@ const Drivetype = ({
             >
               <View style={styles.travelTypeView}>
                 <View styles={[styles.travelTypeView]}>
-                  <View style={{ position: "absolute", top: -30, right: -20 }}>
+                  <View style={{ position: "absolute", top: 10, right: -20 }}>
                     {driverType == "Car Driver needed" ? <Checked /> : null}
                   </View>
                   <Image

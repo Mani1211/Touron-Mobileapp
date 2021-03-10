@@ -1,4 +1,5 @@
 import React from "react";
+import { AntDesign } from "@expo/vector-icons";
 import {
   View,
   Image,
@@ -7,6 +8,7 @@ import {
   Keyboard,
   Text,
   TextInput,
+  TouchableOpacity,
   Dimensions,
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
@@ -20,12 +22,70 @@ const Expediture = ({
   startPoint,
   setStartPoint,
   setExpediture1,
+  prevStep,
+  nextStep,
+  tourName,
   setExpediture2,
   setExpediture3,
 }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="position">
+        <View
+          style={{
+            width: WIDTH * 0.9,
+            alignItems: "flex-end",
+            justifyContent: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginHorizontal: 30,
+            position: "relative",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              prevStep();
+              // navigation.goBack("Home");
+            }}
+          >
+            <View>
+              <AntDesign name="arrowleft" size={28} />
+            </View>
+          </TouchableOpacity>
+
+          <Text
+            style={{
+              fontSize: 20,
+              fontFamily: "NewYorkl",
+              marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            }}
+          >
+            {tourName}
+          </Text>
+
+          {expediture1 !== "" &&
+          startPoint !== "" &&
+          expediture2 !== "" &&
+          expediture3 !== "" ? (
+            <TouchableOpacity
+              onPress={() => {
+                nextStep();
+              }}
+            >
+              <View>
+                <AntDesign name="arrowright" size={28} />
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                nextStep();
+              }}
+            >
+              <View></View>
+            </TouchableOpacity>
+          )}
+        </View>
         <View style={{ alignItems: "center" }}>
           <View
             style={{
@@ -147,7 +207,7 @@ const Expediture = ({
                     value={startPoint}
                     multiline
                     onChangeText={(value) => setStartPoint(value)}
-                    placeholder="Favourite food like that ...."
+                    placeholder="Chennai"
                   />
                 </View>
               </View>

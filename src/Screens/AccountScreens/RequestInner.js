@@ -4,6 +4,7 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  Linking,
   ScrollView,
   StyleSheet,
   StatusBar,
@@ -272,28 +273,28 @@ const RequestInner = ({ navigation, route }) => {
                 </Text>
               </View>
             </View>
-            {/* {Object.keys(plannedDetails).length === 0 ||
-            plannedDetails.paymentLink === "" ? null : ( */}
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL(plannedDetails.paymentLink);
-              }}
-            >
-              <Text
-                style={{
-                  color: "#fff",
-                  marginRight: 10,
-                  padding: 10,
-                  borderRadius: 10,
-                  fontSize: 16,
-                  fontFamily: "NewYorkl",
-                  backgroundColor: "#333",
+            {Object.keys(plannedDetails).length === 0 ||
+            plannedDetails.paymentLink === "" ? null : (
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(plannedDetails.paymentLink);
                 }}
               >
-                Pay Now
-              </Text>
-            </TouchableOpacity>
-            {/* )} */}
+                <Text
+                  style={{
+                    color: "#fff",
+                    marginRight: 10,
+                    padding: 10,
+                    borderRadius: 10,
+                    fontSize: 16,
+                    fontFamily: "NewYorkl",
+                    backgroundColor: "#333",
+                  }}
+                >
+                  Pay Now
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </Header>
         <Tabs
@@ -443,7 +444,7 @@ const RequestInner = ({ navigation, route }) => {
                           marginTop: 10,
                         }}
                       >
-                        {item.phoneNumber}
+                        {item.number}
                       </Text>
                     </View>
                   </View>

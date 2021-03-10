@@ -21,8 +21,8 @@ import Travellertype from "./Reusable components/Travellertype";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import Touristnumber from "./Reusable components/Touristnumber";
-
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
+import moment from "moment";
 import {
   sendEmail,
   sendPushNotification,
@@ -53,8 +53,6 @@ const Luxury = ({ navigation, route }) => {
   let random;
   let formatedMonth;
 
-  const [userInfo, setUserInfo] = useState({});
-
   useEffect(() => {
     random = Math.floor((Math.random() + 4) * 345334);
     const requestDate = new Date();
@@ -65,21 +63,7 @@ const Luxury = ({ navigation, route }) => {
     formatedMonth = month < 10 ? "0" + month : month;
   });
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          setUserInfo(data.val());
-          setName(data.val().name);
-          setNumber(data.val().phoneNumber);
-        });
-    }
-  };
-
   useEffect(() => {
-    getUserData();
     if (route.params !== undefined) {
       const countryName = route.params.countryName;
       const type = route.params.type;
@@ -122,6 +106,8 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       case 1:
         return (
           <Tourname
+            tourName={"Luxury Tour"}
+            navigation={navigation}
             step={() => nextStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/global-travelling-abstract-concept-vector-illustration-global-insurance-world-trip-international-tourism-travel-agency-working-holiday-luxury-vacation-resort-chain-abstract-metaphor_335657-2953.jpg"
@@ -133,6 +119,9 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       case 2:
         return (
           <Tourtype
+            tourName={"Luxury Tour"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc1={require("../../../assets/planned-tour/india.png")}
             imgScr2={require("../../../assets/planned-tour/International.png")}
             nextStep={() => nextStep()}
@@ -145,8 +134,10 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       case 3:
         return (
           <Travellertype
-            travellerType={travellerType}
+            tourName={"Luxury Tour"}
             nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
+            travellerType={travellerType}
             setSolo={() => {
               setTravellerType("Solo");
               setStep(5);
@@ -160,13 +151,15 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       case 4:
         return (
           <Touristnumber
+            tourName={"Luxury Tour"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc1={
               "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg"
             }
             imgScr2={
               "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg"
             }
-            nextStep={() => nextStep()}
             adult={adult}
             children={children}
             setChildren={(value) => setChildren(value)}
@@ -177,6 +170,49 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       case 5:
         return (
           <View style={{ alignItems: "center" }}>
+            <View
+              style={{
+                width: WIDTH * 0.9,
+                alignItems: "flex-end",
+                justifyContent: "center",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginHorizontal: 30,
+                position: "relative",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  prevStep();
+                }}
+              >
+                <View>
+                  <AntDesign name="arrowleft" size={28} />
+                </View>
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "NewYorkl",
+                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                }}
+              >
+                Luxury Trip
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View>
+                  {fromDate !== "" && toDate !== "" ? (
+                    <AntDesign name="arrowright" size={28} />
+                  ) : null}
+                </View>
+              </TouchableOpacity>
+            </View>
             <View style={styles.imageContainer}>
               <Image
                 style={{ height: HEIGHT / 3, width: WIDTH * 0.8 }}
@@ -205,7 +241,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
                       paddingLeft: 5,
                     }}
                   >
-                    Start Date
+                    Onward
                   </Text>
                 </View>
 
@@ -217,7 +253,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
                   placeholder="select date"
                   format="YYYY-MM-DD"
                   // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={moment().add(14, "days").format("YYYY-MM-DD")}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -234,7 +270,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
                       paddingLeft: Platform.OS === "ios" ? 15 : 10,
                     }}
                   >
-                    End Date
+                    Return
                   </Text>
                 </View>
                 <DatePicker
@@ -243,8 +279,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
                   mode="date"
                   placeholder="select date"
                   format="YYYY-MM-DD"
-                  // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={fromDate}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -258,6 +293,9 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       case 6:
         return (
           <Destination
+            tourName={"Luxury Tour"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/destination-concept-illustration_114360-453.jpg"
             }
@@ -272,6 +310,9 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       case 7:
         return (
           <Checkout
+            tourName={"Luxury Tour"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/business-background-design_1270-63.jpg"
             }
@@ -297,7 +338,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
     const userID = user.uid;
 
     const data = {
-      requestID: `T0-${date}${formatedMonth}${year}-${random}`,
+      requestID: `TO-${date}${formatedMonth}${year}-${random}`,
       tourCategory: "Luxury Tour",
       adult: adult,
       children: children,
@@ -339,50 +380,6 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
 
   return (
     <ScrollView style={styles.container}>
-      {step == 8 ? null : (
-        <View style={styles.arrowsContainer}>
-          {step == 1 ? (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack("Home");
-                //   console.log("logged");
-              }}
-            >
-              <View>
-                <AntDesign name="arrowleft" size={28} />
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => prevStep()}>
-              <View>
-                <AntDesign name="arrowleft" size={28} />
-              </View>
-            </TouchableOpacity>
-          )}
-
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "NewYorkl",
-              marginTop: Platform.OS == "android" ? 30 : 80,
-            }}
-          >
-            Luxury
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => {
-              nextStep();
-            }}
-          >
-            {step == 1 || step == 2 || step == 3 || step == 7 ? null : (
-              <View>
-                <AntDesign name="arrowright" size={28} />
-              </View>
-            )}
-          </TouchableOpacity>
-        </View>
-      )}
       {step == 1 || step == 8 ? null : (
         <View style={styles.progressContainer}>
           <View

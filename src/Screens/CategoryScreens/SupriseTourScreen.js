@@ -15,7 +15,6 @@ import Travellertype from "./Reusable components/Travellertype";
 import Checkout from "./Reusable components/Checkout";
 import Touristnumber from "./Reusable components/Touristnumber";
 import Travelmode from "./Reusable components/Travelmode";
-
 import DatePicker from "react-native-datepicker";
 
 import Expediture from "./Reusable components/Expediture";
@@ -23,6 +22,7 @@ import Tourpreferance from "./Reusable components/Tourpreferance";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
+import moment from "moment";
 import {
   getExpoToken,
   sendEmail,
@@ -56,24 +56,6 @@ const SurpriseTourScreen = ({ navigation }) => {
   let random;
   let formatedMonth;
 
-  const [userInfo, setUserInfo] = useState({});
-
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          setUserInfo(data.val());
-          setName(data.val().name);
-          setNumber(data.val().phoneNumber);
-        });
-    }
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
   useEffect(() => {
     if (!isLoggedIn) {
       navigation.replace("SignInScreen");
@@ -109,6 +91,8 @@ const SurpriseTourScreen = ({ navigation }) => {
       case 1:
         return (
           <Tourname
+            tourName={"Suprise Tour"}
+            navigation={navigation}
             step={() => nextStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/xmas-surprise-concept-illustration_114360-1824.jpg"
@@ -122,6 +106,8 @@ const SurpriseTourScreen = ({ navigation }) => {
           <Tourtype
             imgSrc1={require("../../../assets/planned-tour/india.png")}
             imgScr2={require("../../../assets/planned-tour/International.png")}
+            tourName={"Suprise Tour"}
+            prevStep={() => prevStep()}
             nextStep={() => nextStep()}
             tourType={tourType}
             setDomestic={() => setTourType("Domestic")}
@@ -133,6 +119,8 @@ const SurpriseTourScreen = ({ navigation }) => {
         return (
           <Travellertype
             travellerType={travellerType}
+            tourName={"Suprise Tour"}
+            prevStep={() => prevStep()}
             nextStep={() => nextStep()}
             setSolo={() => {
               setTravellerType("Solo");
@@ -146,13 +134,15 @@ const SurpriseTourScreen = ({ navigation }) => {
       case 4:
         return (
           <Touristnumber
+            tourName={"Suprise Tour"}
+            prevStep={() => prevStep()}
+            nextStep={() => nextStep()}
             imgSrc1={
               "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg"
             }
             imgScr2={
               "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg"
             }
-            nextStep={() => nextStep()}
             adult={adult}
             children={children}
             setChildren={(value) => setChildren(value)}
@@ -162,6 +152,9 @@ const SurpriseTourScreen = ({ navigation }) => {
       case 5:
         return (
           <Tourpreferance
+            tourName={"Suprise Tour"}
+            prevStep={() => prevStep()}
+            nextStep={() => nextStep()}
             imgSrc1={
               "https://image.freepik.com/free-vector/skydiving-vector-sport-illustration-extreme-sport-background-skydiving-wing-suit_87946-304.jpg"
             }
@@ -179,19 +172,20 @@ const SurpriseTourScreen = ({ navigation }) => {
             setRelaxation={() => setTourPreferance("Relaxation")}
             setCultural={() => setTourPreferance("Cultural")}
             setExplore={() => setTourPreferance("Explore")}
-            nextStep={() => nextStep()}
           />
         );
       case 6:
         return (
           <Travelmode
+            tourName={"Suprise Tour"}
+            prevStep={() => prevStep()}
+            nextStep={() => nextStep()}
             imgSrc1={
               "https://image.freepik.com/free-vector/train-ride-railroad_1308-11154.jpg"
             }
             imgScr2={
               "https://image.freepik.com/free-vector/airplane-sky_1308-31202.jpg"
             }
-            nextStep={() => nextStep()}
             name1={"Train"}
             name2={"Flight"}
             travelMode={travelMode}
@@ -202,6 +196,49 @@ const SurpriseTourScreen = ({ navigation }) => {
       case 7:
         return (
           <View style={{ alignItems: "center" }}>
+            <View
+              style={{
+                width: WIDTH * 0.9,
+                alignItems: "flex-end",
+                justifyContent: "center",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginHorizontal: 30,
+                position: "relative",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  prevStep();
+                }}
+              >
+                <View>
+                  <AntDesign name="arrowleft" size={28} />
+                </View>
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "NewYorkl",
+                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                }}
+              >
+                Surprise Tour
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View>
+                  {fromDate !== "" && toDate !== "" ? (
+                    <AntDesign name="arrowright" size={28} />
+                  ) : null}
+                </View>
+              </TouchableOpacity>
+            </View>
             <View style={styles.imageContainer}>
               <Image
                 style={{ height: HEIGHT / 3, width: WIDTH * 0.8 }}
@@ -230,7 +267,7 @@ const SurpriseTourScreen = ({ navigation }) => {
                       paddingLeft: 5,
                     }}
                   >
-                    Start Date
+                    Onward
                   </Text>
                 </View>
 
@@ -242,7 +279,7 @@ const SurpriseTourScreen = ({ navigation }) => {
                   placeholder="select date"
                   format="YYYY-MM-DD"
                   // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={moment().add(14, "days").format("YYYY-MM-DD")}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -259,7 +296,7 @@ const SurpriseTourScreen = ({ navigation }) => {
                       paddingLeft: Platform.OS === "ios" ? 15 : 10,
                     }}
                   >
-                    End Date
+                    Return
                   </Text>
                 </View>
                 <DatePicker
@@ -268,8 +305,7 @@ const SurpriseTourScreen = ({ navigation }) => {
                   mode="date"
                   placeholder="select date"
                   format="YYYY-MM-DD"
-                  // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={fromDate}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -283,6 +319,9 @@ const SurpriseTourScreen = ({ navigation }) => {
       case 8:
         return (
           <Expediture
+            tourName={"Suprise Tour"}
+            prevStep={() => prevStep()}
+            nextStep={() => nextStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/romantic-car-illustration_166742-180.jpg"
             }
@@ -299,6 +338,9 @@ const SurpriseTourScreen = ({ navigation }) => {
       case 9:
         return (
           <Checkout
+            tourName={"Suprise Tour"}
+            prevStep={() => prevStep()}
+            nextStep={() => nextStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/business-background-design_1270-63.jpg"
             }
@@ -322,7 +364,7 @@ const SurpriseTourScreen = ({ navigation }) => {
   const submitData = () => {
     const userID = user.uid;
     const tourData = {
-      requestID: `T0-${date}${formatedMonth}${year}-${random}`,
+      requestID: `TO-${date}${formatedMonth}${year}-${random}`,
       tourCategory: "Surprise Tour",
       tourType: tourType,
       travellerType: travellerType,
@@ -366,50 +408,6 @@ const SurpriseTourScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-      {step == 10 ? null : (
-        <View style={styles.arrowsContainer}>
-          {step == 1 ? (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack("Home");
-                console.log("logged");
-              }}
-            >
-              <View>
-                <AntDesign name="arrowleft" size={28} />
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => prevStep()}>
-              <View>
-                <AntDesign name="arrowleft" size={28} />
-              </View>
-            </TouchableOpacity>
-          )}
-
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "NewYorkl",
-              marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
-            }}
-          >
-            Surprise Trip
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => {
-              nextStep();
-            }}
-          >
-            {step == 1 || step == 2 || step == 3 || step == 6 ? null : (
-              <View>
-                <AntDesign name="arrowright" size={28} />
-              </View>
-            )}
-          </TouchableOpacity>
-        </View>
-      )}
       {step == 1 || step == 10 ? null : (
         <View style={styles.progressContainer}>
           <View

@@ -1,9 +1,11 @@
 import React from "react";
+import { AntDesign } from "@expo/vector-icons";
 import {
   View,
   Image,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Platform,
   Keyboard,
   Text,
@@ -17,6 +19,9 @@ const Destination = ({
   imgSrc,
   destination,
   startPoint,
+  tourName,
+  nextStep,
+  prevStep,
   preferanece,
   setDestination,
   setPreferanece,
@@ -25,6 +30,58 @@ const Destination = ({
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="position">
+        <View
+          style={{
+            width: WIDTH * 0.9,
+            alignItems: "flex-end",
+            justifyContent: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginHorizontal: 30,
+            position: "relative",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              prevStep();
+              // navigation.goBack("Home");
+            }}
+          >
+            <View>
+              <AntDesign name="arrowleft" size={28} />
+            </View>
+          </TouchableOpacity>
+
+          <Text
+            style={{
+              fontSize: 20,
+              fontFamily: "NewYorkl",
+              marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            }}
+          >
+            {tourName}
+          </Text>
+
+          {destination !== "" && startPoint !== "" ? (
+            <TouchableOpacity
+              onPress={() => {
+                nextStep();
+              }}
+            >
+              <View>
+                <AntDesign name="arrowright" size={28} />
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                nextStep();
+              }}
+            >
+              <View></View>
+            </TouchableOpacity>
+          )}
+        </View>
         <View style={{ alignItems: "center" }}>
           <View
             style={{

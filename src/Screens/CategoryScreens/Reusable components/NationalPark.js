@@ -1,9 +1,19 @@
 import React from "react";
 import ProgressiveImage from "./../../../Reusable Components/ProgressiveImage";
 import axios from "axios";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-
-const NationalPark = ({ nationalPark, setNationalPark }) => {
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  a,
+} from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get("window").height;
+const NationalPark = ({ nationalPark, setNationalPark, tourName }) => {
   const sendEmail = async () => {
     await axios
       .post(
@@ -16,85 +26,123 @@ const NationalPark = ({ nationalPark, setNationalPark }) => {
 
   const nationalParks = [
     {
-      imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+      imageUrl: "https://www.corbettnationalpark.in/assets/img/bannersss.jpg",
       name: "Jim Corbett",
     },
     {
-      imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+      imageUrl: "https://www.girnationalpark.in/images/jungle_safari.jpg",
       name: "Gir",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://static.india.com/wp-content/uploads/2014/09/Kaziranga-National-Park.jpg",
       name: "Kaziranga",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://curlytales.com/wp-content/uploads/2020/04/white-bengal-tigers-768x504-1.jpg",
       name: "Sunderban",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://breathedreamgo.com/wp-content/uploads/2018/02/Khana-Guide-HD-2.jpg",
       name: "Kanha",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://www.thehotelguru.com/_images/3f/5f/3f5fb246f07c2cc4bf014d8946da8801/500x332.jpg",
       name: "Bandhavgarh",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://davidsbeenhere.com/wp-content/uploads/2019/06/manas-national-park-travel-guide19.jpg",
       name: "Manas",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://www.explorationscompany.com/media/6552/india-reni-pani-jungle-lodge-satpura-national-park-muggar-crocodile.jpg?anchor=center&mode=crop&quality=80&width=680&height=384&rnd=131623229190000000",
       name: "Saptura",
-    },
-    {
-      imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
-      name: "Valley Of Powers",
     },
 
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "http://www.jagranjosh.com/imported/images/E/Articles/76.%20Nanda%20Devi%20National%20Park_%20Facts%20at%20a%20Glance2.jpg",
       name: "Nandha Devi",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://media.istockphoto.com/photos/big-sloth-bear-or-melursus-ursinus-vulnerable-species-encounter-in-picture-id1177584713?k=6&m=1177584713&s=612x612&w=0&h=2Hdmo4p81mO3FV1uXHRqruhs_H88dhEUTJKIigMW-eI=",
       name: "Pench",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://s01.sgp1.cdn.digitaloceanspaces.com/article/144005-lgvnxmsved-1594103535.jpeg",
       name: "Nagarhole",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://indiatrotter.com/wp-content/uploads/2020/08/periyar-national-park-location.jpg",
       name: "Periyar",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://keralatourism.travel/images/places-to-visit/headers/eravikulam-national-park-munnar-tourism-entry-fee-timings-holidays-reviews-header.jpg",
       name: "Eravikulam",
     },
     {
       imageUrl:
-        "https://www.ranthamborenationalpark.in/images/ranthmbore-park.jpg",
+        "https://sites.google.com/a/miamioh.edu/geo121f15/_/rsrc/1444604447269/home/asia-valley-of-the-flowers-india-10/ValleyofFlowers.jpg",
+      name: "Valley Of Flowers",
+    },
+    {
+      imageUrl:
+        "https://viewtraveling.com/wp-content/uploads/2018/06/Bandipur-National-Park-India.jpg",
       name: "Bandipur",
     },
   ];
   return (
     <View>
-      <TouchableOpacity onPress={() => sendEmail()}>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            flex: 0.4,
+          }}
+        >
+          {tourName}
+        </Text>
+
+        <TouchableOpacity
+          onPress={() => {
+            nextStep();
+          }}
+        >
+          <View></View>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity>
         <Text
           style={{
             fontSize: 20,

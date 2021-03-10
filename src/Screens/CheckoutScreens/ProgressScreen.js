@@ -16,7 +16,7 @@ const ProgressScreen = ({ navigation, route }) => {
   const finalTour = route.params.selectedTours;
   // console.log("details", details);
   const selectedCity = route.params.selectedCity;
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
@@ -528,7 +528,7 @@ const ProgressScreen = ({ navigation, route }) => {
                   .database()
                   .ref(`self-planned-tours`)
                   .push({
-                    requestID: `T0-${date}${formatedMonth}${year}-${random}`,
+                    requestID: `TO-${date}${formatedMonth}${year}-${random}`,
                     userId: user.uid,
                     adult: details.adult,
                     children: details.children,
@@ -547,12 +547,8 @@ const ProgressScreen = ({ navigation, route }) => {
                     tourCost: 0,
                     tourType: "International",
                   })
-                  .then((data) => console.log(data))
+                  .then((data) => setStep(1))
                   .catch((err) => console.log(err));
-
-                alert("Query Submitted");
-
-                navigation.navigate("Home");
               }}
             >
               <View

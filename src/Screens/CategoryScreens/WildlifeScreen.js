@@ -24,6 +24,7 @@ import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import NationalPark from "./Reusable components/NationalPark";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
+import moment from "moment";
 import {
   getExpoToken,
   sendPushNotification,
@@ -44,7 +45,7 @@ const WildLife = ({ navigation, route }) => {
   const [startPoint, setStartPoint] = useState("");
   const [name, setName] = useState("");
   const [budget, setBudget] = useState("");
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState(0);
   const [step, setStep] = useState(1);
   const { isLoggedIn, user } = useContext(AuthContext);
   const [date, setDate] = useState();
@@ -54,8 +55,6 @@ const WildLife = ({ navigation, route }) => {
   const [destination, setDestination] = useState(nationalPark);
   let random;
   let formatedMonth;
-
-  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     random = Math.floor((Math.random() + 4) * 345334);
@@ -67,25 +66,7 @@ const WildLife = ({ navigation, route }) => {
     formatedMonth = month < 10 ? "0" + month : month;
   });
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          // console.log("data", data);s
-          if (data === null) {
-            return;
-          }
-          setUserInfo(data.val());
-          setName(data.val().name);
-          setNumber(data.val().phoneNumber);
-        });
-    }
-  };
-
   useEffect(() => {
-    getUserData();
     if (route.params !== undefined) {
       const countryName = route.params.countryName;
       const type = route.params.type;
@@ -128,6 +109,8 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 1:
         return (
           <Tourname
+            navigation={navigation}
+            tourName={"Wildlife"}
             step={() => nextStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/wild-animals-protection-abstract-concept-illustration-wildlife-preservation-biodiversity-protection-save-wild-animals-population-control-prevent-species-extinction_335657-3435.jpg"
@@ -139,6 +122,9 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 2:
         return (
           <NationalPark
+            tourName={"Wildlife"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             nationalPark={nationalPark}
             setNationalPark={(name) => {
               setNationalPark(name);
@@ -151,8 +137,10 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 3:
         return (
           <Travellertype
-            travellerType={travellerType}
+            tourName={"Wildlife"}
             nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
+            travellerType={travellerType}
             setSolo={() => {
               setTravellerType("Solo");
               setStep(5);
@@ -166,13 +154,15 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 4:
         return (
           <Touristnumber
+            tourName={"Wildlife"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc1={
               "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg"
             }
             imgScr2={
               "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg"
             }
-            nextStep={() => nextStep()}
             adult={adult}
             children={children}
             setChildren={(value) => setChildren(value)}
@@ -182,13 +172,15 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 5:
         return (
           <Travelmode
+            tourName={"Wildlife"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc1={
               "https://image.freepik.com/free-vector/train-ride-railroad_1308-11154.jpg"
             }
             imgScr2={
               "https://image.freepik.com/free-vector/airplane-sky_1308-31202.jpg"
             }
-            nextStep={() => nextStep()}
             name1={"Train"}
             name2={"Flight"}
             travelMode={travelMode}
@@ -199,6 +191,49 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 6:
         return (
           <View style={{ alignItems: "center" }}>
+            <View
+              style={{
+                width: WIDTH * 0.9,
+                alignItems: "flex-end",
+                justifyContent: "center",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginHorizontal: 30,
+                position: "relative",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  prevStep();
+                }}
+              >
+                <View>
+                  <AntDesign name="arrowleft" size={28} />
+                </View>
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "NewYorkl",
+                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                }}
+              >
+                Wildlife
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View>
+                  {fromDate !== "" && toDate !== "" ? (
+                    <AntDesign name="arrowright" size={28} />
+                  ) : null}
+                </View>
+              </TouchableOpacity>
+            </View>
             <View style={styles.imageContainer}>
               <Image
                 style={{ height: HEIGHT / 3, width: WIDTH * 0.8 }}
@@ -227,7 +262,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
                       paddingLeft: 5,
                     }}
                   >
-                    Start Date
+                    Onward
                   </Text>
                 </View>
 
@@ -239,7 +274,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
                   placeholder="select date"
                   format="YYYY-MM-DD"
                   // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={moment().add(14, "days").format("YYYY-MM-DD")}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -256,7 +291,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
                       paddingLeft: Platform.OS === "ios" ? 15 : 10,
                     }}
                   >
-                    End Date
+                    Return
                   </Text>
                 </View>
                 <DatePicker
@@ -265,8 +300,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
                   mode="date"
                   placeholder="select date"
                   format="YYYY-MM-DD"
-                  // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={fromDate}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -280,6 +314,9 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 7:
         return (
           <Destination
+            tourName={"Wildlife"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/destination-concept-illustration_114360-453.jpg"
             }
@@ -294,6 +331,9 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       case 8:
         return (
           <Checkout
+            tourName={"Wildlife"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/business-background-design_1270-63.jpg"
             }
@@ -318,7 +358,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
     const userID = user.uid;
 
     const data = {
-      requestID: `T0-${date}${formatedMonth}${year}-${random}`,
+      requestID: `TO-${date}${formatedMonth}${year}-${random}`,
       nationalPark: nationalPark,
       tourCategory: "Wildlife",
       travellerType: travellerType,
@@ -362,60 +402,6 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        {step == 9 ? null : (
-          <View style={styles.arrowsContainer}>
-            {step == 1 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack("Home");
-                  //   console.log("logged");
-                }}
-              >
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => prevStep()}>
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            )}
-
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: "NewYorkl",
-                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
-              }}
-            >
-              Wildlife Santuary
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                nextStep();
-              }}
-            >
-              {/* {step !== 8 &&
-              step !== 2 &&
-              step !== 4 &&
-              step !== 5 &&
-              step == 6 &&
-              step == 0 ? ( */}
-              {step == 1 || step == 2 || step == 3 || step == 8 ? null : (
-                <View>
-                  <AntDesign name="arrowright" size={28} />
-                </View>
-              )}
-              {/* <View>
-                <AntDesign name="arrowright" size={28} />
-              </View> */}
-              {/* ) : null} */}
-            </TouchableOpacity>
-          </View>
-        )}
         {step == 1 || step == 9 ? null : (
           <View style={styles.progressContainer}>
             <View

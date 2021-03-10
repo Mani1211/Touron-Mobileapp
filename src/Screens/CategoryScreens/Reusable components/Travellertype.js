@@ -9,11 +9,14 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
+import { AntDesign } from "@expo/vector-icons";
 
 import Checked from "./Checked";
 const Travellertype = ({
   travellerType,
+  prevStep,
   nextStep,
+  tourName,
   setSolo,
   setFamily,
   setFriends,
@@ -21,6 +24,46 @@ const Travellertype = ({
 }) => {
   return (
     <View>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            flex: 0.6,
+          }}
+        >
+          {tourName}
+        </Text>
+
+        <TouchableOpacity
+          onPress={() => {
+            nextStep();
+          }}
+        >
+          <View></View>
+        </TouchableOpacity>
+      </View>
       <View style={{ marginVertical: HEIGHT / 20, marginHorizontal: 5 }}>
         <Text
           style={{ fontSize: 15, textAlign: "center", fontFamily: "NewYorkl" }}

@@ -666,7 +666,6 @@ const HomeScreen = ({ navigation, route }) => {
                       );
                   }}
                 />
-                {/* {testimonials.length === 0 ? null : ( */}
                 <>
                   <ContentList
                     navigation={navigation}
@@ -674,26 +673,7 @@ const HomeScreen = ({ navigation, route }) => {
                     more={""}
                     content={""}
                   />
-
-                  <Carousel
-                    layout="default"
-                    // layoutCardOffset={1}
-                    autoplay={true}
-                    lockScrollWhileSnapping={true}
-                    loop={true}
-                    enableMomentum={false}
-                    autoplayInterval={1000}
-                    autoplayDelay={4500}
-                    ref={(c) => {
-                      carousel = c;
-                    }}
-                    data={testimonials}
-                    renderItem={_renderItem}
-                    sliderWidth={WIDTH * 0.9}
-                    onSnapToItem={(index) => setActiveSlide(index)}
-                    itemWidth={WIDTH * 0.9}
-                  />
-                  <Pagination
+                  {/* <Pagination
                     dotsLength={testimonials.length}
                     activeDotIndex={activeSlide}
                     // containerStyle={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
@@ -704,9 +684,24 @@ const HomeScreen = ({ navigation, route }) => {
                       height: 7,
                       backgroundColor: "rgba(0, 0, 0, 0.75)",
                     }}
+                  /> */}
+                  <Carousel
+                    layout="default"
+                    // layoutCardOffset={1}
+                    autoplay={true}
+                    lockScrollWhileSnapping={true}
+                    loop={true}
+                    enableMomentum={false}
+                    ref={(c) => {
+                      carousel = c;
+                    }}
+                    data={testimonials}
+                    renderItem={_renderItem}
+                    sliderWidth={WIDTH * 0.9}
+                    onSnapToItem={(index) => setActiveSlide(index)}
+                    itemWidth={WIDTH * 0.9}
                   />
                 </>
-                {/* )} */}
               </>
             </View>
           </ScrollView>

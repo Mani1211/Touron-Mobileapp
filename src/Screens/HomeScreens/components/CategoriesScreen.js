@@ -13,7 +13,7 @@ import { AppLoading } from "expo";
 import * as Font from "expo-font";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-const Categories = ({ navigation }) => {
+const Categories = React.memo(({ navigation }) => {
   const [fontLoaded, setFont] = useState(false);
 
   const fetchFont = async () => {
@@ -144,7 +144,7 @@ const Categories = ({ navigation }) => {
       </View>
     </View>
   );
-};
+});
 
 export default Categories;
 const styles = StyleSheet.create({

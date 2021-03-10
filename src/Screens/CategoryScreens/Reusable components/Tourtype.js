@@ -9,18 +9,56 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
+import { AntDesign } from "@expo/vector-icons";
 
 import Checked from "./Checked";
 const Tourtype = ({
   imgSrc1,
   imgScr2,
+  tourName,
   nextStep,
   tourType,
+  prevStep,
   setDomestic,
   setInternational,
 }) => {
   return (
     <View style={{ alignItems: "center" }}>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+          }}
+        >
+          {tourName}
+        </Text>
+
+        <TouchableOpacity>
+          <View></View>
+        </TouchableOpacity>
+      </View>
       <View style={{ marginTop: HEIGHT / 20 }}>
         <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
           Pick the type of tour!{" "}
@@ -101,5 +139,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 200,
     justifyContent: "center",
+  },
+  arrowsContainer: {
+    width: WIDTH * 0.9,
+    alignItems: "flex-end",
+    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
+    position: "relative",
   },
 });

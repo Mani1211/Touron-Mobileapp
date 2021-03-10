@@ -11,6 +11,7 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 import Checked from "./Checked";
+import { AntDesign } from "@expo/vector-icons";
 const Tourpreferance = ({
   imgSrc1,
   imgSrc2,
@@ -22,9 +23,50 @@ const Tourpreferance = ({
   setCultural,
   setExplore,
   nextStep,
+  tourName,
 }) => {
   return (
     <View>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            flex: 0.6,
+          }}
+        >
+          {tourName}
+        </Text>
+
+        <TouchableOpacity
+          onPress={() => {
+            nextStep();
+          }}
+        >
+          <View></View>
+        </TouchableOpacity>
+      </View>
       <View style={{ marginVertical: HEIGHT / 20, marginHorizontal: 5 }}>
         <Text
           style={{ fontSize: 18, textAlign: "center", fontFamily: "NewYorkl" }}

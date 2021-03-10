@@ -7,13 +7,17 @@ import {
   Text,
   Dimensions,
 } from "react-native";
+
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import Checked from "./Checked";
+import { AntDesign } from "@expo/vector-icons";
 const Travelmode = ({
   imgSrc1,
   imgScr2,
+  prevStep,
   nextStep,
+  tourName,
   travelMode,
   setTrain,
   name1,
@@ -22,6 +26,43 @@ const Travelmode = ({
 }) => {
   return (
     <View style={{ alignItems: "center" }}>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+            // navigation.goBack("Home");
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            flex: 0.6,
+          }}
+        >
+          {tourName}
+        </Text>
+
+        <TouchableOpacity>
+          <View></View>
+        </TouchableOpacity>
+      </View>
       <View
         style={{
           marginTop: HEIGHT / 20,

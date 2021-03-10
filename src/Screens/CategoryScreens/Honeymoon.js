@@ -21,6 +21,7 @@ import Travelmode from "./Reusable components/Travelmode";
 import * as firebase from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
+import moment from "moment";
 import {
   sendEmail,
   sendPushNotification,
@@ -28,7 +29,6 @@ import {
 } from "./utils/PushNotification";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-
 const Honeymoon = ({ navigation, route }) => {
   const [fromDate, setFromDate] = useState("");
   const [tourType, setTourType] = React.useState("");
@@ -59,20 +59,7 @@ const Honeymoon = ({ navigation, route }) => {
     formatedMonth = month < 10 ? "0" + month : month;
   });
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          setName(data.val().name);
-          setNumber(data.val().phoneNumber);
-        });
-    }
-  };
-
   useEffect(() => {
-    getUserData();
     if (route.params !== undefined) {
       const countryName = route.params.countryName;
       const type = route.params.type;
@@ -115,6 +102,8 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 1:
         return (
           <Tourname
+            tourName={"Honeymoon Trip"}
+            navigation={navigation}
             step={() => nextStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/newlywed-couple-is-driving-car-their-honeymoon_3446-291.jpg"
@@ -128,7 +117,9 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
           <Tourtype
             imgSrc1={require("../../../assets/planned-tour/india.png")}
             imgScr2={require("../../../assets/planned-tour/International.png")}
+            tourName={"Honeymoon Trip"}
             nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             tourType={tourType}
             setDomestic={() => setTourType("Domestic")}
             setInternational={() => setTourType("International")}
@@ -138,13 +129,15 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 3:
         return (
           <Travelmode
+            tourName={"Honeymoon Trip"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc1={
               "https://image.freepik.com/free-vector/train-ride-railroad_1308-11154.jpg"
             }
             imgScr2={
               "https://image.freepik.com/free-vector/airplane-sky_1308-31202.jpg"
             }
-            nextStep={() => nextStep()}
             name1={"Train"}
             name2={"Flight"}
             travelMode={travelMode}
@@ -156,6 +149,49 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 4:
         return (
           <View style={{ alignItems: "center" }}>
+            <View
+              style={{
+                width: WIDTH * 0.9,
+                alignItems: "flex-end",
+                justifyContent: "center",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginHorizontal: 30,
+                position: "relative",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  prevStep();
+                }}
+              >
+                <View>
+                  <AntDesign name="arrowleft" size={28} />
+                </View>
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "NewYorkl",
+                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                }}
+              >
+                Honeymoon Trip
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View>
+                  {fromDate !== "" && toDate !== "" ? (
+                    <AntDesign name="arrowright" size={28} />
+                  ) : null}
+                </View>
+              </TouchableOpacity>
+            </View>
             <View style={styles.imageContainer}>
               <Image
                 style={{ height: HEIGHT / 3, width: WIDTH * 0.8 }}
@@ -184,7 +220,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                       paddingLeft: 5,
                     }}
                   >
-                    Start Date
+                    Onward
                   </Text>
                 </View>
 
@@ -196,7 +232,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                   placeholder="select date"
                   format="YYYY-MM-DD"
                   // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={moment().add(14, "days").format("YYYY-MM-DD")}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -213,7 +249,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                       paddingLeft: Platform.OS === "ios" ? 15 : 10,
                     }}
                   >
-                    End Date
+                    Return
                   </Text>
                 </View>
                 <DatePicker
@@ -222,8 +258,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
                   mode="date"
                   placeholder="select date"
                   format="YYYY-MM-DD"
-                  // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={fromDate}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -237,6 +272,9 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 5:
         return (
           <Destination
+            tourName={"Honeymoon Trip"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/destination-concept-illustration_114360-453.jpg"
             }
@@ -251,6 +289,9 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 6:
         return (
           <Checkout
+            tourName={"Honeymoon Trip"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/business-background-design_1270-63.jpg"
             }
@@ -275,7 +316,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
     const userID = user.uid;
 
     const data = {
-      requestID: `T0-${date}${formatedMonth}${year}-${random}`,
+      requestID: `TO-${date}${formatedMonth}${year}-${random}`,
       tourCategory: "Honeymoon Trip",
       fromDate: fromDate,
       travelMode: travelMode,
@@ -317,51 +358,6 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        {step == 7 ? null : (
-          <View style={styles.arrowsContainer}>
-            {step == 1 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack("Home");
-                  //   console.log("logged");
-                }}
-              >
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => prevStep()}>
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            )}
-
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: "NewYorkl",
-                marginTop: Platform.OS == "android" ? 30 : 80,
-                // marginTop: 30,
-              }}
-            >
-              Honeymoon Tour
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                nextStep();
-              }}
-            >
-              {step == 1 || step == 2 || step == 3 || step == 6 ? null : (
-                <View>
-                  <AntDesign name="arrowright" size={28} />
-                </View>
-              )}
-            </TouchableOpacity>
-          </View>
-        )}
         {step == 1 || step == 7 ? null : (
           <View style={styles.progressContainer}>
             <View

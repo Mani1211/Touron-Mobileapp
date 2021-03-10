@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   StatusBar,
 } from "react-native";
+import moment from "moment";
 
 import { AntDesign } from "@expo/vector-icons";
 import Tourname from "./Reusable components/Tourname";
@@ -59,27 +60,7 @@ const RoadTripScreen = ({ navigation }) => {
 
   let random;
   let formatedMonth;
-  const [userInfo, setUserInfo] = useState({});
-  console.log(userInfo.phoneNumber, "ijnfo");
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          setUserInfo(data.val());
-          setName(data.val().name);
-          setNumber(data.val().phoneNumber);
-        });
-    }
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-  const onCarRent = () => setIsSwitchOn(!carRent);
-  const onAdditionalInfo = () => setIsSwitchOn(!additionalInfo);
   useEffect(() => {
     if (!isLoggedIn) {
       navigation.replace("SignInScreen");
@@ -117,7 +98,9 @@ const RoadTripScreen = ({ navigation }) => {
       case 1:
         return (
           <Tourname
+            navigation={navigation}
             step={() => nextStep()}
+            tourName={"Road Trip"}
             imgSrc={
               "https://image.freepik.com/free-vector/off-road-concept-illustration_114360-1220.jpg"
             }
@@ -134,9 +117,11 @@ const RoadTripScreen = ({ navigation }) => {
             imgScr2={
               "https://image.freepik.com/free-vector/happy-traveler-man-woman-dog-red-trunk-car-back-with-check-point-travel-around-world_48049-454.jpg"
             }
-            nextStep={() => nextStep()}
             name1={"Bike"}
             name2={"Car"}
+            nextStep={() => nextStep()}
+            tourName={"Road Trip"}
+            prevStep={() => prevStep()}
             travelMode={travelMode}
             setTrain={() => setTravelMode("Bike")}
             setFlight={() => setTravelMode("Car")}
@@ -146,8 +131,10 @@ const RoadTripScreen = ({ navigation }) => {
       case 3:
         return (
           <Travellertype
-            travellerType={travellerType}
+            tourName={"Road Trip"}
             nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
+            travellerType={travellerType}
             setSolo={() => {
               setTravellerType("Solo");
               setStep(5);
@@ -160,13 +147,15 @@ const RoadTripScreen = ({ navigation }) => {
       case 4:
         return (
           <Touristnumber
+            tourName={"Road Trip"}
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc1={
               "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg"
             }
             imgScr2={
               "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg"
             }
-            nextStep={() => nextStep()}
             adult={adult}
             children={children}
             setChildren={(value) => setChildren(value)}
@@ -176,6 +165,50 @@ const RoadTripScreen = ({ navigation }) => {
       case 5:
         return (
           <View style={{ alignItems: "center" }}>
+            <View
+              style={{
+                width: WIDTH * 0.9,
+                alignItems: "flex-end",
+                justifyContent: "center",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginHorizontal: 30,
+                position: "relative",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  prevStep();
+                }}
+              >
+                <View>
+                  <AntDesign name="arrowleft" size={28} />
+                </View>
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "NewYorkl",
+                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                  flex: 0.4,
+                }}
+              >
+                Road Trip
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View>
+                  {fromDate !== "" && toDate !== "" ? (
+                    <AntDesign name="arrowright" size={28} />
+                  ) : null}
+                </View>
+              </TouchableOpacity>
+            </View>
             <View style={styles.imageContainer}>
               <Image
                 style={{ height: HEIGHT / 3, width: WIDTH * 0.8 }}
@@ -204,7 +237,7 @@ const RoadTripScreen = ({ navigation }) => {
                       paddingLeft: 5,
                     }}
                   >
-                    Start Date
+                    Onward
                   </Text>
                 </View>
 
@@ -216,7 +249,7 @@ const RoadTripScreen = ({ navigation }) => {
                   placeholder="select date"
                   format="YYYY-MM-DD"
                   // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={moment().add(14, "days").format("YYYY-MM-DD")}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -233,7 +266,7 @@ const RoadTripScreen = ({ navigation }) => {
                       paddingLeft: Platform.OS === "ios" ? 15 : 10,
                     }}
                   >
-                    End Date
+                    Return
                   </Text>
                 </View>
                 <DatePicker
@@ -242,8 +275,7 @@ const RoadTripScreen = ({ navigation }) => {
                   mode="date"
                   placeholder="select date"
                   format="YYYY-MM-DD"
-                  // minDate="2016-05-01"
-                  maxDate="2021-06-01"
+                  minDate={fromDate}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   onDateChange={(date) => {
@@ -257,6 +289,8 @@ const RoadTripScreen = ({ navigation }) => {
       case 6:
         return (
           <Roadtripques
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/car-towing-caravan-trailer-camper-against-mountains-spruce-trees-background-summer-travel-lettering-vehicle-wild-nature-adventure-trip-seasonal-camping-illustration_198278-1324.jpg"
             }
@@ -277,6 +311,8 @@ const RoadTripScreen = ({ navigation }) => {
       case 7:
         return (
           <Roadtripques2
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             imgSrc={
               "https://image.freepik.com/free-vector/traveling-car-illustration_126895-243.jpg"
             }
@@ -299,6 +335,8 @@ const RoadTripScreen = ({ navigation }) => {
       case 8:
         return (
           <Drivetype
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             driveType={driveType}
             driverType={driverType}
             imgSrc1={
@@ -317,15 +355,17 @@ const RoadTripScreen = ({ navigation }) => {
             setOwned={() => setDriveType("Own Bike/Car")}
             setSelf={() => setDriverType("Self Drive")}
             setDriver={() => setDriverType("Car Driver needed")}
-            nextStep={() => nextStep()}
           />
         );
       case 9:
         return (
           <Checkout
+            tourName={"Road Trip"}
             imgSrc={
               "https://image.freepik.com/free-vector/business-background-design_1270-63.jpg"
             }
+            nextStep={() => nextStep()}
+            prevStep={() => prevStep()}
             setName={(value) => setName(value)}
             setNumber={(value) => setNumber(value)}
             setBudget={(value) => setBudget(value)}
@@ -397,50 +437,7 @@ const RoadTripScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <StatusBar />
-      {step == 10 ? null : (
-        <View style={styles.arrowsContainer}>
-          {step == 1 ? (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack("Home");
-                console.log("logged");
-              }}
-            >
-              <View>
-                <AntDesign name="arrowleft" size={28} />
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => prevStep()}>
-              <View>
-                <AntDesign name="arrowleft" size={28} />
-              </View>
-            </TouchableOpacity>
-          )}
 
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "NewYorkl",
-              marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
-            }}
-          >
-            Road Trip
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => {
-              nextStep();
-            }}
-          >
-            {step == 1 || step == 2 || step == 3 || step == 8 ? null : (
-              <View>
-                <AntDesign name="arrowright" size={28} />
-              </View>
-            )}
-          </TouchableOpacity>
-        </View>
-      )}
       {step == 1 || step == 10 ? null : (
         <View style={styles.progressContainer}>
           <View

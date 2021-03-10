@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Switch } from "react-native-paper";
+import { AntDesign } from "@expo/vector-icons";
 import {
   View,
   Image,
@@ -8,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Text,
+  TouchableOpacity,
   TextInput,
   Dimensions,
 } from "react-native";
@@ -26,11 +28,65 @@ const Roadtripques2 = ({
   func2,
   func3,
   placeholder3,
+  prevStep,
+  nextStep,
 }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView style={{ flex: 1 }}>
         <View style={{ alignItems: "center" }}>
+          <View
+            style={{
+              width: WIDTH * 0.9,
+              alignItems: "flex-end",
+              justifyContent: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginHorizontal: 30,
+              position: "relative",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                prevStep();
+                // navigation.goBack("Home");
+              }}
+            >
+              <View>
+                <AntDesign name="arrowleft" size={28} />
+              </View>
+            </TouchableOpacity>
+
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "NewYorkl",
+                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+              }}
+            >
+              Road Trip
+            </Text>
+
+            {attr1 !== "" && attr2 !== "" ? (
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View>
+                  <AntDesign name="arrowright" size={28} />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View></View>
+              </TouchableOpacity>
+            )}
+          </View>
           <View
             style={{
               height: HEIGHT / 3.3,

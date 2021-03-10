@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { AntDesign } from "@expo/vector-icons";
+import * as firebase from "firebase";
+import { AuthContext } from "./../../../context/AuthContext";
 import {
   View,
   Image,
@@ -19,16 +22,78 @@ const Checkout = ({
   setBudget,
   setNumber,
   submitData,
+  prevStep,
   name,
   number,
+  tourName,
   budget,
 }) => {
   const [val, setVal] = useState();
+  const [userInfo, setUserInfo] = useState({});
+  const { user } = useContext(AuthContext);
+  console.log("userInfo", userInfo);
+
+  const getUserData = () => {
+    if (user !== null) {
+      firebase
+        .database()
+        .ref(`userGeneralInfo/${user.uid}`)
+        .on("value", (data) => {
+          // console.log("data", data);s
+          if (data === null) {
+            return;
+          }
+          setUserInfo(data.val());
+          setName(data.val().name);
+          setNumber(data.val().phoneNumber);
+        });
+    }
+  };
+  console.log("number", number);
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="position">
         <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <View
+            style={{
+              width: WIDTH * 0.9,
+              alignItems: "flex-end",
+              justifyContent: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginHorizontal: 30,
+              position: "relative",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                // navigation.goBack("Home");
+                prevStep();
+              }}
+            >
+              <View>
+                <AntDesign name="arrowleft" size={28} />
+              </View>
+            </TouchableOpacity>
+
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "NewYorkl",
+                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+              }}
+            >
+              {tourName}
+            </Text>
+
+            <TouchableOpacity>
+              <View></View>
+            </TouchableOpacity>
+          </View>
           <View
             style={{
               height: HEIGHT / 2.5,
@@ -100,7 +165,7 @@ const Checkout = ({
                 keyboardType="number-pad"
                 value={budget}
                 style={{ width: 80 }}
-                placeholder="250000"
+                placeholder="10000 min"
               />
             </View>
             <View
@@ -123,14 +188,10 @@ const Checkout = ({
                 Whatsapp Number:
               </Text>
               <TextInput
-                value={number}
+                onChangeText={(value) => setNumber(value)}
                 keyboardType="number-pad"
-                style={{ width: 85 }}
-                onChangeText={(value) => {
-                  setVal(value);
-                  setNumber(value);
-                }}
-                placeholder="8986754345"
+                placeholder="9098909565"
+                value={number.toString()}
               />
             </View>
             <View
@@ -141,28 +202,30 @@ const Checkout = ({
                 alignItems: "center",
               }}
             >
-              <TouchableOpacity onPress={() => submitData()}>
-                <View
-                  style={{
-                    borderColor: "black",
-                    borderWidth: 1,
-                    borderRadius: 20,
-                    marginTop: 10,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
+              {budget.length >= 5 && name !== "" && number.length === 10 ? (
+                <TouchableOpacity onPress={() => submitData()}>
+                  <View
                     style={{
-                      textAlign: "center",
-                      fontSize: 18,
-                      padding: 10,
+                      borderColor: "black",
+                      borderWidth: 1,
+                      borderRadius: 20,
+                      marginTop: 10,
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    Submit
-                  </Text>
-                </View>
-              </TouchableOpacity>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 18,
+                        padding: 10,
+                      }}
+                    >
+                      Submit
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ) : null}
             </View>
           </View>
         </View>

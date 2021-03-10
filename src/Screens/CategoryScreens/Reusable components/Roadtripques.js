@@ -1,9 +1,11 @@
 import React from "react";
+import { AntDesign } from "@expo/vector-icons";
 import {
   View,
   Image,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
   Text,
   TextInput,
@@ -24,6 +26,8 @@ const Roadtripques = ({
   func2,
   func3,
   placeholder1,
+  nextStep,
+  prevStep,
   placeholder2,
   placeholder3,
 }) => {
@@ -31,6 +35,58 @@ const Roadtripques = ({
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView style={{ flex: 1 }}>
         <View style={{ alignItems: "center" }}>
+          <View
+            style={{
+              width: WIDTH * 0.9,
+              alignItems: "flex-end",
+              justifyContent: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginHorizontal: 30,
+              position: "relative",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                prevStep();
+                // navigation.goBack("Home");
+              }}
+            >
+              <View>
+                <AntDesign name="arrowleft" size={28} />
+              </View>
+            </TouchableOpacity>
+
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "NewYorkl",
+                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+              }}
+            >
+              Road Trip
+            </Text>
+
+            {attr3 !== "" ? (
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View>
+                  <AntDesign name="arrowright" size={28} />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  nextStep();
+                }}
+              >
+                <View></View>
+              </TouchableOpacity>
+            )}
+          </View>
           <View
             style={{
               height: HEIGHT / 3,
