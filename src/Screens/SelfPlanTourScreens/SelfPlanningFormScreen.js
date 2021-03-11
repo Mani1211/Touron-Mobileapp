@@ -125,7 +125,7 @@ const SelfPlanForm = ({ navigation }) => {
     // console.log("count", count);
     return count;
   };
-
+  console.log("userInfo", userInfo);
   const submitD = () => {
     firebase
       .database()

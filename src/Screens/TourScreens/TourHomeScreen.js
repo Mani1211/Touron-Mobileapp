@@ -27,13 +27,9 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const TourHomeScreen = ({ navigation, route }) => {
-  const { isLoggedIn, user, tours, countries, cities } = useContext(
-    AuthContext
-  );
-  const [tour, setTour] = useState(tours);
-  const [selectedCategory, setSelectedCategory] = useState([]);
-  const [selectedTourType, setSelectedTourType] = useState([]);
-  const [selectedIdealFor, setSelectedIdealFor] = useState([]);
+  const { isLoggedIn, user, countries, cities } = useContext(AuthContext);
+  const [tour, setTour] = useState([]);
+
   const [step, setStep] = useState(0);
   const [filterStep, setFilterStep] = useState(0);
 
@@ -63,7 +59,7 @@ const TourHomeScreen = ({ navigation, route }) => {
   const [savedTours, setSavedTours] = useState(sTNames);
   const [savedToursDetails, setSavedToursDetails] = useState(sT);
   const [error, setErrorMessage] = useState();
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [filterLoaded, setfilterLoaded] = useState(false);
   const [tourName, setTourName] = useState("");
 
@@ -98,8 +94,20 @@ const TourHomeScreen = ({ navigation, route }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const getTours = async () => {
+      setLoader(true);
+      const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
+      console.log("tourResponse.data", tourResponse.data);
+      setTour(tourResponse.data);
+      setLoader(false);
+    };
+
+    getTours();
+  }, []);
+
   const getTour = async () => {
-    if (route.params.name) {
+    if (route.params.name !== "") {
       const cityname = route.params.name;
       try {
         const tourResponse = await touron.get(`/tour/cityname/${cityname}`);
@@ -543,7 +551,6 @@ const TourHomeScreen = ({ navigation, route }) => {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      setLoader(false);
       getTour();
     }
     return () => (mounted = false);
@@ -1154,9 +1161,6 @@ const TourHomeScreen = ({ navigation, route }) => {
             >
               <TouchableOpacity
                 onPress={() => {
-                  setSelectedIdealFor([]);
-                  setSelectedTourType([]);
-                  setSelectedCategory([]);
                   setIdealType("");
                   setTourType("");
                   setCountryName("");

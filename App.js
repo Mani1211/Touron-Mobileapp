@@ -68,8 +68,14 @@ const App = () => {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      getTours();
       getCities();
+    }
+    return () => (mounted = false);
+  }, []);
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      getTours();
     }
     return () => (mounted = false);
   }, []);
@@ -82,7 +88,8 @@ const App = () => {
   };
 
   const getTours = async () => {
-    const tourResponse = await touron.get(`/tour`);
+    const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
+    console.log("tourResponse.data", tourResponse.data);
     setTour(tourResponse.data);
   };
 
