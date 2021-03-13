@@ -3,7 +3,11 @@ import {
   Text,
   View,
   Dimensions,
+  Modal,
+  Image,
+  TouchabeleOpacity,
   StatusBar,
+  StyleSheet,
   ScrollView,
   // Button,
   Linking,
@@ -17,6 +21,8 @@ import Carousel from "react-native-snap-carousel";
 import {
   MaterialIcons,
   Feather,
+  FontAwesome,
+  Entypo,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
@@ -24,6 +30,8 @@ import * as firebase from "firebase";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const MyPlansInner = ({ navigation, route }) => {
+  const [selectedImage, setSelectedImage] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
   const item = route.params.item;
   const [plannedDetails, setPlannedDetails] = useState({});
   const [activePromoSlide, setActivePromoSlide] = useState(0);
@@ -50,11 +58,55 @@ const MyPlansInner = ({ navigation, route }) => {
 
   const _renderPromo = ({ item, index }) => {
     return (
-      <ProgressiveImage
-        source={{ uri: item }}
-        resizeMode="cover"
-        style={{ width: WIDTH * 0.9, height: HEIGHT / 4 }}
-      />
+      <TouchableOpacity
+        onPress={() => {
+          setSelectedImage(item);
+          setModalVisible(true);
+        }}
+      >
+        <ProgressiveImage
+          source={{ uri: item }}
+          resizeMode="cover"
+          style={{ width: WIDTH * 0.9, height: HEIGHT / 4 }}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const openImage = () => {
+    return (
+      <Modal transparent visible={modalVisible}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={{ position: "relative" }}>
+              <TouchableOpacity
+                style={{
+                  alignSelf: "flex-end",
+                  position: "absolute",
+                  top: 15,
+                  right: 10,
+                  zIndex: 20,
+                }}
+                onPress={() => setModalVisible(false)}
+              >
+                <View>
+                  <FontAwesome name="close" size={40} color="#fff" />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <Image
+              source={{ uri: selectedImage }}
+              resizeMode="contain"
+              style={{
+                width: WIDTH * 0.95,
+                height: HEIGHT / 2,
+                borderRadius: 5,
+                // zIndex: -2,
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
     );
   };
 
@@ -75,8 +127,9 @@ const MyPlansInner = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
+    <ScrollView>
       <Container>
+        {/* {openImage()} */}
         <Header hasTabs style={{ backgroundColor: "#FFF", height: 80 }}>
           <View
             style={{
@@ -553,13 +606,8 @@ const MyPlansInner = ({ navigation, route }) => {
           <Tab
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
-                {/* <Icon
-                  name="plane-departure"
-                  type="FontAwesome5"
-                  style={{ fontSize: 23 }}
-                  color="#333"
-                /> */}
-                <Text style={{ fontFamily: "NewYorkl" }}>Travel</Text>
+                {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
+                <Text style={{ fontFamily: "NewYorkl" }}>Transport</Text>
               </TabHeading>
             }
           >
@@ -619,7 +667,8 @@ const MyPlansInner = ({ navigation, route }) => {
                         fontFamily: "NewYorkl",
                       }}
                     >
-                      Onward Flight
+                      Onward{" "}
+                      {plannedDetails.flightDetails.onward.onwardTransportMode}
                     </Text>
                   </View>
 
@@ -638,7 +687,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         {plannedDetails.flightDetails.onward.from}
                       </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
-                        Kiv
+                        {plannedDetails.flightDetails.onward.onwardFromCityCode}
                       </Text>
                       <Text style={{ fontFamily: "Andika" }}>
                         {plannedDetails.flightDetails.onward.depatureTime}
@@ -662,7 +711,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         {plannedDetails.flightDetails.onward.to}
                       </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
-                        Kiv
+                        {plannedDetails.flightDetails.onward.onwardToCityCode}
                       </Text>
                       <Text style={{ fontFamily: "Andika" }}>
                         {plannedDetails.flightDetails.onward.arrivalTime}
@@ -713,7 +762,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         fontFamily: "NewYorkl",
                       }}
                     >
-                      Return Flight
+                      {plannedDetails.flightDetails.return.returnTransportMode}
                     </Text>
                   </View>
 
@@ -732,7 +781,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         {plannedDetails.flightDetails.return.from}
                       </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
-                        Kiv
+                        {plannedDetails.flightDetails.return.returnFromCityCode}
                       </Text>
                       <Text style={{ fontFamily: "Andika" }}>
                         {plannedDetails.flightDetails.return.depatureTime}
@@ -755,7 +804,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         {plannedDetails.flightDetails.return.to}
                       </Text>
                       <Text style={{ fontSize: 30, fontFamily: "Avenir" }}>
-                        Kiv
+                        {plannedDetails.flightDetails.return.returnToCityCode}
                       </Text>
                       <Text style={{ fontFamily: "Andika" }}>
                         {plannedDetails.flightDetails.return.arrivalTime}
@@ -785,15 +834,10 @@ const MyPlansInner = ({ navigation, route }) => {
               </View>
             )}
           </Tab>
-
           <Tab
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
-                {/* <Icon
-                  name="restaurant"
-                  type="MaterialIcons"
-                  style={{ fontSize: 23 }}
-                /> */}
+                {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
                 <Text style={{ fontFamily: "NewYorkl" }}>Hotels</Text>
               </TabHeading>
             }
@@ -846,19 +890,39 @@ const MyPlansInner = ({ navigation, route }) => {
                           <View
                             style={{
                               width: WIDTH * 0.9,
-                              alignItems: "center",
+                              // alignItems: "center",
                               borderTopColor: "#f1f2f1",
                               borderTopWidth: 1,
+                              padding: 15,
                             }}
                           >
                             <Text
                               style={{
-                                paddingVertical: 5,
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontFamily: "NewYorkl",
                               }}
                             >
-                              {i.cityName}
+                              {i.hotelName} , {i.cityName}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: "Andika",
+                              }}
+                            >
+                              {new Array(parseInt(i.hotelRatings))
+                                .fill("1")
+                                .map((c, i) => {
+                                  return (
+                                    <FontAwesome
+                                      name="star"
+                                      size={16}
+                                      color="#F5BF00"
+                                      style={{ paddingRight: 5 }}
+                                    />
+                                  );
+                                })}{" "}
+                              hotel
                             </Text>
                           </View>
                           <Carousel
@@ -885,24 +949,149 @@ const MyPlansInner = ({ navigation, route }) => {
                     backgroundColor: "rgba(0, 0, 0, 0.75)",
                   }}
                 /> */}
-                          <View
+
+                          <Surface
+                            style={{
+                              width: WIDTH * 0.9,
+                              margin: 10,
+                              // height: HEIGHT / 3.2,
+                              // elevation: 1,
+                              alignItems: "center",
+                              borderRadius: 10,
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: WIDTH * 0.9,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                flexWrap: "wrap",
+                                justifyContent: "space-between",
+                                padding: 20,
+                              }}
+                            >
+                              <View style={{ alignItems: "center" }}>
+                                <Text style={{ fontFamily: "Andika" }}>
+                                  Check In
+                                </Text>
+                                <Text
+                                  style={{
+                                    paddingVertical: 20,
+                                  }}
+                                >
+                                  <Entypo
+                                    name="login"
+                                    size={24}
+                                    color="black"
+                                  />
+                                </Text>
+                                <Text style={{ fontFamily: "Andika" }}>
+                                  {i.checkIn}
+                                </Text>
+                              </View>
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Text>------------</Text>
+                                <FontAwesome
+                                  name="calendar"
+                                  size={24}
+                                  color="black"
+                                  style={{ paddingHorizontal: 10 }}
+                                />
+                                <Text>------------</Text>
+                              </View>
+                              <View style={{ alignItems: "center" }}>
+                                <Text style={{ fontFamily: "Andika" }}>
+                                  Check Out
+                                </Text>
+                                <Text
+                                  style={{
+                                    paddingVertical: 20,
+                                  }}
+                                >
+                                  <FontAwesome
+                                    name="sign-out"
+                                    size={24}
+                                    color="black"
+                                  />
+                                </Text>
+                                <Text style={{ fontFamily: "Andika" }}>
+                                  {i.checkOut}
+                                </Text>
+                              </View>
+                            </View>
+                          </Surface>
+                          <Surface
                             style={{
                               width: WIDTH * 0.9,
                               alignItems: "center",
-                              borderTopColor: "#f1f2f1",
-                              borderTopWidth: 1,
+                              borderRadius: 10,
                             }}
                           >
-                            <Text
+                            <View
                               style={{
-                                paddingVertical: 5,
-                                fontSize: 20,
-                                fontFamily: "NewYorkl",
+                                width: WIDTH * 0.9,
+                                alignItems: "center",
+                                borderBottomColor: "#f1f2f1",
+                                borderBottomWidth: 1,
+                              }}
+                            ></View>
+
+                            <View
+                              style={{
+                                width: WIDTH * 0.9,
+                                paddingVertical: 20,
+                                // paddingHorizontal: 10,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
                               }}
                             >
-                              {i.hotelName}
-                            </Text>
-                          </View>
+                              <View
+                                style={{
+                                  alignItems: "center",
+                                  justifyContent: "space-evenly",
+                                  borderRightWidth: 2,
+                                  borderRightColor: "#f1f2f1",
+                                  height: HEIGHT / 4.8,
+                                  flexBasis: "50%",
+                                  paddingRight: 5,
+                                }}
+                              >
+                                <Text>Meal Type</Text>
+                                <MaterialCommunityIcons
+                                  name="food-variant"
+                                  size={24}
+                                  color="black"
+                                />
+                                <Text style={{ textAlign: "center" }}>
+                                  {i.mealPlan}
+                                </Text>
+                              </View>
+
+                              <View
+                                style={{
+                                  alignItems: "center",
+                                  justifyContent: "space-evenly",
+                                  flexBasis: "50%",
+                                }}
+                              >
+                                <Text>Room Type</Text>
+                                <FontAwesome
+                                  name="hotel"
+                                  size={24}
+                                  color="black"
+                                />
+                                <Text style={{ textAlign: "center" }}>
+                                  {" "}
+                                  {i.roomType}
+                                </Text>
+                              </View>
+                            </View>
+                          </Surface>
                         </Surface>
                       );
                   })}
@@ -1133,3 +1322,31 @@ const MyPlansInner = ({ navigation, route }) => {
 };
 
 export default MyPlansInner;
+
+const styles = new StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    alignItems: "center",
+    opacity: 0.8,
+    justifyContent: "center",
+    backgroundColor: "#333",
+    height: HEIGHT / 1.7,
+    // paddingTop: HEIGHT / 2,
+  },
+  modalView: {
+    // zIndex: 10,
+    // margin: 20,
+    // position: "relative",
+    // backgroundColor: "white",
+    // borderRadius: 20,
+    // alignItems: "center",
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: WIDTH,
+    //   height: HEIGHT * 2,
+    // },
+    // shadowOpacity: 100,
+    // shadowRadius: 840,
+    // elevation: 10,
+  },
+});

@@ -5,6 +5,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Linking,
+  Modal,
+  Image,
   ScrollView,
   StyleSheet,
   StatusBar,
@@ -21,6 +23,8 @@ import Carousel from "react-native-snap-carousel";
 import {
   MaterialIcons,
   Feather,
+  Entypo,
+  FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
@@ -32,9 +36,11 @@ import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const RequestInner = ({ navigation, route }) => {
   const [visible, setVisible] = React.useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
   const item = route.params.item;
   const [activePromoSlide, setActivePromoSlide] = useState(0);
-
   const [plannedDetails, setPlannedDetails] = useState({});
   // const onToggleSnackBar = () => setVisible(!visible);
   // const onDismissSnackBar = () => setVisible(false);
@@ -62,6 +68,43 @@ const RequestInner = ({ navigation, route }) => {
     }
   };
 
+  const openImage = () => {
+    return (
+      <Modal transparent visible={modalVisible}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={{ position: "relative" }}>
+              <TouchableOpacity
+                style={{
+                  alignSelf: "flex-end",
+                  position: "absolute",
+                  top: 35,
+                  right: 10,
+                  // zIndex: 20,
+                }}
+                onPress={() => setModalVisible(false)}
+              >
+                <View>
+                  <FontAwesome name="close" size={30} color="#fff" />
+                </View>
+              </TouchableOpacity>
+              <Image
+                source={{ uri: selectedImage }}
+                resizeMode="contain"
+                style={{
+                  width: WIDTH * 0.95,
+                  height: HEIGHT / 2,
+                  borderRadius: 5,
+                  zIndex: -2,
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
   useEffect(() => {
     const subscription = Notifications.addNotificationResponseReceivedListener(
       (response) => {
@@ -82,11 +125,18 @@ const RequestInner = ({ navigation, route }) => {
 
   const _renderPromo = ({ item, index }) => {
     return (
-      <ProgressiveImage
-        source={{ uri: item }}
-        resizeMode="cover"
-        style={{ width: WIDTH * 0.9, height: HEIGHT / 4 }}
-      />
+      <TouchableOpacity
+        onPress={() => {
+          setSelectedImage(item);
+          setModalVisible(true);
+        }}
+      >
+        <ProgressiveImage
+          source={{ uri: item }}
+          resizeMode="cover"
+          style={{ width: WIDTH * 0.9, height: HEIGHT / 4 }}
+        />
+      </TouchableOpacity>
     );
   };
 
@@ -233,6 +283,7 @@ const RequestInner = ({ navigation, route }) => {
   return (
     <ScrollView>
       <Container>
+        {openImage()}
         <Header hasTabs style={{ backgroundColor: "#FFF", height: 80 }}>
           <View
             style={{
@@ -1070,19 +1121,39 @@ const RequestInner = ({ navigation, route }) => {
                           <View
                             style={{
                               width: WIDTH * 0.9,
-                              alignItems: "center",
+                              // alignItems: "center",
                               borderTopColor: "#f1f2f1",
                               borderTopWidth: 1,
+                              padding: 15,
                             }}
                           >
                             <Text
                               style={{
-                                paddingVertical: 5,
-                                fontSize: 20,
+                                fontSize: 18,
+                                fontFamily: "NewYorkl",
+                              }}
+                            >
+                              {i.hotelName} , {i.cityName}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 16,
                                 fontFamily: "Andika",
                               }}
                             >
-                              {i.cityName}
+                              {new Array(parseInt(i.hotelRatings))
+                                .fill("1")
+                                .map((c, i) => {
+                                  return (
+                                    <FontAwesome
+                                      name="star"
+                                      size={16}
+                                      color="#F5BF00"
+                                      style={{ paddingRight: 5 }}
+                                    />
+                                  );
+                                })}{" "}
+                              hotel
                             </Text>
                           </View>
                           <Carousel
@@ -1109,24 +1180,149 @@ const RequestInner = ({ navigation, route }) => {
                     backgroundColor: "rgba(0, 0, 0, 0.75)",
                   }}
                 /> */}
-                          <View
+
+                          <Surface
+                            style={{
+                              width: WIDTH * 0.9,
+                              margin: 10,
+                              // height: HEIGHT / 3.2,
+                              // elevation: 1,
+                              alignItems: "center",
+                              borderRadius: 10,
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: WIDTH * 0.9,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                flexWrap: "wrap",
+                                justifyContent: "space-between",
+                                padding: 20,
+                              }}
+                            >
+                              <View style={{ alignItems: "center" }}>
+                                <Text style={{ fontFamily: "Andika" }}>
+                                  Check In
+                                </Text>
+                                <Text
+                                  style={{
+                                    paddingVertical: 20,
+                                  }}
+                                >
+                                  <Entypo
+                                    name="login"
+                                    size={24}
+                                    color="black"
+                                  />
+                                </Text>
+                                <Text style={{ fontFamily: "Andika" }}>
+                                  {i.checkIn}
+                                </Text>
+                              </View>
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Text>------------</Text>
+                                <FontAwesome
+                                  name="calendar"
+                                  size={24}
+                                  color="black"
+                                  style={{ paddingHorizontal: 10 }}
+                                />
+                                <Text>------------</Text>
+                              </View>
+                              <View style={{ alignItems: "center" }}>
+                                <Text style={{ fontFamily: "Andika" }}>
+                                  Check Out
+                                </Text>
+                                <Text
+                                  style={{
+                                    paddingVertical: 20,
+                                  }}
+                                >
+                                  <FontAwesome
+                                    name="sign-out"
+                                    size={24}
+                                    color="black"
+                                  />
+                                </Text>
+                                <Text style={{ fontFamily: "Andika" }}>
+                                  {i.checkOut}
+                                </Text>
+                              </View>
+                            </View>
+                          </Surface>
+                          <Surface
                             style={{
                               width: WIDTH * 0.9,
                               alignItems: "center",
-                              borderTopColor: "#f1f2f1",
-                              borderTopWidth: 1,
+                              borderRadius: 10,
                             }}
                           >
-                            <Text
+                            <View
                               style={{
-                                paddingVertical: 5,
-                                fontSize: 20,
-                                fontFamily: "Andika",
+                                width: WIDTH * 0.9,
+                                alignItems: "center",
+                                borderBottomColor: "#f1f2f1",
+                                borderBottomWidth: 1,
+                              }}
+                            ></View>
+
+                            <View
+                              style={{
+                                width: WIDTH * 0.9,
+                                paddingVertical: 20,
+                                // paddingHorizontal: 10,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
                               }}
                             >
-                              {i.hotelName}
-                            </Text>
-                          </View>
+                              <View
+                                style={{
+                                  alignItems: "center",
+                                  justifyContent: "space-evenly",
+                                  borderRightWidth: 2,
+                                  borderRightColor: "#f1f2f1",
+                                  height: HEIGHT / 4.8,
+                                  flexBasis: "50%",
+                                  paddingRight: 5,
+                                }}
+                              >
+                                <Text>Meal Type</Text>
+                                <MaterialCommunityIcons
+                                  name="food-variant"
+                                  size={24}
+                                  color="black"
+                                />
+                                <Text style={{ textAlign: "center" }}>
+                                  {i.mealPlan}
+                                </Text>
+                              </View>
+
+                              <View
+                                style={{
+                                  alignItems: "center",
+                                  justifyContent: "space-evenly",
+                                  flexBasis: "50%",
+                                }}
+                              >
+                                <Text>Room Type</Text>
+                                <FontAwesome
+                                  name="hotel"
+                                  size={24}
+                                  color="black"
+                                />
+                                <Text style={{ textAlign: "center" }}>
+                                  {" "}
+                                  {i.roomType}
+                                </Text>
+                              </View>
+                            </View>
+                          </Surface>
                         </Surface>
                       );
                   })}
@@ -1194,6 +1390,7 @@ const RequestInner = ({ navigation, route }) => {
                       }}
                       data={plannedDetails.taxiDetails.taxiPicture}
                       renderItem={_renderPromo}
+                      enableSnap={true}
                       sliderWidth={WIDTH * 0.9}
                       onSnapToItem={(index) => setActivePromoSlide(index)}
                       itemWidth={WIDTH * 0.9}
@@ -1336,6 +1533,7 @@ const RequestInner = ({ navigation, route }) => {
                     <View
                       style={{
                         alignItems: "center",
+                        width: WIDTH,
                         justifyContent: "center",
                         padding: 20,
                       }}
@@ -1351,166 +1549,6 @@ const RequestInner = ({ navigation, route }) => {
           </Tab>
         </Tabs>
       </Container>
-      {/* <View
-        style={{
-          backgroundColor: "#28C9E1",
-          height: HEIGHT / 8,
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View style={{ flex: 0.2 }}>
-            <Feather
-              name="arrow-left"
-              size={28}
-              color="black"
-              style={{
-                paddingHorizontal: 20,
-              }}
-            />
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            flex: 0.8,
-            alignItems: "center",
-            justifyContent: "center",
-            paddingTop: 15,
-          }}
-        >
-          <Text style={{ color: "white", fontSize: 20 }}>My Requests</Text>
-        </View>
-      </View>
-   
-
-      {higher ? (
-        <View>
-          <Surface style={{ marginHorizontal: 20, marginVertical: 10 }}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={{ fontFamily: "Andika", fontSize: 30 }}>
-                {higher.tourCategory}
-              </Text>
-            </View>
-
-            <View style={{ marginHorizontal: WIDTH / 10 }}>
-              <Text style={styles.text}>Request Id :{higher.requestID}</Text>
-              {isAdmin ? (
-                <View style={styles.statusContainer}>
-                  <Text style={styles.text}>Status: </Text>
-                  <DropDownPicker
-                    items={queryStatus}
-                    defaultValue={higher.status}
-                    containerStyle={{ height: 40, width: WIDTH / 1.7 }}
-                    itemStyle={{
-                      justifyContent: "flex-start",
-                    }}
-                    dropDownStyle={{
-                      backgroundColor: "#fafafa",
-                    }}
-                    dropDownMaxHeight={400}
-                    onChangeItem={(item) => {
-                      setStatus(item.value);
-                    }}
-                  />
-                </View>
-              ) : (
-                <Text style={styles.text}>Status: {higher.status}</Text>
-              )}
-              <Text style={styles.text}>Name: {higher.name}</Text>
-              <Text style={styles.text}>Number: {higher.number}</Text>
-              <Text style={styles.text}>Budget: {higher.budget}</Text>
-              <Text style={styles.text}>Adult: {higher.adult}</Text>
-              <Text style={styles.text}>Children : {higher.children}</Text>
-              <Text style={styles.text}>From Date: {higher.fromDate}</Text>
-              <Text style={styles.text}>To Date: {higher.toDate}</Text>
-              <Text style={styles.text}>Start Point: {higher.startPoint}</Text>
-              <Text style={styles.text}>Destination: {higher.destination}</Text>
-              <Text style={styles.text}>Tour Type: {higher.tourType}</Text>
-              <Text style={styles.text}>Travel Mode: {higher.travelMode}</Text>
-              <Text style={styles.text}>
-                Traveller Type: {higher.travellerType}
-              </Text>
-              <Text style={styles.text}>
-                National Park: {higher.nationalPark}
-              </Text>
-            </View>
-            {isAdmin ? (
-              <>
-                <TouchableOpacity
-                  onPress={() => {
-                    updateStatus(higher);
-                  }}
-                >
-                  <View style={{ alignItems: "center", margin: 10 }}>
-                    <Text style={styles.updateStatus}>Update Status</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    deleteRequest();
-                    console.log("pressed");
-                  }}
-                >
-                  <View style={{ alignItems: "center", margin: 10 }}>
-                    <Text style={styles.updateStatus}>Delete Status</Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-            ) : (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("MyRequest")}
-              >
-                <View style={{ alignItems: "center", margin: 10 }}>
-                  <Text style={styles.back}>Back</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          </Surface>
-          {higher.tourCost === 0 && !isAdmin ? null : (
-            <Surface style={styles.paymentContainer}>
-              <View>
-                <Text style={styles.payment}>Payment</Text>
-              </View>
-
-              {isAdmin ? (
-                <View>
-                  <View style={styles.estimatedBudgetContainer}>
-                    <Text style={styles.estimatedBudget}>
-                      Estimated Budget:
-                    </Text>
-                    <TextInput
-                      style={styles.estimatedBudgetInput}
-                      value={cost}
-                      onChangeText={(value) => setCost(value)}
-                    />
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      updateCost(higher);
-                    }}
-                  >
-                    <View style={{ alignItems: "center", margin: 10 }}>
-                      <Text style={styles.updateCost}>Update Cost</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <View>
-                  <Text style={styles.estimatedBudget}>
-                    Estimated Budget: {higher.tourCost}
-                  </Text>
-                  <TouchableOpacity>
-                    <View style={{ alignItems: "center", margin: 10 }}>
-                      <Text style={styles.payNow}>Pay Now</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </Surface>
-          )}
-        </View>
-      ) : null} */}
     </ScrollView>
   );
 };
@@ -1518,6 +1556,31 @@ const RequestInner = ({ navigation, route }) => {
 export default RequestInner;
 
 const styles = new StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    alignItems: "center",
+    opacity: 0.8,
+    justifyContent: "center",
+    backgroundColor: "#333",
+    height: HEIGHT / 1.7,
+    // paddingTop: HEIGHT / 2,
+  },
+  modalView: {
+    // zIndex: 10,
+    // margin: 20,
+    // position: "relative",
+    // backgroundColor: "white",
+    // borderRadius: 20,
+    // alignItems: "center",
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: WIDTH,
+    //   height: HEIGHT * 2,
+    // },
+    // shadowOpacity: 100,
+    // shadowRadius: 840,
+    // elevation: 10,
+  },
   text: {
     marginTop: 8,
     fontSize: 16,

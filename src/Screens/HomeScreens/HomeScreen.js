@@ -47,6 +47,11 @@ const HomeScreen = ({ navigation, route }) => {
   const [testimonials, setTestimonials] = useState([]);
   const [promotions, setPromotions] = useState([]);
   const [cities, setCities] = useState([]);
+  // const [page, setPage] = useState(Math.round(Math.random() * 10));
+  const cityPage = Math.round(Math.random() * 15);
+  const countryPage = Math.round(Math.random() * 7);
+  const tourPage = Math.round(Math.random() * 150);
+  // console.log("page", page);
   const getUserData = () => {
     if (user !== null) {
       firebase
@@ -135,15 +140,15 @@ const HomeScreen = ({ navigation, route }) => {
   }, []);
 
   const getTours = async () => {
-    const tours = await touron.get("/tour?page=32&pageSize=10");
+    const tours = await touron.get(`/tour?page=${tourPage}&pageSize=10`);
     setTour(tours.data);
   };
   const getCounries = async () => {
-    const country = await touron.get("/country?page=2&pageSize=10");
+    const country = await touron.get(`/country?page=${countryPage}&pageSize=6`);
     setCountries(country.data);
   };
   const getCities = async () => {
-    const city = await touron.get("/city?page=2&pageSize=10");
+    const city = await touron.get(`/city?page=${cityPage}&pageSize=5`);
     setCities(city.data);
   };
   const getNetwork = async () => {
@@ -154,6 +159,8 @@ const HomeScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+    // setPage(Math.round(Math.random() * 10));
+
     getNetwork();
   }, []);
   useEffect(() => {
@@ -214,11 +221,13 @@ const HomeScreen = ({ navigation, route }) => {
           style={{
             borderColor: "#00000008",
             borderWidth: 0.5,
-            backgroundColor: "#03C6C7",
+            // backgroundColor: "#03C6C7",
             borderRadius: 10,
             paddingBottom: 20,
             elevation: 2,
             marginTop: 20,
+            height: HEIGHT / 1.9,
+            marginBottom: 30,
           }}
         >
           <View
@@ -241,7 +250,7 @@ const HomeScreen = ({ navigation, route }) => {
             <View style={{ paddingHorizontal: 15 }}>
               <Text
                 style={{
-                  color: "#FFF",
+                  // color: "#FFF",
                   fontSize: 20,
                   fontFamily: "NewYorkl",
                 }}
@@ -251,7 +260,7 @@ const HomeScreen = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 16,
-                  color: "#FFF",
+                  // color: "#FFF",
 
                   fontFamily: "Andika",
                 }}
@@ -264,15 +273,19 @@ const HomeScreen = ({ navigation, route }) => {
             style={{
               // width: WIDTH,
               padding: 10,
+              height: HEIGHT / 3,
+              overflow: "scroll",
             }}
           >
-            {/* <Text style={{ paddingLeft: 10, color: "#FFF" }}>
-              {item.comment}
-            </Text> */}
             <HTMLView
               value={item.comment}
               stylesheet={{
-                p: { paddingLeft: 10, color: "#FFF", fontFamily: "Andika" },
+                p: {
+                  paddingLeft: 10,
+                  fontFamily: "Andika",
+                  fontSize: 13,
+                  textAlign: "center",
+                },
               }}
             />
           </View>
@@ -303,7 +316,7 @@ const HomeScreen = ({ navigation, route }) => {
           <Image
             style={{
               width: WIDTH * 0.8,
-              height: HEIGHT / 2,
+              height: HEIGHT / 1.9,
               borderRadius: 10,
             }}
             source={{ uri: item.image }}
@@ -352,7 +365,7 @@ const HomeScreen = ({ navigation, route }) => {
                             source={{ uri: selectedPromotion.image }}
                             style={{
                               width: WIDTH * 0.91,
-                              height: HEIGHT / 3,
+                              height: HEIGHT / 1.6,
                               borderRadius: 20,
                               zIndex: -2,
                             }}
@@ -669,7 +682,7 @@ const HomeScreen = ({ navigation, route }) => {
                 <>
                   <ContentList
                     navigation={navigation}
-                    title={"Our Travellers"}
+                    title={"Our Travellers Talks"}
                     more={""}
                     content={""}
                   />
@@ -689,6 +702,8 @@ const HomeScreen = ({ navigation, route }) => {
                     layout="default"
                     // layoutCardOffset={1}
                     autoplay={true}
+                    autoplayDelay={1000}
+                    autoplayInterval={8000}
                     lockScrollWhileSnapping={true}
                     loop={true}
                     enableMomentum={false}
@@ -939,7 +954,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     backgroundColor: "#333",
     height: HEIGHT,
-    paddingTop: HEIGHT / 8,
+    paddingTop: 20,
   },
   modalView: {
     zIndex: 10,
@@ -947,8 +962,6 @@ const styles = StyleSheet.create({
     position: "relative",
     backgroundColor: "white",
     borderRadius: 20,
-    // paddingVertical: 25,
-    // paddingHorizontal: 15,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {

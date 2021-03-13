@@ -27,8 +27,10 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const TourHomeScreen = ({ navigation, route }) => {
-  const { isLoggedIn, user, countries, cities } = useContext(AuthContext);
-  const [tour, setTour] = useState([]);
+  const { isLoggedIn, user, countries, cities, tours } = useContext(
+    AuthContext
+  );
+  const [tour, setTour] = useState(tours);
 
   const [step, setStep] = useState(0);
   const [filterStep, setFilterStep] = useState(0);
@@ -94,26 +96,28 @@ const TourHomeScreen = ({ navigation, route }) => {
     }
   }, []);
 
-  useEffect(() => {
-    const getTours = async () => {
-      setLoader(true);
-      const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
-      console.log("tourResponse.data", tourResponse.data);
-      setTour(tourResponse.data);
-      setLoader(false);
-    };
+  // useEffect(() => {
+  //   const getTours = async () => {
+  //     setLoader(true);
+  //     const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
+  //     console.log("tourResponse.data", tourResponse.data);
+  //     setTour(tourResponse.data);
+  //     setLoader(false);
+  //   };
 
-    getTours();
-  }, []);
+  //   getTours();
+  // }, []);
 
   const getTour = async () => {
-    if (route.params.name !== "") {
+    console.log("object", route.params.name);
+    if (route.params.name) {
       const cityname = route.params.name;
       try {
         const tourResponse = await touron.get(`/tour/cityname/${cityname}`);
         if (tourResponse.data.length === 0) {
           setTour([]);
         }
+        console.log("tourResponse.data", tourResponse.data);
         setTour(tourResponse.data);
       } catch (err) {
         setErrorMessage("Something went wrong");

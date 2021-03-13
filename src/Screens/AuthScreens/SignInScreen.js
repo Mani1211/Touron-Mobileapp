@@ -256,7 +256,7 @@ function SignInScreen({ navigation }) {
                     textAlign: "center",
                   }}
                 >
-                  Forget Password ?
+                  Forgot Password ?
                 </Text>
               </TouchableOpacity>
 
