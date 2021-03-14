@@ -153,24 +153,24 @@ const App = () => {
     return () => (mounted = false);
   }, []);
 
-  if (appLoading) {
-    return (
-      <Surface
-        style={{
-          backgroundColor: "white",
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          elevation: 20,
-        }}
-      >
-        <Image
-          source={require("./assets/logo.jpeg")}
-          style={{ width: WIDTH, height: HEIGHT / 2 }}
-        />
-      </Surface>
-    );
-  }
+  // if (appLoading) {
+  //   return (
+  //     <Surface
+  //       style={{
+  //         backgroundColor: "white",
+  //         flex: 1,
+  //         alignItems: "center",
+  //         justifyContent: "center",
+  //         elevation: 20,
+  //       }}
+  //     >
+  //       <Image
+  //         source={require("./assets/logo.jpeg")}
+  //         style={{ width: WIDTH, height: HEIGHT / 2 }}
+  //       />
+  //     </Surface>
+  //   );
+  // }
 
   return (
     <>

@@ -9,6 +9,7 @@
     "updates": {
       "enabled": true
     },
+
     "ios": {
       "bundleIdentifier": "com.touron.travelapp",
       "supportsTablet": false,
@@ -21,6 +22,12 @@
       }
     },
     "android": {
+      "splash": {
+        "image": "./assets/logo.jpeg.",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff",
+        "enableDangerousExperimentalLeanBuilds": true
+      },
       "package": "com.touron.travelapp",
       "versionCode": 20,
       "useNextNotificationsApi": true,

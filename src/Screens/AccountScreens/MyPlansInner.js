@@ -83,27 +83,40 @@ const MyPlansInner = ({ navigation, route }) => {
                 style={{
                   alignSelf: "flex-end",
                   position: "absolute",
-                  top: 15,
+                  top: 20,
                   right: 10,
-                  zIndex: 20,
+                  zIndex: -10,
                 }}
                 onPress={() => setModalVisible(false)}
               >
                 <View>
-                  <FontAwesome name="close" size={40} color="#fff" />
+                  <FontAwesome name="close" size={30} color="#fff" />
                 </View>
               </TouchableOpacity>
+              {/* <TouchableOpacity
+                  style={{
+                    alignSelf: "flex-end",
+                    // position: "absolute",
+                    right: 10,
+                    zIndex: 20,
+                  }}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <View>
+                    <FontAwesome name="close" size={60} color="#fff" />
+                  </View>
+                </TouchableOpacity> */}
+              <Image
+                source={{ uri: selectedImage }}
+                resizeMode="contain"
+                style={{
+                  width: WIDTH * 0.95,
+                  height: HEIGHT / 2,
+                  borderRadius: 5,
+                  zIndex: -2,
+                }}
+              />
             </View>
-            <Image
-              source={{ uri: selectedImage }}
-              resizeMode="contain"
-              style={{
-                width: WIDTH * 0.95,
-                height: HEIGHT / 2,
-                borderRadius: 5,
-                // zIndex: -2,
-              }}
-            />
           </View>
         </View>
       </Modal>
@@ -128,8 +141,8 @@ const MyPlansInner = ({ navigation, route }) => {
 
   return (
     <ScrollView>
+      {/* {openImage()} */}
       <Container>
-        {/* {openImage()} */}
         <Header hasTabs style={{ backgroundColor: "#FFF", height: 80 }}>
           <View
             style={{
@@ -1328,25 +1341,10 @@ const styles = new StyleSheet.create({
     flex: 1,
     alignItems: "center",
     opacity: 0.8,
-    justifyContent: "center",
     backgroundColor: "#333",
-    height: HEIGHT / 1.7,
-    // paddingTop: HEIGHT / 2,
+    height: HEIGHT,
+    paddingTop: 20,
+    zIndex: 0,
   },
-  modalView: {
-    // zIndex: 10,
-    // margin: 20,
-    // position: "relative",
-    // backgroundColor: "white",
-    // borderRadius: 20,
-    // alignItems: "center",
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: WIDTH,
-    //   height: HEIGHT * 2,
-    // },
-    // shadowOpacity: 100,
-    // shadowRadius: 840,
-    // elevation: 10,
-  },
+  modalView: {},
 });

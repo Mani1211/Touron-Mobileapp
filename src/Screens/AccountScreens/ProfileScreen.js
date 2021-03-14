@@ -18,7 +18,12 @@ import DropDownPicker from "react-native-dropdown-picker";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import * as firebase from "firebase";
-import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome,
+  MaterialCommunityIcons,
+  Entypo,
+} from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 import { ActivityIndicator } from "react-native-paper";
@@ -273,13 +278,14 @@ const ProfileScreen = ({ navigation }) => {
                         alignItems: "center",
                       }}
                     >
-                      <Feather
+                      <Entypo
                         name="edit"
                         size={28}
                         color="black"
                         onPress={navigation.toggleDrawer}
                         style={{ paddingRight: 5 }}
                       />
+
                       <Text style={{ fontFamily: "Andika", fontSize: 18 }}>
                         Edit Profile
                       </Text>
@@ -298,7 +304,7 @@ const ProfileScreen = ({ navigation }) => {
                   >
                     <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
                       <View>
-                        <Feather
+                        <MaterialCommunityIcons
                           name="menu"
                           size={28}
                           color="white"
@@ -307,13 +313,14 @@ const ProfileScreen = ({ navigation }) => {
                       </View>
                     </TouchableOpacity>
                     <View style={{ alignItems: "center" }}>
-                      <Feather
-                        name="edit"
+                      <Entypo
+                        name="upload"
                         size={24}
                         color="white"
                         onPress={_pickImage}
                         style={{ paddingHorizontal: 20, paddingTop: 10 }}
                       />
+
                       <Text style={{ color: "white", fontSize: 14 }}>
                         Change Pic
                       </Text>

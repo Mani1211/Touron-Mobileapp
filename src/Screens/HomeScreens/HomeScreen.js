@@ -50,7 +50,7 @@ const HomeScreen = ({ navigation, route }) => {
   // const [page, setPage] = useState(Math.round(Math.random() * 10));
   const cityPage = Math.round(Math.random() * 15);
   const countryPage = Math.round(Math.random() * 7);
-  const tourPage = Math.round(Math.random() * 150);
+  const tourPage = Math.round(Math.random() * 100);
   // console.log("page", page);
   const getUserData = () => {
     if (user !== null) {
@@ -81,8 +81,8 @@ const HomeScreen = ({ navigation, route }) => {
       NewYorkl: require("../../../assets/fonts/NewYorkLargeBlack.otf"),
       WSans: require("../../../assets/fonts/WorkSans-Black.ttf"),
       WSansl: require("../../../assets/fonts/WorkSans-Light.ttf"),
-      SFProDisplayRegular: require("../../../assets/fonts/SF-Pro-Display-Regular.otf"),
-      SFProTextRegular: require("../../../assets/fonts/SF-Pro-Text-Regular.otf"),
+      // SFProDisplayRegular: require("../../../assets/fonts/SF-Pro-Display-Regular.otf"),
+      // SFProTextRegular: require("../../../assets/fonts/SF-Pro-Text-Regular.otf"),
     }).then(() => {
       setFont(true);
     });
