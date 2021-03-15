@@ -22,12 +22,7 @@
       }
     },
     "android": {
-      "splash": {
-        "image": "./assets/logo.jpeg.",
-        "resizeMode": "contain",
-        "backgroundColor": "#ffffff",
-        "enableDangerousExperimentalLeanBuilds": true
-      },
+      "enableDangerousExperimentalLeanBuilds": true,
       "package": "com.touron.travelapp",
       "versionCode": 20,
       "useNextNotificationsApi": true,

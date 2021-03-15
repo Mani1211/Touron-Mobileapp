@@ -51,6 +51,7 @@ const HomeScreen = ({ navigation, route }) => {
   const cityPage = Math.round(Math.random() * 15);
   const countryPage = Math.round(Math.random() * 7);
   const tourPage = Math.round(Math.random() * 100);
+  console.log(`HEIGHT`, HEIGHT);
   // console.log("page", page);
   const getUserData = () => {
     if (user !== null) {
@@ -226,7 +227,7 @@ const HomeScreen = ({ navigation, route }) => {
             paddingBottom: 20,
             elevation: 2,
             marginTop: 20,
-            height: HEIGHT / 1.9,
+            height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.9,
             marginBottom: 30,
           }}
         >
