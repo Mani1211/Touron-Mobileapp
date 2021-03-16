@@ -51,7 +51,6 @@ const HomeScreen = ({ navigation, route }) => {
   const cityPage = Math.round(Math.random() * 15);
   const countryPage = Math.round(Math.random() * 7);
   const tourPage = Math.round(Math.random() * 100);
-  console.log(`HEIGHT`, HEIGHT);
   // console.log("page", page);
   const getUserData = () => {
     if (user !== null) {
@@ -80,17 +79,13 @@ const HomeScreen = ({ navigation, route }) => {
       PlaylistScript: require("../../../assets/fonts/PlaylistScript.otf"),
       Avenir: require("../../../assets/fonts/AvenirLTStd-Black.otf"),
       NewYorkl: require("../../../assets/fonts/NewYorkLargeBlack.otf"),
-      WSans: require("../../../assets/fonts/WorkSans-Black.ttf"),
-      WSansl: require("../../../assets/fonts/WorkSans-Light.ttf"),
-      // SFProDisplayRegular: require("../../../assets/fonts/SF-Pro-Display-Regular.otf"),
-      // SFProTextRegular: require("../../../assets/fonts/SF-Pro-Text-Regular.otf"),
     }).then(() => {
       setFont(true);
     });
   };
 
   const openWhatsApp = () => {
-    let url = `whatsapp://send?text=Hi,I would like to go know more details about this offer &phone= +91 8667801206`;
+    let url = `whatsapp://send?text=Hey,🙂 I would like to know more about this&phone= +91 8667801206`;
 
     Linking.openURL(url)
       .then((data) => {

@@ -351,6 +351,7 @@ const SurpriseTourScreen = ({ navigation }) => {
             name={name}
             number={number}
             budget={budget}
+            tourType={tourType}
           />
         );
       case 10:

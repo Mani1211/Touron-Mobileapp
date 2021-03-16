@@ -51,7 +51,6 @@ const PlannedTourScreen = ({ navigation, route }) => {
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  console.log("fromDate", fromDate);
   let random;
   let formatedMonth;
 
@@ -70,7 +69,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
       const countryName = route.params.countryName;
       const type = route.params.type;
       {
-        type == "International" ? setTourType(type) : setTourType("Domestic");
+        type == "International" ? setTourType(type) : setTourType("");
       }
       setStep(3);
       setDestination(countryName);
@@ -340,6 +339,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
             name={name}
             number={number}
             budget={budget}
+            tourType={tourType}
           />
         );
 

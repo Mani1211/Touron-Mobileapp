@@ -301,6 +301,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
             submitData={() => submitData()}
             name={name}
             number={number}
+            tourType={tourType}
             budget={budget}
           />
         );

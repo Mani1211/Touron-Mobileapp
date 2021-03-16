@@ -22,6 +22,7 @@ import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import touron from "../../api/touron";
 import Tourtype from "./../CategoryScreens/Reusable components/Tourtype";
 import SubmittedQuery from "./../CategoryScreens/Reusable components/SubmittedQuery";
+import Checked from "../CategoryScreens/Reusable components/Checked";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 const SelfPlanForm = ({ navigation }) => {
@@ -768,6 +769,7 @@ const SelfPlanForm = ({ navigation }) => {
           imgScr2={require("../../../assets/planned-tour/International.png")}
           nextStep={() => setStep(1)}
           tourType={tourType}
+          tourName={"Self Tour"}
           setDomestic={() => setTourType("Domestic")}
           setInternational={() => setTourType("International")}
         />
@@ -856,21 +858,47 @@ const SelfPlanForm = ({ navigation }) => {
                       return (
                         <View style={{ alignItems: "center" }} key={index}>
                           <View>
+                            {selectedCityNames.includes(item.cityName) ? (
+                              <Feather
+                                name="check-circle"
+                                size={24}
+                                color="green"
+                                style={{
+                                  bottom: 20,
+                                  right: 0,
+                                  zIndex: 10,
+                                  position: "absolute",
+                                }}
+                              />
+                            ) : null}
                             <TouchableWithoutFeedback
                               onPress={() => {
-                                setSelectedCity([
-                                  ...selectedCity,
-                                  {
-                                    cityName: item.cityName,
-                                    imageUrl: item.imageUrl,
-                                    days: 0,
-                                    countryName: item.countryName,
-                                  },
-                                ]);
-                                setSelectedCityNames([
-                                  ...selectedCityNames,
-                                  item.cityName,
-                                ]);
+                                if (selectedCityNames.includes(item.cityName)) {
+                                  const filter = selectedCity.filter((sa) => {
+                                    return sa.cityName !== item.cityName;
+                                  });
+                                  setSelectedCity(filter);
+                                  const filters = selectedCityNames.filter(
+                                    (sa) => {
+                                      return sa !== item.cityName;
+                                    }
+                                  );
+                                  setSelectedCityNames(filters);
+                                } else {
+                                  setSelectedCityNames([
+                                    ...selectedCityNames,
+                                    item.cityName,
+                                  ]);
+                                  setSelectedCity([
+                                    ...selectedCity,
+                                    {
+                                      cityName: item.cityName,
+                                      imageUrl: item.imageUrl,
+                                      days: 0,
+                                      countryName: item.countryName,
+                                    },
+                                  ]);
+                                }
                               }}
                             >
                               <ProgressiveImage
@@ -884,30 +912,6 @@ const SelfPlanForm = ({ navigation }) => {
                               {item.cityName}
                             </Text>
                           </View>
-
-                          {selectedCityNames.includes(item.cityName) ? (
-                            <View style={{ position: "absolute" }}>
-                              <TouchableWithoutFeedback
-                                onPress={() => {
-                                  const filter = selectedCity.filter((sa) => {
-                                    return sa.cityName !== item.cityName;
-                                  });
-                                  setSelectedCity(filter);
-                                  const filters = selectedCityNames.filter(
-                                    (sa) => {
-                                      return sa !== item.cityName;
-                                    }
-                                  );
-                                  setSelectedCityNames(filters);
-                                }}
-                              >
-                                <Image
-                                  style={styles.cityImage}
-                                  source={require("../../../assets/ticks.png")}
-                                />
-                              </TouchableWithoutFeedback>
-                            </View>
-                          ) : null}
                         </View>
                       );
                     })}

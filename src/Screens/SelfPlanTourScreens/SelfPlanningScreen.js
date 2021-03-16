@@ -44,13 +44,16 @@ const SelfPlanningScreen = ({ navigation }) => {
         </View>
 
         <View style={{ marginHorizontal: WIDTH / 9 }}>
-          <Text style={{ fontSize: 14, fontStyle: "italic" }}>
-            Do you constantly find yourself frustrated by the rigid itineraries
-            offered while planning your travels? Well, no more settling! Not if
-            tour On has a say about it! The option says “Plan Myself” but all
-            you have to do is answer a few questions and leave the rest to us.
-            We will contact you with a tour plan made especially for you. So,
-            what are you waiting for?
+          <Text
+            style={{ fontSize: 14, fontFamily: "Andika", textAlign: "center" }}
+          >
+            Do you constantly find yourself getting frustrated with all the
+            rigidly planned itineraries, when your soul yearns to wander on its
+            own? Well, no more settling! Not if tourOn has a say about it. Even
+            though the option reads "Plan it yourself", all you need to do is
+            answer a few questions and leave the rest to us experts. We will
+            help you curate your tour plan, just the way you picture it! So,
+            what're you waiting for?
           </Text>
         </View>
 
