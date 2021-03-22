@@ -470,7 +470,7 @@ const styles = new StyleSheet.create({
   button: {
     color: "white",
     fontSize: 18,
-    fontFamily: "WSansl",
+    fontFamily: "Andika",
   },
 });
 

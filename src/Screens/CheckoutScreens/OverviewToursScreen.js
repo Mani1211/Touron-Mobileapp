@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
+  Platform,
   Text,
   Image,
   View,
@@ -10,13 +11,52 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 import { AntDesign } from "@expo/vector-icons";
+import { SelfTourContext } from "../../context/ SelfTourContext";
 
-const OverviewToursScreen = ({ navigation, route }) => {
-  const selectedTours = route.params.selectedTours;
-  const selectedCity = route.params.selectedCity;
+const OverviewToursScreen = ({ selectedCitys, setStep, prevStep }) => {
+  const { details, setDetails } = useContext(SelfTourContext);
+  const selectedTours = details.selectedTours;
+  const selectedCity = selectedCitys;
   const [finalTour, setFinalTour] = useState([...selectedTours]);
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+          paddingVertical: 50,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+            // marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            flex: 0.45,
+          }}
+        >
+          My Tours
+        </Text>
+
+        <TouchableOpacity>
+          <View>{/* <AntDesign name="arrowright" size={28} /> */}</View>
+        </TouchableOpacity>
+      </View>
       <View
         style={{
           flex: 1,
@@ -24,33 +64,6 @@ const OverviewToursScreen = ({ navigation, route }) => {
         }}
       >
         <View style={{ margin: 10 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SelfTourHome")}
-            >
-              <View style={{ marginLeft: WIDTH / 18 }}>
-                <AntDesign name="indent-left" size={24} color="black" />
-              </View>
-            </TouchableOpacity>
-            <View style={{ marginLeft: WIDTH / 6 }}>
-              <Text
-                style={{
-                  fontSize: 25,
-                  fontFamily: "Avenir",
-                  margin: 20,
-                  color: "#4E4E4E",
-                }}
-              >
-                My Tours!
-              </Text>
-            </View>
-          </View>
-
           <View style={{ alignItems: "center" }}>
             <Image
               style={{ width: 190, height: 185 }}
@@ -127,11 +140,11 @@ const OverviewToursScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={{ flex: 1.5 }}
             onPress={() => {
-              navigation.navigate("Progress", {
-                selectedTours: selectedTours,
+              setDetails({
+                ...details,
                 finalTour: finalTour,
-                selectedCity: selectedCity,
               });
+              setStep();
             }}
           >
             <View style={styles.buttonContainer}>

@@ -400,55 +400,6 @@ const PlannedTourScreen = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        {/* {step == 9 ? null : (
-          <View style={styles.arrowsContainer}>
-            {step == 1 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack("Home");
-                  //   console.log("logged");
-                }}
-              >
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => prevStep()}>
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            )}
-
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: "NewYorkl",
-                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
-              }}
-            >
-              Planned Tour
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                nextStep();
-              }}
-            >
-              {step == 1 ||
-              step == 2 ||
-              step == 3 ||
-              step == 5 ||
-              step == 8 ? null : (
-                <View>
-                  <AntDesign name="arrowright" size={28} />
-                </View>
-              )}
-          
-            </TouchableOpacity>
-          </View>
-        )} */}
         {step == 1 || step == 9 ? null : (
           <View style={styles.progressContainer}>
             <View

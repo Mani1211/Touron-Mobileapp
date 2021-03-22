@@ -5,6 +5,7 @@ import moment from "moment";
 import {
   StyleSheet,
   TouchableOpacity,
+  Platform,
   Text,
   Image,
   TextInput,
@@ -16,42 +17,70 @@ const HEIGHT = Dimensions.get("window").height;
 import { Surface } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { SelfTourContext } from "../../context/ SelfTourContext";
-
-const OverviewCitiesScreen = ({ navigation, route }) => {
-  const { setDetails } = useContext(SelfTourContext);
-  const [selectedCity, setSelectedCity] = useState(route.params.selectedCity);
+import Card from "../../../assets/Boardingcard.png";
+import { AntDesign } from "@expo/vector-icons";
+const OverviewCitiesScreen = ({
+  prevStep,
+  setStep,
+  selectedCitys,
+  selectedCityNamess,
+}) => {
+  const { setDetails, details } = useContext(SelfTourContext);
+  const [selectedCity, setSelectedCity] = useState(selectedCitys);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
-  // console.log("selectedCity", selectedCity);
-  // console.log("selectedCity", totalDays)
-  const selectedCityNames = route.params.selectedCityNames;
+  const selectedCityNames = selectedCityNamess;
   const calculateTotalDays = () => {
     let count = 0;
     selectedCity.forEach((c) => {
       return (count = count + c.days * 1);
     });
-    // console.log("count", count);
     return count;
   };
 
   return (
     <ScrollView>
-      <View style={{ flex: 1, backgroundColor: "#F1F3F6" }}>
-        <View style={{ marginVertical: 20 }}>
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 20,
-              fontFamily: "Andika",
-            }}
-          >
-            Overview of the seletecd cities
-          </Text>
-        </View>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+          paddingVertical: 30,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
 
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+            // marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            flex: 0.5,
+          }}
+        >
+          Overview
+        </Text>
+
+        <TouchableOpacity>
+          <View>{/* <AntDesign name="arrowright" size={28} /> */}</View>
+        </TouchableOpacity>
+      </View>
+      <View style={{ flex: 1, backgroundColor: "#F1F3F6" }}>
         {selectedCity.map((item, index) => (
           <Surface style={styles.surfaces} key={index}>
             <View>
@@ -113,10 +142,7 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
         ))}
 
         <View style={{ width: WIDTH, marginLeft: -20 }}>
-          <Image
-            style={styles.calendarImage}
-            source={require("../../../assets/Boardingcard.png")}
-          />
+          <Image style={styles.calendarImage} source={Card} />
           <View
             style={{
               display: "flex",
@@ -280,28 +306,28 @@ const OverviewCitiesScreen = ({ navigation, route }) => {
                 </View>
               </View>
             </View>
-            <TouchableOpacity
-              style={{
-                marginTop: HEIGHT < 550 ? -WIDTH / 10 - 20 : -WIDTH / 10 - 20,
-              }}
-              onPress={() => {
-                setDetails({
-                  fromDate: fromDate,
-                  toDate: toDate,
-                  adult: adult,
-                  children: children,
-                  totalDays: totalDays,
-                });
-                navigation.navigate("SelfTourHome", {
-                  selectedCity: selectedCity,
-                  selectedCityNames: selectedCityNames,
-                });
-              }}
-            >
-              <View style={styles.buttonContainer}>
-                <Text style={styles.exploreButton}>Proceed</Text>
-              </View>
-            </TouchableOpacity>
+            {fromDate !== "" && adult > 0 && totalDays > 0 ? (
+              <TouchableOpacity
+                style={{
+                  marginTop: HEIGHT < 550 ? -WIDTH / 10 - 20 : -WIDTH / 10 - 20,
+                }}
+                onPress={() => {
+                  setDetails({
+                    ...details,
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    adult: adult,
+                    children: children,
+                    totalDays: totalDays,
+                  });
+                  setStep();
+                }}
+              >
+                <View style={styles.buttonContainer}>
+                  <Text style={styles.exploreButton}>Proceed</Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
           </View>
         </View>
       </View>

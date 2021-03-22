@@ -84,8 +84,8 @@ const HomeScreen = ({ navigation, route }) => {
     });
   };
 
-  const openWhatsApp = () => {
-    let url = `whatsapp://send?text=Hey,🙂 I would like to know more about this&phone= +91 8667801206`;
+  const openWhatsApp = (promoText) => {
+    let url = `whatsapp://send?text=Hey,🙂 I would like to know more about this , ${promoText}&phone= +91 8667801206`;
 
     Linking.openURL(url)
       .then((data) => {
@@ -222,7 +222,7 @@ const HomeScreen = ({ navigation, route }) => {
             paddingBottom: 20,
             elevation: 2,
             marginTop: 20,
-            height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.9,
+            height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
             marginBottom: 30,
           }}
         >
@@ -367,15 +367,15 @@ const HomeScreen = ({ navigation, route }) => {
                             }}
                           />
                         </View>
-                        <Text style={{ fontFamily: "Andika", padding: 15 }}>
-                          {selectedPromotion.comment}
-                        </Text>
-                        <HTMLView value={selectedPromotion.content} />
+
+                        <View style={{ padding: 20 }}>
+                          <HTMLView value={selectedPromotion.content} />
+                        </View>
 
                         <TouchableOpacity
                           style={styles.openButton}
                           onPress={() => {
-                            openWhatsApp();
+                            openWhatsApp(selectedPromotion.promoCode);
                           }}
                         >
                           <View

@@ -123,7 +123,7 @@ const MyPlansScreen = ({ navigation }) => {
           </Text>
           <Text
             style={{
-              fontFamily: "WSansl",
+              fontFamily: "Andika",
               fontSize: 20,
               textAlign: "center",
             }}

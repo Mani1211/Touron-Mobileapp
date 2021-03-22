@@ -18,7 +18,6 @@ import SelfPlanForm from "./SelfPlanTourScreens/SelfPlanningFormScreen";
 import SelfTourHome from "./SelfPlanTourScreens/SelfTourHome";
 import SelfTourInner from "./SelfPlanTourScreens/SelfTourInner";
 import ProgressScreen from "./CheckoutScreens/ProgressScreen";
-import PaymentScreen from "./CheckoutScreens/PaymentScreen";
 import {
   Feather,
   FontAwesome,
@@ -256,7 +255,6 @@ const SelfTourStackScreen = () => {
           name="MyPlanInner"
           component={MyPlansInner}
         />
-        <SelfTourStack.Screen name="Payment" component={PaymentScreen} />
       </SelfTourStack.Navigator>
     </SelfTourContext.Provider>
   );

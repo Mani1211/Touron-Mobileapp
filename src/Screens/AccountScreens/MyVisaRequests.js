@@ -109,7 +109,7 @@ const MyVisaRequestsScreen = ({ navigation }) => {
                 </Text>
                 <Text
                   style={{
-                    fontFamily: "WSansl",
+                    fontFamily: "Andika",
                     fontSize: 20,
                     textAlign: "center",
                   }}
@@ -252,7 +252,7 @@ const styles = new StyleSheet.create({
     paddingHorizontal: 20,
     color: "white",
     fontSize: 18,
-    fontFamily: "WSansl",
+    fontFamily: "Andika",
     borderRadius: 20,
   },
 });

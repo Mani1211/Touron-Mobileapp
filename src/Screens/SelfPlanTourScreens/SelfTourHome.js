@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   StyleSheet,
   Text,
   View,
+  Platform,
   Image,
   FlatList,
   Dimensions,
@@ -11,23 +12,29 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-import { Feather } from "@expo/vector-icons";
+import { Feather, AntDesign } from "@expo/vector-icons";
 import touron from "../../api/touron";
 import { LinearGradient } from "expo-linear-gradient";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 import SearchBar from "../../Reusable Components/SearchBar";
-// import { AuthContext } from "../../context/AuthContext";
+import { SelfTourContext } from "../../context/ SelfTourContext";
 
-const SelfTourHome = ({ navigation, route }) => {
+const SelfTourHome = ({
+  navigation,
+  prevStep,
+  selectedCitys,
+  setStep,
+  selectedCityNamess,
+}) => {
   // const { tours } = useContext(AuthContext);
-
+  const { setDetails, details } = useContext(SelfTourContext);
   const [tour, setTour] = useState([]);
   const [error, setErrorMessage] = useState();
   const [loader, setLoader] = useState(true);
-  const selectedCity = route.params.selectedCity;
-  const selectedCityNames = route.params.selectedCityNames;
+  const selectedCity = selectedCitys;
+  const selectedCityNames = selectedCityNamess;
   const [active, setActive] = useState(0);
   const cityLength = selectedCity.length - 1;
   const [selectedTours, setSelectedTours] = useState([]);
@@ -52,22 +59,44 @@ const SelfTourHome = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          alignItems: "flex-end",
+          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: 30,
+          position: "relative",
+          paddingVertical: 30,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            prevStep();
+          }}
+        >
+          <View>
+            <AntDesign name="arrowleft" size={28} />
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "NewYorkl",
+          }}
+        >
+          Select Tours for {selectedCityNames[active]}
+        </Text>
+
+        <TouchableOpacity>
+          <View>{/* <AntDesign name="arrowright" size={28} /> */}</View>
+        </TouchableOpacity>
+      </View>
       <View style={(styles.view, { shadowOpacity: 1 })}></View>
 
-      <View style={{ marginTop: 20 }}>
-        <View style={{ marginTop: 0 }}>
-          <Text
-            style={{
-              fontSize: 20,
-              textAlign: "center",
-              fontFamily: "Avenir",
-            }}
-          >
-            Select Your Tours for {selectedCityNames[active]}
-          </Text>
-        </View>
-        <SearchBar />
-
+      <View>
         {loader ? (
           <ActivityIndicator
             size="large"
@@ -78,7 +107,7 @@ const SelfTourHome = ({ navigation, route }) => {
             }}
           />
         ) : (
-          <>
+          <View style={{ paddingBottom: 20, flex: 1, height: HEIGHT * 0.8 }}>
             {tour.length == 0 ? (
               <View style={{ alignItems: "center", justifyContent: "center" }}>
                 <View>
@@ -96,27 +125,22 @@ const SelfTourHome = ({ navigation, route }) => {
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(c) => c._id}
                 data={tour}
+                style={{ paddingBottom: 20, flex: 1, height: HEIGHT * 0.8 }}
                 renderItem={({ item }) => {
                   return (
                     <View>
                       {!selectedTourNames.includes(item.tourName) ? null : (
-                        <TouchableOpacity
-                          style={styles.tickImageContainer}
-                          onPress={() => {
-                            let tours = selectedTourNames.filter((c) => {
-                              return c !== item.tourName;
-                            });
-                            setSelectedTourNames(tours);
-
-                            let updatedTours = selectedTours.filter((c) => {
-                              return c.tourName !== item.tourName;
-                            });
-                            setSelectedTours(updatedTours);
-                          }}
-                        >
-                          <Image
-                            style={styles.tickImage}
-                            source={require("../../../assets/tick.png")}
+                        <TouchableOpacity style={styles.tickImageContainer}>
+                          <Feather
+                            name="check-circle"
+                            size={34}
+                            color="green"
+                            style={{
+                              bottom: 20,
+                              right: 10,
+                              zIndex: 10,
+                              position: "absolute",
+                            }}
                           />
                         </TouchableOpacity>
                       )}
@@ -125,11 +149,23 @@ const SelfTourHome = ({ navigation, route }) => {
                         <View style={styles.shadow}>
                           <TouchableOpacity
                             onPress={() => {
-                              setSelectedTourNames([
-                                ...selectedTourNames,
-                                item.tourName,
-                              ]);
-                              setSelectedTours([...selectedTours, item]);
+                              if (selectedTourNames.includes(item.tourName)) {
+                                let tours = selectedTourNames.filter((c) => {
+                                  return c !== item.tourName;
+                                });
+                                setSelectedTourNames(tours);
+
+                                let updatedTours = selectedTours.filter((c) => {
+                                  return c.tourName !== item.tourName;
+                                });
+                                setSelectedTours(updatedTours);
+                              } else {
+                                setSelectedTourNames([
+                                  ...selectedTourNames,
+                                  item.tourName,
+                                ]);
+                                setSelectedTours([...selectedTours, item]);
+                              }
                             }}
                           >
                             <Image
@@ -235,66 +271,76 @@ const SelfTourHome = ({ navigation, route }) => {
                 }}
               />
             )}
-          </>
+          </View>
         )}
+      </View>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+          width: WIDTH * 0.95,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "transparent",
+        }}
+      >
+        {active == 0 ? null : (
+          <TouchableOpacity
+            style={{ flex: 0.5 }}
+            onPress={() => {
+              const cityLength = selectedCityNames.length - 1;
 
-        <View style={styles.buttonContainer}>
-          {active == 0 ? null : (
-            <TouchableOpacity
-              style={{ flex: 0.5 }}
-              onPress={() => {
-                const cityLength = selectedCityNames.length - 1;
+              //  console.log(active);
+              if (active <= cityLength) {
+                getTour(selectedCityNames[active - 1]);
+                setActive(active - 1);
+              }
+              setLoader(true);
+            }}
+          >
+            <View style={[styles.button, { marginRight: 1 }]}>
+              <Text style={styles.buttonText}>Back</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        {cityLength == active ? null : (
+          <TouchableOpacity
+            style={{ flex: 1.5 }}
+            onPress={() => {
+              const cityLength = selectedCityNames.length - 1;
 
-                //  console.log(active);
-                if (active <= cityLength) {
-                  getTour(selectedCityNames[active - 1]);
-                  setActive(active - 1);
-                }
-                setLoader(true);
-              }}
-            >
-              <View style={[styles.button, { marginRight: 1 }]}>
-                <Text style={styles.buttonText}>Back</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          {cityLength == active ? null : (
-            <TouchableOpacity
-              style={{ flex: 1.5 }}
-              onPress={() => {
-                const cityLength = selectedCityNames.length - 1;
-
-                //   console.log(active);
-                if (active <= cityLength) {
-                  setActive(active + 1);
-                  getTour(selectedCityNames[active + 1]);
-                }
-                setLoader(true);
-              }}
-            >
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>
-                  Proceed to {selectedCityNames[active + 1]}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          {cityLength == active ? (
-            <TouchableOpacity
-              style={{ flex: 1.5 }}
-              onPress={() => {
-                navigation.navigate("OverviewTours", {
-                  selectedTours: selectedTours,
-                  selectedCity: selectedCity,
-                });
-              }}
-            >
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>Next</Text>
-              </View>
-            </TouchableOpacity>
-          ) : null}
-        </View>
+              //   console.log(active);
+              if (active <= cityLength) {
+                setActive(active + 1);
+                getTour(selectedCityNames[active + 1]);
+              }
+              setLoader(true);
+            }}
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>
+                Proceed to {selectedCityNames[active + 1]}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        {cityLength == active ? (
+          <TouchableOpacity
+            style={{ flex: 1.5 }}
+            onPress={() => {
+              setDetails({
+                ...details,
+                selectedTours: selectedTours,
+              });
+              setStep();
+            }}
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Next</Text>
+            </View>
+          </TouchableOpacity>
+        ) : null}
       </View>
       {/* )} */}
     </View>
@@ -413,21 +459,14 @@ const styles = StyleSheet.create({
     fontFamily: "Andika",
   },
   tickImageContainer: {
-    justifyContent: "center",
-    alignItems: "center",
     position: "absolute",
-    top: 30,
-    // left: WIDTH / 2 - WIDTH / 6,
     zIndex: 1,
-    left: 0,
-
-    right: 0,
-    top: 0,
-    bottom: 0,
+    right: 20,
+    bottom: "30%",
   },
   tickImage: {
-    width: 140,
-    height: 140,
+    width: 40,
+    height: 40,
     margin: 10,
     borderRadius: 100,
   },

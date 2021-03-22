@@ -71,7 +71,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
             padding: 8,
             margin: 8,
             fontSize: 12,
-            fontFamily: "WSansl",
+            fontFamily: "NewYorkl",
             borderWidth: 1,
             borderRadius: 10,
           }}
@@ -86,7 +86,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
               padding: 8,
               margin: 8,
               fontSize: 12,
-              fontFamily: "WSansl",
+              fontFamily: "NewYorkl",
               borderWidth: 1,
               borderRadius: 10,
             }}
@@ -114,7 +114,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
                       padding: 8,
                       margin: 5,
                       fontSize: 12,
-                      fontFamily: "WSansl",
+                      fontFamily: "NewYorkl",
                       borderWidth: 1,
                       zIndex: 10,
                       borderRadius: 10,

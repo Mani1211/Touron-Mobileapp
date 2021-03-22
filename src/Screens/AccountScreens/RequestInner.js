@@ -1167,7 +1167,7 @@ const RequestInner = ({ navigation, route }) => {
                                         />
                                       );
                                     })}{" "}
-                                  hotel
+                                  Hotel
                                 </Text>
                               </View>
                               <Carousel
