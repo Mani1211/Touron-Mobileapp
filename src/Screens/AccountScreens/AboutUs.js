@@ -74,7 +74,7 @@ const AboutUs = ({ navigation }) => {
         <Text style={{ fontSize: 25, fontFamily: "NewYorkl" }}>
           Travel your dreams today!
         </Text>
-        <Text style={{ fontFamily: "WSansl", fontSize: 12 }}>
+        <Text style={{ fontFamily: "Andika", fontSize: 12 }}>
           Once a year, go somewhere you have never been before!
         </Text>
       </View>

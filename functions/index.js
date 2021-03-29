@@ -8,7 +8,7 @@ admin.initializeApp();
  * Here we're using Gmail to send
  */
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: "smtp.zoho.com",
   port: 465,
   secure: true, //ssl
@@ -39,13 +39,38 @@ under My Requests tab in the tour On App
 <h4>Bon Voyage!</h4>
                 <img src="https://touron.in/assets/frontend/images/logo/logo-black-color-1.png"  width='200px' height='70px'/>
                 <p>Cheers ,tour On<br/>
-                  Contact:Ph: 6383756188<br/>
+                  Contact:Ph: 8667801206<br/>
 
 </p>
             `, // email content in HTML
     };
 
     return transporter.sendMail(mailOptions, (erro, info) => {
+      if (erro) {
+        return res.send(erro.toString());
+      }
+      return res.send("Sended");
+    });
+  });
+});
+
+exports.sendProcessMail = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    // getting dest email by query string
+    const dest = req.query.dest;
+
+    const mailOptions = {
+      from: "Your Account Name <hello@touron.in>",
+      to: dest,
+      subject: "I'M A PICKLE!!!", // email subject
+      html: `<p style="font-size: 16px;">Pickle Riiiiiiiiiiiiiiiick!!</p>
+                <br />
+                <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
+            `, // email content in HTML
+    };
+
+    // returning result
+    return transporter.sendProcessMail(mailOptions, (erro, info) => {
       if (erro) {
         return res.send(erro.toString());
       }

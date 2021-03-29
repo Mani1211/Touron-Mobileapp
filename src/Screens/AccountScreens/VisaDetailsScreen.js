@@ -478,7 +478,7 @@ const styles = new StyleSheet.create({
     paddingHorizontal: 20,
     color: "white",
     fontSize: 18,
-    fontFamily: "WSansl",
+    fontFamily: "Andika",
     borderRadius: 20,
   },
 });

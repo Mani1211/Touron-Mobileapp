@@ -262,7 +262,7 @@ function SignUpScreen({ navigation }) {
             <View style={styles.skip}>
               <TouchableOpacity onPress={() => navigation.navigate("Main")}>
                 <Text
-                  style={{ fontSize: 18, color: "#333", fontWeight: "bold" }}
+                  style={{ fontSize: 18, color: "#333", fontFamily: "Andika" }}
                 >
                   Skip
                 </Text>

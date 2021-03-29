@@ -323,6 +323,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
             name={name}
             number={number}
             budget={budget}
+            tourType={tourType}
           />
         );
 

@@ -50,9 +50,9 @@ const HomeScreen = ({ navigation, route }) => {
   const [promotions, setPromotions] = useState([]);
   const [cities, setCities] = useState([]);
   // const [page, setPage] = useState(Math.round(Math.random() * 10));
-  const cityPage = Math.round(Math.random() * 10);
-  const countryPage = Math.round(Math.random() * 5);
-  const tourPage = Math.round(Math.random() * 50);
+  const cityPage = Math.round(Math.random() * 15);
+  const countryPage = Math.round(Math.random() * 7);
+  const tourPage = Math.round(Math.random() * 100);
   // console.log("page", page);
   const getUserData = () => {
     if (!isLoggedIn) {
@@ -86,17 +86,13 @@ const HomeScreen = ({ navigation, route }) => {
       PlaylistScript: require("../../../assets/fonts/PlaylistScript.otf"),
       Avenir: require("../../../assets/fonts/AvenirLTStd-Black.otf"),
       NewYorkl: require("../../../assets/fonts/NewYorkLargeBlack.otf"),
-      WSans: require("../../../assets/fonts/WorkSans-Black.ttf"),
-      WSansl: require("../../../assets/fonts/WorkSans-Light.ttf"),
-      // SFProDisplayRegular: require("../../../assets/fonts/SF-Pro-Display-Regular.otf"),
-      // SFProTextRegular: require("../../../assets/fonts/SF-Pro-Text-Regular.otf"),
     }).then(() => {
       setFont(true);
     });
   };
 
-  const openWhatsApp = () => {
-    let url = `whatsapp://send?text=Hi,I would like to go know more details about this offer &phone= +91 8667801206`;
+  const openWhatsApp = (promoText) => {
+    let url = `whatsapp://send?text=Hey,🙂 I would like to know more about this , ${promoText}&phone= +91 8667801206`;
 
     Linking.openURL(url)
       .then((data) => {
@@ -233,7 +229,7 @@ const HomeScreen = ({ navigation, route }) => {
             paddingBottom: 20,
             elevation: 2,
             marginTop: 20,
-            height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.9,
+            height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
             marginBottom: 30,
           }}
         >
@@ -378,15 +374,15 @@ const HomeScreen = ({ navigation, route }) => {
                             }}
                           />
                         </View>
-                        <Text style={{ fontFamily: "Andika", padding: 15 }}>
-                          {selectedPromotion.comment}
-                        </Text>
-                        <HTMLView value={selectedPromotion.content} />
+
+                        <View style={{ padding: 20 }}>
+                          <HTMLView value={selectedPromotion.content} />
+                        </View>
 
                         <TouchableOpacity
                           style={styles.openButton}
                           onPress={() => {
-                            openWhatsApp();
+                            openWhatsApp(selectedPromotion.promoCode);
                           }}
                         >
                           <View

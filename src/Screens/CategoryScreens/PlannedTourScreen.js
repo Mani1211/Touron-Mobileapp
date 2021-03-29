@@ -51,7 +51,6 @@ const PlannedTourScreen = ({ navigation, route }) => {
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  console.log("fromDate", fromDate);
   let random;
   let formatedMonth;
 
@@ -70,7 +69,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
       const countryName = route.params.countryName;
       const type = route.params.type;
       {
-        type == "International" ? setTourType(type) : setTourType("Domestic");
+        type == "International" ? setTourType(type) : setTourType("");
       }
       setStep(3);
       setDestination(countryName);
@@ -340,6 +339,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
             name={name}
             number={number}
             budget={budget}
+            tourType={tourType}
           />
         );
 
@@ -400,55 +400,6 @@ const PlannedTourScreen = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        {/* {step == 9 ? null : (
-          <View style={styles.arrowsContainer}>
-            {step == 1 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack("Home");
-                  //   console.log("logged");
-                }}
-              >
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => prevStep()}>
-                <View>
-                  <AntDesign name="arrowleft" size={28} />
-                </View>
-              </TouchableOpacity>
-            )}
-
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: "NewYorkl",
-                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
-              }}
-            >
-              Planned Tour
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                nextStep();
-              }}
-            >
-              {step == 1 ||
-              step == 2 ||
-              step == 3 ||
-              step == 5 ||
-              step == 8 ? null : (
-                <View>
-                  <AntDesign name="arrowright" size={28} />
-                </View>
-              )}
-          
-            </TouchableOpacity>
-          </View>
-        )} */}
         {step == 1 || step == 9 ? null : (
           <View style={styles.progressContainer}>
             <View

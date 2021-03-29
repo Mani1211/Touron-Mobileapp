@@ -22,9 +22,13 @@
       }
     },
     "android": {
+      "splash": {
+        "image": "./assets/logo.png",
+        "resizeMode": "contain"
+      },
       "enableDangerousExperimentalLeanBuilds": true,
       "package": "com.touron.travelapp",
-      "versionCode": 20,
+      "versionCode": 22,
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",
       "permissions": [
@@ -35,7 +39,7 @@
       ]
     },
 
-    "assetBundlePatterns": ["./assets/*/*"],
+    "assetBundlePatterns": ["./assets/*"],
 
     "web": {
       "favicon": "./assets/favicon.png"

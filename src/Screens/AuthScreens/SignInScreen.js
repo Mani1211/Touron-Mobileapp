@@ -315,7 +315,11 @@ function SignInScreen({ navigation }) {
             />
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-                <Text style={{ fontSize: 18, color: "#333" }}>Home</Text>
+                <Text
+                  style={{ fontSize: 18, color: "#333", fontFamily: "Andika" }}
+                >
+                  Home
+                </Text>
               </TouchableOpacity>
             </View>
           </Animatable.View>

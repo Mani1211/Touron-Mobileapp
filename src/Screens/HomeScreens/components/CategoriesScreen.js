@@ -44,7 +44,10 @@ const Categories = React.memo(({ navigation }) => {
             <View>
               <Image
                 style={styles.categoryImage}
-                source={require("../../../../assets/Categories/Plannedtour.jpg")}
+                source={{
+                  uri:
+                    "https://images.pexels.com/photos/885880/pexels-photo-885880.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                }}
               />
             </View>
             <Text style={styles.text}>Planned </Text>
@@ -62,7 +65,10 @@ const Categories = React.memo(({ navigation }) => {
             <View>
               <Image
                 style={styles.categoryImage}
-                source={require("../../../../assets/Categories/Roadtrip.jpg")}
+                source={{
+                  uri:
+                    "https://images.pexels.com/photos/3593923/pexels-photo-3593923.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                }}
               />
             </View>
             <Text style={styles.text}>Road </Text>
@@ -80,7 +86,10 @@ const Categories = React.memo(({ navigation }) => {
             <View>
               <Image
                 style={styles.categoryImage}
-                source={require("../../../../assets/Categories/Surprise.jpg")}
+                source={{
+                  uri:
+                    "https://images.pexels.com/photos/4254562/pexels-photo-4254562.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                }}
               />
             </View>
             <Text style={styles.text}>Surprise </Text>
@@ -97,7 +106,10 @@ const Categories = React.memo(({ navigation }) => {
             <View>
               <Image
                 style={styles.categoryImage}
-                source={require("../../../../assets/Categories/Honeymoon.jpg")}
+                source={{
+                  uri:
+                    "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                }}
               />
             </View>
             <Text style={styles.text}>Honeymoon</Text>
@@ -114,7 +126,10 @@ const Categories = React.memo(({ navigation }) => {
             <View>
               <Image
                 style={styles.categoryImage}
-                source={require("../../../../assets/Categories/luxury.jpg")}
+                source={{
+                  uri:
+                    "https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                }}
               />
             </View>
             <Text style={styles.text}>Luxury</Text>
@@ -164,7 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     marginVertical: 20,
     marginHorizontal: 5,
-    fontFamily: "WSansl",
+    fontFamily: "Andika",
   },
   categoryImage: {
     height: WIDTH / 4.3,

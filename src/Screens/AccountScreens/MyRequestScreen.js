@@ -80,32 +80,38 @@ const MyRequestScreen = ({ navigation }) => {
     {
       name: "Planned Tour",
       data: planned,
-      image: require("../../../assets/Categories/Plannedtour.jpg"),
+      image:
+        "https://images.pexels.com/photos/885880/pexels-photo-885880.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     },
     {
       name: "Surprise Tour",
       data: surprise,
-      image: require("../../../assets/Categories/Surprise.jpg"),
+      image:
+        "https://images.pexels.com/photos/4254562/pexels-photo-4254562.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     },
     {
       name: "Road Trip",
       data: road,
-      image: require("../../../assets/Categories/Roadtrip.jpg"),
+      image:
+        "https://images.pexels.com/photos/3593923/pexels-photo-3593923.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     },
     {
       name: "Luxury Tour",
       data: luxury,
-      image: require("../../../assets/Categories/luxury.jpg"),
+      image:
+        "https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     },
     {
       name: "Honeymoon Trip",
       data: honeymoon,
-      image: require("../../../assets/Categories/Honeymoon.jpg"),
+      image:
+        "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     },
     {
       name: "Wildlife",
       data: wildlife,
-      image: require("../../../assets/Categories/Surprise.jpg"),
+      image:
+        "https://www.udaipurblog.com/wp-content/uploads/2018/04/travel-triangle.jpg",
     },
   ];
 
@@ -422,7 +428,7 @@ const MyRequestScreen = ({ navigation }) => {
                       <View style={{ flex: 0.3 }}>
                         <Image
                           style={{ width: 60, height: 60, borderRadius: 30 }}
-                          source={item.image}
+                          source={{ uri: item.image }}
                         />
                       </View>
                       <View

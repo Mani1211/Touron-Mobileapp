@@ -18,11 +18,12 @@ import SelfPlanForm from "./SelfPlanTourScreens/SelfPlanningFormScreen";
 import SelfTourHome from "./SelfPlanTourScreens/SelfTourHome";
 import SelfTourInner from "./SelfPlanTourScreens/SelfTourInner";
 import ProgressScreen from "./CheckoutScreens/ProgressScreen";
-import PaymentScreen from "./CheckoutScreens/PaymentScreen";
 import {
   Feather,
-  MaterialCommunityIcons,
-  MaterialIcons,
+  FontAwesome,
+  // MaterialCommunityIcons,
+  Ionicons,
+  // MaterialIcons,
 } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -254,7 +255,6 @@ const SelfTourStackScreen = () => {
           name="MyPlanInner"
           component={MyPlansInner}
         />
-        <SelfTourStack.Screen name="Payment" component={PaymentScreen} />
       </SelfTourStack.Navigator>
     </SelfTourContext.Provider>
   );
@@ -269,7 +269,8 @@ const MainTabScreen = () => (
     <Tab.Screen
       options={{
         tabBarIcon: ({ color }) => (
-          <MaterialCommunityIcons name="home" color={color} size={26} />
+          <Ionicons name="ios-home" size={24} color={color} />
+          // <MaterialCommunityIcons name="home" color={color} size={26} />
         ),
       }}
       name="Home"
@@ -278,16 +279,18 @@ const MainTabScreen = () => (
     <Tab.Screen
       options={{
         tabBarIcon: ({ color }) => (
-          <MaterialIcons name="flight-takeoff" size={24} color={color} />
+          <FontAwesome name="paint-brush" size={24} color={color} />
+          // <MaterialIcons name="flight-takeoff" size={24} color={color} />
         ),
       }}
-      name="Plan Myself"
+      name="PIY"
       component={SelfTourStackScreen}
     />
     <Tab.Screen
       options={{
         tabBarIcon: ({ color }) => (
-          <MaterialCommunityIcons name="shopping" size={24} color={color} />
+          <FontAwesome name="book" size={24} color={color} />
+          // <MaterialCommunityIcons name="shopping" size={24} color={color} />
         ),
       }}
       name="Blogs"
