@@ -52,13 +52,12 @@ const ProfileScreen = ({ navigation }) => {
       setName(user.displayName);
       setEmail(user.email);
 
+      console.log(`user,uid`, user.user.uid);
       firebase
         .database()
-        .ref(`userGeneralInfo/${user.uid}`)
+        .ref(`userGeneralInfo/${user.user.uid}`)
         .on("value", (data) => {
           console.log(data, "DATA");
-          console.log(user.uid, "klkkkkkk");
-
           if (data.val() == null) {
             setAboutMe("");
             setAddress("");

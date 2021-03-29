@@ -30,7 +30,7 @@ function SignInScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const { setIsLoggedIn, setUser } = useContext(AuthContext);
+  const { setIsLoggedIn, setUser, setUserInfo } = useContext(AuthContext);
   const [step, setStep] = useState(0);
   const [err, setErr] = useState("");
   const [req, setReq] = useState(false);
@@ -38,17 +38,30 @@ function SignInScreen({ navigation }) {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const storeToken = (value) => {
+  const storeToken = async (value) => {
     try {
-      const userToken = JSON.stringify(value);
-      AsyncStorage.setItem("userToken", userToken);
+      const token = AsyncStorage.getItem("userToken");
+      const pToken = JSON.stringify(token);
+      console.log(`pToken`, pToken);
+
+      if (pToken) {
+        await AsyncStorage.removeItem("userToken");
+        const userToken = JSON.stringify(value);
+        console.log(`userToken`, userToken);
+        await AsyncStorage.setItem("userToken", userToken);
+      } else {
+        const userToken = JSON.stringify(value);
+        console.log(`userToken`, userToken);
+
+        await AsyncStorage.setItem("userToken", userToken);
+      }
     } catch (e) {
       console.log(e);
     }
   };
-  const removeToken = (value) => {
+  const removeToken = async () => {
     try {
-      AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userToken");
     } catch (e) {
       console.log(e);
     }
@@ -78,6 +91,21 @@ function SignInScreen({ navigation }) {
     return () => (mounted = false);
   }, []);
 
+  const getUserData = (uid) => {
+    console.log(`user.uid`, uid);
+    firebase
+      .database()
+      .ref(`userGeneralInfo/${uid}`)
+      .on("value", (data) => {
+        console.log(`d`, data);
+        if (data === null) {
+          setUserInfo({});
+        } else {
+          let val = data.val();
+          setUserInfo(val);
+        }
+      });
+  };
   const updateUserToken = (user) => {
     if (user !== null) {
       firebase
@@ -94,10 +122,11 @@ function SignInScreen({ navigation }) {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        setUser(user);
+        setUser(user.user);
         setLoaded(false);
         storeToken(user.user);
         updateUserToken(user.user);
+        getUserData(user.user.uid);
         setEmail("");
         setPassword("");
         setIsLoggedIn(true);

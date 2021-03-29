@@ -63,7 +63,6 @@ const App = () => {
       setUser(user);
     });
     getNetwork();
-    getUserData();
   }, []);
   useEffect(() => {
     let mounted = true;
@@ -89,7 +88,6 @@ const App = () => {
 
   const getTours = async () => {
     const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
-    console.log("tourResponse.data", tourResponse.data);
     setTour(tourResponse.data);
   };
 
@@ -106,11 +104,13 @@ const App = () => {
     try {
       const data = await AsyncStorage.getItem("userToken");
       const userToken = JSON.parse(data);
-      if (userToken !== null) {
-        setUser(userToken);
+      if (userToken) {
         setIsLoggedIn(true);
+        setUser(userToken);
+        // console.log(`uoken`, userToken.uid);
+        getUserData(userToken.uid);
       } else {
-        setUser({});
+        setUser(null);
         setUserInfo({});
       }
     } catch (e) {
@@ -124,20 +124,20 @@ const App = () => {
     }, 2300);
   };
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          if (data === null) {
-            // setUserInfo({});
-          } else {
-            let val = data.val();
-            // setUserInfo(val);
-          }
-        });
-    }
+  const getUserData = (uid) => {
+    // console.log(`user.uid`, uid);
+    firebase
+      .database()
+      .ref(`userGeneralInfo/${uid}`)
+      .on("value", (data) => {
+        // console.log(`d`, data);
+        if (data === null) {
+          setUserInfo({});
+        } else {
+          let val = data.val();
+          setUserInfo(val);
+        }
+      });
   };
 
   useEffect(() => {

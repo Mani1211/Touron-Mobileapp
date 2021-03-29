@@ -34,9 +34,9 @@ const DrawerContent = (props) => {
 
   // const [isAdmin, setIsAdmin] = useState(userInfo.admin);
 
-  const removeToken = () => {
+  const removeToken = async () => {
     try {
-      AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userToken");
     } catch (e) {
       console.log(err);
     }
@@ -394,6 +394,7 @@ const DrawerContent = (props) => {
                   onPress={() => {
                     firebase.auth().signOut();
                     setUser(null);
+                    setUserInfo({});
                     removeToken();
                     setIsLoggedIn(false);
                     props.navigation.navigate("Home");

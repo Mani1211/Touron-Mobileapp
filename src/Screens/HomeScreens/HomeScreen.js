@@ -34,6 +34,8 @@ import * as firebase from "firebase";
 const HomeScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { user, userInfo, setUserInfo, isLoggedIn } = useContext(AuthContext);
+  // console.log(`userInfo`, userInfo, isLoggedIn);
+  // console.log(`user`, user);
   const [fontLoaded, setFont] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [promoLoaded, setPromoLoaded] = useState(false);
@@ -48,23 +50,27 @@ const HomeScreen = ({ navigation, route }) => {
   const [promotions, setPromotions] = useState([]);
   const [cities, setCities] = useState([]);
   // const [page, setPage] = useState(Math.round(Math.random() * 10));
-  const cityPage = Math.round(Math.random() * 15);
-  const countryPage = Math.round(Math.random() * 7);
-  const tourPage = Math.round(Math.random() * 100);
-  console.log(`HEIGHT`, HEIGHT);
+  const cityPage = Math.round(Math.random() * 10);
+  const countryPage = Math.round(Math.random() * 5);
+  const tourPage = Math.round(Math.random() * 50);
   // console.log("page", page);
   const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          if (data.val() !== null) {
-            let val = data.val();
-            setUserInfo(val);
-          }
-        });
-    } else setUserInfo({});
+    if (!isLoggedIn) {
+      setUserInfo({});
+    }
+    // if (isLoggedIn) {
+    //   if (user !== null) {
+    //     firebase
+    //       .database()
+    //       .ref(`userGeneralInfo/${user.uid}`)
+    //       .on("value", (data) => {
+    //         if (data.val() !== null) {
+    //           let val = data.val();
+    //           setUserInfo(val);
+    //         }
+    //       });
+    //   }
+    // } else setUserInfo({});
   };
 
   useEffect(() => {
@@ -330,13 +336,13 @@ const HomeScreen = ({ navigation, route }) => {
   return (
     <Provider>
       <Portal>
+        <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
+
         {fontLoaded ? (
           <ScrollView
             style={{ backgroundColor: "#fff" }}
             showsVerticalScrollIndicator={false}
           >
-            <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
-
             <View style={styles.container}>
               <>
                 <Modal transparent visible={modalVisible}>

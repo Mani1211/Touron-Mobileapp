@@ -53,8 +53,17 @@ function SignUpScreen({ navigation }) {
   const responseListener = useRef();
   const storeToken = async (value) => {
     try {
-      const userToken = JSON.stringify(value);
-      await AsyncStorage.setItem("userToken", userToken);
+      const token = AsyncStorage.getItem("userToken");
+      const pToken = JSON.stringify(token);
+
+      if (pToken) {
+        await AsyncStorage.removeItem("userToken");
+        const userToken = JSON.stringify(value);
+        await AsyncStorage.setItem("userToken", userToken);
+      } else {
+        const userToken = JSON.stringify(value);
+        await AsyncStorage.setItem("userToken", userToken);
+      }
     } catch (e) {
       console.log(e);
     }
