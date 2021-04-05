@@ -111,6 +111,7 @@ function SignUpScreen({ navigation }) {
             photoURL: "",
             email: email,
             profession: "",
+            userID: user.user.uid,
           });
           user.user
             .updateProfile({
