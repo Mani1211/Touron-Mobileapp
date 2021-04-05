@@ -34,6 +34,8 @@ import * as firebase from "firebase";
 const HomeScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { user, userInfo, setUserInfo, isLoggedIn } = useContext(AuthContext);
+  // console.log(`userInfo`, userInfo, isLoggedIn);
+  // console.log(`user`, user);
   const [fontLoaded, setFont] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [promoLoaded, setPromoLoaded] = useState(false);
@@ -53,17 +55,22 @@ const HomeScreen = ({ navigation, route }) => {
   const tourPage = Math.round(Math.random() * 100);
   // console.log("page", page);
   const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          if (data.val() !== null) {
-            let val = data.val();
-            setUserInfo(val);
-          }
-        });
-    } else setUserInfo({});
+    if (!isLoggedIn) {
+      setUserInfo({});
+    }
+    // if (isLoggedIn) {
+    //   if (user !== null) {
+    //     firebase
+    //       .database()
+    //       .ref(`userGeneralInfo/${user.uid}`)
+    //       .on("value", (data) => {
+    //         if (data.val() !== null) {
+    //           let val = data.val();
+    //           setUserInfo(val);
+    //         }
+    //       });
+    //   }
+    // } else setUserInfo({});
   };
 
   useEffect(() => {
@@ -215,12 +222,12 @@ const HomeScreen = ({ navigation, route }) => {
       <>
         <View
           style={{
-            borderColor: "#00000008",
-            borderWidth: 0.5,
+            borderColor: "#333",
+            borderWidth: Platform.OS === "ios" ? 2 : 2,
             // backgroundColor: "#03C6C7",
             borderRadius: 10,
             paddingBottom: 20,
-            elevation: 2,
+            // elevation: 2,
             marginTop: 20,
             height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
             marginBottom: 30,
@@ -325,16 +332,16 @@ const HomeScreen = ({ navigation, route }) => {
   return (
     <Provider>
       <Portal>
+        <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
+
         {fontLoaded ? (
           <ScrollView
             style={{ backgroundColor: "#fff" }}
             showsVerticalScrollIndicator={false}
           >
-            <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
-
             <View style={styles.container}>
               <>
-                <Modal transparent visible={modalVisible}>
+                <Modal visible={modalVisible}>
                   <ScrollView>
                     <View style={styles.centeredView}>
                       <View style={styles.modalView}>
@@ -407,7 +414,7 @@ const HomeScreen = ({ navigation, route }) => {
                     flexDirection: "row",
                     alignContent: "center",
                     justifyContent: "space-between",
-                    paddingTop: Platform.OS === "ios" ? 15 : 0,
+                    paddingTop: Platform.OS === "ios" ? 35 : 0,
                   }}
                 >
                   <TouchableOpacity
@@ -680,7 +687,9 @@ const HomeScreen = ({ navigation, route }) => {
                     navigation={navigation}
                     title={"Our Travellers Talks"}
                     more={""}
-                    content={""}
+                    content={
+                      "Read the testimonials of our happy travellers as they recollect fond memories after a fabulous tour with us !"
+                    }
                   />
                   {/* <Pagination
                     dotsLength={testimonials.length}

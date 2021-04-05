@@ -52,7 +52,8 @@ const OverviewCitiesScreen = ({
           justifyContent: "space-between",
           marginHorizontal: 30,
           position: "relative",
-          paddingVertical: 30,
+          paddingTop: 30,
+          paddingBottom: Platform.OS === "ios" ? 50 : 30,
         }}
       >
         <TouchableOpacity
@@ -133,6 +134,8 @@ const OverviewCitiesScreen = ({
                   style={{
                     fontSize: 25,
                     marginTop: 5,
+                    width: 50,
+                    textAlign: "center",
                   }}
                   editable={true}
                 />

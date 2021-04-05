@@ -1,29 +1,34 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
-  Dimensions,
   ActivityIndicator,
   Image,
   StatusBar,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
-import { AuthContext } from "../../context/AuthContext";
+// import DropDownPicker from "react-native-dropdown-picker";
+
+// import { AuthContext } from "../../context/AuthContext";
 // import { DataTable } from "react-native-paper";
 // import { Avatar } from "react-native-paper";
 import { Feather } from "@expo/vector-icons";
 // const WIDTH = Dimensions.get("window").width;
 // const HEIGHT = Dimensions.get("window").height;
 import * as firebase from "firebase";
+
+import { useIsFocused } from "@react-navigation/native";
 const MyRequestScreen = ({ navigation }) => {
-  const [loaded, setLoaded] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const { user, userInfo } = useContext(AuthContext);
-  const [allRequest, setAllRequest] = useState([]);
-  const [status, setStatus] = useState("");
-  const [category, setCategory] = useState("");
+  const [loaded, setLoaded] = useState(false);
+
+  const isFocused = useIsFocused();
+  // const [isAdmin, setIsAdmin] = useState(false);
+  // const { user } = useContext(AuthContext);
+  // console.log(`user`, user);
+  // const [allRequest, setAllRequest] = useState([]);
+  // const [status, setStatus] = useState("");
+  // const [category, setCategory] = useState("");
   // const itemsPerPage = 5;
   // const [page, setPage] = useState(0);
   // const [userRequest, setUserRequest] = useState([]);
@@ -38,38 +43,38 @@ const MyRequestScreen = ({ navigation }) => {
   const [requests, setRequests] = useState([]);
   const [step, setStep] = useState(1);
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          if (data.val() !== null) {
-            let val = data.val();
-            setIsAdmin(val.admin);
-          }
-        });
-    }
-  };
+  // const getUserData = () => {
+  //   if (user !== null) {
+  //     firebase
+  //       .database()
+  //       .ref(`userGeneralInfo/${user.uid}`)
+  //       .on("value", (data) => {
+  //         if (data.val() !== null) {
+  //           let val = data.val();
+  //           setIsAdmin(val.admin);
+  //         }
+  //       });
+  //   }
+  // };
 
-  const getAllRequest = () => {
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        let newReq = {};
-        if (data !== null && data !== undefined) {
-          let revReq = Object.keys(data.val()).reverse();
-          revReq.forEach((i) => {
-            newReq[i] = data.val()[i];
-          });
-          setAllRequest({
-            ...newReq,
-          });
-        }
-        setLoaded(false);
-      });
-  };
+  // const getAllRequest = () => {
+  //   firebase
+  //     .database()
+  //     .ref(`requests`)
+  //     .on("value", (data) => {
+  //       let newReq = {};
+  //       if (data !== null && data !== undefined) {
+  //         let revReq = Object.keys(data.val()).reverse();
+  //         revReq.forEach((i) => {
+  //           newReq[i] = data.val()[i];
+  //         });
+  //         setAllRequest({
+  //           ...newReq,
+  //         });
+  //       }
+  //       setLoaded(false);
+  //     });
+  // };
 
   const tourCategories = [
     {
@@ -131,162 +136,168 @@ const MyRequestScreen = ({ navigation }) => {
   //     return allRequest;
   //   }
   // };
+  // useEffect(() => {
+  //   getUserData();
+  //   setCategory("");
+  //   setStatus("");
+  // }, []);
+
   useEffect(() => {
-    getUserData();
-    setCategory("");
-    setStatus("");
-  }, []);
-  useEffect(() => {
+    console.log("called");
+    const getUserRequests = () => {
+      const uid = firebase.auth().currentUser.uid;
+      console.log(`uhhhhhid`, uid);
+
+      setLoaded(true);
+      firebase
+        .database()
+        .ref(`requests`)
+        .on("value", (data) => {
+          if (data) {
+            let sT = [];
+            data.forEach((c) => {
+              if (c.val().userID == uid) {
+                if (c.val().tourCategory === "Planned Tour") {
+                  sT.push(c.val());
+                }
+              }
+            });
+            setPlanned(sT.reverse());
+          }
+          setLoaded(false);
+        });
+      firebase
+        .database()
+        .ref(`requests`)
+        .on("value", (data) => {
+          if (data) {
+            let sT = [];
+            data.forEach((c) => {
+              if (c.val().userID == uid) {
+                if (c.val().tourCategory === "Surprise Tour") {
+                  sT.push(c.val());
+                }
+              }
+            });
+            setSurprise(sT.reverse());
+          }
+        });
+      firebase
+        .database()
+        .ref(`requests`)
+        .on("value", (data) => {
+          if (data) {
+            let sT = [];
+            data.forEach((c) => {
+              if (c.val().userID == uid) {
+                if (c.val().tourCategory === "Road Trip") {
+                  sT.push(c.val());
+                }
+              }
+            });
+            setRoad(sT.reverse());
+          }
+        });
+      firebase
+        .database()
+        .ref(`requests`)
+        .on("value", (data) => {
+          if (data) {
+            let sT = [];
+            data.forEach((c) => {
+              if (c.val().userID == uid) {
+                if (c.val().tourCategory === "Luxury Tour") {
+                  sT.push(c.val());
+                }
+              }
+            });
+            setLuxury(sT.reverse());
+          }
+        });
+      firebase
+        .database()
+        .ref(`requests`)
+        .on("value", (data) => {
+          if (data) {
+            let sT = [];
+            data.forEach((c) => {
+              if (c.val().userID == uid) {
+                if (c.val().tourCategory === "Honeymoon Trip") {
+                  sT.push(c.val());
+                }
+              }
+            });
+            setHoneymoon(sT.reverse());
+          }
+        });
+      firebase
+        .database()
+        .ref(`requests`)
+        .on("value", (data) => {
+          if (data) {
+            let sT = [];
+            data.forEach((c) => {
+              if (c.val().userID == uid) {
+                if (c.val().tourCategory === "Wildlife") {
+                  sT.push(c.val());
+                }
+              }
+            });
+            setWildlife(sT.reverse());
+          }
+        });
+    };
     getUserRequests();
-  }, []);
+  }, [isFocused]);
 
-  const getUserRequests = () => {
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        if (data) {
-          let sT = [];
-          data.forEach((c) => {
-            if (c.val().userID == user.uid) {
-              if (c.val().tourCategory === "Planned Tour") {
-                sT.push(c.val());
-              }
-            }
-          });
-          setPlanned(sT.reverse());
-        }
-      });
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        if (data) {
-          let sT = [];
-          data.forEach((c) => {
-            if (c.val().userID == user.uid) {
-              if (c.val().tourCategory === "Surprise Tour") {
-                sT.push(c.val());
-              }
-            }
-          });
-          setSurprise(sT.reverse());
-        }
-      });
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        if (data) {
-          let sT = [];
-          data.forEach((c) => {
-            if (c.val().userID == user.uid) {
-              if (c.val().tourCategory === "Road Trip") {
-                sT.push(c.val());
-              }
-            }
-          });
-          setRoad(sT.reverse());
-        }
-      });
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        if (data) {
-          let sT = [];
-          data.forEach((c) => {
-            if (c.val().userID == user.uid) {
-              if (c.val().tourCategory === "Luxury Tour") {
-                sT.push(c.val());
-              }
-            }
-          });
-          setLuxury(sT.reverse());
-        }
-      });
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        if (data) {
-          let sT = [];
-          data.forEach((c) => {
-            if (c.val().userID == user.uid) {
-              if (c.val().tourCategory === "Honeymoon Trip") {
-                sT.push(c.val());
-              }
-            }
-          });
-          setHoneymoon(sT.reverse());
-        }
-      });
-    firebase
-      .database()
-      .ref(`requests`)
-      .on("value", (data) => {
-        if (data) {
-          let sT = [];
-          data.forEach((c) => {
-            if (c.val().userID == user.uid) {
-              if (c.val().tourCategory === "Wildlife") {
-                sT.push(c.val());
-              }
-            }
-          });
-          setWildlife(sT.reverse());
-        }
-      });
-  };
+  // useEffect(() => getAllRequest(), []);
 
-  useEffect(() => getAllRequest(), []);
-
-  const colors = [
-    {
-      name: "Query Received",
-      color: "#f39c12",
-    },
-    {
-      name: "Plan Shared",
-      color: "#7f8c8d",
-    },
-    {
-      name: "On Progress",
-      color: "#8e44ad",
-    },
-    {
-      name: "Cancelled",
-      color: "red",
-    },
-    {
-      name: "On Hold",
-      color: "#3498db",
-    },
-    {
-      name: "Duplicate Query",
-      color: "#fbc531",
-    },
-    {
-      name: "Tour Booked",
-      color: "#2d3436",
-    },
-    {
-      name: "Awaiting Payment",
-      color: "#00cec9",
-    },
-    {
-      name: "Cancellation Requested",
-      color: "#d63031",
-    },
-    {
-      name: "Estimated",
-      color: "#2d3436",
-    },
-    {
-      name: "Completed",
-      color: "#55efc4",
-    },
-  ];
+  // const colors = [
+  //   {
+  //     name: "Query Received",
+  //     color: "#f39c12",
+  //   },
+  //   {
+  //     name: "Plan Shared",
+  //     color: "#7f8c8d",
+  //   },
+  //   {
+  //     name: "On Progress",
+  //     color: "#8e44ad",
+  //   },
+  //   {
+  //     name: "Cancelled",
+  //     color: "red",
+  //   },
+  //   {
+  //     name: "On Hold",
+  //     color: "#3498db",
+  //   },
+  //   {
+  //     name: "Duplicate Query",
+  //     color: "#fbc531",
+  //   },
+  //   {
+  //     name: "Tour Booked",
+  //     color: "#2d3436",
+  //   },
+  //   {
+  //     name: "Awaiting Payment",
+  //     color: "#00cec9",
+  //   },
+  //   {
+  //     name: "Cancellation Requested",
+  //     color: "#d63031",
+  //   },
+  //   {
+  //     name: "Estimated",
+  //     color: "#2d3436",
+  //   },
+  //   {
+  //     name: "Completed",
+  //     color: "#55efc4",
+  //   },
+  // ];
 
   // const queryStatus = [
   //   {

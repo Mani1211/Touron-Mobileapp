@@ -113,7 +113,7 @@ const Checkout = ({
                       setError("");
                       submitData();
                     } else {
-                      setError("Min Budjet 50,000");
+                      setError("Min Budget 50,000");
                     }
                   }}
                 >
@@ -130,7 +130,7 @@ const Checkout = ({
                       setError("");
                       submitData();
                     } else {
-                      setError("Min Budjet 75,000");
+                      setError("Min Budget 75,000");
                     }
                   }}
                 >
@@ -184,7 +184,7 @@ const Checkout = ({
                     setError("");
                     submitData();
                   } else {
-                    setError("Min Budjet 20,000");
+                    setError("Min Budget 20,000");
                   }
                 }}
               >
@@ -223,7 +223,7 @@ const Checkout = ({
               </View>
             ) : (
               <View style={styles.budgetC}>
-                <Text style={styles.budget}>Budget:</Text>
+                <Text style={styles.budget}>Budget Per Person:</Text>
                 <TextInput
                   onChangeText={(value) => setBudget(value)}
                   keyboardType="number-pad"
@@ -234,7 +234,7 @@ const Checkout = ({
               </View>
             )}
             <View style={styles.numC}>
-              <Text style={styles.num}>Whatsapp Number:</Text>
+              <Text style={styles.num}>WhatsApp Number:</Text>
               <TextInput
                 onChangeText={(value) => setNumber(value)}
                 keyboardType="number-pad"
@@ -251,7 +251,7 @@ const Checkout = ({
                       setError("");
                       submitData();
                     } else {
-                      setError("Min Budjet 10,000");
+                      setError("Min Budget 10,000");
                     }
                   }}
                 >
@@ -268,7 +268,7 @@ const Checkout = ({
                       setError("");
                       submitData();
                     } else {
-                      setError("Min Budjet 40,000");
+                      setError("Min Budget 40,000");
                     }
                   }}
                 >
@@ -313,7 +313,7 @@ const Checkout = ({
               style={{
                 fontSize: 20,
                 fontFamily: "NewYorkl",
-                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
               }}
             >
               {tourName}

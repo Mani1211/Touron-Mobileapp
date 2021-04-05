@@ -216,7 +216,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
                 style={{
                   fontSize: 20,
                   fontFamily: "NewYorkl",
-                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
                 }}
               >
                 Wildlife
@@ -435,7 +435,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#f0f8ff",
     borderRadius: 20,
-    marginTop: 20,
+    paddingTop: Platform.OS === "ios" ? 70 : 20,
   },
   dateContainer: {
     justifyContent: "space-evenly",

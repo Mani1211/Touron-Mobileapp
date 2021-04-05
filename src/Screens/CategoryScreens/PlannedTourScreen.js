@@ -210,7 +210,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
                 style={{
                   fontSize: 20,
                   fontFamily: "NewYorkl",
-                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
                   flex: 0.6,
                 }}
               >
@@ -433,7 +433,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#f0f8ff",
     borderRadius: 20,
-    marginTop: 20,
+    paddingTop: Platform.OS === "ios" ? 70 : 20,
+
     bottom: 0,
   },
   dateContainer: {

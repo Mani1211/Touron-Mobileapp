@@ -34,9 +34,9 @@ const DrawerContent = (props) => {
 
   // const [isAdmin, setIsAdmin] = useState(userInfo.admin);
 
-  const removeToken = () => {
+  const removeToken = async () => {
     try {
-      AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userToken");
     } catch (e) {
       console.log(err);
     }
@@ -64,7 +64,7 @@ const DrawerContent = (props) => {
             width: WIDTH * 0.75,
             height: HEIGHT + 30,
             position: "absolute",
-            paddingTop: Platform.OS === "ios " ? 200 : 20,
+            // paddingTop: Platform.OS === "ios " ? 200 : 20,
           }}
         >
           <View
@@ -72,10 +72,10 @@ const DrawerContent = (props) => {
               alignItems: "center",
               flexDirection: "row",
               paddingHorizontal: 20,
-              paddingVertical: Platform.OS === "ios " ? 180 : 20,
+              // paddingVertical: Platform.OS === "ios " ? 180 : 20,
             }}
           >
-            {userInfo.photoURL === "" ? (
+            {/* {userInfo.photoURL === "" ? (
               <Thumbnail
                 source={{
                   uri:
@@ -88,23 +88,23 @@ const DrawerContent = (props) => {
                 source={{ uri: userInfo.photoURL }}
                 style={{ height: 55, width: 55 }}
               />
-            )}
+            )} */}
             <View>
               <Text
                 style={{ paddingHorizontal: 20, color: "#FFF", fontSize: 20 }}
               >
-                {userInfo.name}
+                {/* {userInfo.name} */}
               </Text>
               <Text
                 style={{ paddingHorizontal: 20, color: "#FFF", fontSize: 20 }}
               >
-                {userInfo.phoneNumber}
+                {/* {userInfo.phoneNumber} */}
               </Text>
             </View>
           </View>
 
           <DrawerContentScrollView {...props}>
-            <View style={{ marginBottom: 40 }}>
+            <View>
               {/* {isAdmin ? (
                 <>
                   <DrawerItem
@@ -394,6 +394,7 @@ const DrawerContent = (props) => {
                   onPress={() => {
                     firebase.auth().signOut();
                     setUser(null);
+                    setUserInfo({});
                     removeToken();
                     setIsLoggedIn(false);
                     props.navigation.navigate("Home");

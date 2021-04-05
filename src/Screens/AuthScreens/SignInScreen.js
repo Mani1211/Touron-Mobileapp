@@ -6,8 +6,11 @@ import {
   Dimensions,
   Platform,
   ImageBackground,
+  TouchableWithoutFeedback,
+  Keyboard,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import * as Notifications from "expo-notifications";
@@ -30,7 +33,7 @@ function SignInScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const { setIsLoggedIn, setUser } = useContext(AuthContext);
+  const { setIsLoggedIn, setUser, setUserInfo } = useContext(AuthContext);
   const [step, setStep] = useState(0);
   const [err, setErr] = useState("");
   const [req, setReq] = useState(false);
@@ -38,17 +41,30 @@ function SignInScreen({ navigation }) {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const storeToken = (value) => {
+  const storeToken = async (value) => {
     try {
-      const userToken = JSON.stringify(value);
-      AsyncStorage.setItem("userToken", userToken);
+      const token = AsyncStorage.getItem("userToken");
+      const pToken = JSON.stringify(token);
+      console.log(`pToken`, pToken);
+
+      if (pToken) {
+        await AsyncStorage.removeItem("userToken");
+        const userToken = JSON.stringify(value);
+        console.log(`userToken`, userToken);
+        await AsyncStorage.setItem("userToken", userToken);
+      } else {
+        const userToken = JSON.stringify(value);
+        console.log(`userToken`, userToken);
+
+        await AsyncStorage.setItem("userToken", userToken);
+      }
     } catch (e) {
       console.log(e);
     }
   };
-  const removeToken = (value) => {
+  const removeToken = async () => {
     try {
-      AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userToken");
     } catch (e) {
       console.log(e);
     }
@@ -78,6 +94,21 @@ function SignInScreen({ navigation }) {
     return () => (mounted = false);
   }, []);
 
+  const getUserData = (uid) => {
+    console.log(`user.uid`, uid);
+    firebase
+      .database()
+      .ref(`userGeneralInfo/${uid}`)
+      .on("value", (data) => {
+        console.log(`d`, data);
+        if (data === null) {
+          setUserInfo({});
+        } else {
+          let val = data.val();
+          setUserInfo(val);
+        }
+      });
+  };
   const updateUserToken = (user) => {
     if (user !== null) {
       firebase
@@ -94,10 +125,11 @@ function SignInScreen({ navigation }) {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        setUser(user);
+        setUser(user.user);
         setLoaded(false);
         storeToken(user.user);
         updateUserToken(user.user);
+        getUserData(user.user.uid);
         setEmail("");
         setPassword("");
         setIsLoggedIn(true);
@@ -191,7 +223,11 @@ function SignInScreen({ navigation }) {
             <View style={{ position: "absolute" }}>
               <View style={{ marginBottom: HEIGHT / 10, alignItems: "center" }}>
                 <Text
-                  style={{ fontSize: 40, fontFamily: "Andika", color: "black" }}
+                  style={{
+                    fontSize: 40,
+                    fontFamily: "Andika",
+                    color: "black",
+                  }}
                 >
                   Sign In
                 </Text>
@@ -216,8 +252,7 @@ function SignInScreen({ navigation }) {
                     keyboardAppearance="dark"
                     keyboardType="visible-password"
                     onChangeText={(value) => setPassword(value)}
-                    passwordRules={true}
-                    secureTextEntry={true}
+                    // secureTextEntry={true}
                   />
                 </View>
                 {err !== "" ? (
@@ -287,7 +322,11 @@ function SignInScreen({ navigation }) {
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={() => navigation.navigate("Main")}>
                 <Text
-                  style={{ fontSize: 18, color: "#333", fontFamily: "Andika" }}
+                  style={{
+                    fontSize: 18,
+                    color: "#333",
+                    fontFamily: "Andika",
+                  }}
                 >
                   Home
                 </Text>
@@ -307,7 +346,7 @@ function SignInScreen({ navigation }) {
             animation="fadeInUp"
             duration={1500}
           >
-            <View style={{ position: "absolute" }}>
+            <View style={{ position: "absolute", paddingBottom: 10 }}>
               <View style={{ marginBottom: HEIGHT / 10, alignItems: "center" }}>
                 <Text
                   style={{ fontSize: 40, fontFamily: "Andika", color: "black" }}
@@ -360,7 +399,22 @@ function SignInScreen({ navigation }) {
                   </TouchableOpacity>
                 )}
               </View>
+              <View style={{ width: WIDTH * 0.9 }}>
+                <TouchableOpacity onPress={() => setStep(0)}>
+                  <Text
+                    style={{
+                      fontWeight: "900",
+                      color: "white",
+                      textAlign: "center",
+                      marginVertical: Platform.OS === "ios" ? 30 : 20,
+                    }}
+                  >
+                    Already have an account? Try Sign In
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
+
             <ImageBackground
               style={{ width: WIDTH, height: HEIGHT, zIndex: -2 }}
               source={{
@@ -373,7 +427,17 @@ function SignInScreen({ navigation }) {
     }
   };
 
-  return <>{renderForm()}</>;
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        // style={styles.container}
+      >
+        <>{renderForm()}</>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
+  );
 }
 
 export default SignInScreen;

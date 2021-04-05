@@ -13,7 +13,7 @@
     "ios": {
       "bundleIdentifier": "com.touron.travelapp",
       "supportsTablet": false,
-      "buildNumber": "1.1.1",
+      "buildNumber": "1.1.2",
       "usesIcloudStorage": false,
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to take photos to upload profile pictures.",

@@ -987,15 +987,17 @@ const SelfPlanForm = ({ navigation }) => {
   return (
     <>
       {tourType === "" ? (
-        <Tourtype
-          imgSrc1={require("../../../assets/planned-tour/india.png")}
-          imgScr2={require("../../../assets/planned-tour/International.png")}
-          nextStep={() => setStep(1)}
-          tourType={tourType}
-          tourName={"Self Tour"}
-          setDomestic={() => setTourType("Domestic")}
-          setInternational={() => setTourType("International")}
-        />
+        <View style={{ marginTop: Platform.OS === "ios" ? 30 : 0 }}>
+          <Tourtype
+            imgSrc1={require("../../../assets/planned-tour/india.png")}
+            imgScr2={require("../../../assets/planned-tour/International.png")}
+            nextStep={() => setStep(1)}
+            tourType={tourType}
+            tourName={"Self Tour"}
+            setDomestic={() => setTourType("Domestic")}
+            setInternational={() => setTourType("International")}
+          />
+        </View>
       ) : (
         <>
           {tourType === "Domestic" ? (
@@ -1026,7 +1028,7 @@ const SelfPlanForm = ({ navigation }) => {
                     style={{
                       fontSize: 20,
                       fontFamily: "NewYorkl",
-                      marginTop: Platform.OS == "android" ? 30 : 80,
+                      marginTop: Platform.OS == "android" ? 30 : 40,
                     }}
                   >
                     Domestic
