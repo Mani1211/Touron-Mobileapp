@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   StyleSheet,
+  KeyboardAvoidingView,
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
@@ -399,7 +400,8 @@ function SignUpScreen({ navigation }) {
                     placeholder="Password"
                     value={password}
                     placeholderTextColor="white"
-                    keyboardType="email-address"
+                    keyboardType="visible-password"
+                    // secureTextEntry={true}
                     onChangeText={(value) => setPassword(value)}
                   />
                 </View>
@@ -552,28 +554,33 @@ function SignUpScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <Animatable.View
-        duration={1000}
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
       >
-        <ImageBackground
+        <Animatable.View
+          duration={1000}
           style={{
-            width: WIDTH,
-            height: HEIGHT + 30,
-            position: "absolute",
-            //zIndex: -2,
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "flex-end",
           }}
-          source={{
-            uri:
-              "https://images.pexels.com/photos/2249602/pexels-photo-2249602.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          }}
-        />
-        {renderView(step)}
-      </Animatable.View>
+        >
+          <ImageBackground
+            style={{
+              width: WIDTH,
+              height: HEIGHT + 30,
+              position: "absolute",
+              //zIndex: -2,
+            }}
+            source={{
+              uri:
+                "https://images.pexels.com/photos/2249602/pexels-photo-2249602.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            }}
+          />
+          {renderView(step)}
+        </Animatable.View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }

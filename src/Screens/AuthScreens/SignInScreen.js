@@ -6,8 +6,11 @@ import {
   Dimensions,
   Platform,
   ImageBackground,
+  TouchableWithoutFeedback,
+  Keyboard,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import * as Notifications from "expo-notifications";
@@ -220,7 +223,11 @@ function SignInScreen({ navigation }) {
             <View style={{ position: "absolute" }}>
               <View style={{ marginBottom: HEIGHT / 10, alignItems: "center" }}>
                 <Text
-                  style={{ fontSize: 40, fontFamily: "Andika", color: "black" }}
+                  style={{
+                    fontSize: 40,
+                    fontFamily: "Andika",
+                    color: "black",
+                  }}
                 >
                   Sign In
                 </Text>
@@ -245,8 +252,7 @@ function SignInScreen({ navigation }) {
                     keyboardAppearance="dark"
                     keyboardType="visible-password"
                     onChangeText={(value) => setPassword(value)}
-                    passwordRules={true}
-                    secureTextEntry={true}
+                    // secureTextEntry={true}
                   />
                 </View>
                 {err !== "" ? (
@@ -316,7 +322,11 @@ function SignInScreen({ navigation }) {
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={() => navigation.navigate("Main")}>
                 <Text
-                  style={{ fontSize: 18, color: "#333", fontFamily: "Andika" }}
+                  style={{
+                    fontSize: 18,
+                    color: "#333",
+                    fontFamily: "Andika",
+                  }}
                 >
                   Home
                 </Text>
@@ -336,7 +346,7 @@ function SignInScreen({ navigation }) {
             animation="fadeInUp"
             duration={1500}
           >
-            <View style={{ position: "absolute" }}>
+            <View style={{ position: "absolute", paddingBottom: 10 }}>
               <View style={{ marginBottom: HEIGHT / 10, alignItems: "center" }}>
                 <Text
                   style={{ fontSize: 40, fontFamily: "Andika", color: "black" }}
@@ -389,7 +399,22 @@ function SignInScreen({ navigation }) {
                   </TouchableOpacity>
                 )}
               </View>
+              <View style={{ width: WIDTH * 0.9 }}>
+                <TouchableOpacity onPress={() => setStep(0)}>
+                  <Text
+                    style={{
+                      fontWeight: "900",
+                      color: "white",
+                      textAlign: "center",
+                      marginVertical: Platform.OS === "ios" ? 30 : 20,
+                    }}
+                  >
+                    Already have an account? Try Sign In
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
+
             <ImageBackground
               style={{ width: WIDTH, height: HEIGHT, zIndex: -2 }}
               source={{
@@ -402,7 +427,17 @@ function SignInScreen({ navigation }) {
     }
   };
 
-  return <>{renderForm()}</>;
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        // style={styles.container}
+      >
+        <>{renderForm()}</>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
+  );
 }
 
 export default SignInScreen;

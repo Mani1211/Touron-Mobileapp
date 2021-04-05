@@ -44,7 +44,7 @@ const BlogHomeScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={{ backgroundColor: "#FFF", flex: 1 }}>
+    <View style={{ backgroundColor: "#FFF", flex: 1, marginTop: 20 }}>
       <StatusBar barStyle="dark-content" />
       <View
         style={{

@@ -53,7 +53,7 @@ const Drivetype = ({
           style={{
             fontSize: 20,
             fontFamily: "NewYorkl",
-            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
           }}
         >
           Road Trip

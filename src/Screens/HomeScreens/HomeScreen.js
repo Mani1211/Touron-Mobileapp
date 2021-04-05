@@ -222,12 +222,12 @@ const HomeScreen = ({ navigation, route }) => {
       <>
         <View
           style={{
-            borderColor: "#00000008",
-            borderWidth: 0.5,
+            borderColor: "#333",
+            borderWidth: Platform.OS === "ios" ? 2 : 2,
             // backgroundColor: "#03C6C7",
             borderRadius: 10,
             paddingBottom: 20,
-            elevation: 2,
+            // elevation: 2,
             marginTop: 20,
             height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
             marginBottom: 30,
@@ -341,7 +341,7 @@ const HomeScreen = ({ navigation, route }) => {
           >
             <View style={styles.container}>
               <>
-                <Modal transparent visible={modalVisible}>
+                <Modal visible={modalVisible}>
                   <ScrollView>
                     <View style={styles.centeredView}>
                       <View style={styles.modalView}>
@@ -414,7 +414,7 @@ const HomeScreen = ({ navigation, route }) => {
                     flexDirection: "row",
                     alignContent: "center",
                     justifyContent: "space-between",
-                    paddingTop: Platform.OS === "ios" ? 15 : 0,
+                    paddingTop: Platform.OS === "ios" ? 35 : 0,
                   }}
                 >
                   <TouchableOpacity
@@ -687,7 +687,9 @@ const HomeScreen = ({ navigation, route }) => {
                     navigation={navigation}
                     title={"Our Travellers Talks"}
                     more={""}
-                    content={""}
+                    content={
+                      "Read the testimonials of our happy travellers as they recollect fond memories after a fabulous tour with us !"
+                    }
                   />
                   {/* <Pagination
                     dotsLength={testimonials.length}

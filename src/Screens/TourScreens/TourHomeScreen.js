@@ -16,6 +16,8 @@ import { AuthContext } from "../../context/AuthContext";
 import firebase from "firebase";
 import touron from "../../api/touron";
 import _ from "lodash";
+import axios from "axios";
+
 import { LinearGradient } from "expo-linear-gradient";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -31,7 +33,9 @@ const TourHomeScreen = ({ navigation, route }) => {
     AuthContext
   );
   const [tour, setTour] = useState(tours);
-
+  // const [cancelToken, setCancelToken] = useState();
+  let cancelToken;
+  console.log(`cancelToken`, cancelToken);
   const [step, setStep] = useState(0);
   const [filterStep, setFilterStep] = useState(0);
 

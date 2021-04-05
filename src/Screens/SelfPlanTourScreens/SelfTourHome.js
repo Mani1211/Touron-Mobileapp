@@ -136,7 +136,7 @@ const SelfTourHome = ({
                             size={34}
                             color="green"
                             style={{
-                              bottom: 20,
+                              bottom: Platform.OS === "ios" ? -5 : 16,
                               right: 10,
                               zIndex: 10,
                               position: "absolute",
