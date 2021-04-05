@@ -1,24 +1,15 @@
-import {
-  Dimensions,
-  View,
-  ActivityIndicator,
-  Image,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Dimensions, Image, StatusBar } from "react-native";
 import React, { useState, useEffect } from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { AuthContext } from "./src/context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import AsyncStorage from "@react-native-community/async-storage";
 import * as firebase from "firebase";
-
-import touron from "./src/api/touron";
 import * as Network from "expo-network";
-import { Surface } from "react-native-paper";
 import SubApp from "./SubApp";
+import Data from "./src/Data/Data";
+import AppLoading from "expo-app-loading";
+import * as Font from "expo-font";
+import { Surface } from "react-native-paper";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
@@ -36,36 +27,52 @@ if (!firebase.apps.length) {
 }
 
 const App = () => {
-  const [user, setUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [tours, setTour] = useState([]);
-  const [countries, setCountries] = useState([]);
-  const [appLoading, setAppLoading] = useState(true);
-  const [status, setStatus] = useState(true);
-  const [networkLoader, setNetworkLoader] = useState(false);
-  const [cities, setCities] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
+  const [
+    user,
+    setUser,
+    userInfo,
+    setUserInfo,
+    isLoggedIn,
+    setIsLoggedIn,
+    cities,
+    countries,
+    tours,
+  ] = Data();
 
+  const fetchFont = async () => {
+    try {
+      await Font.loadAsync({
+        Andika: require("./assets/fonts/Andika-Regular.ttf"),
+        PlaylistScript: require("./assets/fonts/PlaylistScript.otf"),
+        Avenir: require("./assets/fonts/AvenirLTStd-Black.otf"),
+        NewYorkl: require("./assets/fonts/NewYorkLargeBlack.otf"),
+      }).then(() => setAppLoading(false));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFont();
+  });
+
+  const [appLoading, setAppLoading] = useState(true);
+  const [networkLoader, setNetworkLoader] = useState(false);
+  const [status, setStatus] = useState(true);
   useEffect(() => {
     firebase.default.auth().onAuthStateChanged((user) => {
       setUser(user);
     });
     getNetwork();
   }, []);
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      getCities();
-    }
-    return () => (mounted = false);
-  }, []);
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      getTours();
-    }
-    return () => (mounted = false);
-  }, []);
+
+  console.log("appLoading :>> ", appLoading);
+
+  const showImage = () => {
+    setTimeout(() => {
+      setAppLoading(false);
+    }, 1500);
+  };
 
   const getNetwork = async () => {
     setNetworkLoader(true);
@@ -74,71 +81,9 @@ const App = () => {
     setNetworkLoader(false);
   };
 
-  const getTours = async () => {
-    const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
-    setTour(tourResponse.data);
-  };
-
-  const getCountries = async () => {
-    const countryResponse = await touron.get(`/country`);
-    setCountries(countryResponse.data);
-  };
-  const getCities = async () => {
-    const cityResponse = await touron.get(`/city`);
-    setCities(cityResponse.data);
-  };
-
-  const getToken = async () => {
-    try {
-      const data = await AsyncStorage.getItem("userToken");
-      const userToken = JSON.parse(data);
-      if (userToken) {
-        setIsLoggedIn(true);
-        setUser(userToken);
-        getUserData(userToken.uid);
-      } else {
-        setUser(null);
-        setUserInfo({});
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const showImage = () => {
-    setTimeout(() => {
-      setAppLoading(false);
-    }, 2300);
-  };
-
-  const getUserData = (uid) => {
-    // console.log(`user.uid`, uid);
-    firebase
-      .database()
-      .ref(`userGeneralInfo/${uid}`)
-      .on("value", (data) => {
-        // console.log(`d`, data);
-        if (data === null) {
-          setUserInfo({});
-        } else {
-          let val = data.val();
-          setUserInfo(val);
-        }
-      });
-  };
-
   useEffect(() => {
     showImage();
   });
-
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      getToken();
-      getCountries();
-    }
-    return () => (mounted = false);
-  }, []);
 
   if (appLoading) {
     return (
@@ -159,10 +104,20 @@ const App = () => {
     );
   }
 
+  // if (!appLoading) {
+  //   return (
+  //     <AppLoading
+  //       startAsync={fetchFont}
+  //       onFinish={() => setAppLoading(true)}
+  //       onError={console.warn}
+  //     />
+  //   );
+  // }
+
   return (
     <>
       <StatusBar />
-      {!status ? (
+      {/* {!status ? (
         <View
           style={{
             flex: 1,
@@ -197,23 +152,23 @@ const App = () => {
             </TouchableOpacity>
           )}
         </View>
-      ) : (
-        <AuthContext.Provider
-          value={{
-            isLoggedIn,
-            setIsLoggedIn,
-            user,
-            setUserInfo,
-            setUser,
-            userInfo,
-            tours,
-            cities,
-            countries,
-          }}
-        >
-          <SubApp />
-        </AuthContext.Provider>
-      )}
+      ) : ( */}
+      <AuthContext.Provider
+        value={{
+          isLoggedIn,
+          setIsLoggedIn,
+          user,
+          setUserInfo,
+          setUser,
+          userInfo,
+          tours,
+          cities,
+          countries,
+        }}
+      >
+        <SubApp />
+      </AuthContext.Provider>
+      {/* )} */}
     </>
   );
 };

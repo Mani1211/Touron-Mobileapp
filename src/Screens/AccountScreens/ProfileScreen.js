@@ -37,12 +37,12 @@ const ProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [address, setAddress] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const [step, setStep] = useState(1);
   const [aboutMe, setAboutMe] = useState("");
   const [travellerType, setTravellerType] = useState("");
   const { user } = useContext(AuthContext);
+  console.log("user :>> ", user);
 
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -52,10 +52,10 @@ const ProfileScreen = ({ navigation }) => {
       setName(user.displayName);
       setEmail(user.email);
 
-      console.log(`user,uid`, user.user.uid);
+      console.log(`user,uid`, user.uid);
       firebase
         .database()
-        .ref(`userGeneralInfo/${user.user.uid}`)
+        .ref(`userGeneralInfo/${user.uid}`)
         .on("value", (data) => {
           console.log(data, "DATA");
           if (data.val() == null) {
