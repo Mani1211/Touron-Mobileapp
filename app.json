@@ -14,7 +14,7 @@
       "bundleIdentifier": "com.touron.travelapp",
       "supportsTablet": false,
       "buildNumber": "1.1.1",
-      "usesIcloudStorage": true,
+      "usesIcloudStorage": false,
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to take photos to upload profile pictures.",
         "NSPhotoLibraryAddUsageDescription": "This app uses photo bibrary to pick and save photos",
