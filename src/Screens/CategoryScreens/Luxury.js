@@ -45,7 +45,7 @@ const Luxury = ({ navigation, route }) => {
   const [budget, setBudget] = useState("");
   const [number, setNumber] = useState("");
   const [step, setStep] = useState(1);
-  const { isLoggedIn, user } = useContext(AuthContext);
+  const { isLoggedIn, userInfo } = useContext(AuthContext);
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
@@ -336,7 +336,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
   };
 
   const submitData = () => {
-    const userID = user.uid;
+    const userID = userInfo.userID;
 
     const data = {
       requestID: `TO-${date}${formatedMonth}${year}-${random}`,
@@ -366,7 +366,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       .then((data) => {
         console.log(data);
         const token = getExpoToken(userID);
-        sendEmail(user.email, destination);
+        sendEmail(userInfo.email, destination);
         const message = {
           to: token,
           sound: "default",

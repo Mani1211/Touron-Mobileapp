@@ -23,25 +23,13 @@ const VisaDetailsScreen = ({ navigation }) => {
   const [visa, setVisa] = useState([]);
   const [visaName, setVisaName] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
-  const { user } = useContext(AuthContext);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { userInfo } = useContext(AuthContext);
+  const [isAdmin, setIsAdmin] = useState(userInfo.isAdmin);
   const [step, setStep] = useState(0);
   const [visaData, setVisaData] = useState({});
   const [visaRequest, setVisaRequest] = useState([]);
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          if (data.val() !== null) {
-            let val = data.val();
-            setIsAdmin(val.admin);
-          }
-        });
-    }
-  };
+
 
   const getVisaRequests = (value) => {
     let request = [];
@@ -60,7 +48,6 @@ const VisaDetailsScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getUserData();
     getVisaRequests();
   }, []);
   const search = () => {
@@ -160,7 +147,7 @@ const VisaDetailsScreen = ({ navigation }) => {
               <Text
                 style={{ marginTop: 20, fontSize: 16, fontFamily: "Avenir" }}
               >
-                Admin : {user.email === null || undefined ? " " : user.email}
+                Admin : {userInfo.email === null || undefined ? " " : userInfo.email}
               </Text>
               <View
                 style={{

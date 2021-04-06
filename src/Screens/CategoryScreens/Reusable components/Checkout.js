@@ -30,27 +30,27 @@ const Checkout = ({
   tourName,
   budget,
 }) => {
-  const { user } = useContext(AuthContext);
-  console.log("tourType :>> ", tourType);
-  console.log("tourName :>> ", tourName);
+  const { userInfo } = useContext(AuthContext);
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          // console.log("data", data);s
-          if (data.val() === null) {
-            return;
-          }
-          setName(data.val().name);
-          setNumber(data.val().phoneNumber);
-        });
-    }
-  };
+  // const getUserData = () => {
+  //   if (user !== null) {
+  //     firebase
+  //       .database()
+  //       .ref(`userGeneralInfo/${user.uid}`)
+  //       .on("value", (data) => {
+  //         // console.log("data", data);s
+  //         if (data.val() === null) {
+  //           return;
+  //         }
+  //         setName(data.val().name);
+  //         setNumber(data.val().phoneNumber);
+  //       });
+  //   }
+  // };
   useEffect(() => {
-    getUserData();
+    // getUserData();
+    setName(userInfo.name);
+    setNumber(userInfo.phoneNumber);
   }, []);
 
   const [error, setError] = useState("");
@@ -73,7 +73,7 @@ const Checkout = ({
             </View>
             {tourType === "Domestic" ? (
               <View style={styles.budgetC}>
-                <Text style={styles.budget}>Budget:</Text>
+                <Text style={styles.budget}>Budget Per Person:</Text>
                 <TextInput
                   onChangeText={(value) => setBudget(value)}
                   keyboardType="number-pad"
@@ -84,7 +84,7 @@ const Checkout = ({
               </View>
             ) : (
               <View style={styles.budgetC}>
-                <Text style={styles.budget}>Budget:</Text>
+                <Text style={styles.budget}>Budget Per Person:</Text>
                 <TextInput
                   onChangeText={(value) => setBudget(value)}
                   keyboardType="number-pad"
@@ -157,7 +157,7 @@ const Checkout = ({
               />
             </View>
             <View style={styles.budgetC}>
-              <Text style={styles.budget}>Budget:</Text>
+              <Text style={styles.budget}>Budget Per Person:</Text>
               <TextInput
                 onChangeText={(value) => setBudget(value)}
                 keyboardType="number-pad"
@@ -212,7 +212,7 @@ const Checkout = ({
             </View>
             {tourType === "Domestic" ? (
               <View style={styles.budgetC}>
-                <Text style={styles.budget}>Budget:</Text>
+                <Text style={styles.budget}>Budget Per Person:</Text>
                 <TextInput
                   onChangeText={(value) => setBudget(value)}
                   keyboardType="number-pad"
@@ -373,9 +373,9 @@ const styles = new StyleSheet.create({
   budget: {
     fontSize: 20,
     fontFamily: "Andika",
-    paddingRight: 100,
+    // paddingRight: 100,
     width: WIDTH / 2,
-    textAlign: "left",
+    // textAlign: "left",
   },
   numC: {
     height: HEIGHT / 13,

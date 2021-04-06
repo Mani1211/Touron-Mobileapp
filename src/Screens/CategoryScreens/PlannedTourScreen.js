@@ -47,7 +47,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
   const [budget, setBudget] = useState("");
   const [number, setNumber] = useState("");
   const [step, setStep] = useState(1);
-  const { isLoggedIn, user } = useContext(AuthContext);
+  const { isLoggedIn, userInfo } = useContext(AuthContext);
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
@@ -351,7 +351,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
   };
 
   const submitData = () => {
-    const userID = user.uid;
+    const userID = userInfo.userID;
 
     const data = {
       requestID: `TO-${date}${formatedMonth}${year}-${random}`,
@@ -384,7 +384,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
       .then((data) => {
         console.log(data);
         const token = getExpoToken(userID);
-        sendEmail(user.email, "Surprise trip");
+        sendEmail(userInfo.email, "Surprise trip");
         const message = {
           to: token,
           sound: "default",

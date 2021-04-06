@@ -37,6 +37,7 @@ const ProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [address, setAddress] = useState("");
+  const [pic, setPic] = useState("");
 
   const [step, setStep] = useState(1);
   const [aboutMe, setAboutMe] = useState("");
@@ -75,6 +76,7 @@ const ProfileScreen = ({ navigation }) => {
             setAge(val.age);
             setNumber(val.phoneNumber);
             setGender(val.gender);
+            setPic(val.photoURL);
             setTravellerType(val.travellerType);
           }
         });
@@ -88,7 +90,6 @@ const ProfileScreen = ({ navigation }) => {
   }, [user]);
 
   const updateProfilePic = async (uri) => {
-    setLoading(true);
     if (user !== null) {
       firebase
         .database()
@@ -111,6 +112,7 @@ const ProfileScreen = ({ navigation }) => {
       aboutMe: aboutMe,
       travellerType: travellerType,
       admin: false,
+      photoURL: pic,
     });
     prevStep();
   };
@@ -124,6 +126,7 @@ const ProfileScreen = ({ navigation }) => {
         quality: 1,
       });
       if (!result.cancelled) {
+        setLoading(true);
         const response = await fetch(result.uri);
         const blob = await response.blob();
         firebase
@@ -136,6 +139,8 @@ const ProfileScreen = ({ navigation }) => {
               .ref(`users/${user.uid}/profile.jpg`)
               .getDownloadURL()
               .then((imageUrl) => {
+                setPic("");
+                setPic(imageUrl);
                 updateProfilePic(imageUrl);
                 console.log(imageUrl, "lo");
               });
@@ -149,50 +154,6 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
-  // const _pickImage = async () => {
-  //   try {
-  //     let result = await ImagePicker.launchImageLibraryAsync({
-  //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //       //  allowsEditing: true,
-  //       aspect: [1, 3],
-  //       quality: 1,
-  //     });
-  //     if (!result.cancelled) {
-  //       const response = await fetch(result.uri);
-  //       const blob = await response.blob();
-  //       firebase
-  //         .storage()
-  //         .ref(`users/${user.uid}/profile.jpg`)
-  //         .put(blob)
-  //         .then(() => {
-  //           firebase
-  //             .storage()
-  //             .ref(`users/${user.uid}/profile.jpg`)
-  //             .getDownloadURL()
-  //             .then((imageUrl) => {
-  //               updateProfilePic(imageUrl);
-  //               console.log("uploaded");
-  //             });
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         });
-  //     }
-
-  //     //  console.log(result);
-  //   } catch (E) {
-  //     console.log(E);
-  //   }
-  // };
-
-  // const getPermissionAsync = async () => {
-  //   const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-  //   // console.log(status, "STATUS");
-  //   if (status !== "granted") {
-  //     alert("Sorry, we need camera roll permissions to make this work!");
-  //   }
-  // };
-
   const nextStep = () => {
     setStep(step + 1);
   };
@@ -205,171 +166,170 @@ const ProfileScreen = ({ navigation }) => {
       case 1:
         return (
           <ScrollView animation="bounceIn" duration={3000}>
-            {user == null ? null : (
-              <>
-                <View
-                  style={{
-                    flex: 1,
-                    zIndex: -2,
-                  }}
-                >
-                  {user.photoURL == "" ? (
-                    <Image
-                      source={{
-                        uri:
-                          "https://image.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg",
-                      }}
-                      style={{
-                        width: WIDTH,
-                        height: HEIGHT / 1.2,
-                        borderBottomLeftRadius: WIDTH / 10,
-                        borderBottomRightRadius: WIDTH / 10,
-                      }}
-                    />
-                  ) : loading ? (
-                    <ActivityIndicator
-                      size="small"
-                      color="black"
-                      style={{
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: WIDTH / 1,
-                        marginRight: WIDTH / 10,
-                        height: HEIGHT,
-                        flex: 1,
-                      }}
-                    />
-                  ) : (
-                    <Image
-                      source={{ uri: userInfo.photoURL }}
-                      style={{
-                        width: WIDTH,
-                        height: HEIGHT / 1.2,
-                        borderBottomLeftRadius: WIDTH / 10,
-                        borderBottomRightRadius: WIDTH / 10,
-                      }}
-                    />
-                  )}
-                </View>
-
-                <View
-                  style={{
-                    marginHorizontal: WIDTH / 13,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "black",
-                      fontFamily: "Andika",
-                      marginVertical: 10,
-                      fontSize: 14,
+            <>
+              <View
+                style={{
+                  flex: 1,
+                  zIndex: -2,
+                }}
+              >
+                {pic === "" && (
+                  <Image
+                    source={{
+                      uri:
+                        "https://image.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg",
                     }}
-                  >
-                    {aboutMe}
-                  </Text>
-                  <TouchableOpacity onPress={() => nextStep()}>
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Entypo
-                        name="edit"
-                        size={28}
-                        color="black"
-                        onPress={navigation.toggleDrawer}
-                        style={{ paddingRight: 5 }}
-                      />
+                    style={{
+                      width: WIDTH,
+                      height: HEIGHT / 1.2,
+                      borderBottomLeftRadius: WIDTH / 10,
+                      borderBottomRightRadius: WIDTH / 10,
+                    }}
+                  />
+                )}
+                {/* {loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color="black"
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: WIDTH / 1,
+                      marginRight: WIDTH / 10,
+                      height: HEIGHT,
+                      flex: 1,
+                    }}
+                  />
+                ) : ( */}
+                <Image
+                  source={{ uri: pic }}
+                  style={{
+                    width: WIDTH,
+                    height: HEIGHT / 1.2,
+                    borderBottomLeftRadius: WIDTH / 10,
+                    borderBottomRightRadius: WIDTH / 10,
+                  }}
+                />
+                {/* )} */}
+              </View>
 
-                      <Text style={{ fontFamily: "Andika", fontSize: 18 }}>
-                        Edit Profile
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-                <View style={{ position: "absolute", zIndex: 2 }}>
+              <View
+                style={{
+                  marginHorizontal: WIDTH / 13,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "black",
+                    fontFamily: "Andika",
+                    marginVertical: 10,
+                    fontSize: 14,
+                  }}
+                >
+                  {aboutMe}
+                </Text>
+                <TouchableOpacity onPress={() => nextStep()}>
                   <View
                     style={{
+                      justifyContent: "center",
                       flexDirection: "row",
-                      width: WIDTH * 0.9,
-                      justifyContent: "space-between",
-                      marginHorizontal: 20,
-                      marginTop: WIDTH / 10,
+                      alignItems: "center",
                     }}
                   >
-                    <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                      <View>
-                        <MaterialCommunityIcons
-                          name="menu"
-                          size={28}
-                          color="white"
-                          style={{ paddingHorizontal: 20, paddingTop: 10 }}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                    <View style={{ alignItems: "center" }}>
-                      <Entypo
-                        name="upload"
-                        size={24}
+                    <Entypo
+                      name="edit"
+                      size={28}
+                      color="black"
+                      onPress={navigation.toggleDrawer}
+                      style={{ paddingRight: 5 }}
+                    />
+
+                    <Text style={{ fontFamily: "Andika", fontSize: 18 }}>
+                      Edit Profile
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style={{ position: "absolute", zIndex: 2 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    width: WIDTH * 0.9,
+                    justifyContent: "space-between",
+                    marginHorizontal: 20,
+                    marginTop: WIDTH / 10,
+                  }}
+                >
+                  <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+                    <View>
+                      <MaterialCommunityIcons
+                        name="menu"
+                        size={28}
                         color="white"
-                        onPress={_pickImage}
                         style={{ paddingHorizontal: 20, paddingTop: 10 }}
                       />
-
-                      <Text style={{ color: "white", fontSize: 14 }}>
-                        Change Pic
-                      </Text>
                     </View>
-                  </View>
-                  <View style={{ position: "absolute", top: HEIGHT / 1.45 }}>
-                    <Text
-                      style={{
-                        fontSize: 35,
-                        color: "black",
-                        marginHorizontal: WIDTH / 10,
-                        paddingBottom: 10,
-                        fontFamily: "NewYorkl",
-                      }}
-                    >
-                      {name}
+                  </TouchableOpacity>
+                  <View style={{ alignItems: "center" }}>
+                    <Entypo
+                      name="upload"
+                      size={24}
+                      color="white"
+                      onPress={_pickImage}
+                      style={{ paddingHorizontal: 20, paddingTop: 10 }}
+                    />
+
+                    <Text style={{ color: "white", fontSize: 14 }}>
+                      Change Pic
                     </Text>
-                    {age == "" && travellerType == "" ? null : (
-                      <View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            // paddingBottom: 20,
-                          }}
-                        >
-                          <FontAwesome
-                            name="circle"
-                            size={20}
-                            color="green"
-                            style={{
-                              marginLeft: WIDTH / 10,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              marginLeft: WIDTH / 20,
-                              color: "black",
-                              fontFamily: "Andika",
-                            }}
-                          >
-                            {age},{travellerType}
-                          </Text>
-                        </View>
-                      </View>
-                    )}
                   </View>
                 </View>
-              </>
-            )}
+                <View style={{ position: "absolute", top: HEIGHT / 1.45 }}>
+                  <Text
+                    style={{
+                      fontSize: 35,
+                      color: "black",
+                      marginHorizontal: WIDTH / 10,
+                      paddingBottom: 10,
+                      fontFamily: "NewYorkl",
+                    }}
+                  >
+                    {name}
+                  </Text>
+                  {age == "" && travellerType == "" ? null : (
+                    <View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          // paddingBottom: 20,
+                        }}
+                      >
+                        <FontAwesome
+                          name="circle"
+                          size={20}
+                          color="green"
+                          style={{
+                            marginLeft: WIDTH / 10,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            marginLeft: WIDTH / 20,
+                            color: "black",
+                            fontFamily: "Andika",
+                          }}
+                        >
+                          {age},{travellerType}
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+                </View>
+              </View>
+            </>
           </ScrollView>
         );
 

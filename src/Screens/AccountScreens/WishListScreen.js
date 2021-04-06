@@ -15,14 +15,15 @@ import * as firebase from "firebase";
 import { Feather, AntDesign } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
 const WishListScreen = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const [loaded, setLoaded] = useState(false);
   const [savedTours, setSavedTours] = useState([]);
 
   const getSavedTours = () => {
+    setLoaded(true);
     firebase
       .database()
-      .ref(`saved-tours/${user.uid}`)
+      .ref(`saved-tours/${userInfo.userID}`)
       .on("value", (data) => {
         if (data) {
           let sT = [];
@@ -32,6 +33,7 @@ const WishListScreen = ({ navigation }) => {
           setSavedTours(sT);
         }
       });
+    setLoaded(false);
   };
 
   useEffect(() => {
@@ -123,7 +125,6 @@ const WishListScreen = ({ navigation }) => {
                 data={savedTours}
                 keyExtractor={(item) => item.tourName}
                 renderItem={({ item }) => {
-                  console.log(item, "ITEM");
                   return (
                     <View>
                       <View
@@ -192,7 +193,7 @@ const WishListScreen = ({ navigation }) => {
 
                               firebase
                                 .database()
-                                .ref(`saved-tours/${user.uid}`)
+                                .ref(`saved-tours/${userInfo.userID}`)
                                 .set(filterTour)
                                 .then((data) => console.log(data))
                                 .catch((err) => console.log(err));

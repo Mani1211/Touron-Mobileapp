@@ -7,10 +7,17 @@ import * as firebase from "firebase";
 import * as Network from "expo-network";
 import SubApp from "./SubApp";
 import Data from "./src/Data/Data";
-import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import { Surface } from "react-native-paper";
-
+import AppLoading from "expo-app-loading";
+import * as SplashScreen from "expo-splash-screen";
+import {
+  AntDesign,
+  FontAwesome,
+  MaterialCommunityIcons,
+  Feather,
+  Entypo,
+} from "@expo/vector-icons";
 const firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
   authDomain: "touronapp-248e4.firebaseapp.com",
@@ -39,8 +46,11 @@ const App = () => {
     tours,
   ] = Data();
 
+  // console.log(`userInfoapppp`, userInfo);
   const fetchFont = async () => {
     try {
+      await SplashScreen.preventAutoHideAsync();
+      Feather.loadFont();
       await Font.loadAsync({
         Andika: require("./assets/fonts/Andika-Regular.ttf"),
         PlaylistScript: require("./assets/fonts/PlaylistScript.otf"),
@@ -57,62 +67,63 @@ const App = () => {
   });
 
   const [appLoading, setAppLoading] = useState(true);
-  const [networkLoader, setNetworkLoader] = useState(false);
-  const [status, setStatus] = useState(true);
-  useEffect(() => {
-    firebase.default.auth().onAuthStateChanged((user) => {
-      setUser(user);
-    });
-    getNetwork();
-  }, []);
+  // useEffect(() => {
+  //   firebase.default.auth().onAuthStateChanged((user) => {
+  //     setUser(user);
+  //   });
+  //   getNetwork();
+  // }, []);
 
   console.log("appLoading :>> ", appLoading);
 
-  const showImage = () => {
-    setTimeout(() => {
-      setAppLoading(false);
-    }, 1500);
-  };
+  // const showImage = () => {
+  //   setTimeout(() => {
+  //     setAppLoading(false);
+  //   }, 1500);
+  // };
 
-  const getNetwork = async () => {
-    setNetworkLoader(true);
-    const status = (await Network.getNetworkStateAsync()).isConnected;
-    setStatus(status);
-    setNetworkLoader(false);
-  };
+  // const getNetwork = async () => {
+  //   setNetworkLoader(true);
+  //   const status = (await Network.getNetworkStateAsync()).isConnected;
+  //   setStatus(status);
+  //   setNetworkLoader(false);
+  // };
 
-  useEffect(() => {
-    showImage();
-  });
+  // useEffect(() => {
+  //   showImage();
+  // });
+
+  // if (appLoading) {
+  //   return (
+  //     <Surface
+  //       style={{
+  //         backgroundColor: "white",
+  //         flex: 1,
+  //         alignItems: "center",
+  //         justifyContent: "center",
+  //         elevation: 20,
+  //       }}
+  //     >
+  //       <Image
+  //         source={require("./assets/logo.jpeg")}
+  //         style={{ width: WIDTH, height: HEIGHT / 2 }}
+  //       />
+  //     </Surface>
+  //   );
+  // }
 
   if (appLoading) {
     return (
-      <Surface
-        style={{
-          backgroundColor: "white",
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          elevation: 20,
+      <AppLoading
+        startAsync={fetchFont}
+        onFinish={() => async () => {
+          await SplashScreen.hideAsync();
+          setAppLoading(false);
         }}
-      >
-        <Image
-          source={require("./assets/logo.jpeg")}
-          style={{ width: WIDTH, height: HEIGHT / 2 }}
-        />
-      </Surface>
+        onError={(err) => console.error(err)}
+      />
     );
   }
-
-  // if (!appLoading) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={fetchFont}
-  //       onFinish={() => setAppLoading(true)}
-  //       onError={console.warn}
-  //     />
-  //   );
-  // }
 
   return (
     <>

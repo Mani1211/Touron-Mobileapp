@@ -48,7 +48,7 @@ const SurpriseTourScreen = ({ navigation }) => {
   const [budget, setBudget] = useState("");
   const [number, setNumber] = useState("");
   const [step, setStep] = useState(1);
-  const { isLoggedIn, user } = useContext(AuthContext);
+  const { isLoggedIn, userInfo } = useContext(AuthContext);
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
@@ -363,7 +363,7 @@ const SurpriseTourScreen = ({ navigation }) => {
   };
 
   const submitData = () => {
-    const userID = user.uid;
+    const userID = userInfo.userID;
     const tourData = {
       requestID: `TO-${date}${formatedMonth}${year}-${random}`,
       tourCategory: "Surprise Tour",
@@ -394,7 +394,7 @@ const SurpriseTourScreen = ({ navigation }) => {
       .then((data) => {
         console.log(data);
         const token = getExpoToken(userID);
-        sendEmail(user.email, "Surprise trip");
+        sendEmail(userInfo.email, "Surprise trip");
         const message = {
           to: token,
           sound: "default",

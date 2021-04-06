@@ -17,7 +17,7 @@ import { List, Surface } from "react-native-paper";
 
 const MyVisaRequestsScreen = ({ navigation }) => {
   const [visaRequest, setVisaRequest] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const [step, setStep] = useState(0);
   const [visaData, setVisaData] = useState({});
   const getUserVisaRequest = () => {
@@ -27,8 +27,7 @@ const MyVisaRequestsScreen = ({ navigation }) => {
       .ref(`visaSubmission`)
       .on("value", (data) => {
         data.forEach((c) => {
-          if (c.val().userID === user.uid) {
-            console.log(c.val(), "LLLLLL");
+          if (c.val().userID === userInfo.userID) {
             request.push(c.val());
           }
           setVisaRequest(request.reverse());

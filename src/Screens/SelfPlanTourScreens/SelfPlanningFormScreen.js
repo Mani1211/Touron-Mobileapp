@@ -23,7 +23,6 @@ import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import touron from "../../api/touron";
 import Tourtype from "./../CategoryScreens/Reusable components/Tourtype";
 import SubmittedQuery from "./../CategoryScreens/Reusable components/SubmittedQuery";
-import Checked from "../CategoryScreens/Reusable components/Checked";
 import SelfTourHome from "./SelfTourHome";
 import OverviewToursScreen from "../CheckoutScreens/OverviewToursScreen";
 import ProgressScreen from "../CheckoutScreens/ProgressScreen";
@@ -31,7 +30,7 @@ import OverviewCitiesScreen from "../CheckoutScreens/OverviewCitiesScreen";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 const SelfPlanForm = ({ navigation }) => {
-  const { cities, user, userInfo } = useContext(AuthContext);
+  const { cities, userInfo } = useContext(AuthContext);
   const [destination, setDestination] = useState("");
   const [selectedCity, setSelectedCity] = useState([]);
   const [selectedCityNames, setSelectedCityNames] = useState([]);
@@ -103,10 +102,7 @@ const SelfPlanForm = ({ navigation }) => {
     try {
       setLoaded(true);
       const domesticResponse = await touron.get(`/statecity/statename/${name}`);
-      // console.log(
-      //   "object",
-      //   parse(domesticResponse.data[0].suggestedCombinations)
-      // );
+
       setDCities(domesticResponse.data);
       setLoaded(false);
     } catch (err) {
@@ -129,7 +125,6 @@ const SelfPlanForm = ({ navigation }) => {
     // console.log("count", count);
     return count;
   };
-  console.log("userInfo", userInfo);
   const submitD = () => {
     firebase
       .database()
@@ -137,7 +132,7 @@ const SelfPlanForm = ({ navigation }) => {
       .push({
         requestID: `TO-${date}${formatedMonth}${year}-${random}`,
         tourType: tourType,
-        userId: user.uid,
+        userId: userInfo.userID,
         adult: adult,
         children: children,
         fromData: fromDate,

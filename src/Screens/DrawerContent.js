@@ -392,11 +392,11 @@ const DrawerContent = (props) => {
                     </Text>
                   )}
                   onPress={() => {
-                    firebase.auth().signOut();
                     setUser(null);
                     setUserInfo({});
                     removeToken();
                     setIsLoggedIn(false);
+                    firebase.auth().signOut();
                     props.navigation.navigate("Home");
                   }}
                   icon={() => (

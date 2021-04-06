@@ -23,7 +23,7 @@ export const RootStackScreen = () => {
     countries,
     tours,
   ] = Data();
-  console.log("user,userInfo,isLoggedIn :>> ", user, userInfo, isLoggedIn);
+  // console.log("user,userInfo,isLoggedIn :>> ", user, userInfo, isLoggedIn);
 
   return (
     <RootStack.Navigator

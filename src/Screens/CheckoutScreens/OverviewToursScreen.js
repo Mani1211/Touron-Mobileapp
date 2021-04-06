@@ -13,10 +13,9 @@ const WIDTH = Dimensions.get("window").width;
 import { AntDesign } from "@expo/vector-icons";
 import { SelfTourContext } from "../../context/ SelfTourContext";
 
-const OverviewToursScreen = ({ selectedCitys, setStep, prevStep }) => {
+const OverviewToursScreen = ({ setStep, prevStep }) => {
   const { details, setDetails } = useContext(SelfTourContext);
   const selectedTours = details.selectedTours;
-  const selectedCity = selectedCitys;
   const [finalTour, setFinalTour] = useState([...selectedTours]);
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>

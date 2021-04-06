@@ -18,13 +18,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Switch } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 const VisaInner = ({ navigation, route }) => {
-  const { user } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const visaDetails = route.params.item;
   const [step, setStep] = useState(0);
-  const [userInfo, setUserInfo] = useState({});
   const [formVisible, setFormVisible] = useState(false);
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [name, setName] = useState(userInfo.name);
+  const [number, setNumber] = useState(userInfo.phoneNumber);
   const [country, setCountry] = useState(visaDetails.countryName);
   const [salaried, setSalaried] = useState(false);
   const [selfEmployed, setSelfEmployed] = useState(false);
@@ -45,7 +44,7 @@ const VisaInner = ({ navigation, route }) => {
       .database()
       .ref(`visaSubmission`)
       .push({
-        userID: user.uid,
+        userID: userInfo.userID,
         name: name,
         phoneNumber: number,
         countryName: visaDetails.countryName,
@@ -57,25 +56,6 @@ const VisaInner = ({ navigation, route }) => {
     setName("");
     setNumber("");
     setCountry("");
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          if (data.val() !== null) {
-            let val = data.val();
-            setUserInfo(val);
-            setName(val.name);
-            setNumber(val.phoneNumber);
-          }
-        });
-    }
   };
 
   const renderItem = () => {
@@ -335,7 +315,7 @@ const VisaInner = ({ navigation, route }) => {
                   <TextInput
                     style={styles.input}
                     keyboardType="number-pad"
-                    value={number}
+                    value={number.toString()}
                     onChangeText={(value) => setNumber(value)}
                   />
                 </View>

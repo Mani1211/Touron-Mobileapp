@@ -47,7 +47,7 @@ const WildLife = ({ navigation, route }) => {
   const [budget, setBudget] = useState("");
   const [number, setNumber] = useState(0);
   const [step, setStep] = useState(1);
-  const { isLoggedIn, user } = useContext(AuthContext);
+  const { isLoggedIn, userInfo } = useContext(AuthContext);
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
@@ -355,7 +355,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
   };
 
   const submitData = () => {
-    const userID = user.uid;
+    const userID = userInfo.userID;
 
     const data = {
       requestID: `TO-${date}${formatedMonth}${year}-${random}`,
@@ -386,7 +386,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       .push(data)
       .then((data) => {
         const token = getExpoToken(userID);
-        sendEmail(user.email, destination);
+        sendEmail(userInfo.email, destination);
         const message = {
           to: token,
           sound: "default",

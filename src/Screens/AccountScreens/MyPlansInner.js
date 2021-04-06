@@ -5,11 +5,9 @@ import {
   Dimensions,
   Modal,
   Image,
-  TouchabeleOpacity,
   StatusBar,
   StyleSheet,
   ScrollView,
-  // Button,
   Linking,
 } from "react-native";
 import { Container, Header, Tab, Tabs, TabHeading } from "native-base";

@@ -35,7 +35,6 @@ import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 // } from "./../CategoryScreens/utils/PushNotification";
 
 const RequestInner = ({ navigation, route }) => {
-  const [visible, setVisible] = React.useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -44,7 +43,7 @@ const RequestInner = ({ navigation, route }) => {
   const [plannedDetails, setPlannedDetails] = useState({});
   // const onToggleSnackBar = () => setVisible(!visible);
   // const onDismissSnackBar = () => setVisible(false);
-  const { user } = useContext(AuthContext);
+  // const { userInfo } = useContext(AuthContext);
 
   // const higher = route.params.higher;
   // const key = route.params.key;
@@ -54,19 +53,19 @@ const RequestInner = ({ navigation, route }) => {
   // const [cost, setCost] = useState(0);
   // const [progress, setProgress] = useState(0);
 
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          if (data.val() !== null) {
-            let val = data.val();
-            // setIsAdmin(val.admin);
-          }
-        });
-    }
-  };
+  // const getUserData = () => {
+  //   if (user !== null) {
+  //     firebase
+  //       .database()
+  //       .ref(`userGeneralInfo/${user.uid}`)
+  //       .on("value", (data) => {
+  //         if (data.val() !== null) {
+  //           let val = data.val();
+  //           // setIsAdmin(val.admin);
+  //         }
+  //       });
+  //   }
+  // };
   const planning = () => {
     return (
       <View

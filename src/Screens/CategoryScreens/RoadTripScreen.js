@@ -53,7 +53,7 @@ const RoadTripScreen = ({ navigation }) => {
   const [budget, setBudget] = useState("");
   const [number, setNumber] = useState("");
   const [step, setStep] = useState(1);
-  const { isLoggedIn, user } = useContext(AuthContext);
+  const { isLoggedIn, userInfo } = useContext(AuthContext);
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
@@ -384,7 +384,8 @@ const RoadTripScreen = ({ navigation }) => {
     }
   };
   const submitData = () => {
-    const userID = user.uid;
+    const userID = userInfo.userID;
+
     console.log(userID);
 
     firebase
@@ -421,7 +422,7 @@ const RoadTripScreen = ({ navigation }) => {
       .then((data) => {
         console.log(data);
         const token = getExpoToken(userID);
-        sendEmail(user.email, "Road Trip");
+        sendEmail(userInfo.email, "Road Trip");
         const message = {
           to: token,
           sound: "default",

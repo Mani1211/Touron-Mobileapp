@@ -18,31 +18,14 @@ import { SelfTourContext } from "../../context/ SelfTourContext";
 import { AntDesign } from "@expo/vector-icons";
 const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
   const { details } = useContext(SelfTourContext);
-  const { user } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const finalTour = details.selectedTours;
-  // console.log("details", details);
   const selectedCity = selectedCitys;
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  const [userInfo, setUserInfo] = useState({});
   let random;
   let formatedMonth;
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const getUserData = () => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .on("value", (data) => {
-          let val = data.val();
-          setUserInfo(val);
-        });
-    }
-  };
 
   const cityTourNames = [];
   finalTour.forEach((tour) => {
@@ -72,11 +55,6 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
       tours: arr3,
     });
   });
-
-  // console.log(selectedCityNames, "names");
-  // console.log("specificCityTours ", specificCityTours);
-
-  // calculating specific city tours duratiom
 
   let cityTourDurations = [];
   specificCityTours.forEach((c) => {
@@ -555,7 +533,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
               .ref(`self-planned-tours`)
               .push({
                 requestID: `TO-${date}${formatedMonth}${year}-${random}`,
-                userId: user.uid,
+                userId: userInfo.userID,
                 adult: details.adult,
                 children: details.children,
                 fromData: details.fromDate,

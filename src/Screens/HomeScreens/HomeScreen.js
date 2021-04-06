@@ -417,7 +417,7 @@ const HomeScreen = ({ navigation }) => {
                       style={{
                         width: WIDTH * 0.9,
                         marginHorizontal: 5,
-                        marginTop: 20,
+                        marginVertical: 20,
                         justifyContent: "center",
                         // marginBottom: 35,
                         alignItems: "center",
@@ -644,23 +644,154 @@ const HomeScreen = ({ navigation }) => {
                   }
                 />
 
-                <Carousel
-                  layout="default"
-                  autoplay={true}
-                  autoplayDelay={1000}
-                  autoplayInterval={8000}
-                  lockScrollWhileSnapping={true}
-                  loop={true}
-                  enableMomentum={false}
-                  ref={(c) => {
-                    carousel = c;
-                  }}
-                  data={testimonials}
-                  renderItem={_renderItem}
-                  sliderWidth={WIDTH * 0.9}
-                  onSnapToItem={(index) => setActiveSlide(index)}
-                  itemWidth={WIDTH * 0.9}
-                />
+                {testimonials.length === 0 ? (
+                  <>
+                    <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
+                      <View
+                        style={{
+                          borderColor: "#333",
+                          borderWidth: Platform.OS === "ios" ? 2 : 2,
+                          borderRadius: 10,
+                          paddingBottom: 20,
+                          marginTop: 20,
+                          height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
+                          marginBottom: 30,
+                        }}
+                      >
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            paddingHorizontal: 20,
+                            paddingTop: 20,
+                          }}
+                        >
+                          <View
+                            style={{
+                              paddingHorizontal: 10,
+                              alignItems: "center",
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: 100,
+                                height: 100,
+                                borderRadius: 50,
+                              }}
+                            ></View>
+                          </View>
+                          <View>
+                            <View
+                              style={{
+                                width: 200,
+                                height: 20,
+                                marginBottom: 10,
+                              }}
+                            ></View>
+                            <View style={{ width: 100, height: 20 }}></View>
+                          </View>
+                        </View>
+                        <View
+                          style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                          <View
+                            style={{
+                              width: WIDTH * 0.85,
+                              marginVertical: 10,
+                              height: 10,
+                              overflow: "scroll",
+                            }}
+                          />
+                        </View>
+                      </View>
+                    </SkeletonPlaceholder>
+                  </>
+                ) : (
+                  <Carousel
+                    layout="default"
+                    autoplay={true}
+                    autoplayDelay={1000}
+                    autoplayInterval={8000}
+                    lockScrollWhileSnapping={true}
+                    loop={true}
+                    enableMomentum={false}
+                    ref={(c) => {
+                      carousel = c;
+                    }}
+                    data={testimonials}
+                    renderItem={_renderItem}
+                    sliderWidth={WIDTH * 0.9}
+                    onSnapToItem={(index) => setActiveSlide(index)}
+                    itemWidth={WIDTH * 0.9}
+                  />
+                )}
               </>
             </>
           </View>

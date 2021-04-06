@@ -16,24 +16,9 @@ import { useIsFocused } from "@react-navigation/native";
 import * as firebase from "firebase";
 import { Feather } from "@expo/vector-icons";
 const MyPlansScreen = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const [selfPlans, setSelfPlans] = useState([]);
   const isFocused = useIsFocused();
-  // const [isAdmin, setIsAdmin] = useState(false);
-
-  // const getUserData = () => {
-  //   if (user !== null) {
-  //     firebase
-  //       .database()
-  //       .ref(`userGeneralInfo/${user.uid}`)
-  //       .on("value", (data) => {
-  //         if (data.val() !== null) {
-  //           let val = data.val();
-  //           setIsAdmin(val.admin);
-  //         }
-  //       });
-  //   }
-  // };
 
   const getUserPlans = () => {
     firebase
@@ -42,7 +27,7 @@ const MyPlansScreen = ({ navigation }) => {
       .on("value", (data) => {
         let plans = [];
         data.forEach((c) => {
-          if (c.val().userId === user.uid) {
+          if (c.val().userId === userInfo.userID) {
             plans.push(c.val());
           }
         });
@@ -52,7 +37,6 @@ const MyPlansScreen = ({ navigation }) => {
 
   useEffect(() => {
     getUserPlans();
-    // getUserData();
   }, [isFocused]);
   return (
     <View
