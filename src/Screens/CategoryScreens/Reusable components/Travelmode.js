@@ -40,7 +40,6 @@ const Travelmode = ({
         <TouchableOpacity
           onPress={() => {
             prevStep();
-            // navigation.goBack("Home");
           }}
         >
           <View>

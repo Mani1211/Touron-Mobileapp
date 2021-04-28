@@ -49,7 +49,6 @@ const Roadtripques = ({
             <TouchableOpacity
               onPress={() => {
                 prevStep();
-                // navigation.goBack("Home");
               }}
             >
               <View>

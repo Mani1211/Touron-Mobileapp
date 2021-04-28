@@ -44,7 +44,6 @@ const Destination = ({
           <TouchableOpacity
             onPress={() => {
               prevStep();
-              // navigation.goBack("Home");
             }}
           >
             <View>

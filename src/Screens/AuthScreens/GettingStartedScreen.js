@@ -51,7 +51,7 @@ const GettingStartedScreen = ({ navigation }) => {
     );
   };
   const _onDone = () => {
-    navigation.navigate("Main");
+    navigation.navigate("HomeDrawer");
   };
 
   return (

@@ -19,7 +19,8 @@ import DatePicker from "react-native-datepicker";
 
 import Expediture from "./Reusable components/Expediture";
 import Tourpreferance from "./Reusable components/Tourpreferance";
-import * as firebase from "firebase";
+import { database } from "firebase";
+
 import { AuthContext } from "../../context/AuthContext";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
 import moment from "moment";
@@ -387,12 +388,11 @@ const SurpriseTourScreen = ({ navigation }) => {
       tourCost: 0,
       requestDate: new Date().toDateString(),
     };
-    firebase
-      .database()
+
+    database()
       .ref(`requests`)
       .push(tourData)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         const token = getExpoToken(userID);
         sendEmail(userInfo.email, "Surprise trip");
         const message = {

@@ -13,9 +13,10 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { AuthContext } from "../../context/AuthContext";
-import firebase from "firebase";
+
+import { database } from "firebase";
+
 import touron from "../../api/touron";
-import _ from "lodash";
 
 import { LinearGradient } from "expo-linear-gradient";
 const WIDTH = Dimensions.get("window").width;
@@ -32,8 +33,6 @@ const TourHomeScreen = ({ navigation, route }) => {
     AuthContext
   );
   const [tour, setTour] = useState(tours);
-  let cancelToken;
-  console.log(`cancelToken`, cancelToken);
   const [step, setStep] = useState(0);
   const [filterStep, setFilterStep] = useState(0);
 
@@ -41,8 +40,7 @@ const TourHomeScreen = ({ navigation, route }) => {
     let sT = [];
     let sTNames = [];
     if (user) {
-      firebase
-        .database()
+      database()
         .ref(`saved-tours/${user.uid}`)
         .on("value", (data) => {
           if (data) {
@@ -88,8 +86,7 @@ const TourHomeScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (isLoggedIn) {
       if (savedToursDetails.length > 0) {
-        firebase
-          .database()
+        database()
           .ref(`saved-tours/${user.uid}`)
           .set(savedToursDetails)
           .then((data) => console.log(data))
@@ -97,18 +94,6 @@ const TourHomeScreen = ({ navigation, route }) => {
       }
     }
   }, []);
-
-  // useEffect(() => {
-  //   const getTours = async () => {
-  //     setLoader(true);
-  //     const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
-  //     console.log("tourResponse.data", tourResponse.data);
-  //     setTour(tourResponse.data);
-  //     setLoader(false);
-  //   };
-
-  //   getTours();
-  // }, []);
 
   const getTour = async () => {
     console.log("object", route.params.name);

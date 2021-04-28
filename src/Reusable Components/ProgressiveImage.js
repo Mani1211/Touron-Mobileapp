@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Animated, StyleSheet, Image } from "react-native";
 import DefaultImage from "../../assets/default_image.png";
-import { SkeletonPlaceholder } from "react-native-skeleton-placeholder";
 
 const ProgressiveImage = ({ source, style, ...props }) => {
   let defaultImageAnimated = new Animated.Value(0);

@@ -18,7 +18,8 @@ import Checkout from "./Reusable components/Checkout";
 import Destination from "./Reusable components/Destination";
 import Tourtype from "./Reusable components/Tourtype";
 import Travellertype from "./Reusable components/Travellertype";
-import * as firebase from "firebase";
+import { database } from "firebase";
+
 import { AuthContext } from "../../context/AuthContext";
 import Touristnumber from "./Reusable components/Touristnumber";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
@@ -359,8 +360,8 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       tourCost: 0,
       requestDate: new Date().toDateString(),
     };
-    firebase
-      .database()
+
+    database()
       .ref(`requests`)
       .push(data)
       .then((data) => {

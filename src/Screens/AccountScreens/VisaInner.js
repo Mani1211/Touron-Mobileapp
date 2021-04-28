@@ -1,4 +1,3 @@
-import React, { useState, useContext, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,10 +9,9 @@ import {
   Platform,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import * as Animatable from "react-native-animatable";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import * as firebase from "firebase";
+import { database } from "firebase";
 import { ScrollView } from "react-native-gesture-handler";
 import { Switch } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
@@ -40,8 +38,7 @@ const VisaInner = ({ navigation, route }) => {
   };
 
   const submitVisa = () => {
-    firebase
-      .database()
+    database()
       .ref(`visaSubmission`)
       .push({
         userID: userInfo.userID,

@@ -24,7 +24,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
-import * as firebase from "firebase";
+import { database } from "firebase";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const MyPlansInner = ({ navigation, route }) => {
@@ -32,7 +32,7 @@ const MyPlansInner = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const item = route.params.item;
   const [plannedDetails, setPlannedDetails] = useState({});
-  const [activePromoSlide, setActivePromoSlide] = useState(0);
+  // const [activePromoSlide, setActivePromoSlide] = useState(0);
   const ln = item.selectedCities.length;
 
   useEffect(() => {
@@ -40,8 +40,8 @@ const MyPlansInner = ({ navigation, route }) => {
   }, [item]);
   const getPlannedDetails = () => {
     setPlannedDetails({});
-    firebase
-      .database()
+    // firebase
+    database()
       .ref(`plannedDetails`)
       .on("value", (data) => {
         if (data.val() !== null) {
@@ -593,18 +593,15 @@ const MyPlansInner = ({ navigation, route }) => {
                           <View
                             key={index}
                             style={{
-                              flexBasis: "100%",
-                              flexWrap: "wrap",
                               height: HEIGHT / 10,
                               paddingVertical: 10,
+                              width: WIDTH * 0.6,
                             }}
                           >
                             <View
                               style={{
                                 flexDirection: "row",
                                 alignItems: "center",
-                                // flexWrap: "wrap",
-                                flexBasis: "100%",
                               }}
                             >
                               <ProgressiveImage
@@ -620,7 +617,8 @@ const MyPlansInner = ({ navigation, route }) => {
                                 <Text
                                   style={{
                                     fontSize: 15,
-                                    textAlign: "left",
+                                    // textAlign: "left",
+                                    // flexBasis: "50%",
                                   }}
                                 >
                                   {item.tourName}
@@ -957,9 +955,9 @@ const MyPlansInner = ({ navigation, route }) => {
                                 data={i.hotelPicture}
                                 renderItem={_renderPromo}
                                 sliderWidth={WIDTH * 0.9}
-                                onSnapToItem={(index) =>
-                                  setActivePromoSlide(index)
-                                }
+                                // onSnapToItem={(index) =>
+                                //   setActivePromoSlide(index)
+                                // }
                                 itemWidth={WIDTH * 0.9}
                               />
                               {/* <Pagination
@@ -1166,7 +1164,7 @@ const MyPlansInner = ({ navigation, route }) => {
                           data={plannedDetails.taxiDetails.taxiPicture}
                           renderItem={_renderPromo}
                           sliderWidth={WIDTH * 0.9}
-                          onSnapToItem={(index) => setActivePromoSlide(index)}
+                          // onSnapToItem={(index) => setActivePromoSlide(index)}
                           itemWidth={WIDTH * 0.9}
                         />
 

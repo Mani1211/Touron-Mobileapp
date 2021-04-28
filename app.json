@@ -8,10 +8,9 @@
     "updates": {
       "enabled": true
     },
-
     "splash": {
-      "image": "./assets/playstore.png",
-      "resizeMode": "contain"
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF"
     },
     "ios": {
       "bundleIdentifier": "com.touron.travelapp",
@@ -37,9 +36,9 @@
         "WRITE_EXTERNAL_STORAGE"
       ]
     },
-
-    "assetBundlePatterns": ["./assets/*"],
-
+    "assetBundlePatterns": [
+      "./assets/**"
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     },

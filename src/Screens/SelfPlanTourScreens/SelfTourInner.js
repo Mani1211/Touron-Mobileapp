@@ -18,7 +18,6 @@ import {
 
 const WIDTH = Dimensions.get("window").width;
 import { LinearGradient } from "expo-linear-gradient";
-import * as Animatable from "react-native-animatable";
 
 const HEIGHT = Dimensions.get("window").height;
 
@@ -460,7 +459,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
 
     // fontFamily: "NewYorkl",
-    fontFamily: "WSansl",
+    fontFamily: "Andika",
   },
   features: {
     justifyContent: "center",

@@ -4,11 +4,12 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
+  FlatList,
   Platform,
 } from "react-native";
-import * as firebase from "firebase";
+import { database } from "firebase";
 
-import { ScrollView, FlatList } from "react-native-gesture-handler";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { PieChart } from "react-native-svg-charts";
@@ -31,7 +32,6 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
   finalTour.forEach((tour) => {
     cityTourNames.push(tour);
   });
-  // console.log("ctn", cityTourNames);
   useEffect(() => {
     random = Math.floor((Math.random() + 4) * 345334 * Math.random());
     const requestDate = new Date();
@@ -59,7 +59,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
   let cityTourDurations = [];
   specificCityTours.forEach((c) => {
     let tourduration = 0;
-    const durations = c.tours.forEach((t) => {
+    c.tours.forEach((t) => {
       let length = t.tourDuration.length;
       tourduration +=
         length < 11
@@ -528,8 +528,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
         <TouchableOpacity
           style={{ flex: 1.5 }}
           onPress={() => {
-            firebase
-              .database()
+            database()
               .ref(`self-planned-tours`)
               .push({
                 requestID: `TO-${date}${formatedMonth}${year}-${random}`,

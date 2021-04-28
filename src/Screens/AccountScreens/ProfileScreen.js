@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
-  Image,
   View,
   TextInput,
   Dimensions,
@@ -17,14 +16,9 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import * as firebase from "firebase";
-import {
-  AntDesign,
-  FontAwesome,
-  MaterialCommunityIcons,
-  Entypo,
-} from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+import { database } from "firebase";
+
+import { AntDesign } from "@expo/vector-icons";
 
 import { ActivityIndicator } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
@@ -39,14 +33,12 @@ const ProfileScreen = ({ navigation }) => {
   const [address, setAddress] = useState("");
   const [pic, setPic] = useState("");
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [aboutMe, setAboutMe] = useState("");
   const [travellerType, setTravellerType] = useState("");
   const { user } = useContext(AuthContext);
-  console.log("user :>> ", user);
 
-  const [loaded, setLoaded] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(true);
 
   const getUserData = () => {
     if (user !== null) {
@@ -54,8 +46,7 @@ const ProfileScreen = ({ navigation }) => {
       setEmail(user.email);
 
       console.log(`user,uid`, user.uid);
-      firebase
-        .database()
+      database()
         .ref(`userGeneralInfo/${user.uid}`)
         .on("value", (data) => {
           console.log(data, "DATA");
@@ -81,29 +72,27 @@ const ProfileScreen = ({ navigation }) => {
           }
         });
     }
+    setLoaded(false);
   };
   useEffect(() => {
-    setTimeout(() => {
-      setLoaded(true);
-    }, 1500);
     getUserData();
-  }, [user]);
+  }, []);
 
-  const updateProfilePic = async (uri) => {
-    if (user !== null) {
-      firebase
-        .database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .update({
-          photoURL: uri,
-        })
-        .then(() => {
-          setLoading(false);
-        });
-    }
-  };
+  // const updateProfilePic = async (uri) => {
+  //   if (user !== null) {
+  //     // firebase
+  //     database()
+  //       .ref(`userGeneralInfo/${user.uid}`)
+  //       .update({
+  //         photoURL: uri,
+  //       })
+  //       .then(() => {
+  //         setLoading(false);
+  //       });
+  //   }
+  // };
   const updateUser = () => {
-    firebase.database().ref(`userGeneralInfo/${user.uid}`).update({
+    database().ref(`userGeneralInfo/${user.uid}`).update({
       name: name,
       phoneNumber: number,
       address: address,
@@ -114,49 +103,47 @@ const ProfileScreen = ({ navigation }) => {
       admin: false,
       photoURL: pic,
     });
-    prevStep();
   };
 
-  const _pickImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [5, 6],
-        quality: 1,
-      });
-      if (!result.cancelled) {
-        setLoading(true);
-        const response = await fetch(result.uri);
-        const blob = await response.blob();
-        firebase
-          .storage()
-          .ref(`users/${user.uid}/profile.jpg`)
-          .put(blob)
-          .then(() => {
-            firebase
-              .storage()
-              .ref(`users/${user.uid}/profile.jpg`)
-              .getDownloadURL()
-              .then((imageUrl) => {
-                setPic("");
-                setPic(imageUrl);
-                updateProfilePic(imageUrl);
-                console.log(imageUrl, "lo");
-              });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    } catch (E) {
-      console.log(E);
-    }
-  };
+  // const _pickImage = async () => {
+  //   try {
+  //     let result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //       allowsEditing: true,
+  //       aspect: [5, 6],
+  //       quality: 1,
+  //     });
+  //     if (!result.cancelled) {
+  //       setLoading(true);
+  //       const response = await fetch(result.uri);
+  //       const blob = await response.blob();
+  //       // firebase
+  //       storage()
+  //         .ref(`users/${user.uid}/profile.jpg`)
+  //         .put(blob)
+  //         .then(() => {
+  //           // firebase
+  //           storage()
+  //             .ref(`users/${user.uid}/profile.jpg`)
+  //             .getDownloadURL()
+  //             .then((imageUrl) => {
+  //               setPic(imageUrl);
+  //               updateProfilePic(imageUrl);
+  //               console.log(imageUrl, "lo");
+  //             });
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     }
+  //   } catch (E) {
+  //     console.log(E);
+  //   }
+  // };
 
-  const nextStep = () => {
-    setStep(step + 1);
-  };
+  // const nextStep = () => {
+  //   setStep(step + 1);
+  // };
   const prevStep = () => {
     setStep(step - 1);
   };
@@ -165,172 +152,139 @@ const ProfileScreen = ({ navigation }) => {
     switch (step) {
       case 1:
         return (
-          <ScrollView animation="bounceIn" duration={3000}>
-            <>
-              <View
-                style={{
-                  flex: 1,
-                  zIndex: -2,
-                }}
-              >
-                {pic === "" && (
-                  <Image
-                    source={{
-                      uri:
-                        "https://image.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg",
-                    }}
-                    style={{
-                      width: WIDTH,
-                      height: HEIGHT / 1.2,
-                      borderBottomLeftRadius: WIDTH / 10,
-                      borderBottomRightRadius: WIDTH / 10,
-                    }}
-                  />
-                )}
-                {/* {loading ? (
-                  <ActivityIndicator
-                    size="small"
-                    color="black"
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: WIDTH / 1,
-                      marginRight: WIDTH / 10,
-                      height: HEIGHT,
-                      flex: 1,
-                    }}
-                  />
-                ) : ( */}
+          <View>
+            {/* <View style={{ position: "relative" }}>
+              {pic === "" ? (
                 <Image
-                  source={{ uri: pic }}
+                  source={{
+                    uri:
+                      "https://image.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg",
+                  }}
                   style={{
                     width: WIDTH,
-                    height: HEIGHT / 1.2,
+
+                    height: HEIGHT / 1.3,
                     borderBottomLeftRadius: WIDTH / 10,
                     borderBottomRightRadius: WIDTH / 10,
                   }}
                 />
-                {/* )} */}
-              </View>
-
+              ) : (
+                <>
+                  <ProgressiveImage
+                    source={{ uri: pic }}
+                    style={{
+                      width: WIDTH,
+                      height: HEIGHT / 1.3,
+                      borderBottomLeftRadius: WIDTH / 10,
+                      borderBottomRightRadius: WIDTH / 10,
+                    }}
+                  />
+                </>
+              )}
               <View
                 style={{
-                  marginHorizontal: WIDTH / 13,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  flexDirection: "row",
+                  position: "absolute",
+                  width: WIDTH * 0.9,
+                  justifyContent: "space-between",
+                  marginHorizontal: 20,
+                  height: HEIGHT,
+                  marginTop: 20,
+                  zIndex: 10,
                 }}
               >
-                <Text
-                  style={{
-                    color: "black",
-                    fontFamily: "Andika",
-                    marginVertical: 10,
-                    fontSize: 14,
-                  }}
-                >
-                  {aboutMe}
-                </Text>
-                <TouchableOpacity onPress={() => nextStep()}>
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Entypo
-                      name="edit"
+                <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+                  <View>
+                    <MaterialCommunityIcons
+                      name="menu"
                       size={28}
                       color="black"
-                      onPress={navigation.toggleDrawer}
-                      style={{ paddingRight: 5 }}
+                      style={{ paddingHorizontal: 20, paddingTop: 10 }}
                     />
-
-                    <Text style={{ fontFamily: "Andika", fontSize: 18 }}>
-                      Edit Profile
-                    </Text>
                   </View>
                 </TouchableOpacity>
-              </View>
-              <View style={{ position: "absolute", zIndex: 2 }}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: WIDTH * 0.9,
-                    justifyContent: "space-between",
-                    marginHorizontal: 20,
-                    marginTop: WIDTH / 10,
-                  }}
-                >
-                  <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                    <View>
-                      <MaterialCommunityIcons
-                        name="menu"
-                        size={28}
-                        color="white"
-                        style={{ paddingHorizontal: 20, paddingTop: 10 }}
-                      />
-                    </View>
-                  </TouchableOpacity>
+                <TouchableOpacity onPress={_pickImage}>
                   <View style={{ alignItems: "center" }}>
                     <Entypo
                       name="upload"
                       size={24}
-                      color="white"
-                      onPress={_pickImage}
+                      color="black"
                       style={{ paddingHorizontal: 20, paddingTop: 10 }}
                     />
 
-                    <Text style={{ color: "white", fontSize: 14 }}>
+                    <Text style={{ color: "black", fontSize: 14 }}>
                       Change Pic
                     </Text>
                   </View>
-                </View>
-                <View style={{ position: "absolute", top: HEIGHT / 1.45 }}>
-                  <Text
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 35,
+                  color: "black",
+                  marginHorizontal: WIDTH / 10,
+                  paddingBottom: 10,
+                  fontFamily: "NewYorkl",
+                }}
+              >
+                {name}
+              </Text>
+              {age == "" && travellerType == "" ? null : (
+                <View>
+                  <View
                     style={{
-                      fontSize: 35,
-                      color: "black",
-                      marginHorizontal: WIDTH / 10,
-                      paddingBottom: 10,
-                      fontFamily: "NewYorkl",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      // paddingBottom: 20,
                     }}
                   >
-                    {name}
-                  </Text>
-                  {age == "" && travellerType == "" ? null : (
-                    <View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          // paddingBottom: 20,
-                        }}
-                      >
-                        <FontAwesome
-                          name="circle"
-                          size={20}
-                          color="green"
-                          style={{
-                            marginLeft: WIDTH / 10,
-                          }}
-                        />
-                        <Text
-                          style={{
-                            marginLeft: WIDTH / 20,
-                            color: "black",
-                            fontFamily: "Andika",
-                          }}
-                        >
-                          {age},{travellerType}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
+                    <FontAwesome
+                      name="circle"
+                      size={20}
+                      color="green"
+                      style={{
+                        marginLeft: WIDTH / 10,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        marginLeft: WIDTH / 20,
+                        color: "black",
+                        fontFamily: "Andika",
+                      }}
+                    >
+                      {age},{travellerType}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </>
-          </ScrollView>
+              )}
+              <TouchableOpacity onPress={() => nextStep()}>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingTop: 20,
+                  }}
+                >
+                  <Entypo
+                    name="edit"
+                    size={28}
+                    color="black"
+                    onPress={navigation.toggleDrawer}
+                    style={{ paddingRight: 5 }}
+                  />
+
+                  <Text style={{ fontFamily: "Andika", fontSize: 18 }}>
+                    Edit Profile
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View> */}
+            <Text>Profile Page</Text>
+          </View>
         );
 
       case 2:
@@ -345,19 +299,13 @@ const ProfileScreen = ({ navigation }) => {
                   style={{
                     position: "absolute",
                     alignItems: "flex-start",
-                    // rotation: 10,
                   }}
                 >
                   <ImageBackground
                     style={{
                       width: WIDTH,
-                      // position: "absolute",
                       height: HEIGHT * 1.3,
-                      // top: -WIDTH / 2,
-
-                      // overflow: "hidden",
                     }}
-                    // resizeMode="stretch"
                     source={{
                       uri:
                         "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
@@ -384,7 +332,7 @@ const ProfileScreen = ({ navigation }) => {
                         size={28}
                         color="black"
                         style={{ paddingHorizontal: 20, paddingTop: 35 }}
-                        onPress={() => prevStep()}
+                        onPress={() => navigation.toggleDrawer()}
                       />
                     </View>
                   </TouchableOpacity>
@@ -545,8 +493,8 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <>
-      {!loaded ? (
+    <View style={{ flex: 1 }}>
+      {loaded ? (
         <ActivityIndicator
           size="large"
           color="black"
@@ -555,7 +503,7 @@ const ProfileScreen = ({ navigation }) => {
       ) : (
         <>{renderPage(step)}</>
       )}
-    </>
+    </View>
   );
 };
 

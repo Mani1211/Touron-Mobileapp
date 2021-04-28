@@ -15,7 +15,7 @@ import {
   TextInput,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import * as firebase from "firebase";
+import { database, auth } from "firebase";
 import { Spinner } from "native-base";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
@@ -93,12 +93,12 @@ function SignUpScreen({ navigation }) {
       name !== " "
     ) {
       setLoaded(true);
-      firebase
-        .auth()
+
+      auth()
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
           setUser(user.user);
-          firebase.database().ref(`userGeneralInfo/${user.user.uid}`).set({
+          database().ref(`userGeneralInfo/${user.user.uid}`).set({
             phoneNumber: number,
             name: name,
             address: "",
@@ -249,7 +249,7 @@ function SignUpScreen({ navigation }) {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      firebase.auth().onAuthStateChanged((user) => {
+      auth().onAuthStateChanged((user) => {
         setUser(user);
       });
     }
@@ -375,7 +375,7 @@ function SignUpScreen({ navigation }) {
                   <TextInput
                     style={styles.input}
                     value={number}
-                    placeholder="Phone Number"
+                    placeholder="Whatsapp Number"
                     keyboardAppearance="dark"
                     keyboardType="number-pad"
                     placeholderTextColor="white"

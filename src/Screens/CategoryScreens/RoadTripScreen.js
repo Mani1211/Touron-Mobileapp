@@ -23,7 +23,8 @@ import DatePicker from "react-native-datepicker";
 import Roadtripques from "./Reusable components/Roadtripques";
 import Roadtripques2 from "./Reusable components/Roadtripques2";
 import Drivetype from "./Reusable components/Drivetype";
-import * as firebase from "firebase";
+import { database } from "firebase";
+
 import { AuthContext } from "../../context/AuthContext";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
 import {
@@ -386,10 +387,7 @@ const RoadTripScreen = ({ navigation }) => {
   const submitData = () => {
     const userID = userInfo.userID;
 
-    console.log(userID);
-
-    firebase
-      .database()
+    database()
       .ref(`requests/`)
       .push({
         requestID: `TO-${date}${formatedMonth}${year}-${random}`,

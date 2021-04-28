@@ -9,6 +9,7 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
+  StatusBar,
   ActivityIndicator,
 } from "react-native";
 
@@ -18,7 +19,6 @@ import { LinearGradient } from "expo-linear-gradient";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
-import SearchBar from "../../Reusable Components/SearchBar";
 import { SelfTourContext } from "../../context/ SelfTourContext";
 
 const SelfTourHome = ({
@@ -28,7 +28,6 @@ const SelfTourHome = ({
   setStep,
   selectedCityNamess,
 }) => {
-  // const { tours } = useContext(AuthContext);
   const { setDetails, details } = useContext(SelfTourContext);
   const [tour, setTour] = useState([]);
   const [error, setErrorMessage] = useState();
@@ -39,9 +38,6 @@ const SelfTourHome = ({
   const cityLength = selectedCity.length - 1;
   const [selectedTours, setSelectedTours] = useState([]);
   const [selectedTourNames, setSelectedTourNames] = useState([]);
-  // console.log("selectedTours", selectedTours);
-  // console.log("selectedTours", selectedTourNames);
-
   const getTour = async (city) => {
     try {
       const tourResponse = await touron.get(`/tour/cityname/${city}`);
@@ -59,6 +55,7 @@ const SelfTourHome = ({
 
   return (
     <View style={styles.container}>
+      <StatusBar />
       <View
         style={{
           width: WIDTH * 0.9,
@@ -69,6 +66,7 @@ const SelfTourHome = ({
           marginHorizontal: 30,
           position: "relative",
           paddingVertical: 30,
+          marginTop: Platform.OS === "ios" ? 20 : 0,
         }}
       >
         <TouchableOpacity
@@ -85,6 +83,9 @@ const SelfTourHome = ({
           style={{
             fontSize: 20,
             fontFamily: "NewYorkl",
+            marginBottom: Platform.OS === "ios" ? 15 : 0,
+
+            // marginBottom: Platform.OS === "ios" ? 20 : 0,
           }}
         >
           Select Tours for {selectedCityNames[active]}
@@ -107,9 +108,14 @@ const SelfTourHome = ({
             }}
           />
         ) : (
-          <View style={{ paddingBottom: 20, flex: 1, height: HEIGHT * 0.8 }}>
+          <View style={{ paddingBottom: 100, marginBottom: 40 }}>
             {tour.length == 0 ? (
-              <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <View>
                   <Image
                     style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 }}

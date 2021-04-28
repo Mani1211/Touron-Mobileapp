@@ -1,10 +1,9 @@
-import * as firebase from "firebase";
+import { database } from "firebase";
 import axios from "axios";
 
 export const getExpoToken = (userId) => {
   let token = "";
-  firebase
-    .database()
+  database()
     .ref(`userGeneralInfo/${userId}`)
     .on("value", (data) => {
       if (data.val() !== null) {
@@ -21,7 +20,6 @@ export const sendPushNotification = async (message) => {
     sound: message.sound,
     title: message.title,
     body: message.body,
-    // data: { data: message.data },
   };
 
   await fetch("https://exp.host/--/api/v2/push/send", {
@@ -36,8 +34,6 @@ export const sendPushNotification = async (message) => {
 };
 
 export const sendEmail = async (email, countryname) => {
-  // console.log("email,countryname", email, countryname);
-
   await axios
     .post(
       `https://us-central1-touronapp-248e4.cloudfunctions.net/sendMail?dest=${email}&countryName=${countryname}`

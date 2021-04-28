@@ -18,7 +18,6 @@ import {
 
 const WIDTH = Dimensions.get("window").width;
 import { LinearGradient } from "expo-linear-gradient";
-import * as Animatable from "react-native-animatable";
 
 const HEIGHT = Dimensions.get("window").height;
 

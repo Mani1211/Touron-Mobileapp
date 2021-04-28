@@ -6,34 +6,18 @@ import {
   Image,
   StatusBar,
   ScrollView,
+  Dimensions,
   TouchableOpacity,
+  Platform,
 } from "react-native";
-// import DropDownPicker from "react-native-dropdown-picker";
-
-// import { AuthContext } from "../../context/AuthContext";
-// import { DataTable } from "react-native-paper";
-// import { Avatar } from "react-native-paper";
 import { Feather } from "@expo/vector-icons";
-// const WIDTH = Dimensions.get("window").width;
-// const HEIGHT = Dimensions.get("window").height;
-import * as firebase from "firebase";
+import { database, auth } from "firebase";
+const HEIGHT = Dimensions.get("window").height;
 
 import { useIsFocused } from "@react-navigation/native";
 const MyRequestScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(false);
-
   const isFocused = useIsFocused();
-  // const [isAdmin, setIsAdmin] = useState(false);
-  // const { user } = useContext(AuthContext);
-  // console.log(`user`, user);
-  // const [allRequest, setAllRequest] = useState([]);
-  // const [status, setStatus] = useState("");
-  // const [category, setCategory] = useState("");
-  // const itemsPerPage = 5;
-  // const [page, setPage] = useState(0);
-  // const [userRequest, setUserRequest] = useState([]);
-  // const from = page * itemsPerPage;
-  // const to = (page + 1) * itemsPerPage;
   const [planned, setPlanned] = useState([]);
   const [surprise, setSurprise] = useState([]);
   const [road, setRoad] = useState([]);
@@ -42,39 +26,6 @@ const MyRequestScreen = ({ navigation }) => {
   const [wildlife, setWildlife] = useState([]);
   const [requests, setRequests] = useState([]);
   const [step, setStep] = useState(1);
-
-  const getUserData = () => {
-    let address = [];
-    firebase
-      .database()
-      .ref(`contractaddress/`)
-      .on("value", (snapshot) => {
-        snapshot.forEach((s) => {
-          address.push(s.val());
-        });
-      });
-
-    console.log(`address`, address);
-  };
-
-  // const getAllRequest = () => {
-  //   firebase
-  //     .database()
-  //     .ref(`requests`)
-  //     .on("value", (data) => {
-  //       let newReq = {};
-  //       if (data !== null && data !== undefined) {
-  //         let revReq = Object.keys(data.val()).reverse();
-  //         revReq.forEach((i) => {
-  //           newReq[i] = data.val()[i];
-  //         });
-  //         setAllRequest({
-  //           ...newReq,
-  //         });
-  //       }
-  //       setLoaded(false);
-  //     });
-  // };
 
   const tourCategories = [
     {
@@ -115,40 +66,12 @@ const MyRequestScreen = ({ navigation }) => {
     },
   ];
 
-  // const filterDataByType = () => {
-  //   if (status !== "") {
-  //     let rs = {};
-  //     const tour = Object.keys(allRequest).map((r) => {
-  //       if (allRequest[r].status === status) {
-  //         rs[r] = allRequest[r];
-  //       }
-  //     });
-  //     return rs;
-  //   } else if (category !== "") {
-  //     let rs = {};
-  //     const tour = Object.keys(allRequest).map((r) => {
-  //       if (allRequest[r].tourCategory === category) {
-  //         rs[r] = allRequest[r];
-  //       }
-  //     });
-  //     return rs;
-  //   } else {
-  //     return allRequest;
-  //   }
-  // };
-  // useEffect(() => {
-  //   getUserData();
-  //   setCategory("");
-  //   setStatus("");
-  // }, []);
-
   useEffect(() => {
     const getUserRequests = () => {
-      const uid = firebase.auth().currentUser.uid;
+      const uid = auth().currentUser.uid;
 
       setLoaded(true);
-      firebase
-        .database()
+      database()
         .ref(`requests`)
         .on("value", (data) => {
           if (data) {
@@ -164,8 +87,7 @@ const MyRequestScreen = ({ navigation }) => {
           }
           setLoaded(false);
         });
-      firebase
-        .database()
+      database()
         .ref(`requests`)
         .on("value", (data) => {
           if (data) {
@@ -180,8 +102,7 @@ const MyRequestScreen = ({ navigation }) => {
             setSurprise(sT.reverse());
           }
         });
-      firebase
-        .database()
+      database()
         .ref(`requests`)
         .on("value", (data) => {
           if (data) {
@@ -196,8 +117,7 @@ const MyRequestScreen = ({ navigation }) => {
             setRoad(sT.reverse());
           }
         });
-      firebase
-        .database()
+      database()
         .ref(`requests`)
         .on("value", (data) => {
           if (data) {
@@ -212,8 +132,7 @@ const MyRequestScreen = ({ navigation }) => {
             setLuxury(sT.reverse());
           }
         });
-      firebase
-        .database()
+      database()
         .ref(`requests`)
         .on("value", (data) => {
           if (data) {
@@ -228,8 +147,7 @@ const MyRequestScreen = ({ navigation }) => {
             setHoneymoon(sT.reverse());
           }
         });
-      firebase
-        .database()
+      database()
         .ref(`requests`)
         .on("value", (data) => {
           if (data) {
@@ -258,7 +176,8 @@ const MyRequestScreen = ({ navigation }) => {
               <View
                 style={{
                   backgroundColor: "#fff",
-                  paddingVertical: 40,
+                  paddingTop: Platform.OS === "ios" ? 80 : 40,
+                  paddingBottom: Platform.OS === "ios" ? 20 : 20,
                   alignItems: "center",
                   flexDirection: "row",
                 }}
@@ -438,10 +357,15 @@ const MyRequestScreen = ({ navigation }) => {
     }
   };
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "#FFF" }}>
+    <ScrollView style={{ backgroundColor: "#FFF", flex: 1 }}>
       {loaded ? (
         <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            height: HEIGHT,
+          }}
         >
           <ActivityIndicator size="large" color="black" />
         </View>

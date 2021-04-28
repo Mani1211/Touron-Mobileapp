@@ -12,7 +12,7 @@ import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import * as firebase from "firebase";
+import { database } from "firebase";
 import { List, Surface } from "react-native-paper";
 
 const MyVisaRequestsScreen = ({ navigation }) => {
@@ -22,8 +22,7 @@ const MyVisaRequestsScreen = ({ navigation }) => {
   const [visaData, setVisaData] = useState({});
   const getUserVisaRequest = () => {
     const request = [];
-    firebase
-      .database()
+    database()
       .ref(`visaSubmission`)
       .on("value", (data) => {
         data.forEach((c) => {
@@ -52,7 +51,9 @@ const MyVisaRequestsScreen = ({ navigation }) => {
               style={{
                 backgroundColor: "#fff",
                 alignItems: "center",
-                paddingVertical: 40,
+                paddingTop: Platform.OS === "ios" ? 60 : 40,
+                paddingBottom: Platform.OS === "ios" ? 20 : 20,
+
                 flexDirection: "row",
               }}
             >
@@ -64,7 +65,6 @@ const MyVisaRequestsScreen = ({ navigation }) => {
                     color="black"
                     style={{
                       paddingHorizontal: 20,
-                      paddingTop: Platform.OS === "ios" ? 25 : 0,
                     }}
                   />
                 </View>

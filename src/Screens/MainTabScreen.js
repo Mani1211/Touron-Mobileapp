@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button } from "react-native";
-
+import { Button, Platform, Dimensions } from "react-native";
+import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./HomeScreens/HomeScreen";
 import PlannedTourScreen from "./CategoryScreens/PlannedTourScreen";
 import SurpriseTourScreen from "./CategoryScreens/SupriseTourScreen";
@@ -18,33 +18,28 @@ import SelfPlanForm from "./SelfPlanTourScreens/SelfPlanningFormScreen";
 import SelfTourHome from "./SelfPlanTourScreens/SelfTourHome";
 import SelfTourInner from "./SelfPlanTourScreens/SelfTourInner";
 import ProgressScreen from "./CheckoutScreens/ProgressScreen";
-import {
-  Feather,
-  FontAwesome,
-  // MaterialCommunityIcons,
-  Ionicons,
-  // MaterialIcons,
-} from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import OverviewToursScreen from "./CheckoutScreens/OverviewToursScreen";
 import OverviewCitiesScreen from "./CheckoutScreens/OverviewCitiesScreen";
-
-import PromotionPage from "./AccountScreens/PromotionPage";
 import { SelfTourContext } from "../context/ SelfTourContext";
-import AboutUs from "./AccountScreens/AboutUs";
-import ContactUs from "./AccountScreens/ContactUs";
-// import BookingDetails from "./AccountScreens/BookingDetails";
 import MyPlansInner from "./AccountScreens/MyPlansInner";
 import WildLife from "./CategoryScreens/WildlifeScreen";
 import Luxury from "./CategoryScreens/Luxury";
 import Honeymoon from "./CategoryScreens/Honeymoon";
+import { Surface } from "react-native-paper";
 const HomeStack = createStackNavigator();
+const BlogStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
+const WIDTH = Dimensions.get("window").width;
 const HomeStackScreen = () => {
   return (
-    <HomeStack.Navigator screenOptions={{}}>
+    <HomeStack.Navigator initialRouteName="GettingStarted">
+      {/* <HomeStack.Screen
+        options={{ headerShown: false }}
+        name="GettingStarted"
+        component={GettingStartedScreen}
+      /> */}
       <HomeStack.Screen
         options={{
           headerShown: false,
@@ -132,18 +127,7 @@ const HomeStackScreen = () => {
         }}
         component={CityInnerScreen}
       />
-      <HomeStack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="BlogHome"
-        component={BlogHomeScreen}
-      />
-      <HomeStack.Screen
-        options={{ headerShown: false, title: "", headerTransparent: true }}
-        name="BlogInner"
-        component={BlogInnerScreen}
-      />
+
       <HomeStack.Screen
         options={{
           title: "Tours",
@@ -165,16 +149,8 @@ const HomeStackScreen = () => {
         name="TourInner"
         component={TourInnerScreen}
       />
-      <HomeStack.Screen
-        options={{
-          title: "",
-          headerShown: true,
-          headerTransparent: true,
-        }}
-        name="Promotion"
-        component={PromotionPage}
-      />
-      <HomeStack.Screen
+
+      {/* <HomeStack.Screen
         options={{
           title: "About Us",
           headerShown: false,
@@ -191,24 +167,6 @@ const HomeStackScreen = () => {
         }}
         name="ContactUs"
         component={ContactUs}
-      />
-      {/* <HomeStack.Screen
-        options={{
-          title: "",
-          headerShown: true,
-          headerTransparent: false,
-        }}
-        name="Bookings"
-        component={BookingDetails}
-      /> */}
-      {/* <HomeStack.Screen
-        options={{
-          title: "",
-          headerShown: false,
-          headerTransparent: false,
-        }}
-        name="MyPlanInner"
-        component={MyPlansInner}
       /> */}
     </HomeStack.Navigator>
   );
@@ -260,17 +218,55 @@ const SelfTourStackScreen = () => {
   );
 };
 
+const BlogStackScreen = () => {
+  return (
+    <BlogStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <BlogStack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="BlogHome"
+        component={BlogHomeScreen}
+      />
+      <BlogStack.Screen
+        options={{ headerShown: false, title: "", headerTransparent: true }}
+        name="BlogInner"
+        component={BlogInnerScreen}
+      />
+    </BlogStack.Navigator>
+  );
+};
+
 const MainTabScreen = () => (
   <Tab.Navigator
     tabBarOptions={{
+      labelStyle: {
+        fontFamily: "Andika",
+        fontSize: 14,
+      },
+      style: {
+        backgroundColor: "#fff",
+        padding: Platform.OS === "ios" ? 0 : 10,
+        paddingBottom: Platform.OS === "ios" ? 10 : 0,
+        marginBottom: Platform.OS === "ios" ? 20 : 0,
+        height: 65,
+      },
       keyboardHidesTabBar: true,
     }}
   >
     <Tab.Screen
       options={{
         tabBarIcon: ({ color }) => (
-          <Ionicons name="ios-home" size={24} color={color} />
-          // <MaterialCommunityIcons name="home" color={color} size={26} />
+          <Ionicons
+            name="ios-home"
+            size={24}
+            color={color}
+            style={{ padding: 10 }}
+          />
         ),
       }}
       name="Home"
@@ -279,7 +275,21 @@ const MainTabScreen = () => (
     <Tab.Screen
       options={{
         tabBarIcon: ({ color }) => (
-          <FontAwesome name="paint-brush" size={24} color={color} />
+          <Surface
+            style={{
+              elevation: 5,
+              backgroundColor: "#fff",
+              borderRadius: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 5,
+              height: WIDTH / 7,
+              width: WIDTH / 7,
+              marginBottom: Platform.OS === "ios" ? 35 : 50,
+            }}
+          >
+            <FontAwesome name="paint-brush" size={24} color={color} />
+          </Surface>
           // <MaterialIcons name="flight-takeoff" size={24} color={color} />
         ),
       }}
@@ -290,11 +300,10 @@ const MainTabScreen = () => (
       options={{
         tabBarIcon: ({ color }) => (
           <FontAwesome name="book" size={24} color={color} />
-          // <MaterialCommunityIcons name="shopping" size={24} color={color} />
         ),
       }}
       name="Blogs"
-      component={BlogHomeScreen}
+      component={BlogStackScreen}
     />
   </Tab.Navigator>
 );

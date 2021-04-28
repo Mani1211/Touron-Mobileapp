@@ -19,7 +19,6 @@ const CountryInnerScreen = ({ navigation, route }) => {
   const item = route.params.item;
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
   const openWhatsApp = (name) => {
     let url = `whatsapp://send?text=Hi,I would like to go ${name} help me to plan on that &phone= +91 8667801206`;
 

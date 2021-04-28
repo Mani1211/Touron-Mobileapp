@@ -1,23 +1,12 @@
-import { Dimensions, Image, StatusBar } from "react-native";
+import { Dimensions, Image } from "react-native";
 import React, { useState, useEffect } from "react";
-import { AuthContext } from "./src/context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import * as firebase from "firebase";
-import * as Network from "expo-network";
 import SubApp from "./SubApp";
-import Data from "./src/Data/Data";
 import * as Font from "expo-font";
 import { Surface } from "react-native-paper";
-import AppLoading from "expo-app-loading";
-import * as SplashScreen from "expo-splash-screen";
-import {
-  AntDesign,
-  FontAwesome,
-  MaterialCommunityIcons,
-  Feather,
-  Entypo,
-} from "@expo/vector-icons";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
   authDomain: "touronapp-248e4.firebaseapp.com",
@@ -34,23 +23,9 @@ if (!firebase.apps.length) {
 }
 
 const App = () => {
-  const [
-    user,
-    setUser,
-    userInfo,
-    setUserInfo,
-    isLoggedIn,
-    setIsLoggedIn,
-    cities,
-    countries,
-    tours,
-  ] = Data();
-
-  // console.log(`userInfoapppp`, userInfo);
+  const [appLoading, setAppLoading] = useState(true);
   const fetchFont = async () => {
     try {
-      await SplashScreen.preventAutoHideAsync();
-      Feather.loadFont();
       await Font.loadAsync({
         Andika: require("./assets/fonts/Andika-Regular.ttf"),
         PlaylistScript: require("./assets/fonts/PlaylistScript.otf"),
@@ -66,122 +41,26 @@ const App = () => {
     fetchFont();
   });
 
-  const [appLoading, setAppLoading] = useState(true);
-  // useEffect(() => {
-  //   firebase.default.auth().onAuthStateChanged((user) => {
-  //     setUser(user);
-  //   });
-  //   getNetwork();
-  // }, []);
-
-  console.log("appLoading :>> ", appLoading);
-
-  // const showImage = () => {
-  //   setTimeout(() => {
-  //     setAppLoading(false);
-  //   }, 1500);
-  // };
-
-  // const getNetwork = async () => {
-  //   setNetworkLoader(true);
-  //   const status = (await Network.getNetworkStateAsync()).isConnected;
-  //   setStatus(status);
-  //   setNetworkLoader(false);
-  // };
-
-  // useEffect(() => {
-  //   showImage();
-  // });
-
-  // if (appLoading) {
-  //   return (
-  //     <Surface
-  //       style={{
-  //         backgroundColor: "white",
-  //         flex: 1,
-  //         alignItems: "center",
-  //         justifyContent: "center",
-  //         elevation: 20,
-  //       }}
-  //     >
-  //       <Image
-  //         source={require("./assets/logo.jpeg")}
-  //         style={{ width: WIDTH, height: HEIGHT / 2 }}
-  //       />
-  //     </Surface>
-  //   );
-  // }
-
   if (appLoading) {
     return (
-      <AppLoading
-        startAsync={fetchFont}
-        onFinish={() => async () => {
-          await SplashScreen.hideAsync();
-          setAppLoading(false);
+      <Surface
+        style={{
+          backgroundColor: "#fff",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          elevation: 20,
         }}
-        onError={(err) => console.error(err)}
-      />
+      >
+        <Image
+          source={require("./assets/playstore.png")}
+          style={{ width: WIDTH, height: HEIGHT / 2 }}
+        />
+      </Surface>
     );
   }
 
-  return (
-    <>
-      <StatusBar />
-      {/* {!status ? (
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            style={{
-              height: WIDTH * 0.8,
-              width: WIDTH * 0.8,
-              marginTop: HEIGHT / 6,
-            }}
-            source={require("./assets/oops.jpg")}
-          />
-
-          {networkLoader ? (
-            <TouchableOpacity
-              onPress={() => {
-                getNetwork();
-              }}
-            >
-              <ActivityIndicator size="large" />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() => {
-                getNetwork();
-              }}
-            >
-              <MaterialCommunityIcons name="reload" size={40} color="black" />
-            </TouchableOpacity>
-          )}
-        </View>
-      ) : ( */}
-      <AuthContext.Provider
-        value={{
-          isLoggedIn,
-          setIsLoggedIn,
-          user,
-          setUserInfo,
-          setUser,
-          userInfo,
-          tours,
-          cities,
-          countries,
-        }}
-      >
-        <SubApp />
-      </AuthContext.Provider>
-      {/* )} */}
-    </>
-  );
+  return <SubApp />;
 };
 
 export default App;

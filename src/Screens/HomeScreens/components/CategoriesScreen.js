@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -6,29 +6,10 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 
-import { AppLoading } from "expo";
-import * as Font from "expo-font";
 const WIDTH = Dimensions.get("window").width;
-const HEIGHT = Dimensions.get("window").height;
 const Categories = React.memo(({ navigation }) => {
-  const [fontLoaded, setFont] = useState(false);
-
-  const fetchFont = async () => {
-    await Font.loadAsync({
-      Andika: require("../../../../assets/fonts/Andika-Regular.ttf"),
-    });
-    setFont(true);
-  };
-  useEffect(() => {
-    fetchFont();
-  }, []);
-
-  if (!fontLoaded) {
-    return <AppLoading />;
-  }
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>

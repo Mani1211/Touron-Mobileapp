@@ -14,16 +14,6 @@ import { AntDesign } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 const NationalPark = ({ nationalPark, setNationalPark, tourName }) => {
-  const sendEmail = async () => {
-    await axios
-      .post(
-        `https://us-central1-touronapp-248e4.cloudfunctions.net/sendMail?dest=touronholidayz@gmail.com&countryName=Maldives`
-      )
-      .then((d) => console.log("d", d))
-      .catch((err) => console.log("err", err))
-      .catch((err) => console.log("err", err));
-  };
-
   const nationalParks = [
     {
       imageUrl: "https://www.corbettnationalpark.in/assets/img/bannersss.jpg",
@@ -165,13 +155,10 @@ const NationalPark = ({ nationalPark, setNationalPark, tourName }) => {
         {nationalParks.map((item, index) => (
           <View key={index}>
             {nationalPark === item.name ? (
-              // <TouchableOpacity onPress={() => setNationalPark(item.name)}>
-              <TouchableOpacity onPress={sendEmail}>
-                <ProgressiveImage
-                  style={styles.cityImage}
-                  source={require("../../../../assets/ticks.png")}
-                />
-              </TouchableOpacity>
+              <ProgressiveImage
+                style={styles.cityImage}
+                source={require("../../../../assets/ticks.png")}
+              />
             ) : (
               <TouchableOpacity onPress={() => setNationalPark(item.name)}>
                 <Image
@@ -186,38 +173,6 @@ const NationalPark = ({ nationalPark, setNationalPark, tourName }) => {
           </View>
         ))}
       </View>
-
-      {/* <FlatList
-        data={nationalParks}
-        keyExtractor={(item) => item.name}
-        showsVerticalScrollIndicator={false}
-        numColumns={3}
-        renderItem={({ item, index }) => {
-          return (
-            <View key={index}>
-              {nationalPark === item.name ? (
-                // <TouchableOpacity onPress={() => setNationalPark(item.name)}>
-                <TouchableOpacity onPress={sendEmail}>
-                  <Image
-                    style={styles.cityImage}
-                    source={require("../../../../assets/ticks.png")}
-                  />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity onPress={() => setNationalPark(item.name)}>
-                  <Image
-                    style={styles.cityImage}
-                    source={{ uri: item.imageUrl }}
-                  />
-                </TouchableOpacity>
-              )}
-              <Text style={{ textAlign: "center", marginBottom: 5 }}>
-                {item.name}
-              </Text>
-            </View>
-          );
-        }}
-      /> */}
     </View>
   );
 };

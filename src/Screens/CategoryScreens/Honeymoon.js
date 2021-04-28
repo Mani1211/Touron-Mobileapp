@@ -18,7 +18,7 @@ import Checkout from "./Reusable components/Checkout";
 import Destination from "./Reusable components/Destination";
 import Tourtype from "./Reusable components/Tourtype";
 import Travelmode from "./Reusable components/Travelmode";
-import * as firebase from "firebase";
+import { database } from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
 import moment from "moment";
@@ -45,7 +45,6 @@ const Honeymoon = ({ navigation, route }) => {
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  console.log(`userInfo`, userInfo);
   let random;
   let formatedMonth;
 
@@ -336,8 +335,8 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
 
       tourCost: 0,
     };
-    firebase
-      .database()
+
+    database()
       .ref(`requests`)
       .push(data)
       .then((data) => {

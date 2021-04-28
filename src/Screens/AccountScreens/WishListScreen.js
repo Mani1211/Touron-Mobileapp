@@ -11,7 +11,7 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import * as firebase from "firebase";
+import { database } from "firebase";
 import { Feather, AntDesign } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
 const WishListScreen = ({ navigation }) => {
@@ -21,8 +21,7 @@ const WishListScreen = ({ navigation }) => {
 
   const getSavedTours = () => {
     setLoaded(true);
-    firebase
-      .database()
+    database()
       .ref(`saved-tours/${userInfo.userID}`)
       .on("value", (data) => {
         if (data) {
@@ -54,7 +53,9 @@ const WishListScreen = ({ navigation }) => {
             style={{
               backgroundColor: "#fff",
               alignItems: "center",
-              paddingVertical: 40,
+              paddingTop: Platform.OS === "ios" ? 60 : 40,
+              paddingBottom: Platform.OS === "ios" ? 20 : 20,
+
               flexDirection: "row",
             }}
           >
@@ -66,7 +67,7 @@ const WishListScreen = ({ navigation }) => {
                   color="black"
                   style={{
                     paddingHorizontal: 20,
-                    paddingTop: Platform.OS === "ios" ? 25 : 0,
+                    // paddingTop: Platform.OS === "ios" ? 25 : 0,
                   }}
                 />
               </View>
@@ -191,8 +192,7 @@ const WishListScreen = ({ navigation }) => {
                                 return c.tourName != item.tourName;
                               });
 
-                              firebase
-                                .database()
+                              database()
                                 .ref(`saved-tours/${userInfo.userID}`)
                                 .set(filterTour)
                                 .then((data) => console.log(data))

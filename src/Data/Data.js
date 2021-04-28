@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as firebase from "firebase";
+import { database, auth } from "firebase";
 import touron from "../api/touron";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -12,7 +12,7 @@ const Data = () => {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    firebase.default.auth().onAuthStateChanged((user) => {
+    auth().onAuthStateChanged((user) => {
       setUser(user);
     });
   }, []);
@@ -63,9 +63,7 @@ const Data = () => {
   };
 
   const getUserData = (uid) => {
-    // console.log(`user.uid`, uid);
-    firebase
-      .database()
+    database()
       .ref(`userGeneralInfo/${uid}`)
       .on("value", (data) => {
         // console.log(`d`, data);

@@ -45,7 +45,6 @@ const Expediture = ({
           <TouchableOpacity
             onPress={() => {
               prevStep();
-              // navigation.goBack("Home");
             }}
           >
             <View>

@@ -48,7 +48,6 @@ const SubmittedQuery = ({ navigation, type }) => {
             <View style={{ alignItems: "center", margin: 10 }}>
               <Text
                 style={{
-                  // backgroundColor: "red",
                   textAlign: "center",
                   padding: 8,
                   borderWidth: 1,
@@ -60,7 +59,7 @@ const SubmittedQuery = ({ navigation, type }) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <TouchableOpacity onPress={() => navigation.replace("Main")}>
             <View style={{ alignItems: "center", margin: 10 }}>
               <Text
                 style={{

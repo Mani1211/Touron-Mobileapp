@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import * as firebase from "firebase";
 import { AuthContext } from "./../../../context/AuthContext";
 import {
   View,
@@ -32,29 +31,12 @@ const Checkout = ({
 }) => {
   const { userInfo } = useContext(AuthContext);
 
-  // const getUserData = () => {
-  //   if (user !== null) {
-  //     firebase
-  //       .database()
-  //       .ref(`userGeneralInfo/${user.uid}`)
-  //       .on("value", (data) => {
-  //         // console.log("data", data);s
-  //         if (data.val() === null) {
-  //           return;
-  //         }
-  //         setName(data.val().name);
-  //         setNumber(data.val().phoneNumber);
-  //       });
-  //   }
-  // };
   useEffect(() => {
-    // getUserData();
     setName(userInfo.name);
     setNumber(userInfo.phoneNumber);
   }, []);
 
   const [error, setError] = useState("");
-  console.log("error :>> ", error);
 
   const render = () => {
     switch (tourName) {

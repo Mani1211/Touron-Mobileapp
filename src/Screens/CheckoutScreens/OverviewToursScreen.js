@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
-  Platform,
   Text,
   Image,
   View,
@@ -45,7 +44,6 @@ const OverviewToursScreen = ({ setStep, prevStep }) => {
           style={{
             fontSize: 20,
             fontFamily: "NewYorkl",
-            // marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
             flex: 0.45,
           }}
         >

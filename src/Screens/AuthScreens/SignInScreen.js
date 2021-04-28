@@ -16,7 +16,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
-import * as firebase from "firebase";
+import { database, auth } from "firebase";
 import * as Animatable from "react-native-animatable";
 import { Spinner } from "native-base";
 import { AuthContext } from "../../context/AuthContext";
@@ -71,8 +71,7 @@ function SignInScreen({ navigation }) {
   };
   const forgetPassword = () => {
     setLoaded(true);
-    firebase
-      .auth()
+    auth()
       .sendPasswordResetEmail(email)
       .then((res) => {
         setLoaded(false);
@@ -87,7 +86,7 @@ function SignInScreen({ navigation }) {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      firebase.auth().onAuthStateChanged((user) => {
+      auth().onAuthStateChanged((user) => {
         setUser(user);
       });
     }
@@ -96,8 +95,7 @@ function SignInScreen({ navigation }) {
 
   const getUserData = (uid) => {
     console.log(`user.uid`, uid);
-    firebase
-      .database()
+    database()
       .ref(`userGeneralInfo/${uid}`)
       .on("value", (data) => {
         console.log(`d`, data);
@@ -111,8 +109,7 @@ function SignInScreen({ navigation }) {
   };
   const updateUserToken = (user) => {
     if (user !== null) {
-      firebase
-        .database()
+      database()
         .ref(`userGeneralInfo/${user.uid}`)
         .child("pushNotificationToken")
         .set(expoToken);
@@ -121,8 +118,7 @@ function SignInScreen({ navigation }) {
   const signIn = () => {
     setLoaded(true);
 
-    firebase
-      .auth()
+    auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
         setUser(user.user);

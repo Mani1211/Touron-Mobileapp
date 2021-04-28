@@ -17,14 +17,9 @@ const HEIGHT = Dimensions.get("window").height;
 import { Surface } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { SelfTourContext } from "../../context/ SelfTourContext";
-import Card from "../../../assets/Boardingcard.png";
+import Card from "../../../assets/Board.jpg";
 import { AntDesign } from "@expo/vector-icons";
-const OverviewCitiesScreen = ({
-  prevStep,
-  setStep,
-  selectedCitys,
-  selectedCityNamess,
-}) => {
+const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
   const { setDetails, details } = useContext(SelfTourContext);
   const [selectedCity, setSelectedCity] = useState(selectedCitys);
   const [fromDate, setFromDate] = useState("");
@@ -32,7 +27,6 @@ const OverviewCitiesScreen = ({
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
-  const selectedCityNames = selectedCityNamess;
   const calculateTotalDays = () => {
     let count = 0;
     selectedCity.forEach((c) => {
@@ -52,8 +46,8 @@ const OverviewCitiesScreen = ({
           justifyContent: "space-between",
           marginHorizontal: 30,
           position: "relative",
-          paddingTop: 30,
-          paddingBottom: Platform.OS === "ios" ? 50 : 30,
+          paddingTop: Platform.OS === "ios" ? 60 : 30,
+          paddingBottom: Platform.OS === "ios" ? 30 : 30,
         }}
       >
         <TouchableOpacity
@@ -70,7 +64,6 @@ const OverviewCitiesScreen = ({
           style={{
             fontSize: 20,
             fontFamily: "NewYorkl",
-            // marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
             flex: 0.5,
           }}
         >
@@ -134,7 +127,8 @@ const OverviewCitiesScreen = ({
                   style={{
                     fontSize: 25,
                     marginTop: 5,
-                    width: 50,
+                    height: HEIGHT / 25,
+                    width: WIDTH / 9,
                     textAlign: "center",
                   }}
                   editable={true}

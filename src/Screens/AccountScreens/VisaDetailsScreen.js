@@ -16,7 +16,7 @@ const WIDTH = Dimensions.get("window").width;
 import touron from "../../api/touron";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
-import * as firebase from "firebase";
+import { database } from "firebase";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 const HEIGHT = Dimensions.get("window").height;
 const VisaDetailsScreen = ({ navigation }) => {
@@ -24,17 +24,14 @@ const VisaDetailsScreen = ({ navigation }) => {
   const [visaName, setVisaName] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
   const { userInfo } = useContext(AuthContext);
-  const [isAdmin, setIsAdmin] = useState(userInfo.isAdmin);
+  const [isAdmin] = useState(userInfo.isAdmin);
   const [step, setStep] = useState(0);
   const [visaData, setVisaData] = useState({});
   const [visaRequest, setVisaRequest] = useState([]);
 
-
-
   const getVisaRequests = (value) => {
     let request = [];
-    firebase
-      .database()
+    database()
       .ref(`visaSubmission/`)
       .on("value", (data) => {
         if (data) {
@@ -65,8 +62,7 @@ const VisaDetailsScreen = ({ navigation }) => {
   const getExpoToken = (userId) => {
     // console.log(userId, "id");
     let token = "";
-    firebase
-      .database()
+    database()
       .ref(`userGeneralInfo/${userId}`)
       .on("value", (data) => {
         if (data.val() !== null) {
@@ -147,7 +143,8 @@ const VisaDetailsScreen = ({ navigation }) => {
               <Text
                 style={{ marginTop: 20, fontSize: 16, fontFamily: "Avenir" }}
               >
-                Admin : {userInfo.email === null || undefined ? " " : userInfo.email}
+                Admin :{" "}
+                {userInfo.email === null || undefined ? " " : userInfo.email}
               </Text>
               <View
                 style={{

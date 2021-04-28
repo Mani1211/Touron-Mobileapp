@@ -20,7 +20,7 @@ import Destination from "./Reusable components/Destination";
 import Travellertype from "./Reusable components/Travellertype";
 import Travelmode from "./Reusable components/Travelmode";
 import Touristnumber from "./Reusable components/Touristnumber";
-import * as firebase from "firebase";
+import { database } from "firebase";
 import { AuthContext } from "../../context/AuthContext";
 import NationalPark from "./Reusable components/NationalPark";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
@@ -380,8 +380,8 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       tourCost: 0,
       requestDate: new Date().toDateString(),
     };
-    firebase
-      .database()
+
+    database()
       .ref(`requests`)
       .push(data)
       .then((data) => {

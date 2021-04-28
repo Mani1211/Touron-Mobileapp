@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -8,11 +8,11 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
-import * as firebase from "firebase";
+import { auth } from "firebase";
+
 import AsyncStorage from "@react-native-community/async-storage";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
-import { FontAwesome5, Fontisto, Feather, AntDesign } from "@expo/vector-icons";
-import { Thumbnail } from "native-base";
+import { FontAwesome5, Fontisto, AntDesign } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -20,19 +20,9 @@ import { AuthContext } from "../context/AuthContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const DrawerContent = (props) => {
-  const {
-    user,
-    isLoggedIn,
-    setIsLoggedIn,
-    setUser,
-    userInfo,
-    setUserInfo,
-  } = useContext(AuthContext);
-  useEffect(() => {
-    // getUserData();
-  }, []);
-
-  // const [isAdmin, setIsAdmin] = useState(userInfo.admin);
+  const { isLoggedIn, setIsLoggedIn, setUser, setUserInfo } = useContext(
+    AuthContext
+  );
 
   const removeToken = async () => {
     try {
@@ -64,181 +54,10 @@ const DrawerContent = (props) => {
             width: WIDTH * 0.75,
             height: HEIGHT + 30,
             position: "absolute",
-            // paddingTop: Platform.OS === "ios " ? 200 : 20,
           }}
         >
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-              paddingHorizontal: 20,
-              // paddingVertical: Platform.OS === "ios " ? 180 : 20,
-            }}
-          >
-            {/* {userInfo.photoURL === "" ? (
-              <Thumbnail
-                source={{
-                  uri:
-                    "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
-                }}
-                style={{ height: 50, width: 50 }}
-              />
-            ) : (
-              <Thumbnail
-                source={{ uri: userInfo.photoURL }}
-                style={{ height: 55, width: 55 }}
-              />
-            )} */}
-            <View>
-              <Text
-                style={{ paddingHorizontal: 20, color: "#FFF", fontSize: 20 }}
-              >
-                {/* {userInfo.name} */}
-              </Text>
-              <Text
-                style={{ paddingHorizontal: 20, color: "#FFF", fontSize: 20 }}
-              >
-                {/* {userInfo.phoneNumber} */}
-              </Text>
-            </View>
-          </View>
-
           <DrawerContentScrollView {...props}>
-            <View>
-              {/* {isAdmin ? (
-                <>
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>Home</Text>}
-                    style={{ color: "white" }}
-                    icon={() => (
-                      <Image
-                        style={{ height: 30, width: 30 }}
-                        source={require("../../assets/houses.png")}
-                      />
-                    )}
-                    onPress={() => props.navigation.navigate("Home")}
-                  />
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>All Requests</Text>}
-                    icon={() => (
-                      <Image
-                        style={{ height: 30, width: 30 }}
-                        source={require("../../assets/Planes.png")}
-                      />
-                    )}
-                    onPress={() => props.navigation.navigate("MyRequest")}
-                  />
-
-                  <DrawerItem
-                    label={() => (
-                      <Text style={styles.label}>Self Tour Plans</Text>
-                    )}
-                    //   icon={({ color, size }) => <Feather name="menu" />}
-                    icon={() => (
-                      <View style={{ marginHorizontal: 5 }}>
-                        <Fontisto
-                          name="plane-ticket"
-                          size={24}
-                          color="#C1C5C6"
-                        />
-                      </View>
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("MyPlans");
-                    }}
-                  />
-                  <DrawerItem
-                    label={() => (
-                      <Text style={styles.label}>Promotion page</Text>
-                    )}
-                    icon={() => (
-                      <View style={{ marginHorizontal: 5 }}>
-                        <Fontisto name="lightning" size={23} color="#C1C5C6" />
-                      </View>
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("Promotion");
-                    }}
-                  />
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>Profile</Text>}
-                    icon={() => (
-                      <Image
-                        style={{
-                          height: 30,
-                          width: 30,
-                        }}
-                        source={require("../../assets/Profiles.png")}
-                      />
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("Profile");
-                    }}
-                  />
-                  <DrawerItem
-                    label={() => <Text style={styles.label}>Support</Text>}
-                    icon={() => (
-                      <Image
-                        style={{
-                          height: 30,
-                          width: 30,
-                        }}
-                        source={require("../../assets/setting.png")}
-                      />
-                    )}
-                    onPress={() => {}}
-                  />
-                  <DrawerItem
-                    label={() => (
-                      <Text style={styles.label}>Visa Requested Queries</Text>
-                    )}
-                    icon={() => (
-                      <View style={{ marginHorizontal: 5 }}>
-                        <FontAwesome5
-                          name="passport"
-                          size={23}
-                          color="#C1C5C6"
-                        />
-                      </View>
-                    )}
-                    onPress={() => {
-                      props.navigation.navigate("Visa");
-                    }}
-                  />
-                  <DrawerItem
-                    label={() => (
-                      <Text
-                        style={{
-                          marginBottom: HEIGHT / 10,
-                          color: "#FFF",
-                          fontWeight: "bold",
-                          fontSize: 16,
-                        }}
-                      >
-                        Log Out
-                      </Text>
-                    )}
-                    onPress={() => {
-                      setUser(null);
-                      removeToken();
-                      setUserInfo({});
-                      setIsLoggedIn(false);
-                      firebase.auth().signOut();
-                      props.navigation.navigate("Home");
-                    }}
-                    icon={() => (
-                      <Image
-                        style={{
-                          height: 30,
-                          width: 30,
-                          marginBottom: HEIGHT / 10,
-                        }}
-                        source={require("../../assets/log-out.png")}
-                      />
-                    )}
-                  />
-                </>
-              ) : ( */}
+            <View style={{ paddingTop: 50 }}>
               <>
                 <DrawerItem
                   label={() => <Text style={styles.label}>Home</Text>}
@@ -396,7 +215,7 @@ const DrawerContent = (props) => {
                     setUserInfo({});
                     removeToken();
                     setIsLoggedIn(false);
-                    firebase.auth().signOut();
+                    auth().signOut();
                     props.navigation.navigate("Home");
                   }}
                   icon={() => (

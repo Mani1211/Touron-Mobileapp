@@ -19,7 +19,8 @@ import Tourtype from "./Reusable components/Tourtype";
 import Travellertype from "./Reusable components/Travellertype";
 import Travelmode from "./Reusable components/Travelmode";
 import Touristnumber from "./Reusable components/Touristnumber";
-import * as firebase from "firebase";
+import { database } from "firebase";
+
 import { AuthContext } from "../../context/AuthContext";
 import {
   getExpoToken,
@@ -377,8 +378,8 @@ const PlannedTourScreen = ({ navigation, route }) => {
 
       tourCost: 0,
     };
-    firebase
-      .database()
+
+    database()
       .ref(`requests`)
       .push(data)
       .then((data) => {

@@ -12,9 +12,7 @@ const HEIGHT = Dimensions.get("window").height;
 import Checked from "./Checked";
 import { AntDesign } from "@expo/vector-icons";
 const Drivetype = ({
-  imgSrc1,
   imgSrc2,
-  imgSrc3,
   imgSrc4,
   setRent,
   setOwned,
@@ -41,7 +39,6 @@ const Drivetype = ({
         <TouchableOpacity
           onPress={() => {
             prevStep();
-            // navigation.goBack("Home");
           }}
         >
           <View>

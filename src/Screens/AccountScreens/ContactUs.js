@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 const ContactUs = ({ navigation }) => {
@@ -18,7 +17,9 @@ const ContactUs = ({ navigation }) => {
         style={{
           backgroundColor: "#fff",
           alignItems: "center",
-          paddingVertical: 40,
+
+          paddingTop: Platform.OS === "ios" ? 60 : 40,
+          paddingBottom: Platform.OS === "ios" ? 20 : 20,
           flexDirection: "row",
         }}
       >
@@ -30,7 +31,6 @@ const ContactUs = ({ navigation }) => {
               color="black"
               style={{
                 paddingHorizontal: 20,
-                paddingTop: Platform.OS === "ios" ? 25 : 0,
               }}
             />
           </View>

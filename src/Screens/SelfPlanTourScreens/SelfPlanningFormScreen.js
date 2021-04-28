@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import {
   View,
   Text,
@@ -12,12 +12,12 @@ import {
   Dimensions,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import * as firebase from "firebase";
+import { database } from "firebase";
 import { Surface } from "react-native-paper";
 import DatePicker from "react-native-datepicker";
 import moment from "moment";
 import { Feather } from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+
 import { AuthContext } from "../../context/AuthContext";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import touron from "../../api/touron";
@@ -27,6 +27,9 @@ import SelfTourHome from "./SelfTourHome";
 import OverviewToursScreen from "../CheckoutScreens/OverviewToursScreen";
 import ProgressScreen from "../CheckoutScreens/ProgressScreen";
 import OverviewCitiesScreen from "../CheckoutScreens/OverviewCitiesScreen";
+import { city } from "../../Data/Data";
+import Card from "../../../assets/Board.jpg";
+
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 const SelfPlanForm = ({ navigation }) => {
@@ -55,6 +58,61 @@ const SelfPlanForm = ({ navigation }) => {
   let random;
   let formatedMonth;
 
+  const renderCity = ({ item }) => (
+    <View style={{ alignItems: "center", width: "33%" }}>
+      <View>
+        {selectedCityNames.includes(item.cityName) ? (
+          <Feather
+            name="check-circle"
+            size={24}
+            color="green"
+            style={{
+              bottom: 20,
+              right: 0,
+              zIndex: 10,
+              position: "absolute",
+            }}
+          />
+        ) : null}
+        <TouchableOpacity
+          onPress={() => {
+            if (selectedCityNames.includes(item.cityName)) {
+              const filter = selectedCity.filter((sa) => {
+                return sa.cityName !== item.cityName;
+              });
+              setSelectedCity(filter);
+              const filters = selectedCityNames.filter((sa) => {
+                return sa !== item.cityName;
+              });
+              setSelectedCityNames(filters);
+            } else {
+              setSelectedCityNames([...selectedCityNames, item.cityName]);
+              setSelectedCity([
+                ...selectedCity,
+                {
+                  cityName: item.cityName,
+                  imageUrl: item.imageUrl,
+                  days: 0,
+                  countryName: item.countryName,
+                },
+              ]);
+            }
+          }}
+        >
+          <ProgressiveImage
+            style={styles.cityImage}
+            source={{ uri: item.imageUrl }}
+          />
+        </TouchableOpacity>
+        <Text style={{ textAlign: "center", marginBottom: 5 }}>
+          {item.cityName}
+        </Text>
+      </View>
+    </View>
+  );
+
+  const memoCity = useMemo(() => renderCity, [city]);
+
   useEffect(() => {
     random = Math.floor((Math.random() + 4) * 345334);
     const requestDate = new Date();
@@ -66,15 +124,15 @@ const SelfPlanForm = ({ navigation }) => {
   });
 
   const getCity = () => {
-    if (destination === "") return cities;
-    const c = cities.filter((c) => {
+    if (destination === "") return city;
+    const c = city.filter((c) => {
       return c.cityName
         .trim()
         .toUpperCase()
         .includes(destination.toUpperCase().trim());
     });
 
-    const countries = cities.filter((c) => {
+    const countries = city.filter((c) => {
       return c.countryName
         .trim()
         .toUpperCase()
@@ -99,11 +157,13 @@ const SelfPlanForm = ({ navigation }) => {
   };
 
   const getDomesticCities = async (name) => {
+    // console.log(`name`, name.length);
     try {
       setLoaded(true);
       const domesticResponse = await touron.get(`/statecity/statename/${name}`);
 
       setDCities(domesticResponse.data);
+      console.log(`object`, domesticResponse.data);
       setLoaded(false);
     } catch (err) {
       console.log(err, "err");
@@ -125,9 +185,23 @@ const SelfPlanForm = ({ navigation }) => {
     // console.log("count", count);
     return count;
   };
+
+  const filterState = () => {
+    // console.log(`destination`, destination);
+
+    if (destination === "") return states;
+
+    const state = states.filter((c) => {
+      return c.stateName
+        .trim()
+        .toUpperCase()
+        .includes(destination.toUpperCase().trim());
+    });
+
+    return state;
+  };
   const submitD = () => {
-    firebase
-      .database()
+    database()
       .ref(`self-planned-tours`)
       .push({
         requestID: `TO-${date}${formatedMonth}${year}-${random}`,
@@ -165,8 +239,7 @@ const SelfPlanForm = ({ navigation }) => {
               <TextInput
                 style={styles.inputStyle}
                 placeholder="Search"
-                onChangeText={(value) => setDestination(value)}
-                onSubmitEditing={getCity}
+                onChangeText={(text) => setDestination(text)}
                 autoCapitalize="none"
                 autoCorrect={false}
               />
@@ -193,7 +266,7 @@ const SelfPlanForm = ({ navigation }) => {
                     justifyContent: "center",
                   }}
                 >
-                  {states.map((item, index) => {
+                  {filterState().map((item, index) => {
                     return (
                       <View style={{ alignItems: "center" }} key={index}>
                         {selectedState === item.stateName ? (
@@ -273,81 +346,104 @@ const SelfPlanForm = ({ navigation }) => {
               />
             ) : (
               <ScrollView showsVerticalScrollIndicator={false}>
-                <View
-                  style={{
-                    width: WIDTH,
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {dcities.map((t, index) => {
-                    return (
-                      <View style={{ alignItems: "center" }} key={index}>
-                        {selectedCityNames.includes(t.cityName) ? (
-                          <Feather
-                            name="check-circle"
-                            size={24}
-                            color="green"
-                            style={{
-                              bottom: 20,
-                              right: 10,
-                              zIndex: 10,
-                              position: "absolute",
-                            }}
-                          />
-                        ) : null}
-                        <View>
-                          <TouchableOpacity
-                            onPress={() => {
-                              if (selectedCityNames.includes(t.cityName)) {
-                                const filter = selectedCity.filter((sa) => {
-                                  return sa.cityName !== t.cityName;
-                                });
-                                setSelectedCity(filter);
-                                const filters = selectedCityNames.filter(
-                                  (sa) => {
-                                    return sa !== t.cityName;
-                                  }
-                                );
-                                setSelectedCityNames(filters);
-                              } else {
-                                setSelectedCity([
-                                  ...selectedCity,
-                                  {
-                                    cityName: t.cityName,
-                                    days: 0,
-                                    stateName: t.stateName,
-                                    idealDays: t.idealDays,
-                                    suggestedCombinations:
-                                      t.suggestedCombinations,
-                                    imageUrl: t.imageUrl,
-                                  },
-                                ]);
-                                setSelectedCityNames([
-                                  ...selectedCityNames,
-                                  t.cityName,
-                                ]);
-                              }
-                            }}
-                          >
-                            <ProgressiveImage
-                              style={styles.cityImage}
-                              source={{ uri: t.imageUrl }}
+                {dcities.length === 0 ? (
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flex: 1,
+                      backgroundColor: "#fff",
+                      height: HEIGHT / 1.2,
+                      width: WIDTH,
+                    }}
+                  >
+                    <View>
+                      <Image
+                        style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 }}
+                        source={require("../../../assets/oops.jpg")}
+                      />
+                    </View>
+                    <Text style={{ fontFamily: "Avenir", fontSize: 23 }}>
+                      No Cities Found
+                    </Text>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      width: WIDTH,
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {dcities.map((t, index) => {
+                      return (
+                        <View style={{ alignItems: "center" }} key={index}>
+                          {selectedCityNames.includes(t.cityName) ? (
+                            <Feather
+                              name="check-circle"
+                              size={24}
+                              color="green"
+                              style={{
+                                bottom: 20,
+                                right: 10,
+                                zIndex: 10,
+                                position: "absolute",
+                              }}
                             />
-                          </TouchableOpacity>
-                          <Text
-                            style={{ textAlign: "center", marginBottom: 5 }}
-                          >
-                            {t.cityName}
-                          </Text>
+                          ) : null}
+                          <View>
+                            <TouchableOpacity
+                              onPress={() => {
+                                if (selectedCityNames.includes(t.cityName)) {
+                                  const filter = selectedCity.filter((sa) => {
+                                    return sa.cityName !== t.cityName;
+                                  });
+                                  setSelectedCity(filter);
+                                  const filters = selectedCityNames.filter(
+                                    (sa) => {
+                                      return sa !== t.cityName;
+                                    }
+                                  );
+                                  setSelectedCityNames(filters);
+                                } else {
+                                  setSelectedCity([
+                                    ...selectedCity,
+                                    {
+                                      cityName: t.cityName,
+                                      days: 0,
+                                      stateName: t.stateName,
+                                      idealDays: t.idealDays,
+                                      suggestedCombinations:
+                                        t.suggestedCombinations,
+                                      imageUrl: t.imageUrl,
+                                    },
+                                  ]);
+                                  setSelectedCityNames([
+                                    ...selectedCityNames,
+                                    t.cityName,
+                                  ]);
+                                }
+                              }}
+                            >
+                              <ProgressiveImage
+                                style={styles.cityImage}
+                                source={{ uri: t.imageUrl }}
+                              />
+                            </TouchableOpacity>
+                            <Text
+                              style={{ textAlign: "center", marginBottom: 5 }}
+                            >
+                              {t.cityName}
+                            </Text>
+                          </View>
                         </View>
-                      </View>
-                    );
-                  })}
-                </View>
+                      );
+                    })}
+                  </View>
+                )}
               </ScrollView>
             )}
 
@@ -372,7 +468,7 @@ const SelfPlanForm = ({ navigation }) => {
         return (
           <ScrollView>
             <View style={{ flex: 1, backgroundColor: "#F1F3F6" }}>
-              <View style={{ marginVertical: 20 }}>
+              <View>
                 <Text
                   style={{
                     textAlign: "center",
@@ -435,6 +531,9 @@ const SelfPlanForm = ({ navigation }) => {
                         style={{
                           fontSize: 25,
                           marginTop: 5,
+                          height: HEIGHT / 25,
+                          width: WIDTH / 9,
+                          textAlign: "center",
                         }}
                         editable={true}
                       />
@@ -444,13 +543,7 @@ const SelfPlanForm = ({ navigation }) => {
               ))}
 
               <View style={{ width: WIDTH, marginLeft: -20 }}>
-                <Image
-                  style={styles.calendarImage}
-                  source={{
-                    uri:
-                      "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Boardingcard.png?alt=media&token=3ca29134-6c34-4e32-b8c9-7c54d6ecce3e",
-                  }}
-                />
+                <Image style={styles.calendarImage} source={Card} />
                 <View
                   style={{
                     display: "flex",
@@ -663,10 +756,7 @@ const SelfPlanForm = ({ navigation }) => {
               </Text>
               <View style={styles.ftypecontainer}>
                 {hotels.map((t, index) => (
-                  <TouchableWithoutFeedback
-                    onPress={() => setHoteltype(t)}
-                    key={index}
-                  >
+                  <TouchableOpacity onPress={() => setHoteltype(t)} key={index}>
                     <Surface
                       style={{
                         margin: 10,
@@ -690,7 +780,7 @@ const SelfPlanForm = ({ navigation }) => {
                         {t}
                       </Text>
                     </Surface>
-                  </TouchableWithoutFeedback>
+                  </TouchableOpacity>
                 ))}
               </View>
             </View>
@@ -702,7 +792,7 @@ const SelfPlanForm = ({ navigation }) => {
               </Text>
               <View style={styles.ftypecontainer}>
                 {tourtype.map((t, index) => (
-                  <TouchableWithoutFeedback
+                  <TouchableOpacity
                     onPress={() => setTravelmode(t)}
                     key={index}
                   >
@@ -719,7 +809,7 @@ const SelfPlanForm = ({ navigation }) => {
                         {t}
                       </Text>
                     </Surface>
-                  </TouchableWithoutFeedback>
+                  </TouchableOpacity>
                 ))}
               </View>
             </View>
@@ -736,7 +826,7 @@ const SelfPlanForm = ({ navigation }) => {
                 </Text>
                 <View style={styles.ftypecontainer}>
                   {flighttype.map((t, index) => (
-                    <TouchableWithoutFeedback
+                    <TouchableOpacity
                       onPress={() => setFlightType(t)}
                       key={index}
                     >
@@ -753,7 +843,7 @@ const SelfPlanForm = ({ navigation }) => {
                           {t}
                         </Text>
                       </Surface>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                   ))}
                 </View>
               </View>
@@ -796,6 +886,7 @@ const SelfPlanForm = ({ navigation }) => {
                 marginHorizontal: 30,
                 paddingBottom: 10,
                 position: "relative",
+                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
               }}
             >
               <TouchableOpacity
@@ -812,8 +903,8 @@ const SelfPlanForm = ({ navigation }) => {
                 style={{
                   fontSize: 20,
                   fontFamily: "NewYorkl",
-                  marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
                   flex: 0.7,
+                  marginBottom: Platform.OS == "ios" ? 5 : 0,
                 }}
               >
                 Select your cities
@@ -834,7 +925,26 @@ const SelfPlanForm = ({ navigation }) => {
                 autoCorrect={false}
               />
             </View>
-
+            {selectedCity.length === 0 ? null : (
+              <TouchableOpacity
+                style={{ position: "absolute", bottom: 0, zIndex: 10 }}
+                onPress={() => {
+                  setStep(2);
+                }}
+              >
+                <View style={styles.proceedButton}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: "white",
+                      fontFamily: "Andika",
+                    }}
+                  >
+                    Proceed
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
             {!loader ? (
               <ActivityIndicator
                 style={{
@@ -873,7 +983,7 @@ const SelfPlanForm = ({ navigation }) => {
                               }}
                             />
                           ) : null}
-                          <TouchableWithoutFeedback
+                          <TouchableOpacity
                             onPress={() => {
                               if (selectedCityNames.includes(item.cityName)) {
                                 const filter = selectedCity.filter((sa) => {
@@ -907,7 +1017,7 @@ const SelfPlanForm = ({ navigation }) => {
                               style={styles.cityImage}
                               source={{ uri: item.imageUrl }}
                             />
-                          </TouchableWithoutFeedback>
+                          </TouchableOpacity>
                           <Text
                             style={{ textAlign: "center", marginBottom: 5 }}
                           >
@@ -919,25 +1029,6 @@ const SelfPlanForm = ({ navigation }) => {
                   })}
                 </View>
               </ScrollView>
-            )}
-            {selectedCity.length === 0 ? null : (
-              <TouchableOpacity
-                onPress={() => {
-                  setStep(2);
-                }}
-              >
-                <View style={styles.proceedButton}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "white",
-                      fontFamily: "Andika",
-                    }}
-                  >
-                    Proceed
-                  </Text>
-                </View>
-              </TouchableOpacity>
             )}
           </View>
         );
@@ -957,6 +1048,7 @@ const SelfPlanForm = ({ navigation }) => {
             selectedCityNamess={selectedCityNames}
             setStep={() => setStep(4)}
             prevStep={() => prevStep()}
+            navigation={navigation}
           />
         );
       case 4:
@@ -1005,18 +1097,18 @@ const SelfPlanForm = ({ navigation }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     marginHorizontal: WIDTH / 15,
+                    marginVertical: Platform.OS === "ios" ? 30 : 20,
                   }}
                 >
                   <TouchableOpacity
                     onPress={() => {
                       if (step > 1) setStep(step - 1);
+                      else setTourType("");
                     }}
                   >
-                    {step === 1 ? null : (
-                      <View>
-                        <AntDesign name="arrowleft" size={28} />
-                      </View>
-                    )}
+                    <View>
+                      <AntDesign name="arrowleft" size={28} />
+                    </View>
                   </TouchableOpacity>
 
                   <Text

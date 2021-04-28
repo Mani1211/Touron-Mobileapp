@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,10 +15,8 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import * as Notifications from "expo-notifications";
 import { Surface } from "react-native-paper";
-import { AuthContext } from "../../context/AuthContext";
 import * as firebase from "firebase";
-// import DropDownPicker from "react-native-dropdown-picker";
-import { Container, Header, Tab, Tabs, Icon, TabHeading } from "native-base";
+import { Container, Header, Tab, Tabs, TabHeading } from "native-base";
 import Carousel from "react-native-snap-carousel";
 import {
   MaterialIcons,
@@ -29,10 +27,6 @@ import {
 } from "@expo/vector-icons";
 
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
-// import {
-//   getExpoToken,
-//   sendPushNotification,
-// } from "./../CategoryScreens/utils/PushNotification";
 
 const RequestInner = ({ navigation, route }) => {
   const [selectedImage, setSelectedImage] = useState("");
@@ -41,31 +35,6 @@ const RequestInner = ({ navigation, route }) => {
   const item = route.params.item;
   const [activePromoSlide, setActivePromoSlide] = useState(0);
   const [plannedDetails, setPlannedDetails] = useState({});
-  // const onToggleSnackBar = () => setVisible(!visible);
-  // const onDismissSnackBar = () => setVisible(false);
-  // const { userInfo } = useContext(AuthContext);
-
-  // const higher = route.params.higher;
-  // const key = route.params.key;
-  // const [loaded, setLoaded] = useState(true);
-  // const [isAdmin, setIsAdmin] = useState(false);
-  // const [status, setStatus] = useState("");
-  // const [cost, setCost] = useState(0);
-  // const [progress, setProgress] = useState(0);
-
-  // const getUserData = () => {
-  //   if (user !== null) {
-  //     firebase
-  //       .database()
-  //       .ref(`userGeneralInfo/${user.uid}`)
-  //       .on("value", (data) => {
-  //         if (data.val() !== null) {
-  //           let val = data.val();
-  //           // setIsAdmin(val.admin);
-  //         }
-  //       });
-  //   }
-  // };
   const planning = () => {
     return (
       <View
@@ -73,7 +42,6 @@ const RequestInner = ({ navigation, route }) => {
           alignItems: "center",
           justifyContent: "center",
           padding: 30,
-          // height: HEIGHT / 1.2,
         }}
       >
         <ProgressiveImage
@@ -156,7 +124,7 @@ const RequestInner = ({ navigation, route }) => {
           setModalVisible(true);
         }}
       >
-        <ProgressiveImage
+        <Image
           source={{ uri: item }}
           resizeMode="cover"
           style={{ width: WIDTH * 0.9, height: HEIGHT / 4 }}
@@ -164,10 +132,6 @@ const RequestInner = ({ navigation, route }) => {
       </TouchableOpacity>
     );
   };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
 
   useEffect(() => {
     getPlannedDetails();
@@ -203,107 +167,6 @@ const RequestInner = ({ navigation, route }) => {
         />
       );
   };
-
-  // const updateStatus = (plan) => {
-  //   firebase.database().ref(`requests`).child(key).child("status").set(status);
-
-  //   const token = getExpoToken(plan.userID);
-
-  //   const message = {
-  //     to: token,
-  //     sound: "default",
-  //     title: `Request Status Changed`,
-  //     body: `Request Status Changed for your ${plan.tourCategory} of id ${plan.requestID} has been changed to  ${status}`,
-  //     data: plan,
-  //   };
-  //   sendPushNotification(message);
-
-  //   navigation.navigate("MyRequest");
-  // };
-
-  // const deleteRequest = () => {
-  //   console.log("key", key);
-  //   firebase
-  //     .database()
-  //     .ref(`requests`)
-  //     .child(key)
-  //     .set(null)
-  //     .then(() => {
-  //       console.log("success :>> ");
-  //       navigation.navigate("MyRequest");
-  //     })
-  //     .catch((err) => console.log("err :>> ", err));
-  // };
-
-  // const updateCost = (plan) => {
-  //   const ref = firebase
-  //     .database()
-  //     .ref(`requests`)
-  //     .child(key)
-  //     .child("tourCost")
-  //     .set(cost);
-  //   console.log(ref, "ref");
-
-  //   const token = getExpoToken(plan.userID);
-
-  //   const message = {
-  //     to: token,
-  //     sound: "default",
-  //     title: `Payment Updated`,
-  //     body: `Final payment for your  ${plan.tourCategory} of id ${plan.requestID} has been updated ,go and check your payment in My Request Section ${cost}`,
-  //     data: plan,
-  //   };
-  //   sendPushNotification(message);
-
-  //   navigation.navigate("MyRequest");
-  // };
-
-  const queryStatus = [
-    {
-      label: "Query Received",
-      value: "Query Received",
-    },
-    {
-      label: "Plan Shared",
-      value: "Plan Shared",
-    },
-    {
-      label: "On Progress",
-      value: "On Progress",
-    },
-    {
-      label: "Cancelled",
-      value: "Cancelled",
-    },
-    {
-      label: "On Hold",
-      value: "On Hold",
-    },
-    {
-      label: "Duplicate Query",
-      value: "Duplicate Query",
-    },
-    {
-      label: "Tour Booked",
-      value: "Tour Booked",
-    },
-    {
-      label: "Awaiting Payment",
-      value: "Awaiting Payment",
-    },
-    {
-      label: "Cancellation Requested",
-      value: "Cancellation Requested",
-    },
-    {
-      label: "Estimated",
-      value: "Estimated",
-    },
-    {
-      label: "Completed",
-      value: "Completed",
-    },
-  ];
 
   return (
     <ScrollView>
@@ -443,7 +306,10 @@ const RequestInner = ({ navigation, route }) => {
                           marginRight: 20,
                         }}
                       >
-                        Adults : {item.adult}
+                        Adults :{" "}
+                        {item.tourCategory === "Honeymoon Trip"
+                          ? "2"
+                          : item.adult}
                       </Text>
                       <Text
                         style={{
@@ -462,7 +328,7 @@ const RequestInner = ({ navigation, route }) => {
 
                     <View
                       style={{
-                        flexDirection: "row",
+                        // flexDirection: "row",
                         justifyContent: "center",
                       }}
                     >
@@ -470,6 +336,7 @@ const RequestInner = ({ navigation, route }) => {
                         style={{
                           fontSize: 16,
                           fontFamily: "Andika",
+                          width: WIDTH * 0.8,
                           color: "#333",
                           paddingVertical: 10,
                           paddingHorizontal: 9,
@@ -477,13 +344,18 @@ const RequestInner = ({ navigation, route }) => {
                           borderRadius: 5,
                           borderColor: "#333",
                           marginRight: 20,
+                          marginBottom: 10,
+                          textAlign: "center",
                         }}
                       >
-                        Onward : {item.fromDate}
+                        Onward Date : {item.fromDate}
                       </Text>
                       <Text
                         style={{
                           fontSize: 16,
+                          width: WIDTH * 0.8,
+                          textAlign: "center",
+
                           fontFamily: "Andika",
                           color: "#333",
                           paddingVertical: 10,
@@ -493,7 +365,7 @@ const RequestInner = ({ navigation, route }) => {
                           borderColor: "#333",
                         }}
                       >
-                        Return : {item.toDate}
+                        Return Date : {item.toDate}
                       </Text>
                     </View>
                     <View
@@ -577,7 +449,12 @@ const RequestInner = ({ navigation, route }) => {
                         size={24}
                         color="black"
                       />
-                      <Text> {item.travellerType}</Text>
+                      <Text>
+                        {" "}
+                        {item.tourCategory === "Honeymoon Trip"
+                          ? "Couples"
+                          : item.travellerType}
+                      </Text>
                     </View>
                     <View
                       style={{
@@ -607,261 +484,12 @@ const RequestInner = ({ navigation, route }) => {
                     </View>
                   </View>
                 </Surface>
-
-                {/* <Surface
-                  style={{
-                    width: WIDTH * 0.9,
-                    margin: 10,
-                    elevation: 10,
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    borderRadius: 10,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: WIDTH * 0.9,
-                      alignItems: "center",
-                      borderBottomColor: "#f1f2f1",
-                      borderBottomWidth: 1,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        paddingVertical: 10,
-                      }}
-                    >
-                      Selected Cities
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      flexWrap: "wrap",
-                      width: WIDTH * 0.9,
-                      paddingVertical: 10,
-                    }}
-                  >
-                    {item.selectedCities.map((item, index) => {
-                      return (
-                        <View
-                          key={index}
-                          style={{
-                            width: ln == 1 ? WIDTH * 0.9 : WIDTH / 2.2,
-                            flexBasis: ln == 1 ? "100%" : "50%",
-                            backgroundColor: "#fff",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderRadius: 10,
-                          }}
-                        >
-                          <ProgressiveImage
-                            source={{ uri: item.imageUrl }}
-                            style={{
-                              height: WIDTH / 7,
-                              width: WIDTH / 7,
-                              borderRadius: 100,
-                              margin: 10,
-                            }}
-                          />
-                          <View style={{ padding: 5, alignItems: "center" }}>
-                            <Text
-                              style={{
-                                color: "black",
-                                fontFamily: "NewYorkl",
-                                fontSize: 16,
-                              }}
-                            >
-                              {item.cityName}
-                            </Text>
-                            <Text
-                              style={{ color: "black", fontFamily: "Andika" }}
-                            >
-                              {item.days} Days
-                            </Text>
-                          </View>
-                        </View>
-                      );
-                    })}
-                  </View>
-                </Surface> */}
-                {/* {item.tourType === "Domestic" ? (
-                  <Surface
-                    style={{
-                      width: WIDTH * 0.9,
-                      margin: 10,
-                      height: HEIGHT / 3.2,
-                      elevation: 10,
-                      alignItems: "center",
-                      borderRadius: 10,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: WIDTH * 0.9,
-                        alignItems: "center",
-                        borderBottomColor: "#f1f2f1",
-                        borderBottomWidth: 1,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          paddingVertical: 10,
-                        }}
-                      >
-                        Travel Preferance
-                      </Text>
-                    </View>
-
-                    <View
-                      style={{
-                        width: WIDTH * 0.9,
-                        padding: 20,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <View
-                        style={{
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          borderRightWidth: 2,
-                          borderRightColor: "#f1f2f1",
-                          height: HEIGHT / 4.8,
-                          flexBasis: "33%",
-                        }}
-                      >
-                        <Text>Hotel Type</Text>
-                        <MaterialCommunityIcons
-                          name="map-marker-distance"
-                          size={24}
-                          color="black"
-                        />
-                        <Text> {item.hotelType}</Text>
-                      </View>
-                      <View
-                        style={{
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          borderRightWidth: 2,
-                          borderRightColor: "#f1f2f1",
-                          height: HEIGHT / 4.8,
-                          flexBasis: "33%",
-                        }}
-                      >
-                        <Text>Travel Type </Text>
-                        {item.travelmode === "Train" ? (
-                          <MaterialIcons name="train" size={24} color="black" />
-                        ) : (
-                          <MaterialIcons
-                            name="flight"
-                            size={24}
-                            color="black"
-                          />
-                        )}
-                        <Text> {item.travelmode}</Text>
-                      </View>
-                      <View
-                        style={{
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          flexBasis: "33%",
-                        }}
-                      >
-                        <Text>Total Days</Text>
-                        <MaterialIcons name="today" size={24} color="black" />
-
-                        <Text> {item.totalDays}</Text>
-                      </View>
-                    </View>
-                  </Surface>
-                ) : (
-                  <Surface
-                    style={{
-                      width: WIDTH * 0.9,
-                      margin: 10,
-                      elevation: 10,
-                      alignItems: "center",
-                      flexWrap: "wrap",
-                      borderRadius: 10,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: WIDTH * 0.9,
-                        alignItems: "center",
-                        borderBottomColor: "#f1f2f1",
-                        borderBottomWidth: 1,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          paddingVertical: 10,
-                        }}
-                      >
-                        Selected Tours
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: WIDTH * 0.9,
-                        borderRadius: 20,
-                        marginHorizontal: 20,
-                        marginVertical: 10,
-                      }}
-                    >
-                      {item.tourDetails.map((item, index) => {
-                        return (
-                          <View
-                            key={index}
-                            style={{
-                              flexBasis: "100%",
-                              flexWrap: "wrap",
-                              height: HEIGHT / 10,
-                              paddingVertical: 10,
-                            }}
-                          >
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                // flexWrap: "wrap",
-                                flexBasis: "100%",
-                              }}
-                            >
-                              <ProgressiveImage
-                                source={{ uri: item.imageUrl }}
-                                style={{
-                                  height: WIDTH / 8,
-                                  width: WIDTH / 8,
-                                  borderRadius: 5,
-                                  marginRight: 10,
-                                }}
-                              />
-                              <View>
-                                <Text
-                                  style={{
-                                    fontSize: 15,
-                                    textAlign: "left",
-                                  }}
-                                >
-                                  {item.tourName}
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
-                        );
-                      })}
-                    </View>
-                  </Surface>
-                )} */}
               </View>
             </ScrollView>
           </Tab>
           <Tab
             heading={
               <TabHeading style={{ backgroundColor: "#fff" }}>
-                {/* <Icon name="taxi" type="FontAwesome" style={{ fontSize: 23 }} /> */}
                 <Text style={{ fontFamily: "NewYorkl" }}>Transport</Text>
               </TabHeading>
             }
@@ -884,7 +512,6 @@ const RequestInner = ({ navigation, route }) => {
                     <Surface
                       style={{
                         width: WIDTH * 0.9,
-                        margin: 10,
                         height: HEIGHT / 3.2,
                         elevation: 10,
                         alignItems: "center",
@@ -943,13 +570,13 @@ const RequestInner = ({ navigation, route }) => {
                         <View
                           style={{ flexDirection: "row", alignItems: "center" }}
                         >
-                          <Text>------------</Text>
+                          <Text>-------</Text>
                           {renderIcon(
                             plannedDetails.flightDetails.onward
                               .onwardTransportMode
                           )}
 
-                          <Text>------------</Text>
+                          <Text>-------</Text>
                         </View>
                         <View style={{ alignItems: "center" }}>
                           <Text style={{ fontFamily: "Andika" }}>
@@ -989,11 +616,11 @@ const RequestInner = ({ navigation, route }) => {
                     <Surface
                       style={{
                         width: WIDTH * 0.9,
-                        margin: 10,
                         height: HEIGHT / 3.2,
                         elevation: 10,
                         alignItems: "center",
                         borderRadius: 10,
+                        marginTop: 20,
                       }}
                     >
                       <View
@@ -1010,6 +637,7 @@ const RequestInner = ({ navigation, route }) => {
                             fontFamily: "NewYorkl",
                           }}
                         >
+                          Return{" "}
                           {
                             plannedDetails.flightDetails.return
                               .returnTransportMode
@@ -1047,12 +675,13 @@ const RequestInner = ({ navigation, route }) => {
                         <View
                           style={{ flexDirection: "row", alignItems: "center" }}
                         >
-                          <Text>------------</Text>
+                          <Text>-------</Text>
+
                           {renderIcon(
                             plannedDetails.flightDetails.return
                               .returnTransportMode
                           )}
-                          <Text>------------</Text>
+                          <Text>-------</Text>
                         </View>
                         <View style={{ alignItems: "center" }}>
                           <Text style={{ fontFamily: "Andika" }}>
@@ -1159,6 +788,7 @@ const RequestInner = ({ navigation, route }) => {
                                     .map((c, i) => {
                                       return (
                                         <FontAwesome
+                                          key={i}
                                           name="star"
                                           size={16}
                                           color="#F5BF00"
@@ -1515,44 +1145,46 @@ const RequestInner = ({ navigation, route }) => {
                           </View>
                         </View>
                       </Surface>
-                      <Surface
-                        style={{
-                          width: WIDTH * 0.9,
-                          margin: 10,
-                          elevation: 10,
-                          alignItems: "center",
-                          borderRadius: 10,
-                        }}
-                      >
-                        <View
+                      {plannedDetails.basicDetails.termsConditions !== "" && (
+                        <Surface
                           style={{
                             width: WIDTH * 0.9,
+                            margin: 10,
+                            elevation: 10,
                             alignItems: "center",
-                            borderBottomColor: "#f1f2f1",
-                            borderBottomWidth: 1,
+                            borderRadius: 10,
                           }}
                         >
-                          <Text
+                          <View
                             style={{
-                              paddingVertical: 10,
+                              width: WIDTH * 0.9,
+                              alignItems: "center",
+                              borderBottomColor: "#f1f2f1",
+                              borderBottomWidth: 1,
                             }}
                           >
-                            Terms & Conditions
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            alignItems: "center",
-                            width: WIDTH,
-                            justifyContent: "center",
-                            padding: 20,
-                          }}
-                        >
-                          <Text style={{ fontFamily: "Andika" }}>
-                            {plannedDetails.basicDetails.termsConditions}
-                          </Text>
-                        </View>
-                      </Surface>
+                            <Text
+                              style={{
+                                paddingVertical: 10,
+                              }}
+                            >
+                              Terms & Conditions
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              alignItems: "center",
+                              width: WIDTH,
+                              justifyContent: "center",
+                              padding: 20,
+                            }}
+                          >
+                            <Text style={{ fontFamily: "Andika" }}>
+                              {plannedDetails.basicDetails.termsConditions}
+                            </Text>
+                          </View>
+                        </Surface>
+                      )}
                     </View>
                   </ScrollView>
                 )}
