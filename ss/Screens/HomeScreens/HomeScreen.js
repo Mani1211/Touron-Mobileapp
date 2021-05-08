@@ -5,7 +5,6 @@ import {
   View,
   StatusBar,
   Linking,
-  Animated,
   Modal,
   FlatList,
   ScrollView,
@@ -14,9 +13,10 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+r;
 import HTMLView from "react-native-htmlview";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
-import Carousel, { Pagination } from "react-native-snap-carousel";
+import Carousel from "react-native-looped-carousel";
 import Categories from "./components/CategoriesScreen";
 import ContentList from "./components/ContentList";
 import { Feather, FontAwesome } from "@expo/vector-icons";
@@ -33,13 +33,11 @@ const HomeScreen = ({ navigation }) => {
   // const [tour, setTour] = useState([]);
   // const [cities, setCities] = useState([]);
   // const [countries, setCountries] = useState([]);
+  console.log(`modalVisible`, modalVisible);
   const [promotions, setPromotions] = useState([]);
   const [googleStats, setGoogleStats] = useState({});
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [activePromoSlide, setActivePromoSlide] = useState(0);
   const [selectedPromotion, setSelectedPromotion] = useState({});
   const [testimonials, setTestimonials] = useState([]);
-  console.log("activeSlide :>> ", activeSlide);
   // const cityPage = Math.round(Math.random() * 15);
   // const countryPage = Math.round(Math.random() * 7);
   // const tourPage = Math.round(Math.random() * 50);
@@ -516,9 +514,9 @@ const HomeScreen = ({ navigation }) => {
   //   getCounries();
   // }, []);
 
-  useEffect(() => {
-    getPromotions();
-  }, []);
+  // useEffect(() => {
+  //   getPromotions();
+  // }, []);
 
   const openWhatsApp = (promoText) => {
     let url = `whatsapp://send?text=Hey,🙂 I would like to know more about this , ${promoText}&phone= +91 8667801206`;
@@ -593,179 +591,7 @@ const HomeScreen = ({ navigation }) => {
   //   getNetwork();
   // }, []);
 
-  const scrollX = React.useRef(new Animated.Value(0)).current;
-
-  const _renderItem = ({ item, index }) => {
-    return (
-      <>
-        <View
-          style={{
-            width: WIDTH * 0.9,
-            borderTopColor: "#E7ACAA",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              paddingVertical: 10,
-              fontSize: 30,
-              fontFamily: "PlaylistScript",
-            }}
-          >
-            {item.tourPlace}
-          </Text>
-
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              source={{ uri: item.testImage }}
-              style={{
-                height: HEIGHT / 2.8,
-                width: WIDTH / 1.4,
-                borderRadius: 40,
-              }}
-            />
-            <View
-              style={{
-                paddingTop: 30,
-              }}
-            >
-              <HTMLView
-                value={item.comment}
-                stylesheet={{
-                  p: {
-                    paddingLeft: 10,
-                    fontFamily: "Andika",
-                    fontSize: 13,
-                    textAlign: "center",
-                  },
-                }}
-              />
-            </View>
-            <Text style={{ textAlign: "center", paddingTop: 20 }}>
-              {item.name}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: "Andika",
-              }}
-            >
-              🚀 <Text style={{ fontWeight: "bold" }}>Mission</Text> to{" "}
-              {item.tourPlace}
-            </Text>
-          </View>
-        </View>
-        {/* <View
-          style={{
-            borderColor: "#333",
-            borderWidth: Platform.OS === "ios" ? 2 : 2,
-            borderRadius: 10,
-            paddingBottom: 20,
-            marginTop: 20,
-            height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
-            marginBottom: 30,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              paddingHorizontal: 20,
-              paddingTop: 20,
-            }}
-          >
-            <Image
-              source={{ uri: item.testImage }}
-              resizeMode="cover"
-              style={{
-                height: WIDTH / 5,
-                width: WIDTH / 5,
-                borderRadius: 50,
-              }}
-            />
-            <View style={{ paddingHorizontal: 15 }}>
-              <Text
-                style={{
-                  // color: "#FFF",
-                  fontSize: 20,
-                  fontFamily: "NewYorkl",
-                }}
-              >
-                {item.name}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  // color: "#FFF",
-
-                  fontFamily: "Andika",
-                }}
-              >
-                🚀 <Text style={{ fontWeight: "bold" }}>Mission</Text> to{" "}
-                {item.tourPlace}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              // width: WIDTH,
-              padding: 10,
-              height: HEIGHT / 3,
-              overflow: "scroll",
-            }}
-          >
-            <HTMLView
-              value={item.comment}
-              stylesheet={{
-                p: {
-                  paddingLeft: 10,
-                  fontFamily: "Andika",
-                  fontSize: 13,
-                  textAlign: "center",
-                },
-              }}
-            />
-          </View>
-        </View> */}
-      </>
-    );
-  };
-  const _renderPromo = ({ item, index }) => {
-    return (
-      <View
-        key={index}
-        style={{
-          width: WIDTH * 0.9,
-          marginHorizontal: 5,
-          marginTop: 20,
-          justifyContent: "center",
-          // marginBottom: 35,
-          alignItems: "center",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setSelectedPromotion(item);
-            setModalVisible(true);
-          }}
-        >
-          <Image
-            style={{
-              width: WIDTH * 0.8,
-              height: HEIGHT / 1.9,
-              borderRadius: 10,
-            }}
-            source={{ uri: item.image }}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  // const scrollX = React.useRef(new Animated.Value(0)).current;
 
   const renderCountry = ({ item }) => {
     return (
@@ -808,6 +634,7 @@ const HomeScreen = ({ navigation }) => {
   );
 
   const memoizedCity = useMemo(() => renderCity, [city]);
+  useMemo(() => getPromotions(), []);
 
   const renderTour = ({ item }) => (
     <TouchableOpacity
@@ -972,37 +799,46 @@ const HomeScreen = ({ navigation }) => {
                 </>
               ) : (
                 <>
-                  <View>
-                    <Text>{activeSlide / testimonials.length}</Text>
+                  <View style={{ flex: 1, paddingVertical: 20 }}>
+                    <Carousel
+                      delay={3000}
+                      style={{
+                        height: HEIGHT / 1.9,
+                      }}
+                      autoplay={false}
+                      onAnimateNextPage={(p) => console.log(p)}
+                    >
+                      {promotions.map((item, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            setModalVisible(true);
+                            setSelectedPromotion(item);
+                          }}
+                        >
+                          <View
+                            style={{
+                              width: WIDTH * 0.9,
+                              marginHorizontal: 5,
+                              marginTop: 20,
+                              justifyContent: "center",
+                              // marginBottom: 35,
+                              alignItems: "center",
+                            }}
+                          >
+                            <Image
+                              style={{
+                                width: WIDTH * 0.8,
+                                height: HEIGHT / 1.9,
+                                borderRadius: 10,
+                              }}
+                              source={{ uri: item.image }}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      ))}
+                    </Carousel>
                   </View>
-                  <Carousel
-                    layout="default"
-                    lockScrollWhileSnapping={true}
-                    enableMomentum={false}
-                    autoplayInterval={500}
-                    autoplayDelay={1000}
-                    loop={true}
-                    ref={(c) => {
-                      carousel = c;
-                    }}
-                    data={promotions}
-                    renderItem={_renderPromo}
-                    sliderWidth={WIDTH * 0.9}
-                    onSnapToItem={(index) => setActivePromoSlide(index)}
-                    itemWidth={WIDTH * 0.9}
-                  />
-                  <Pagination
-                    dotsLength={promotions.length}
-                    activeDotIndex={activePromoSlide}
-                    dotStyle={{
-                      width: 30,
-                      marginTop: 0,
-                      paddingTop: 0,
-                      height: 7,
-                      // borderRadius: 5,
-                      backgroundColor: "rgba(0, 0, 0, 0.75)",
-                    }}
-                  />
                 </>
               )}
 
@@ -1170,7 +1006,7 @@ const HomeScreen = ({ navigation }) => {
                     }}
                   >
                     {" "}
-                    From -{googleStats.googleReviewCount}+ Feedbacks from our
+                    From {googleStats.googleReviewCount}+ Feedbacks from our
                     travellers
                   </Text>
                 </View>
@@ -1305,23 +1141,93 @@ const HomeScreen = ({ navigation }) => {
                     </SkeletonPlaceholder>
                   </>
                 ) : (
-                  <Carousel
-                    layout="default"
-                    autoplay={true}
-                    autoplayDelay={1000}
-                    autoplayInterval={8000}
-                    lockScrollWhileSnapping={true}
-                    loop={true}
-                    enableMomentum={false}
-                    ref={(c) => {
-                      carousel = c;
-                    }}
-                    data={testimonials}
-                    renderItem={_renderItem}
-                    sliderWidth={WIDTH * 0.9}
-                    onSnapToItem={(index) => setActiveSlide(index)}
-                    itemWidth={WIDTH * 0.9}
-                  />
+                  <View style={{ flex: 1 }}>
+                    <Carousel
+                      delay={3000}
+                      style={{ height: HEIGHT, width: WIDTH * 0.9 }}
+                      autoplay={false}
+                      pageInfo
+                      pageInfoBottomContainerStyle={{
+                        position: "absolute",
+                        left: WIDTH * 0.3,
+                        width: WIDTH,
+                        right: 0,
+                        top: 0,
+                      }}
+                      onAnimateNextPage={(p) => console.log(p)}
+                    >
+                      {testimonials.map((item, i) => (
+                        <View
+                          key={i}
+                          style={{
+                            width: WIDTH * 0.9,
+                            borderTopColor: "#E7ACAA",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              paddingVertical: 10,
+                              fontSize: 30,
+                              fontFamily: "PlaylistScript",
+                            }}
+                          >
+                            {item.tourPlace}
+                          </Text>
+
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Image
+                              source={{ uri: item.testImage }}
+                              style={{
+                                height: HEIGHT / 2.8,
+                                width: WIDTH / 1.4,
+                                borderRadius: 40,
+                              }}
+                            />
+                            <View
+                              style={{
+                                paddingTop: 30,
+                              }}
+                            >
+                              <HTMLView
+                                value={item.comment}
+                                stylesheet={{
+                                  p: {
+                                    paddingLeft: 10,
+                                    fontFamily: "Andika",
+                                    fontSize: 13,
+                                    textAlign: "center",
+                                  },
+                                }}
+                              />
+                            </View>
+                            <Text
+                              style={{ textAlign: "center", paddingTop: 20 }}
+                            >
+                              {item.name}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: "Andika",
+                              }}
+                            >
+                              🚀{" "}
+                              <Text style={{ fontWeight: "bold" }}>
+                                Mission
+                              </Text>{" "}
+                              to {item.tourPlace}
+                            </Text>
+                          </View>
+                        </View>
+                      ))}
+                    </Carousel>
+                  </View>
                 )}
               </>
             </>
