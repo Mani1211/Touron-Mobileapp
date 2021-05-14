@@ -27,7 +27,6 @@ import SelfTourHome from "./SelfTourHome";
 import OverviewToursScreen from "../CheckoutScreens/OverviewToursScreen";
 import ProgressScreen from "../CheckoutScreens/ProgressScreen";
 import OverviewCitiesScreen from "../CheckoutScreens/OverviewCitiesScreen";
-import { city } from "../../Data/Data";
 import Card from "../../../assets/Board.jpg";
 
 const HEIGHT = Dimensions.get("window").height;
@@ -42,10 +41,10 @@ const SelfPlanForm = ({ navigation }) => {
   const [totalDays, setTotalDays] = useState(0);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [selectedState, setSelectedState] = useState("");
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
-  const [step, setStep] = useState(1);
-  const [selectedState, setSelectedState] = useState("");
+  const [step, setStep] = useState(2);
   const [dcities, setDCities] = useState([]);
   const [states, setStates] = useState([]);
   const [hotelType, setHoteltype] = useState("");
@@ -111,28 +110,32 @@ const SelfPlanForm = ({ navigation }) => {
     </View>
   );
 
-  const memoCity = useMemo(() => renderCity, [city]);
+  // const memoCity = useMemo(() => renderCity, [city]);
 
   useEffect(() => {
-    random = Math.floor((Math.random() + 4) * 345334);
-    const requestDate = new Date();
-    let currentYear = requestDate.getFullYear();
-    setDate(requestDate.getDate());
-    setMonth(requestDate.getMonth() + 1);
-    setYear(currentYear.toString().slice(2, 5));
-    formatedMonth = month < 10 ? "0" + month : month;
-  });
+    let mounted = true;
+    if (mounted) {
+      random = Math.floor((Math.random() + 4) * 345334);
+      const requestDate = new Date();
+      let currentYear = requestDate.getFullYear();
+      setDate(requestDate.getDate());
+      setMonth(requestDate.getMonth() + 1);
+      setYear(currentYear.toString().slice(2, 5));
+      formatedMonth = month < 10 ? "0" + month : month;
+    }
+    return () => (mounted = false);
+  }, []);
 
   const getCity = () => {
-    if (destination === "") return city;
-    const c = city.filter((c) => {
+    if (destination === "") return cities.reverse();
+    const c = cities.filter((c) => {
       return c.cityName
         .trim()
         .toUpperCase()
         .includes(destination.toUpperCase().trim());
     });
 
-    const countries = city.filter((c) => {
+    const countries = cities.filter((c) => {
       return c.countryName
         .trim()
         .toUpperCase()
@@ -640,8 +643,7 @@ const SelfPlanForm = ({ navigation }) => {
                         <Image
                           style={styles.image}
                           source={{
-                            uri:
-                              "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg",
+                            uri: "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg",
                           }}
                         />
                         <View style={styles.personContainer}>
@@ -678,8 +680,7 @@ const SelfPlanForm = ({ navigation }) => {
                         <Image
                           style={styles.image}
                           source={{
-                            uri:
-                              "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg",
+                            uri: "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg",
                           }}
                         />
                         <View style={styles.personContainer}>
@@ -737,7 +738,7 @@ const SelfPlanForm = ({ navigation }) => {
         const hotels = ["3 Star Hotel", "4 Star Hotel", "5 Star Hotel"];
         const tourtype = ["Train", "Flight"];
 
-        const flighttype = ["Non Stop", "Low Fare"];
+        const flighttypes = ["Non Stop", "Low Fare"];
         return (
           <View
             style={{
@@ -825,7 +826,7 @@ const SelfPlanForm = ({ navigation }) => {
                   Flight Type
                 </Text>
                 <View style={styles.ftypecontainer}>
-                  {flighttype.map((t, index) => (
+                  {flighttypes.map((t, index) => (
                     <TouchableOpacity
                       onPress={() => setFlightType(t)}
                       key={index}
@@ -1079,6 +1080,7 @@ const SelfPlanForm = ({ navigation }) => {
             imgSrc1={require("../../../assets/planned-tour/india.png")}
             imgScr2={require("../../../assets/planned-tour/International.png")}
             nextStep={() => setStep(1)}
+            prevStep={() => navigation.goBack()}
             tourType={tourType}
             tourName={"Self Tour"}
             setDomestic={() => setTourType("Domestic")}

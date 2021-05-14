@@ -67,103 +67,106 @@ const MyRequestScreen = ({ navigation }) => {
   ];
 
   useEffect(() => {
-    const getUserRequests = () => {
-      const uid = auth().currentUser.uid;
-
-      setLoaded(true);
-      database()
-        .ref(`requests`)
-        .on("value", (data) => {
-          if (data) {
-            let sT = [];
-            data.forEach((c) => {
-              if (c.val().userID == uid) {
-                if (c.val().tourCategory === "Planned Tour") {
-                  sT.push(c.val());
+    let mounted = true;
+    if (mounted) {
+      const getUserRequests = () => {
+        const uid = auth().currentUser.uid;
+        setLoaded(true);
+        database()
+          .ref(`requests`)
+          .on("value", (data) => {
+            if (data) {
+              let sT = [];
+              data.forEach((c) => {
+                if (c.val().userID == uid) {
+                  if (c.val().tourCategory === "Planned Tour") {
+                    sT.push(c.val());
+                  }
                 }
-              }
-            });
-            setPlanned(sT.reverse());
-          }
-          setLoaded(false);
-        });
-      database()
-        .ref(`requests`)
-        .on("value", (data) => {
-          if (data) {
-            let sT = [];
-            data.forEach((c) => {
-              if (c.val().userID == uid) {
-                if (c.val().tourCategory === "Surprise Tour") {
-                  sT.push(c.val());
+              });
+              setPlanned(sT.reverse());
+            }
+            setLoaded(false);
+          });
+        database()
+          .ref(`requests`)
+          .on("value", (data) => {
+            if (data) {
+              let sT = [];
+              data.forEach((c) => {
+                if (c.val().userID == uid) {
+                  if (c.val().tourCategory === "Surprise Tour") {
+                    sT.push(c.val());
+                  }
                 }
-              }
-            });
-            setSurprise(sT.reverse());
-          }
-        });
-      database()
-        .ref(`requests`)
-        .on("value", (data) => {
-          if (data) {
-            let sT = [];
-            data.forEach((c) => {
-              if (c.val().userID == uid) {
-                if (c.val().tourCategory === "Road Trip") {
-                  sT.push(c.val());
+              });
+              setSurprise(sT.reverse());
+            }
+          });
+        database()
+          .ref(`requests`)
+          .on("value", (data) => {
+            if (data) {
+              let sT = [];
+              data.forEach((c) => {
+                if (c.val().userID == uid) {
+                  if (c.val().tourCategory === "Road Trip") {
+                    sT.push(c.val());
+                  }
                 }
-              }
-            });
-            setRoad(sT.reverse());
-          }
-        });
-      database()
-        .ref(`requests`)
-        .on("value", (data) => {
-          if (data) {
-            let sT = [];
-            data.forEach((c) => {
-              if (c.val().userID == uid) {
-                if (c.val().tourCategory === "Luxury Tour") {
-                  sT.push(c.val());
+              });
+              setRoad(sT.reverse());
+            }
+          });
+        database()
+          .ref(`requests`)
+          .on("value", (data) => {
+            if (data) {
+              let sT = [];
+              data.forEach((c) => {
+                if (c.val().userID == uid) {
+                  if (c.val().tourCategory === "Luxury Tour") {
+                    sT.push(c.val());
+                  }
                 }
-              }
-            });
-            setLuxury(sT.reverse());
-          }
-        });
-      database()
-        .ref(`requests`)
-        .on("value", (data) => {
-          if (data) {
-            let sT = [];
-            data.forEach((c) => {
-              if (c.val().userID == uid) {
-                if (c.val().tourCategory === "Honeymoon Trip") {
-                  sT.push(c.val());
+              });
+              setLuxury(sT.reverse());
+            }
+          });
+        database()
+          .ref(`requests`)
+          .on("value", (data) => {
+            if (data) {
+              let sT = [];
+              data.forEach((c) => {
+                if (c.val().userID == uid) {
+                  if (c.val().tourCategory === "Honeymoon Trip") {
+                    sT.push(c.val());
+                  }
                 }
-              }
-            });
-            setHoneymoon(sT.reverse());
-          }
-        });
-      database()
-        .ref(`requests`)
-        .on("value", (data) => {
-          if (data) {
-            let sT = [];
-            data.forEach((c) => {
-              if (c.val().userID == uid) {
-                if (c.val().tourCategory === "Wildlife") {
-                  sT.push(c.val());
+              });
+              setHoneymoon(sT.reverse());
+            }
+          });
+        database()
+          .ref(`requests`)
+          .on("value", (data) => {
+            if (data) {
+              let sT = [];
+              data.forEach((c) => {
+                if (c.val().userID == uid) {
+                  if (c.val().tourCategory === "Wildlife") {
+                    sT.push(c.val());
+                  }
                 }
-              }
-            });
-            setWildlife(sT.reverse());
-          }
-        });
-    };
-    getUserRequests();
+              });
+              setWildlife(sT.reverse());
+            }
+          });
+      };
+      getUserRequests();
+      return () => (mounted = false);
+    }
   }, [isFocused]);
 
   const renderData = () => {

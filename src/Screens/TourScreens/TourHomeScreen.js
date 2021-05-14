@@ -27,11 +27,11 @@ import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
+import axios from "axios";
 
 const TourHomeScreen = ({ navigation, route }) => {
-  const { isLoggedIn, user, countries, cities, tours } = useContext(
-    AuthContext
-  );
+  const { isLoggedIn, user, countries, cities, tours } =
+    useContext(AuthContext);
   const [tour, setTour] = useState(tours);
   const [step, setStep] = useState(0);
   const [filterStep, setFilterStep] = useState(0);
@@ -84,15 +84,19 @@ const TourHomeScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      if (savedToursDetails.length > 0) {
-        database()
-          .ref(`saved-tours/${user.uid}`)
-          .set(savedToursDetails)
-          .then((data) => console.log(data))
-          .catch((err) => console.log(err));
+    let mounted = true;
+    if (mounted) {
+      if (isLoggedIn) {
+        if (savedToursDetails.length > 0) {
+          database()
+            .ref(`saved-tours/${user.uid}`)
+            .set(savedToursDetails)
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
+        }
       }
     }
+    return () => (mounted = false);
   }, []);
 
   const getTour = async () => {
@@ -540,11 +544,11 @@ const TourHomeScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      getTour();
-    }
-    return () => (mounted = false);
+    const source = axios.CancelToken.source();
+
+    getTour();
+
+    return () => source.cancel();
   }, []);
 
   const render = (step) => {
@@ -890,21 +894,22 @@ const TourHomeScreen = ({ navigation, route }) => {
                                         {savedTours.includes(item.tourName) ? (
                                           <TouchableOpacity
                                             onPress={() => {
-                                              let filterData = savedTours.filter(
-                                                (c) => {
+                                              let filterData =
+                                                savedTours.filter((c) => {
                                                   return c != item.tourName;
-                                                }
-                                              );
+                                                });
 
                                               setSavedTours(filterData);
 
-                                              const filterDetails = savedToursDetails.filter(
-                                                (c) => {
-                                                  return (
-                                                    c.tourName !== item.tourName
-                                                  );
-                                                }
-                                              );
+                                              const filterDetails =
+                                                savedToursDetails.filter(
+                                                  (c) => {
+                                                    return (
+                                                      c.tourName !==
+                                                      item.tourName
+                                                    );
+                                                  }
+                                                );
 
                                               setSavedToursDetails(
                                                 filterDetails

@@ -134,7 +134,11 @@ const RequestInner = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    getPlannedDetails();
+    let mounted = true;
+    if (mounted) {
+      getPlannedDetails();
+    }
+    return () => (mounted = false);
   }, [item]);
   const getPlannedDetails = () => {
     setPlannedDetails({});

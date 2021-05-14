@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { database, auth } from "firebase";
 import touron from "../api/touron";
+import axios from "axios";
+
 import AsyncStorage from "@react-native-community/async-storage";
 
 const Data = () => {
@@ -10,57 +12,50 @@ const Data = () => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [userInfo, setUserInfo] = useState({});
-
+  //  return () => {
+  //    source.cancel();
+  //  };
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       setUser(user);
     });
   }, []);
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      getCities();
-    }
-    return () => (mounted = false);
+    const source = axios.CancelToken.source();
+    const getCities = async () => {
+      const cityResponse = await touron.get(`/city/search`);
+      setCities(cityResponse.data);
+    };
+    getCities();
+    return () => {
+      source.cancel();
+    };
+    console.log(`object`, source);
   }, []);
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      getTours();
-    }
-    return () => (mounted = false);
+    const source = axios.CancelToken.source();
+    const getTours = async () => {
+      const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
+      setTour(tourResponse.data);
+    };
+
+    getTours();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
-  const getTours = async () => {
-    const tourResponse = await touron.get(`/tour?page=1&pageSize=90`);
-    setTour(tourResponse.data);
-  };
-
-  const getCountries = async () => {
-    const countryResponse = await touron.get(`/country`);
-    setCountries(countryResponse.data);
-  };
-  const getCities = async () => {
-    const cityResponse = await touron.get(`/city`);
-    setCities(cityResponse.data);
-  };
-
-  const getToken = async () => {
-    try {
-      const data = await AsyncStorage.getItem("userToken");
-      const userToken = JSON.parse(data);
-      if (userToken) {
-        setIsLoggedIn(true);
-        setUser(userToken);
-        getUserData(userToken.uid);
-      } else {
-        setUser(null);
-        setUserInfo({});
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    const getCountries = async () => {
+      const countryResponse = await touron.get(`/country`);
+      setCountries(countryResponse.data);
+    };
+    getCountries();
+    return () => {
+      source.cancel();
+    };
+  }, []);
 
   const getUserData = (uid) => {
     database()
@@ -78,11 +73,32 @@ const Data = () => {
 
   useEffect(() => {
     let mounted = true;
+    console.log(`mounted`, mounted);
+
     if (mounted) {
-      getToken();
-      getCountries();
+      const getToken = async () => {
+        try {
+          const data = await AsyncStorage.getItem("userToken");
+          const userToken = JSON.parse(data);
+          if (userToken) {
+            setIsLoggedIn(true);
+            setUser(userToken);
+            getUserData(userToken.uid);
+          } else {
+            setUser(null);
+            setUserInfo({});
+          }
+        } catch (e) {
+          console.log(e);
+        }
+        getToken();
+      };
+
+      return () => {
+        mounted = false;
+        console.log(`m`, mounted);
+      };
     }
-    return () => (mounted = false);
   }, []);
 
   return [

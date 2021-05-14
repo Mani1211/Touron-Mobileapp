@@ -7,22 +7,47 @@ import {
   Image,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
   Dimensions,
   ScrollView,
 } from "react-native";
+import moment from "moment";
 import { AntDesign } from "@expo/vector-icons";
 import touron from "../../api/touron";
+import HTMLView from "react-native-htmlview";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
+import axios from "axios";
+
 const BlogInnerScreen = ({ navigation, route }) => {
-  const item = route.params.item;
-  const [click, setClick] = useState(false);
+  const { title, id } = route.params;
+  const [blogid, setBlogid] = useState(id);
+  console.log(`deep Item`, title, id, blogid);
+  const [blogDetails, setBlogDetails] = useState({});
+  const [loaded, setLoaded] = useState(false);
 
   const filteredTour = async (name) => {
     const tourResponse = await touron.get(`/tour/countryname/${name}`);
     return tourResponse.data;
   };
 
+  const getBlogDetails = async () => {
+    try {
+      setLoaded(true);
+      const blogResponse = await touron.get(`/blog/edit/${blogid}`);
+      setBlogDetails(blogResponse.data);
+      setLoaded(false);
+    } catch (err) {
+      console.log(err, "ergggr");
+    }
+  };
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    getBlogDetails();
+
+    return () => source.cancel();
+  }, []);
   useEffect(() => {
     let mounted = true;
     if (mounted) {
@@ -32,333 +57,325 @@ const BlogInnerScreen = ({ navigation, route }) => {
   }, []);
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "#FFF" }}>
-      <StatusBar />
-      <View
-        style={{
-          // height: HEIGHT / 10,
-          position: "absolute",
-          zIndex: 2,
-          alignItems: "center",
-          flexDirection: "row",
-          marginTop: Platform.OS === "ios" ? 20 : 25,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("BlogHome")}>
+    <>
+      {loaded ? (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
           <View
             style={{
-              paddingLeft: 16,
+              position: "absolute",
+              zIndex: 2,
+              alignItems: "center",
+              flexDirection: "row",
+              top: 0,
+              left: 0,
+              marginTop: Platform.OS === "ios" ? 20 : 25,
             }}
           >
-            <AntDesign name="arrowleft" size={30} color="#fff" />
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <Image
-          style={{ width: WIDTH, height: HEIGHT / 3 }}
-          source={{ uri: item.imageSrc }}
-        />
-      </View>
-
-      <View
-        style={{ flexDirection: "row", alignItems: "center", paddingLeft: 10 }}
-      >
-        <Text
-          style={{
-            backgroundColor: "transparent",
-            borderColor: "black",
-            padding: 8,
-            margin: 8,
-            fontSize: 12,
-            fontFamily: "NewYorkl",
-            borderWidth: 1,
-            borderRadius: 10,
-          }}
-        >
-          {item.countryName}
-        </Text>
-        {item.cityName.length == 0 ? null : (
-          <Text
-            style={{
-              backgroundColor: "transparent",
-              borderColor: "black",
-              padding: 8,
-              margin: 8,
-              fontSize: 12,
-              fontFamily: "NewYorkl",
-              borderWidth: 1,
-              borderRadius: 10,
-            }}
-          >
-            {item.cityName[0]}
-          </Text>
-        )}
-
-        {!click ? (
-          <TouchableOpacity onPress={() => setClick(true)}>
-            {item.cityName.length > 2 ? (
-              <Text>+ {item.cityName.length - 1}</Text>
-            ) : null}
-          </TouchableOpacity>
-        ) : (
-          <>
-            {item.cityName.map((c, index) => {
-              if (index > 0) {
-                return (
-                  <Text
-                    style={{
-                      backgroundColor: "transparent",
-                      position: "relative",
-                      borderColor: "black",
-                      padding: 8,
-                      margin: 5,
-                      fontSize: 12,
-                      fontFamily: "NewYorkl",
-                      borderWidth: 1,
-                      zIndex: 10,
-                      borderRadius: 10,
-                    }}
-                  >
-                    {c}
-                  </Text>
-                );
-              }
-            })}
-            <TouchableOpacity onPress={() => setClick(false)}>
-              <View style={{ bottom: 10, zIndex: 20 }}>
-                <Text
-                  style={{
-                    padding: 3,
-                    fontSize: 20,
-                    fontFamily: "Avenir",
-                  }}
-                >
-                  X
-                </Text>
+            <TouchableOpacity
+              onPress={() => {
+                setBlogid("");
+                navigation.navigate("BlogHome");
+              }}
+            >
+              <View
+                style={{
+                  paddingLeft: 16,
+                }}
+              >
+                <AntDesign name="arrowleft" size={30} color="black" />
               </View>
             </TouchableOpacity>
-          </>
-        )}
-      </View>
-
-      <Text
-        style={{
-          fontFamily: "NewYorkl",
-
-          fontSize: 26,
-          margin: 10,
-        }}
-      >
-        {item.blogTitle}
-      </Text>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <View
-          style={{
-            marginHorizontal: 10,
-          }}
-        >
-          <Image
-            style={{ width: WIDTH / 8, height: WIDTH / 8, borderRadius: 50 }}
-            source={require("../../../assets/logo.jpeg")}
-          />
+          </View>
+          <ActivityIndicator size="large" />
         </View>
-        <Text style={{ fontFamily: "Andika", fontSize: 16 }}>
-          PUBLISHED {item.createdAt.slice(0, 10)} {"\n"}by tour On Team
-        </Text>
-      </View>
+      ) : (
+        <ScrollView style={{ flex: 1, backgroundColor: "#FFF" }}>
+          <StatusBar />
+          <View
+            style={{
+              // height: HEIGHT / 10,
+              position: "absolute",
+              zIndex: 2,
+              alignItems: "center",
+              flexDirection: "row",
+              marginTop: Platform.OS === "ios" ? 20 : 25,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                setBlogid("");
+                navigation.navigate("BlogHome");
+              }}
+            >
+              <View
+                style={{
+                  paddingLeft: 16,
+                }}
+              >
+                <AntDesign name="arrowleft" size={30} color="black" />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginBottom: 25 }}>
+            <View>
+              <Image
+                style={{
+                  width: WIDTH,
+                  height: HEIGHT / 2,
+                  borderBottomRightRadius: 30,
+                  borderBottomLeftRadius: 30,
+                }}
+                source={{ uri: blogDetails.imageSrc }}
+              />
+            </View>
+            {Object.keys(blogDetails).includes("countryName") && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingLeft: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "black",
+                    padding: 8,
+                    margin: 8,
+                    fontSize: 12,
+                    fontFamily: "NewYorkl",
+                    borderWidth: 1,
+                    borderRadius: 10,
+                  }}
+                >
+                  {blogDetails.countryName}
+                </Text>
+              </View>
+            )}
 
-      <Text
-        style={{
-          marginVertical: 10,
-          marginHorizontal: 15,
-          fontFamily: "Andika",
-          fontSize: 15,
-          lineHeight: HEIGHT / 40,
-        }}
-      >
-        {item.content}
-      </Text>
+            <Text
+              style={{
+                fontFamily: "NewYorkl",
 
-      {item.subHeading1 == "" ? null : (
-        <View style={{ margin: 10 }}>
-          <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
-            {item.subHeading1}
-          </Text>
-        </View>
-      )}
-      {item.imageSrc1 == "" ? null : (
-        <View>
-          <Image
-            style={{ width: WIDTH, height: HEIGHT / 3 }}
-            source={{ uri: item.imageSrc1 }}
-          />
-        </View>
-      )}
-      {item.content1 == "" ? null : (
-        <Text
-          style={{
-            marginVertical: 10,
-            marginHorizontal: 15,
-            fontSize: 15,
-            fontFamily: "Andika",
+                fontSize: 26,
+                margin: 10,
+              }}
+            >
+              {blogDetails.blogTitle}
+            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View
+                style={{
+                  marginHorizontal: 10,
+                }}
+              >
+                <Image
+                  style={{
+                    width: WIDTH / 7,
+                    height: WIDTH / 7,
+                    borderRadius: 50,
+                  }}
+                  source={require("../../../assets/logo.jpeg")}
+                />
+              </View>
+              <Text style={{ fontFamily: "Andika", fontSize: 16 }}>
+                PUBLISHED {moment(blogDetails.createdAt).format("MMMM Do YYYY")}
+                {"\n"}
+                by tour On Team
+              </Text>
+            </View>
+            {Object.keys(blogDetails).includes("content") &&
+            blogDetails.content.charAt(0) === "<" ? (
+              <HTMLView
+                value={blogDetails.content}
+                stylesheet={{
+                  p: {
+                    marginVertical: 10,
+                    marginHorizontal: 15,
+                    fontSize: 15,
+                    fontFamily: "Andika",
+                    lineHeight: HEIGHT / 40,
+                  },
+                  h1: {
+                    fontFamily: "Andika",
+                    color: "#fff",
+                  },
+                }}
+              />
+            ) : (
+              <Text
+                style={{
+                  marginVertical: 10,
+                  marginHorizontal: 15,
+                  fontFamily: "Andika",
+                  fontSize: 15,
+                  lineHeight: HEIGHT / 40,
+                }}
+              >
+                {blogDetails.content}
+              </Text>
+            )}
 
-            lineHeight: HEIGHT / 40,
-          }}
-        >
-          {item.content1}
-        </Text>
-      )}
+            {blogDetails.subHeading1 == "" ? null : (
+              <View style={{ margin: 10 }}>
+                <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
+                  {blogDetails.subHeading1}
+                </Text>
+              </View>
+            )}
+            {Object.keys(blogDetails).includes("imageSrc1") &&
+            blogDetails.imageSrc1.length < 10 ? null : (
+              <View>
+                <Image
+                  style={{ width: WIDTH, height: HEIGHT / 3 }}
+                  source={{ uri: blogDetails.imageSrc1 }}
+                />
+              </View>
+            )}
+            {blogDetails.content1 == "" ? null : (
+              <>
+                {Object.keys(blogDetails).includes("content1") &&
+                blogDetails.content1.charAt(0) === "<" ? (
+                  <HTMLView
+                    value={blogDetails.content1}
+                    stylesheet={{
+                      p: {
+                        marginVertical: 10,
+                        marginHorizontal: 15,
+                        fontSize: 15,
+                        fontFamily: "Andika",
+                        lineHeight: HEIGHT / 40,
+                      },
+                      h1: {
+                        fontFamily: "Andika",
+                        color: "#fff",
+                      },
+                    }}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      marginVertical: 10,
+                      marginHorizontal: 15,
+                      fontFamily: "Andika",
+                      fontSize: 15,
+                      lineHeight: HEIGHT / 40,
+                    }}
+                  >
+                    {blogDetails.content1}
+                  </Text>
+                )}
+              </>
+            )}
 
-      {item.subHeading2 == "" ? null : (
-        <View style={{ margin: 10 }}>
-          <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
-            {item.subHeading2}
-          </Text>
-        </View>
-      )}
-      {item.imageSrc2 == "" ? null : (
-        <View>
-          <Image
-            style={{ width: WIDTH, height: HEIGHT / 3 }}
-            source={{ uri: item.imageSrc2 }}
-          />
-        </View>
-      )}
-      {item.content2 == "" ? null : (
-        <Text
-          style={{
-            marginVertical: 10,
-            marginHorizontal: 15,
-            fontSize: 15,
-            fontFamily: "Andika",
+            {blogDetails.subHeading2 == "" ? null : (
+              <View style={{ margin: 10 }}>
+                <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
+                  {blogDetails.subHeading2}
+                </Text>
+              </View>
+            )}
+            {Object.keys(blogDetails).includes("imageSrc2") &&
+            blogDetails.imageSrc2.length < 10 ? null : (
+              <View>
+                <Image
+                  style={{ width: WIDTH, height: HEIGHT / 3 }}
+                  source={{ uri: blogDetails.imageSrc2 }}
+                />
+              </View>
+            )}
+            {blogDetails.content2 == "" ? null : (
+              <>
+                {Object.keys(blogDetails).includes("content2") &&
+                blogDetails.content2.charAt(0) === "<" ? (
+                  <HTMLView
+                    value={blogDetails.content2}
+                    stylesheet={{
+                      p: {
+                        marginVertical: 10,
+                        marginHorizontal: 15,
+                        fontSize: 15,
+                        fontFamily: "Andika",
+                        lineHeight: HEIGHT / 40,
+                      },
+                      h1: {
+                        fontFamily: "Andika",
+                        color: "#fff",
+                      },
+                    }}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      marginVertical: 10,
+                      marginHorizontal: 15,
+                      fontFamily: "Andika",
+                      fontSize: 15,
+                      lineHeight: HEIGHT / 40,
+                    }}
+                  >
+                    {blogDetails.content2}
+                  </Text>
+                )}
+              </>
+            )}
 
-            lineHeight: HEIGHT / 40,
-          }}
-        >
-          {item.content2}
-        </Text>
-      )}
+            {blogDetails.subHeading3 == "" ? null : (
+              <View style={{ margin: 10 }}>
+                <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
+                  {blogDetails.subHeading3}
+                </Text>
+              </View>
+            )}
+            {Object.keys(blogDetails).includes("imageSrc3") &&
+            blogDetails.imageSrc3.length < 10 ? null : (
+              <View>
+                <Image
+                  style={{ width: WIDTH, height: HEIGHT / 3 }}
+                  source={{ uri: blogDetails.imageSrc3 }}
+                />
+              </View>
+            )}
+            {blogDetails.content3 == "" ? null : (
+              <>
+                {Object.keys(blogDetails).includes("content3") &&
+                blogDetails.content3.charAt(0) === "<" ? (
+                  <HTMLView
+                    value={blogDetails.content3}
+                    stylesheet={{
+                      p: {
+                        marginVertical: 10,
+                        marginHorizontal: 15,
+                        fontSize: 15,
+                        fontFamily: "Andika",
+                        lineHeight: HEIGHT / 40,
+                      },
+                      h1: {
+                        fontFamily: "Andika",
+                        color: "#fff",
+                      },
+                    }}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      marginVertical: 10,
+                      marginHorizontal: 15,
+                      fontFamily: "Andika",
+                      fontSize: 15,
+                      lineHeight: HEIGHT / 40,
+                    }}
+                  >
+                    {blogDetails.content3}
+                  </Text>
+                )}
+              </>
+            )}
+          </View>
 
-      {item.subHeading3 == "" ? null : (
-        <View style={{ margin: 10 }}>
-          <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
-            {item.subHeading3}
-          </Text>
-        </View>
-      )}
-      {item.imageSrc3 == "" ? null : (
-        <View>
-          <Image
-            style={{ width: WIDTH, height: HEIGHT / 3 }}
-            source={{ uri: item.imageSrc3 }}
-          />
-        </View>
-      )}
-      {item.content3 == "" ? null : (
-        <Text
-          style={{
-            marginVertical: 10,
-            marginHorizontal: 15,
-            fontSize: 15,
-            fontFamily: "Andika",
-
-            lineHeight: HEIGHT / 40,
-          }}
-        >
-          {item.content3}
-        </Text>
-      )}
-
-      {item.subHeading4 == "" ? null : (
-        <View style={{ margin: 10 }}>
-          <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
-            {item.subHeading4}
-          </Text>
-        </View>
-      )}
-      {item.imageSrc4 == "" ? null : (
-        <View>
-          <Image
-            style={{ width: WIDTH, height: HEIGHT / 3 }}
-            source={{ uri: item.imageSrc4 }}
-          />
-        </View>
-      )}
-      {item.content4 == "" ? null : (
-        <Text
-          style={{
-            marginVertical: 10,
-            marginHorizontal: 15,
-            fontSize: 15,
-            fontFamily: "Andika",
-
-            lineHeight: HEIGHT / 40,
-          }}
-        >
-          {item.content4}
-        </Text>
-      )}
-
-      {item.subHeading4 == "" ? null : (
-        <View style={{ margin: 10 }}>
-          <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
-            {item.subHeading4}
-          </Text>
-        </View>
-      )}
-      {item.imageSrc5 == "" ? null : (
-        <View>
-          <Image
-            style={{ width: WIDTH, height: HEIGHT / 3 }}
-            source={{ uri: item.imageSrc5 }}
-          />
-        </View>
-      )}
-      {item.content5 == "" ? null : (
-        <Text
-          style={{
-            marginVertical: 10,
-            marginHorizontal: 15,
-            fontSize: 15,
-            fontFamily: "Andika",
-
-            lineHeight: HEIGHT / 40,
-          }}
-        >
-          {item.content5}
-        </Text>
-      )}
-
-      {item.subHeading6 == "" && item.content6 == "" ? null : (
-        <View style={{ margin: 10 }}>
-          <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
-            {item.subHeading6}
-          </Text>
-        </View>
-      )}
-      {item.imageSrc6 == "" ? null : (
-        <View>
-          <Image
-            style={{ width: WIDTH, height: HEIGHT / 3 }}
-            source={{ uri: item.imageSrc6 }}
-          />
-        </View>
-      )}
-      {item.content6 == "" ? null : (
-        <Text
-          style={{
-            marginVertical: 10,
-            marginHorizontal: 15,
-            fontSize: 15,
-            lineHeight: HEIGHT / 40,
-          }}
-        >
-          {item.content6}
-        </Text>
-      )}
-
-      <View
+          {/* <View
         style={{
           padding: 5,
           paddingLeft: 10,
@@ -376,10 +393,10 @@ const BlogInnerScreen = ({ navigation, route }) => {
             paddingBottom: 20,
           }}
         >
-          Explore Tours in {item.countryName}
+          Explore Tours in {blogDetails.countryName}
         </Text>
         <FlatList
-          data={filteredTour(item.countryName)}
+          data={filteredTour(blogDetails.countryName)}
           showsHorizontalScrollIndicator={false}
           horizontal
           keyExtractor={(item) => item._id}
@@ -423,8 +440,10 @@ const BlogInnerScreen = ({ navigation, route }) => {
             );
           }}
         />
-      </View>
-    </ScrollView>
+      </View> */}
+        </ScrollView>
+      )}
+    </>
   );
 };
 

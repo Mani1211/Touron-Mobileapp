@@ -2,10 +2,10 @@ import { Dimensions, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 import SubApp from "./SubApp";
 import * as Font from "expo-font";
-import { Surface } from "react-native-paper";
+import GettingStartedScreen from "./src/Screens/AuthScreens/GettingStartedScreen";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
@@ -31,36 +31,46 @@ const App = () => {
         PlaylistScript: require("./assets/fonts/PlaylistScript.otf"),
         Avenir: require("./assets/fonts/AvenirLTStd-Black.otf"),
         NewYorkl: require("./assets/fonts/NewYorkLargeBlack.otf"),
-      }).then(() => setAppLoading(false));
+      }).then(() => {
+        setAppLoading(false);
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchFont();
+    let mounted = true;
+    if (mounted) {
+      fetchFont();
+    }
+    return () => (mounted = false);
   });
 
-  if (appLoading) {
-    return (
-      <Surface
-        style={{
-          backgroundColor: "#fff",
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          elevation: 20,
-        }}
-      >
-        <Image
-          source={require("./assets/playstore.png")}
-          style={{ width: WIDTH, height: HEIGHT / 2 }}
-        />
-      </Surface>
-    );
-  }
+  // if (appLoading) {
+  //   return (
+  //     <Surface
+  //       style={{
+  //         backgroundColor: "#fff",
+  //         flex: 1,
+  //         alignItems: "center",
+  //         justifyContent: "center",
+  //         elevation: 20,
+  //       }}
+  //     >
+  //       <Image
+  //         source={require("./assets/playstore.png")}
+  //         style={{ width: WIDTH, height: HEIGHT / 2 }}
+  //       />
+  //     </Surface>
+  //   );
+  // }
+  // if (!appLoading) {
+  //   <SubApp />;
+  // }
 
-  return <SubApp />;
+  return <GettingStartedScreen />;
+  // return <>{!appLoading && <SubApp />}</>;
 };
 
 export default App;

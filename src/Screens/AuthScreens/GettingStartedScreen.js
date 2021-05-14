@@ -1,25 +1,46 @@
-import React from "react";
-import { StyleSheet, View, Image, Dimensions, Text } from "react-native";
+import React, { useState, useRef } from "react";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  Animated,
+  Dimensions,
+  Text,
+  FlatList,
+  useWindowDimensions,
+} from "react-native";
+
 import AppIntroSlider from "react-native-app-intro-slider";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 
 const GettingStartedScreen = ({ navigation }) => {
+  const [currentIndex, setCurrentIndex] = useState(2);
+  console.log(`currentIndex`, currentIndex);
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+  const slidesRef = useRef(null);
+  const viewableItemChanged = useRef(({ viewableItems }) => {
+    console.log(`item`, viewableItems);
+    setCurrentIndex(viewableItems[0].index);
+  }).current;
+  const { width, height } = useWindowDimensions();
   const slides = [
     {
-      key: 1,
+      key: "1",
       image: require("../../../assets/intros/1.png"),
     },
     {
-      key: 2,
+      key: "2",
       image: require("../../../assets/intros/2.png"),
     },
     {
-      key: 3,
+      key: "3",
       image: require("../../../assets/intros/3.png"),
     },
     {
-      key: 4,
+      key: "4",
       image: require("../../../assets/intros/4.png"),
     },
   ];
@@ -51,12 +72,13 @@ const GettingStartedScreen = ({ navigation }) => {
     );
   };
   const _onDone = () => {
-    navigation.navigate("HomeDrawer");
+    // navigation.navigate("HomeDrawer");
+    console.log(`clicked`);
   };
 
   return (
     <>
-      <AppIntroSlider
+      {/* <AppIntroSlider
         renderItem={_renderItem}
         keyExtractor={(item) => item.key.toString()}
         renderDoneButton={_renderDoneButton}
@@ -71,7 +93,78 @@ const GettingStartedScreen = ({ navigation }) => {
         activeDotStyle={{
           backgroundColor: "#ff6b81",
         }}
-      />
+      /> */}
+      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+        <FlatList
+          // onViewableItemsChanged={(d) => console.log(`d`, d)}
+          data={slides}
+          key={(item, index) => item.key}
+          renderItem={({ item }) => (
+            <View>
+              <Image
+                source={item.image}
+                resizeMode="cover"
+                style={{ height: height * 0.8, width: width }}
+              />
+            </View>
+          )}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          scrollEventThrottle={32}
+          onScroll={
+            new Animated.event(
+              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              { useNativeDriver: false }
+            )
+          }
+          bounces={true}
+          onViewableItemsChanged={viewableItemChanged}
+          viewabilityConfig={viewConfig}
+          ref={slidesRef}
+        />
+        {currentIndex === slides.length - 1 && (
+          <TouchableOpacity onPress={_onDone}>
+            <View
+              style={{
+                marginTop: 20,
+                borderRadius: 5,
+                paddingHorizontal: 25,
+                paddingVertical: 10,
+                backgroundColor: "#ff6b81",
+              }}
+            >
+              <Text
+                style={{ color: "#fff", fontFamily: "Andika", fontSize: 20 }}
+              >
+                Get Started
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        <View style={{ marginTop: 20, flexDirection: "row", height: 64 }}>
+          {slides.map((s, i) => {
+            const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
+            const dotWidth = scrollX.interpolate({
+              inputRange,
+              outputRange: [10, 20, 10],
+              extrapolate: "clamp",
+            });
+            const opacity = scrollX.interpolate({
+              inputRange,
+              outputRange: [0.3, 1, 0.3],
+              extrapolate: "clamp",
+            });
+
+            return (
+              <Animated.View
+                style={[styles.dot, { width: dotWidth, opacity }]}
+                key={i.toString()}
+              ></Animated.View>
+            );
+          })}
+        </View>
+      </View>
     </>
   );
 };
@@ -79,6 +172,12 @@ const GettingStartedScreen = ({ navigation }) => {
 export default GettingStartedScreen;
 
 const styles = new StyleSheet.create({
+  dot: {
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: "#ff6b81",
+    marginHorizontal: 8,
+  },
   loginButton: {
     marginVertical: 10,
     backgroundColor: "#fff",

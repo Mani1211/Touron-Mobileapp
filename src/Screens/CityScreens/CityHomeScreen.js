@@ -15,6 +15,7 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import touron from "../../api/touron";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
+import axios from "axios";
 
 const CityHomeScreen = ({ navigation, route }) => {
   const { cities } = useContext(AuthContext);
@@ -50,7 +51,10 @@ const CityHomeScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+    let source = axios.CancelToken.source();
     getCity(), showLoader();
+
+    return () => source.cancel();
   }, []);
 
   const search = () => {

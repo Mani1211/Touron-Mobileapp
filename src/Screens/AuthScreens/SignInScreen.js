@@ -124,7 +124,7 @@ function SignInScreen({ navigation }) {
         setUser(user.user);
         setLoaded(false);
         storeToken(user.user);
-        updateUserToken(user.user);
+        // updateUserToken(user.user);
         getUserData(user.user.uid);
         setEmail("");
         setPassword("");

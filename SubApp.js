@@ -21,7 +21,49 @@ import { AuthContext } from "./src/context/AuthContext";
 import Data from "./src/Data/Data";
 const Drawer = createDrawerNavigator();
 
+import * as Linking from "expo-linking";
+
+const prefix = Linking.makeUrl("/");
+
 const SubApp = () => {
+  const linking = {
+    prefixes: [prefix],
+    // prefixes: [
+    //   "https://www.touron.in",
+    //   "https://touron.in",
+    //   "http://touron.in",
+    //   "http://www.touron.in",
+    // ],
+    config: {
+      screens: {
+        AboutUs: "about",
+        HomeDrawer: {
+          screens: {
+            Home: {
+              screens: {
+                Planned: "planned-tour",
+                Surprise: "surprise-tour",
+                Road: "roadtrip-tour",
+                Luxury: "luxury-tour",
+                Honeymoon: "honeymoon-tour",
+                Wildlife: "wildlife-tour",
+              },
+            },
+          },
+        },
+        HomeDrawer: {
+          screens: {
+            Blogs: {
+              screens: {
+                BlogInner: "blogdetails/:title/:id",
+                BlogHome: "blogs",
+              },
+            },
+          },
+        },
+      },
+    },
+  };
   const [
     user,
     setUser,
@@ -32,9 +74,11 @@ const SubApp = () => {
     cities,
     countries,
     tours,
+    promotions,
   ] = Data();
+
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <AuthContext.Provider
         value={{
           isLoggedIn,
@@ -46,6 +90,7 @@ const SubApp = () => {
           tours,
           cities,
           countries,
+          promotions,
         }}
       >
         <Drawer.Navigator

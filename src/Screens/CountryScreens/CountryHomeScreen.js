@@ -13,6 +13,7 @@ import { Feather } from "@expo/vector-icons";
 import touron from "../../api/touron";
 import { AuthContext } from "../../context/AuthContext";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
+import axios from "axios";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -29,8 +30,11 @@ const CountryHomeScreen = ({ navigation }) => {
     }, 500);
   };
   useEffect(() => {
+    let source = axios.CancelToken.source();
     getCountry();
     showLoader();
+
+    return () => source.cancel();
   }, []);
 
   const getCountry = async () => {

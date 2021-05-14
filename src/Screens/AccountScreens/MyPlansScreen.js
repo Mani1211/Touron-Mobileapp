@@ -39,7 +39,11 @@ const MyPlansScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getUserPlans();
+    let mounted = true;
+    if (mounted) {
+      getUserPlans();
+    }
+    return () => (mounted = false);
   }, [isFocused]);
   return (
     <View

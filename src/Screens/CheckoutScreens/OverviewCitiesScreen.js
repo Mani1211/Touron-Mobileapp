@@ -27,11 +27,13 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
+  console.log(`totalDays`, totalDays);
   const calculateTotalDays = () => {
     let count = 0;
     selectedCity.forEach((c) => {
       return (count = count + c.days * 1);
     });
+    console.log(`count`, count);
     return count;
   };
 
@@ -230,8 +232,7 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
                   <Image
                     style={styles.image}
                     source={{
-                      uri:
-                        "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg",
+                      uri: "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg",
                     }}
                   />
                   <View style={styles.personContainer}>
@@ -268,8 +269,7 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
                   <Image
                     style={styles.image}
                     source={{
-                      uri:
-                        "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg",
+                      uri: "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg",
                     }}
                   />
                   <View style={styles.personContainer}>

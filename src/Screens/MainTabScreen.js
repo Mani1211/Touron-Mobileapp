@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Platform, Dimensions } from "react-native";
+import { Button, View, Text, Platform, Dimensions } from "react-native";
 import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./HomeScreens/HomeScreen";
 import PlannedTourScreen from "./CategoryScreens/PlannedTourScreen";
@@ -244,29 +244,47 @@ const BlogStackScreen = () => {
 const MainTabScreen = () => (
   <Tab.Navigator
     tabBarOptions={{
-      labelStyle: {
-        fontFamily: "Andika",
-        fontSize: 14,
-      },
+      showLabel: false,
+
       style: {
         backgroundColor: "#fff",
-        padding: Platform.OS === "ios" ? 0 : 10,
-        paddingBottom: Platform.OS === "ios" ? 10 : 0,
-        marginBottom: Platform.OS === "ios" ? 20 : 0,
-        height: 65,
+        position: "absolute",
+        height: 80,
+        bottom: 10,
+        left: 10,
+        borderRadius: 25,
+        right: 10,
       },
       keyboardHidesTabBar: true,
     }}
+    //   labelStyle: {
+    //     fontFamily: "Andika",
+    //     fontSize: 14,
+    //   },
+    //   style: {
+    //     backgroundColor: "#fff",
+    //     padding: Platform.OS === "ios" ? 0 : 10,
+    //     paddingBottom: Platform.OS === "ios" ? 10 : 0,
+    //     marginBottom: Platform.OS === "ios" ? 20 : 0,
+    //     height: 65,
+    //   },
+    //   keyboardHidesTabBar: true,
+    // }}
   >
     <Tab.Screen
       options={{
-        tabBarIcon: ({ color }) => (
-          <Ionicons
-            name="ios-home"
-            size={24}
-            color={color}
-            style={{ padding: 10 }}
-          />
+        tabBarIcon: ({ color, focused }) => (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Ionicons name="ios-home" size={24} color={color} />
+            <Text
+              style={{
+                color: color,
+                fontFamily: "Andika",
+              }}
+            >
+              Home
+            </Text>
+          </View>
         ),
       }}
       name="Home"
@@ -275,22 +293,85 @@ const MainTabScreen = () => (
     <Tab.Screen
       options={{
         tabBarIcon: ({ color }) => (
-          <Surface
+          <View
             style={{
-              elevation: 5,
-              backgroundColor: "#fff",
-              borderRadius: 50,
               justifyContent: "center",
               alignItems: "center",
-              zIndex: 5,
-              height: WIDTH / 7,
-              width: WIDTH / 7,
-              marginBottom: Platform.OS === "ios" ? 35 : 50,
+              position: "relative",
             }}
           >
-            <FontAwesome name="paint-brush" size={24} color={color} />
-          </Surface>
-          // <MaterialIcons name="flight-takeoff" size={24} color={color} />
+            {/* <Surface
+              style={{
+                elevation: 5,
+                backgroundColor: "#fff",
+                borderRadius: 50,
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 5,
+                height: WIDTH / 7,
+                width: WIDTH / 7,
+                position: "absolute",
+                bottom: 10,
+                marginBottom: Platform.OS === "ios" ? 35 : 10,
+              }}
+            > */}
+            <View
+              style={{
+                backgroundColor: "#fff",
+                elevation: 10,
+                padding: 10,
+                bottom: 30,
+                borderRadius: 30,
+                height: 60,
+                width: 60,
+                // marginBottom: 30,
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+              }}
+            >
+              <FontAwesome name="paint-brush" size={24} color={color} />
+            </View>
+            {/* </Surface> */}
+            {/* <FontAwesome name="paint-brush" size={24} color={color} /> */}
+
+            <Text
+              style={{
+                color: color,
+                fontFamily: "Andika",
+                marginTop: 20,
+              }}
+            >
+              PIY
+            </Text>
+          </View>
+          // <>
+          //   <Surface
+          //     style={{
+          //       elevation: 5,
+          //       backgroundColor: "#fff",
+          //       borderRadius: 50,
+          //       justifyContent: "center",
+          //       alignItems: "center",
+          //       zIndex: 5,
+          //       height: WIDTH / 7,
+          //       width: WIDTH / 7,
+          //       // position: "absolute",
+          //       // bottom: 40,
+          //       marginBottom: Platform.OS === "ios" ? 35 : 30,
+          //     }}
+          //   >
+          //     <FontAwesome name="paint-brush" size={24} color={color} />
+          //   </Surface>
+          //   <Text
+          //     style={{
+          //       color: color,
+          //       fontFamily: "Andika",
+          //     }}
+          //   >
+          //     Blogs
+          //   </Text>
+          // </>
         ),
       }}
       name="PIY"
@@ -299,7 +380,18 @@ const MainTabScreen = () => (
     <Tab.Screen
       options={{
         tabBarIcon: ({ color }) => (
-          <FontAwesome name="book" size={24} color={color} />
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <FontAwesome name="book" size={24} color={color} />
+
+            <Text
+              style={{
+                color: color,
+                fontFamily: "Andika",
+              }}
+            >
+              Blogs
+            </Text>
+          </View>
         ),
       }}
       name="Blogs"

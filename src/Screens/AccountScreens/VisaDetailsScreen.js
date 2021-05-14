@@ -45,7 +45,11 @@ const VisaDetailsScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getVisaRequests();
+    let mounted = true;
+    if (mounted) {
+      getVisaRequests();
+    }
+    return () => (mounted = false);
   }, []);
   const search = () => {
     if (visa.length > 0) {

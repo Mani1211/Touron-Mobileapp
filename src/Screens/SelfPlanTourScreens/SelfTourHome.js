@@ -20,6 +20,7 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 import { SelfTourContext } from "../../context/ SelfTourContext";
+import axios from "axios";
 
 const SelfTourHome = ({
   navigation,
@@ -50,7 +51,9 @@ const SelfTourHome = ({
   };
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     getTour(selectedCityNames[active]);
+    return () => source.cancel();
   }, []);
 
   return (

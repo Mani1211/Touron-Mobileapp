@@ -18,10 +18,14 @@ const SelfPlanningScreen = ({ navigation }) => {
   const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigation.replace("SignInScreen");
+    let mounted = true;
+    if (mounted) {
+      if (!isLoggedIn) {
+        navigation.replace("SignInScreen");
+      }
     }
-  });
+    return () => (mounted = false);
+  }, []);
   return (
     <ScrollView style={styles.container}>
       <View style={{ marginTop: HEIGHT / 12 }}>
@@ -34,8 +38,7 @@ const SelfPlanningScreen = ({ navigation }) => {
         <View style={styles.imageContainer}>
           <Image
             source={{
-              uri:
-                "https://image.freepik.com/free-vector/visual-data-concept-illustration_114360-1713.jpg",
+              uri: "https://image.freepik.com/free-vector/visual-data-concept-illustration_114360-1713.jpg",
             }}
             style={{ height: HEIGHT / 3.2, width: 230, marginTop: 20 }}
           />
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 15,
+    marginVertical: 20,
     borderRadius: 10,
   },
   buttonText: {

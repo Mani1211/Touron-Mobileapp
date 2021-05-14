@@ -35,7 +35,11 @@ const MyVisaRequestsScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getUserVisaRequest();
+    let mounted = true;
+    if (mounted) {
+      getUserVisaRequest();
+    }
+    return () => (mounted = false);
   }, []);
 
   const renderScreen = () => {

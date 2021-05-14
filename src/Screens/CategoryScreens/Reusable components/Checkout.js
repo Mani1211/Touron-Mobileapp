@@ -32,8 +32,12 @@ const Checkout = ({
   const { userInfo } = useContext(AuthContext);
 
   useEffect(() => {
-    setName(userInfo.name);
-    setNumber(userInfo.phoneNumber);
+    let mounted = true;
+    if (mounted) {
+      setName(userInfo.name);
+      setNumber(userInfo.phoneNumber);
+    }
+    return () => (mounted = false);
   }, []);
 
   const [error, setError] = useState("");

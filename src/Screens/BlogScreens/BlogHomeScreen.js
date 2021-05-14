@@ -7,7 +7,6 @@ import {
   Platform,
   Dimensions,
   Image,
-  TouchableWithoutFeedback,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
@@ -18,18 +17,25 @@ import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-const BlogHomeScreen = ({ navigation }) => {
+import HTMLView from "react-native-htmlview";
+import axios from "axios";
+
+const BlogHomeScreen = ({ navigation, route }) => {
   const [blog, setBlog] = useState([]);
   const [loaded, setLoaded] = useState(true);
   const [blogloaded, setBlogLoaded] = useState(true);
-  const [pageSize, setpageSize] = useState(40);
+  const [pageSize, setpageSize] = useState(15);
+  const [page, setPage] = useState(1);
+  // console.log(`page`, page);
+  // console.log(`pageSize`, pageSize);
   const getBlog = async () => {
-    setBlogLoaded(true);
+    // console.log(`pagnm be`, page);
     try {
       const blogResponse = await touron.get(
-        `/blog?page=1&pageSize=${pageSize}`
+        `/blog/search?page=${page}&pageSize=${pageSize}`
       );
-      setBlog(blogResponse.data.reverse());
+      setBlog([...blog, ...blogResponse.data]);
+      // console.log(`object`, blogResponse.data);
       setBlogLoaded(false);
       setLoaded(false);
     } catch (err) {
@@ -38,11 +44,17 @@ const BlogHomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     getBlog();
-  }, []);
+    return () => {
+      setpageSize(15);
+      setPage(1);
+      source.cancel();
+    };
+  }, [page]);
 
   return (
-    <View
+    <ScrollView
       style={{
         backgroundColor: "#FFF",
         flex: 1,
@@ -55,7 +67,7 @@ const BlogHomeScreen = ({ navigation }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          marginTop: 30,
+          marginTop: Platform.OS === "android" ? 30 : 60,
           marginLeft: 20,
         }}
       >
@@ -71,204 +83,268 @@ const BlogHomeScreen = ({ navigation }) => {
       </View>
       {loaded ? (
         <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            height: HEIGHT,
+          }}
         >
           <ActivityIndicator size="large" />
         </View>
       ) : (
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            marginVertical: 30,
-            paddingLeft: 20,
-          }}
-        >
-          <FlatList
-            data={blog}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item, index }) => {
-              if (index < 11)
+        <>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              marginVertical: 30,
+              paddingLeft: 20,
+            }}
+          >
+            <FlatList
+              data={blog}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item, index }) => {
+                if (index < 6)
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("BlogInner", {
+                          title: item.blogTitle,
+                          id: item._id,
+                        })
+                      }
+                    >
+                      <Surface
+                        style={{
+                          width: WIDTH * 0.8,
+                          marginHorizontal: 10,
+                          marginVertical: 5,
+                          borderRadius: 20,
+                          elevation: 5,
+                          height: HEIGHT / 2.5,
+                        }}
+                      >
+                        <View style={{ position: "relative" }}>
+                          <ProgressiveImage
+                            style={{
+                              height: HEIGHT / 2.5,
+                              width: WIDTH * 0.8,
+                              borderRadius: 15,
+                            }}
+                            resizeMode="cover"
+                            source={{ uri: item.imageSrc }}
+                          />
+                        </View>
+                        <View
+                          style={{
+                            position: "absolute",
+                            bottom: 0,
+                            backgroundColor: "#0006",
+                            borderBottomRightRadius: 15,
+                            borderBottomLeftRadius: 15,
+                            width: WIDTH * 0.8,
+                            height: HEIGHT / 9,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontFamily: "NewYorkl",
+                              marginHorizontal: 10,
+                              color: "#fff",
+                              marginTop: 4,
+                            }}
+                          >
+                            {item.blogTitle}
+                          </Text>
+                          <View style={{ marginHorizontal: 10 }}>
+                            {Platform.OS === "ios" ? (
+                              <>
+                                {Object.keys(item).includes("content") &&
+                                item.content.charAt(0) === "<" ? (
+                                  <HTMLView
+                                    value={item.content.slice(0, 45)}
+                                    stylesheet={{
+                                      p: {
+                                        fontSize: 14,
+                                        padding: 0,
+                                        fontFamily: "Andika",
+                                        color: "#fff",
+                                      },
+                                    }}
+                                  />
+                                ) : (
+                                  <Text
+                                    style={{
+                                      fontSize: 14,
+                                      fontFamily: "Andika",
+                                      color: "#fff",
+                                      padding: 0,
+                                    }}
+                                  >
+                                    {item.content.slice(0, 105)}...
+                                  </Text>
+                                )}
+                              </>
+                            ) : (
+                              <>
+                                {Object.keys(item).includes("content") &&
+                                item.content.charAt(0) === "<" ? (
+                                  <HTMLView
+                                    value={item.content.slice(0, 45)}
+                                    stylesheet={{
+                                      p: {
+                                        fontSize: 14,
+                                        padding: 0,
+                                        fontFamily: "Andika",
+                                        color: "#fff",
+                                      },
+                                    }}
+                                  />
+                                ) : (
+                                  <Text
+                                    style={{
+                                      fontSize: 14,
+                                      fontFamily: "Andika",
+                                      color: "#fff",
+                                      padding: 0,
+                                    }}
+                                  >
+                                    {item.content.slice(0, 75)}...
+                                  </Text>
+                                )}
+                              </>
+                            )}
+                          </View>
+                        </View>
+                      </Surface>
+                    </TouchableOpacity>
+                  );
+              }}
+            />
+          </View>
+          <View
+            style={{
+              width: WIDTH * 0.5,
+              paddingHorizontal: 25,
+              paddingBottom: 15,
+              // marginBottom: 80,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Avenir",
+                fontSize: 25,
+                paddingVertical: 10,
+              }}
+            >
+              Popular
+            </Text>
+
+            {blog.map((item, index) => {
+              if (index > 6)
                 return (
-                  <TouchableWithoutFeedback
+                  <TouchableOpacity
+                    key={index}
                     onPress={() =>
-                      navigation.navigate("BlogInner", { item: item })
+                      navigation.navigate("BlogInner", {
+                        title: item.blogTitle,
+                        id: item._id,
+                      })
                     }
                   >
-                    <Surface
+                    <View
                       style={{
                         width: WIDTH * 0.8,
-                        marginHorizontal: 10,
-                        marginVertical: 5,
-                        borderRadius: 20,
-                        elevation: 5,
-                        height: HEIGHT / 2.5,
+                        // flexWrap: "wrap",
+                        flexDirection: "row",
+                        marginTop: 20,
+                        alignItems: "center",
+                        borderBottomColor: "#f2f2f2",
+                        borderBottomWidth: 2,
+                        paddingBottom: 20,
                       }}
                     >
-                      <View style={{ position: "relative" }}>
-                        <ProgressiveImage
+                      <View>
+                        <Image
                           style={{
-                            height: HEIGHT / 2.5,
-                            width: WIDTH * 0.8,
-                            borderRadius: 15,
+                            width: 75,
+                            height: 75,
+                            borderRadius: 10,
+                            marginRight: 20,
                           }}
-                          resizeMode="cover"
                           source={{ uri: item.imageSrc }}
                         />
                       </View>
-                      <View
-                        style={{
-                          position: "absolute",
-                          bottom: 0,
-                          backgroundColor: "#0006",
-                          borderBottomRightRadius: 15,
-                          borderBottomLeftRadius: 15,
-                          width: WIDTH * 0.8,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            fontSize: 15,
-                            fontFamily: "NewYorkl",
-                            marginHorizontal: 10,
-                            color: "#fff",
-                            marginTop: 4,
-                          }}
+                      <View>
+                        <Text style={{ fontSize: 15 }}>{item.blogTitle}</Text>
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
                         >
-                          {item.blogTitle}
-                        </Text>
-                        <View style={{ marginHorizontal: 10 }}>
-                          {Platform.OS === "ios" ? (
-                            <Text
-                              style={{
-                                fontSize: 14,
-                                fontFamily: "Andika",
-                                color: "#fff",
-                              }}
-                            >
-                              {item.content.slice(0, 100)}...
-                            </Text>
-                          ) : (
-                            <Text
-                              style={{
-                                fontSize: 14,
-                                fontFamily: "Andika",
-                                color: "#fff",
-                              }}
-                            >
-                              {item.content.slice(0, 45)}...
-                            </Text>
-                          )}
+                          <MaterialIcons name="timer" size={24} color="black" />
+                          <Text
+                            style={{
+                              fontFamily: "Andika",
+                              fontSize: 16,
+                              paddingHorizontal: 5,
+                            }}
+                          >
+                            Read More
+                          </Text>
                         </View>
                       </View>
-                    </Surface>
-                  </TouchableWithoutFeedback>
+                    </View>
+                  </TouchableOpacity>
                 );
-            }}
-          />
-        </View>
-      )}
-      <View style={{ paddingHorizontal: 25 }}>
-        <Text
-          style={{ fontFamily: "Avenir", fontSize: 25, paddingVertical: 10 }}
-        >
-          Popular
-        </Text>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {blog.map((item, index) => {
-            if (index > 11)
-              return (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() =>
-                    navigation.navigate("BlogInner", { item: item })
-                  }
-                >
+            })}
+          </View>
+
+          {loaded ? null : (
+            <TouchableOpacity
+              onPress={() => {
+                setBlogLoaded(true);
+                setPage(page + 1);
+                setpageSize(pageSize + 15);
+              }}
+            >
+              <View style={{ margin: 10, width: WIDTH, alignItems: "center" }}>
+                {blogloaded ? (
                   <View
                     style={{
-                      flexDirection: "row",
-                      marginTop: 20,
-                      // justifyContent: "space-between",
-                      alignItems: "center",
-                      borderBottomColor: "#f2f2f2",
-                      borderBottomWidth: 2,
-                      paddingBottom: 20,
+                      backgroundColor: "#95a5a6",
+                      paddingHorizontal: 40,
+                      paddingVertical: 10,
+                      borderRadius: 20,
+                      marginBottom: 30,
                     }}
                   >
-                    <View>
-                      <Image
-                        style={{
-                          width: 75,
-                          height: 75,
-                          borderRadius: 10,
-                          marginRight: 20,
-                        }}
-                        source={{ uri: item.imageSrc }}
-                      />
-                    </View>
-                    <View>
-                      <Text style={{ fontSize: 18 }}>{item.blogTitle}</Text>
-                      <View
-                        style={{ flexDirection: "row", alignItems: "center" }}
-                      >
-                        <MaterialIcons name="timer" size={24} color="black" />
-                        <Text
-                          style={{
-                            fontFamily: "Andika",
-                            fontSize: 16,
-                            paddingHorizontal: 5,
-                          }}
-                        >
-                          Read More
-                        </Text>
-                      </View>
-                    </View>
+                    <ActivityIndicator color="white" />
                   </View>
-                </TouchableOpacity>
-              );
-          })}
-        </ScrollView>
-      </View>
-
-      {loaded ? null : (
-        <TouchableOpacity
-          onPress={() => {
-            setpageSize(pageSize + 10);
-            getBlog();
-          }}
-        >
-          <View style={{ margin: 10, width: WIDTH, alignItems: "center" }}>
-            {blogloaded ? (
-              <View
-                style={{
-                  backgroundColor: "#95a5a6",
-                  paddingHorizontal: 40,
-                  paddingVertical: 10,
-                  borderRadius: 20,
-                }}
-              >
-                <ActivityIndicator color="white"></ActivityIndicator>
+                ) : (
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      backgroundColor: "#95a5a6",
+                      paddingHorizontal: 20,
+                      paddingVertical: 10,
+                      borderRadius: 20,
+                      marginBottom: 30,
+                    }}
+                  >
+                    Load More ...
+                  </Text>
+                )}
               </View>
-            ) : (
-              <Text
-                style={{
-                  textAlign: "center",
-                  backgroundColor: "#95a5a6",
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                  borderRadius: 20,
-                }}
-              >
-                Load More ...
-              </Text>
-            )}
-          </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+          )}
+        </>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

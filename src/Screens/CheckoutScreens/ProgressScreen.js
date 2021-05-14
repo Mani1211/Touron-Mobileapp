@@ -33,14 +33,18 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
     cityTourNames.push(tour);
   });
   useEffect(() => {
-    random = Math.floor((Math.random() + 4) * 345334 * Math.random());
-    const requestDate = new Date();
-    let currentYear = requestDate.getFullYear();
-    setDate(requestDate.getDate());
-    setMonth(requestDate.getMonth() + 1);
-    setYear(currentYear.toString().slice(2, 5));
-    formatedMonth = month < 10 ? "0" + month : month;
-  });
+    let mounted = true;
+    if (mounted) {
+      random = Math.floor((Math.random() + 4) * 345334 * Math.random());
+      const requestDate = new Date();
+      let currentYear = requestDate.getFullYear();
+      setDate(requestDate.getDate());
+      setMonth(requestDate.getMonth() + 1);
+      setYear(currentYear.toString().slice(2, 5));
+      formatedMonth = month < 10 ? "0" + month : month;
+    }
+    return () => (mounted = false);
+  }, []);
 
   let selectedCityNames = [];
   let specificCityTours = [];

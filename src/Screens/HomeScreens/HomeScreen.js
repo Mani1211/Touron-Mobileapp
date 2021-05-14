@@ -26,26 +26,16 @@ import { Portal, Provider } from "react-native-paper";
 import touron from "../../api/touron";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import { database } from "firebase";
+import axios from "axios";
+
 const HomeScreen = ({ navigation }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  // const [status, setStatus] = useState(true);
-  // const [networkLoader, setNetworkLoader] = useState(false);
-  // const [tour, setTour] = useState([]);
-  // const [cities, setCities] = useState([]);
-  // const [countries, setCountries] = useState([]);
   const [promotions, setPromotions] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
   const [googleStats, setGoogleStats] = useState({});
   const [activeSlide, setActiveSlide] = useState(0);
   const [activePromoSlide, setActivePromoSlide] = useState(0);
   const [selectedPromotion, setSelectedPromotion] = useState({});
   const [testimonials, setTestimonials] = useState([]);
-  console.log("activeSlide :>> ", activeSlide);
-  // const cityPage = Math.round(Math.random() * 15);
-  // const countryPage = Math.round(Math.random() * 7);
-  // const tourPage = Math.round(Math.random() * 50);
-
-  // console.log(`testimonials`, testimonials);
-
   const city = [
     {
       coordinates: {
@@ -512,12 +502,26 @@ const HomeScreen = ({ navigation }) => {
       updatedAt: "2021-03-15T11:06:02.465Z",
     },
   ];
-  // useEffect(() => {
-  //   getCounries();
-  // }, []);
 
+  const getPromotions = () => {
+    database()
+      .ref("promotion")
+      .on("value", (data) => {
+        let req = [];
+        if (data !== null) {
+          data.forEach((d) => {
+            req.push(d.val());
+          });
+        }
+        setPromotions(req.reverse());
+      });
+  };
   useEffect(() => {
-    getPromotions();
+    let mounted = true;
+    if (mounted) {
+      getPromotions();
+    }
+    return () => (mounted = false);
   }, []);
 
   const openWhatsApp = (promoText) => {
@@ -545,55 +549,23 @@ const HomeScreen = ({ navigation }) => {
         setTestimonials(req);
       });
   };
-  const getPromotions = () => {
-    database()
-      .ref("promotion")
-      .on("value", (data) => {
-        let req = [];
-        if (data !== null) {
-          data.forEach((d) => {
-            req.push(d.val());
-          });
-        }
-        setPromotions(req.reverse());
-      });
-  };
 
   const getStats = async () => {
     const tours = await touron.get("stats");
     setGoogleStats(...tours.data);
   };
   useEffect(() => {
-    getTestimonial();
+    let mounted = true;
+    if (mounted) {
+      getTestimonial();
+    }
+    return () => (mounted = false);
   }, []);
   useEffect(() => {
+    const source = axios.CancelToken.source();
     getStats();
+    return () => source.cancel();
   }, []);
-
-  // const getTours = async () => {
-  //   const tours = await touron.get(`/tour?page=${tourPage}&pageSize=10`);
-  //   setTour(tours.data);
-  // };
-  // const getCounries = async () => {
-  //   const country = await touron.get(`/country?page=${countryPage}&pageSize=6`);
-  //   setCountries(country.data);
-  // };
-  // const getCities = async () => {
-  //   const city = await touron.get(`/city?page=${cityPage}&pageSize=5`);
-  //   setCities(city.data);
-  // };
-  // const getNetwork = async () => {
-  //   setNetworkLoader(true);
-  //   const status = (await Network.getNetworkStateAsync()).isConnected;
-  //   setStatus(status);
-  //   setNetworkLoader(false);
-  // };
-
-  // useEffect(() => {
-  //   getNetwork();
-  // }, []);
-
-  const scrollX = React.useRef(new Animated.Value(0)).current;
 
   const _renderItem = ({ item, index }) => {
     return (
@@ -660,78 +632,6 @@ const HomeScreen = ({ navigation }) => {
             </Text>
           </View>
         </View>
-        {/* <View
-          style={{
-            borderColor: "#333",
-            borderWidth: Platform.OS === "ios" ? 2 : 2,
-            borderRadius: 10,
-            paddingBottom: 20,
-            marginTop: 20,
-            height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
-            marginBottom: 30,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              paddingHorizontal: 20,
-              paddingTop: 20,
-            }}
-          >
-            <Image
-              source={{ uri: item.testImage }}
-              resizeMode="cover"
-              style={{
-                height: WIDTH / 5,
-                width: WIDTH / 5,
-                borderRadius: 50,
-              }}
-            />
-            <View style={{ paddingHorizontal: 15 }}>
-              <Text
-                style={{
-                  // color: "#FFF",
-                  fontSize: 20,
-                  fontFamily: "NewYorkl",
-                }}
-              >
-                {item.name}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  // color: "#FFF",
-
-                  fontFamily: "Andika",
-                }}
-              >
-                🚀 <Text style={{ fontWeight: "bold" }}>Mission</Text> to{" "}
-                {item.tourPlace}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              // width: WIDTH,
-              padding: 10,
-              height: HEIGHT / 3,
-              overflow: "scroll",
-            }}
-          >
-            <HTMLView
-              value={item.comment}
-              stylesheet={{
-                p: {
-                  paddingLeft: 10,
-                  fontFamily: "Andika",
-                  fontSize: 13,
-                  textAlign: "center",
-                },
-              }}
-            />
-          </View>
-        </View> */}
       </>
     );
   };
@@ -972,9 +872,6 @@ const HomeScreen = ({ navigation }) => {
                 </>
               ) : (
                 <>
-                  <View>
-                    <Text>{activeSlide / testimonials.length}</Text>
-                  </View>
                   <Carousel
                     layout="default"
                     lockScrollWhileSnapping={true}
@@ -999,7 +896,6 @@ const HomeScreen = ({ navigation }) => {
                       marginTop: 0,
                       paddingTop: 0,
                       height: 7,
-                      // borderRadius: 5,
                       backgroundColor: "rgba(0, 0, 0, 0.75)",
                     }}
                   />
@@ -1126,10 +1022,18 @@ const HomeScreen = ({ navigation }) => {
                   style={{
                     alignItems: "center",
                     justifyContent: "center",
+                    width: "100%",
                     padding: 30,
                   }}
                 >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      paddingRight: 15,
+                    }}
+                  >
                     <Image
                       source={require("../../../assets/fonts/google.png")}
                       style={{ marginRight: 20 }}
@@ -1169,9 +1073,8 @@ const HomeScreen = ({ navigation }) => {
                       fontFamily: "Andika",
                     }}
                   >
-                    {" "}
-                    From -{googleStats.googleReviewCount}+ Feedbacks from our
-                    travellers
+                    From more than {googleStats.googleReviewCount}+ Feedbacks
+                    from our travellers
                   </Text>
                 </View>
 
@@ -1305,23 +1208,36 @@ const HomeScreen = ({ navigation }) => {
                     </SkeletonPlaceholder>
                   </>
                 ) : (
-                  <Carousel
-                    layout="default"
-                    autoplay={true}
-                    autoplayDelay={1000}
-                    autoplayInterval={8000}
-                    lockScrollWhileSnapping={true}
-                    loop={true}
-                    enableMomentum={false}
-                    ref={(c) => {
-                      carousel = c;
-                    }}
-                    data={testimonials}
-                    renderItem={_renderItem}
-                    sliderWidth={WIDTH * 0.9}
-                    onSnapToItem={(index) => setActiveSlide(index)}
-                    itemWidth={WIDTH * 0.9}
-                  />
+                  <>
+                    <View style={{ width: WIDTH, position: "relative" }}>
+                      <Text
+                        style={{
+                          backgroundColor: "#758283",
+                          position: "absolute",
+                          right: 40,
+                          textAlign: "right",
+                          padding: 5,
+                          paddingHorizontal: 8,
+                          borderRadius: 20,
+                          color: "#fff",
+                        }}
+                      >
+                        {activeSlide + 1} / {testimonials.length}
+                      </Text>
+                    </View>
+                    <Carousel
+                      layout="default"
+                      autoplay={false}
+                      ref={(c) => {
+                        carousel = c;
+                      }}
+                      data={testimonials}
+                      renderItem={_renderItem}
+                      sliderWidth={WIDTH * 0.9}
+                      onSnapToItem={(index) => setActiveSlide(index)}
+                      itemWidth={WIDTH * 0.9}
+                    />
+                  </>
                 )}
               </>
             </>

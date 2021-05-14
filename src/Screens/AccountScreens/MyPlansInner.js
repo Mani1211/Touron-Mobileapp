@@ -36,7 +36,11 @@ const MyPlansInner = ({ navigation, route }) => {
   const ln = item.selectedCities.length;
 
   useEffect(() => {
-    getPlannedDetails();
+    let mounted = true;
+    if (mounted) {
+      getPlannedDetails();
+    }
+    return () => (mounted = false);
   }, [item]);
   const getPlannedDetails = () => {
     setPlannedDetails({});

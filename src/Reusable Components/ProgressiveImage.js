@@ -30,7 +30,11 @@ const ProgressiveImage = ({ source, style, ...props }) => {
   };
 
   useEffect(() => {
-    changeBackground();
+    let mounted = true;
+    if (mounted) {
+      changeBackground();
+    }
+    return () => (mounted = false);
   }, []);
 
   return (

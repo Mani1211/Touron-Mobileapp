@@ -36,7 +36,11 @@ const WishListScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getSavedTours();
+    let mounted = true;
+    if (mounted) {
+      getSavedTours();
+    }
+    return () => (mounted = false);
   }, []);
 
   return (

@@ -75,7 +75,11 @@ const ProfileScreen = ({ navigation }) => {
     setLoaded(false);
   };
   useEffect(() => {
-    getUserData();
+    let mounted = true;
+    if (mounted) {
+      getUserData();
+    }
+    return () => (mounted = false);
   }, []);
 
   // const updateProfilePic = async (uri) => {
@@ -307,8 +311,7 @@ const ProfileScreen = ({ navigation }) => {
                       height: HEIGHT * 1.3,
                     }}
                     source={{
-                      uri:
-                        "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                      uri: "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                     }}
                   />
                 </View>

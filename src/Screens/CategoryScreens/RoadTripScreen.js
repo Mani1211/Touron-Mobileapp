@@ -63,19 +63,27 @@ const RoadTripScreen = ({ navigation }) => {
   let formatedMonth;
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigation.replace("SignInScreen");
+    let mounted = true;
+    if (mounted) {
+      if (!isLoggedIn) {
+        navigation.replace("SignInScreen");
+      }
     }
-  });
+    return () => (mounted = false);
+  }, []);
   useEffect(() => {
-    random = Math.floor((Math.random() + 4) * 345334);
-    const requestDate = new Date();
-    let currentYear = requestDate.getFullYear();
-    setDate(requestDate.getDate());
-    setMonth(requestDate.getMonth() + 1);
-    setYear(currentYear.toString().slice(2, 5));
-    formatedMonth = month < 10 ? "0" + month : month;
-  });
+    let mounted = true;
+    if (mounted) {
+      random = Math.floor((Math.random() + 4) * 345334);
+      const requestDate = new Date();
+      let currentYear = requestDate.getFullYear();
+      setDate(requestDate.getDate());
+      setMonth(requestDate.getMonth() + 1);
+      setYear(currentYear.toString().slice(2, 5));
+      formatedMonth = month < 10 ? "0" + month : month;
+    }
+    return () => (mounted = false);
+  }, []);
 
   const handleFromDate = (date) => {
     setFromDate(date);
@@ -214,8 +222,7 @@ const RoadTripScreen = ({ navigation }) => {
               <Image
                 style={{ height: HEIGHT / 3, width: WIDTH * 0.8 }}
                 source={{
-                  uri:
-                    "https://image.freepik.com/free-vector/build-your-program-appointment-booking_23-2148552954.jpg",
+                  uri: "https://image.freepik.com/free-vector/build-your-program-appointment-booking_23-2148552954.jpg",
                 }}
               />
             </View>
