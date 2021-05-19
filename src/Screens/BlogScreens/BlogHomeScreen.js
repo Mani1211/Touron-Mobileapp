@@ -24,12 +24,9 @@ const BlogHomeScreen = ({ navigation, route }) => {
   const [blog, setBlog] = useState([]);
   const [loaded, setLoaded] = useState(true);
   const [blogloaded, setBlogLoaded] = useState(true);
-  const [pageSize, setpageSize] = useState(15);
+  const [pageSize, setpageSize] = useState(12);
   const [page, setPage] = useState(1);
-  // console.log(`page`, page);
-  // console.log(`pageSize`, pageSize);
   const getBlog = async () => {
-    // console.log(`pagnm be`, page);
     try {
       const blogResponse = await touron.get(
         `/blog/search?page=${page}&pageSize=${pageSize}`
@@ -40,6 +37,7 @@ const BlogHomeScreen = ({ navigation, route }) => {
       setLoaded(false);
     } catch (err) {
       console.log(err, "err");
+      alert(err.message);
     }
   };
 
@@ -109,7 +107,7 @@ const BlogHomeScreen = ({ navigation, route }) => {
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => {
-                if (index < 6)
+                if (index < 5)
                   return (
                     <TouchableOpacity
                       onPress={() =>
@@ -233,7 +231,6 @@ const BlogHomeScreen = ({ navigation, route }) => {
               width: WIDTH * 0.5,
               paddingHorizontal: 25,
               paddingBottom: 15,
-              // marginBottom: 80,
             }}
           >
             <Text
@@ -247,7 +244,7 @@ const BlogHomeScreen = ({ navigation, route }) => {
             </Text>
 
             {blog.map((item, index) => {
-              if (index > 6)
+              if (index > 5)
                 return (
                   <TouchableOpacity
                     key={index}
@@ -309,10 +306,16 @@ const BlogHomeScreen = ({ navigation, route }) => {
               onPress={() => {
                 setBlogLoaded(true);
                 setPage(page + 1);
-                setpageSize(pageSize + 15);
               }}
             >
-              <View style={{ margin: 10, width: WIDTH, alignItems: "center" }}>
+              <View
+                style={{
+                  margin: 10,
+                  marginBottom: 30,
+                  width: WIDTH,
+                  alignItems: "center",
+                }}
+              >
                 {blogloaded ? (
                   <View
                     style={{
@@ -320,7 +323,7 @@ const BlogHomeScreen = ({ navigation, route }) => {
                       paddingHorizontal: 40,
                       paddingVertical: 10,
                       borderRadius: 20,
-                      marginBottom: 30,
+                      marginBottom: 100,
                     }}
                   >
                     <ActivityIndicator color="white" />
@@ -333,7 +336,7 @@ const BlogHomeScreen = ({ navigation, route }) => {
                       paddingHorizontal: 20,
                       paddingVertical: 10,
                       borderRadius: 20,
-                      marginBottom: 30,
+                      marginBottom: 100,
                     }}
                   >
                     Load More ...

@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { AuthContext } from "./../../context/AuthContext";
 import {
   StyleSheet,
   View,
@@ -11,20 +12,26 @@ import {
   useWindowDimensions,
 } from "react-native";
 
-import AppIntroSlider from "react-native-app-intro-slider";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 
 const GettingStartedScreen = ({ navigation }) => {
-  const [currentIndex, setCurrentIndex] = useState(2);
-  console.log(`currentIndex`, currentIndex);
+  const { isLoggedIn } = useContext(AuthContext);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
   const slidesRef = useRef(null);
   const viewableItemChanged = useRef(({ viewableItems }) => {
-    console.log(`item`, viewableItems);
     setCurrentIndex(viewableItems[0].index);
   }).current;
+  useEffect(() => {
+    console.log("objelknnlct");
+    if (!isLoggedIn) {
+      console.log("object");
+      // navigation.jumpTo("HomeDrawer");
+    }
+  }, []);
+
   const { width, height } = useWindowDimensions();
   const slides = [
     {
@@ -44,59 +51,22 @@ const GettingStartedScreen = ({ navigation }) => {
       image: require("../../../assets/intros/4.png"),
     },
   ];
-  const _renderItem = ({ item }) => {
-    return (
-      <View style={styles.slide}>
-        <Image
-          source={item.image}
-          resizeMode="stretch"
-          style={{ height: HEIGHT + 50, width: WIDTH }}
-        />
-      </View>
-    );
-  };
-  const _renderDoneButton = () => {
-    return (
-      <View
-        style={{
-          width: WIDTH * 0.9,
-          marginHorizontal: 10,
-          height: 50,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#51E1ED",
-        }}
-      >
-        <Text>Get Started</Text>
-      </View>
-    );
-  };
+
   const _onDone = () => {
-    // navigation.navigate("HomeDrawer");
-    console.log(`clicked`);
+    navigation.navigate("HomeDrawer");
   };
 
   return (
     <>
-      {/* <AppIntroSlider
-        renderItem={_renderItem}
-        keyExtractor={(item) => item.key.toString()}
-        renderDoneButton={_renderDoneButton}
-        data={slides}
-        onDone={_onDone}
-        nextLabel="Next"
-        doneLabel="Get Started"
-        bottomButton
-        dotStyle={{
-          backgroundColor: "#a4b0be",
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          backgroundColor: "#fff",
         }}
-        activeDotStyle={{
-          backgroundColor: "#ff6b81",
-        }}
-      /> */}
-      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+      >
         <FlatList
-          // onViewableItemsChanged={(d) => console.log(`d`, d)}
           data={slides}
           key={(item, index) => item.key}
           renderItem={({ item }) => (
@@ -127,15 +97,14 @@ const GettingStartedScreen = ({ navigation }) => {
           <TouchableOpacity onPress={_onDone}>
             <View
               style={{
-                marginTop: 20,
                 borderRadius: 5,
-                paddingHorizontal: 25,
-                paddingVertical: 10,
+                paddingHorizontal: 20,
+                paddingVertical: 6,
                 backgroundColor: "#ff6b81",
               }}
             >
               <Text
-                style={{ color: "#fff", fontFamily: "Andika", fontSize: 20 }}
+                style={{ color: "#fff", fontFamily: "Andika", fontSize: 18 }}
               >
                 Get Started
               </Text>

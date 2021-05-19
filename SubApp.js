@@ -22,6 +22,9 @@ import Data from "./src/Data/Data";
 const Drawer = createDrawerNavigator();
 
 import * as Linking from "expo-linking";
+import SignInScreen from "./src/Screens/AuthScreens/SignInScreen";
+import SignUpScreen from "./src/Screens/AuthScreens/SignUpScreen";
+import GettingStartedScreen from "./src/Screens/AuthScreens/GettingStartedScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -76,7 +79,7 @@ const SubApp = () => {
     tours,
     promotions,
   ] = Data();
-
+  console.log(`isLoggedIn`, isLoggedIn);
   return (
     <NavigationContainer linking={linking}>
       <AuthContext.Provider
@@ -108,7 +111,10 @@ const SubApp = () => {
           overlayColor={0}
           drawerContent={(props) => <DrawerContent {...props} />}
         >
-          <Drawer.Screen name="Get" component={RootStackScreen} />
+          {/* <Drawer.Screen name="Get" component={RootStackScreen} /> */}
+          {!isLoggedIn && (
+            <Drawer.Screen name="Get" component={GettingStartedScreen} />
+          )}
           <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
           <Drawer.Screen name="Profile" component={ProfileScreen} />
           <Drawer.Screen name="MyRequest" component={MyRequestScreen} />
@@ -121,7 +127,8 @@ const SubApp = () => {
           <Drawer.Screen name="Visa" component={VisaDetailsScreen} />
           <Drawer.Screen name="VisaInner" component={VisaInner} />
           <Drawer.Screen name="RequestInner" component={RequestInner} />
-          <Drawer.Screen name="MyPlanInner" component={MyPlansInner} />
+          <Drawer.Screen name="SignInScreen" component={SignInScreen} />
+          <Drawer.Screen name="SignUpScreen" component={SignUpScreen} />
           <Drawer.Screen
             options={{
               title: "About Us",

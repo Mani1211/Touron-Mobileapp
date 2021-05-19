@@ -5,7 +5,6 @@ import {
   View,
   StatusBar,
   Linking,
-  Animated,
   Modal,
   FlatList,
   ScrollView,
@@ -16,7 +15,6 @@ import {
 } from "react-native";
 import HTMLView from "react-native-htmlview";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
-import Carousel, { Pagination } from "react-native-snap-carousel";
 import Categories from "./components/CategoriesScreen";
 import ContentList from "./components/ContentList";
 import { Feather, FontAwesome } from "@expo/vector-icons";
@@ -27,13 +25,13 @@ import touron from "../../api/touron";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import { database } from "firebase";
 import axios from "axios";
+import Slider from "./../../Reusable Components/Slider";
 
 const HomeScreen = ({ navigation }) => {
   const [promotions, setPromotions] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [googleStats, setGoogleStats] = useState({});
   const [activeSlide, setActiveSlide] = useState(0);
-  const [activePromoSlide, setActivePromoSlide] = useState(0);
   const [selectedPromotion, setSelectedPromotion] = useState({});
   const [testimonials, setTestimonials] = useState([]);
   const city = [
@@ -503,6 +501,10 @@ const HomeScreen = ({ navigation }) => {
     },
   ];
 
+  const set = (s) => {
+    setActiveSlide(s);
+  };
+
   const getPromotions = () => {
     database()
       .ref("promotion")
@@ -569,70 +571,71 @@ const HomeScreen = ({ navigation }) => {
 
   const _renderItem = ({ item, index }) => {
     return (
-      <>
+      <View
+        style={{
+          width: WIDTH * 0.9,
+          marginHorizontal: 5,
+          marginTop: 20,
+          justifyContent: "center",
+          // marginBottom: 35,
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            paddingVertical: 10,
+            fontSize: 30,
+            fontFamily: "PlaylistScript",
+          }}
+        >
+          {item.tourPlace}
+        </Text>
+
         <View
           style={{
-            width: WIDTH * 0.9,
-            borderTopColor: "#E7ACAA",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Text
+          <Image
+            source={{ uri: item.testImage }}
             style={{
-              paddingVertical: 10,
-              fontSize: 30,
-              fontFamily: "PlaylistScript",
+              height: HEIGHT / 2.8,
+              width: WIDTH / 1.4,
+              borderRadius: 40,
             }}
-          >
-            {item.tourPlace}
-          </Text>
-
+          />
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              paddingTop: 30,
             }}
           >
-            <Image
-              source={{ uri: item.testImage }}
-              style={{
-                height: HEIGHT / 2.8,
-                width: WIDTH / 1.4,
-                borderRadius: 40,
+            <HTMLView
+              value={item.comment}
+              stylesheet={{
+                p: {
+                  paddingLeft: 10,
+                  fontFamily: "Andika",
+                  fontSize: 13,
+                  textAlign: "center",
+                },
               }}
             />
-            <View
-              style={{
-                paddingTop: 30,
-              }}
-            >
-              <HTMLView
-                value={item.comment}
-                stylesheet={{
-                  p: {
-                    paddingLeft: 10,
-                    fontFamily: "Andika",
-                    fontSize: 13,
-                    textAlign: "center",
-                  },
-                }}
-              />
-            </View>
-            <Text style={{ textAlign: "center", paddingTop: 20 }}>
-              {item.name}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: "Andika",
-              }}
-            >
-              🚀 <Text style={{ fontWeight: "bold" }}>Mission</Text> to{" "}
-              {item.tourPlace}
-            </Text>
           </View>
+          <Text style={{ textAlign: "center", paddingTop: 20 }}>
+            {item.name}
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "Andika",
+            }}
+          >
+            🚀 <Text style={{ fontWeight: "bold" }}>Mission</Text> to{" "}
+            {item.tourPlace}
+          </Text>
         </View>
-      </>
+      </View>
     );
   };
   const _renderPromo = ({ item, index }) => {
@@ -644,7 +647,6 @@ const HomeScreen = ({ navigation }) => {
           marginHorizontal: 5,
           marginTop: 20,
           justifyContent: "center",
-          // marginBottom: 35,
           alignItems: "center",
         }}
       >
@@ -872,32 +874,16 @@ const HomeScreen = ({ navigation }) => {
                 </>
               ) : (
                 <>
-                  <Carousel
-                    layout="default"
-                    lockScrollWhileSnapping={true}
-                    enableMomentum={false}
-                    autoplayInterval={500}
-                    autoplayDelay={1000}
-                    loop={true}
-                    ref={(c) => {
-                      carousel = c;
-                    }}
+                  <Slider
                     data={promotions}
-                    renderItem={_renderPromo}
-                    sliderWidth={WIDTH * 0.9}
-                    onSnapToItem={(index) => setActivePromoSlide(index)}
-                    itemWidth={WIDTH * 0.9}
-                  />
-                  <Pagination
-                    dotsLength={promotions.length}
-                    activeDotIndex={activePromoSlide}
                     dotStyle={{
-                      width: 30,
-                      marginTop: 0,
-                      paddingTop: 0,
-                      height: 7,
-                      backgroundColor: "rgba(0, 0, 0, 0.75)",
+                      height: 10,
+                      backgroundColor: "#8E8E8F",
+                      marginHorizontal: 10,
+                      borderRadius: 5,
                     }}
+                    showDots={true}
+                    renderItem={_renderPromo}
                   />
                 </>
               )}
@@ -1225,17 +1211,19 @@ const HomeScreen = ({ navigation }) => {
                         {activeSlide + 1} / {testimonials.length}
                       </Text>
                     </View>
-                    <Carousel
-                      layout="default"
-                      autoplay={false}
-                      ref={(c) => {
-                        carousel = c;
-                      }}
+                    <Slider
                       data={testimonials}
+                      dotStyle={{
+                        height: 10,
+                        backgroundColor: "#8E8E8F",
+                        marginHorizontal: 10,
+                        borderRadius: 5,
+                      }}
+                      setActiveSlide={(s) => {
+                        set(s);
+                      }}
+                      showDots={true}
                       renderItem={_renderItem}
-                      sliderWidth={WIDTH * 0.9}
-                      onSnapToItem={(index) => setActiveSlide(index)}
-                      itemWidth={WIDTH * 0.9}
                     />
                   </>
                 )}

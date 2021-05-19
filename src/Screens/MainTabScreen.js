@@ -273,19 +273,21 @@ const MainTabScreen = () => (
   >
     <Tab.Screen
       options={{
-        tabBarIcon: ({ color, focused }) => (
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Ionicons name="ios-home" size={24} color={color} />
-            <Text
-              style={{
-                color: color,
-                fontFamily: "Andika",
-              }}
-            >
-              Home
-            </Text>
-          </View>
-        ),
+        tabBarIcon: ({ color, focused }) => {
+          return (
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <Ionicons name="ios-home" size={24} color={color} />
+              <Text
+                style={{
+                  color: color,
+                  fontFamily: "Andika",
+                }}
+              >
+                Home
+              </Text>
+            </View>
+          );
+        },
       }}
       name="Home"
       component={HomeStackScreen}

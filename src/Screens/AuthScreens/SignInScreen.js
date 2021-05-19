@@ -124,7 +124,7 @@ function SignInScreen({ navigation }) {
         setUser(user.user);
         setLoaded(false);
         storeToken(user.user);
-        // updateUserToken(user.user);
+        updateUserToken(user.user);
         getUserData(user.user.uid);
         setEmail("");
         setPassword("");
@@ -181,18 +181,16 @@ function SignInScreen({ navigation }) {
     if (mounted) {
       registerForPushNotificationsAsync().then((token) => setExpoToken(token));
       // This listener is fired whenever a notification is received while the app is foregrounded
-      notificationListener.current = Notifications.addNotificationReceivedListener(
-        (notification) => {
+      notificationListener.current =
+        Notifications.addNotificationReceivedListener((notification) => {
           setNotification(notification);
-        }
-      );
+        });
 
       // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-      responseListener.current = Notifications.addNotificationResponseReceivedListener(
-        (response) => {
+      responseListener.current =
+        Notifications.addNotificationResponseReceivedListener((response) => {
           console.log(response);
-        }
-      );
+        });
 
       return () => {
         Notifications.removeNotificationSubscription(notificationListener);
@@ -311,8 +309,7 @@ function SignInScreen({ navigation }) {
             <ImageBackground
               style={{ width: WIDTH, height: HEIGHT, zIndex: -2 }}
               source={{
-                uri:
-                  "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                uri: "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
               }}
             />
             <View style={styles.skipButton}>
@@ -414,8 +411,7 @@ function SignInScreen({ navigation }) {
             <ImageBackground
               style={{ width: WIDTH, height: HEIGHT, zIndex: -2 }}
               source={{
-                uri:
-                  "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                uri: "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
               }}
             />
           </Animatable.View>
@@ -428,7 +424,6 @@ function SignInScreen({ navigation }) {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
-        // style={styles.container}
       >
         <>{renderForm()}</>
       </KeyboardAvoidingView>

@@ -91,8 +91,8 @@ const Data = () => {
         } catch (e) {
           console.log(e);
         }
-        getToken();
       };
+      getToken();
 
       return () => {
         mounted = false;

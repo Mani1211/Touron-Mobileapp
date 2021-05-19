@@ -198,18 +198,16 @@ function SignUpScreen({ navigation }) {
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => setExpoToken(token));
     // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current = Notifications.addNotificationReceivedListener(
-      (notification) => {
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification);
-      }
-    );
+      });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(
-      (response) => {
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
         console.log(response);
-      }
-    );
+      });
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener);
@@ -236,7 +234,7 @@ function SignUpScreen({ navigation }) {
           setIsLoggedIn(true);
           storeToken(user);
           setLoaded(false);
-          navigation.navigate("Main");
+          navigation.replace("Main");
           prevStep();
         }
       })
@@ -575,8 +573,7 @@ function SignUpScreen({ navigation }) {
               //zIndex: -2,
             }}
             source={{
-              uri:
-                "https://images.pexels.com/photos/2249602/pexels-photo-2249602.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+              uri: "https://images.pexels.com/photos/2249602/pexels-photo-2249602.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
             }}
           />
           {renderView(step)}

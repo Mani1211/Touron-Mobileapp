@@ -7,7 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/playstore.png",
     "updates": {
-      "enabled": false
+      "enabled": true
     },
     "ios": {
       "splash": {
@@ -43,15 +43,12 @@
               "scheme": "tour-on"
             }
           ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
+          "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
       "enableDangerousExperimentalLeanBuilds": true,
       "package": "com.touron.travelapp",
-      "versionCode": 25,
+      "versionCode": 26,
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",
       "permissions": [
@@ -61,9 +58,7 @@
         "WRITE_EXTERNAL_STORAGE"
       ]
     },
-    "assetBundlePatterns": [
-      "./assets/**"
-    ],
+    "assetBundlePatterns": ["./assets/**"],
     "web": {
       "favicon": "./assets/favicon.png"
     },

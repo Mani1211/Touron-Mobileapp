@@ -5,7 +5,6 @@ const HEIGHT = Dimensions.get("window").height;
 import firebase from "firebase/app";
 import SubApp from "./SubApp";
 import * as Font from "expo-font";
-import GettingStartedScreen from "./src/Screens/AuthScreens/GettingStartedScreen";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
@@ -18,8 +17,10 @@ const firebaseConfig = {
   measurementId: "G-KCPSW6WFC9",
 };
 
-if (!firebase.apps.length) {
+if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app();
 }
 
 const App = () => {
@@ -69,8 +70,8 @@ const App = () => {
   //   <SubApp />;
   // }
 
-  return <GettingStartedScreen />;
-  // return <>{!appLoading && <SubApp />}</>;
+  // return <GettingStartedScreen />;
+  return <>{!appLoading && <SubApp />}</>;
 };
 
 export default App;
