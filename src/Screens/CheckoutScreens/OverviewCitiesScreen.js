@@ -38,7 +38,7 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={{ marginBottom: 70 }}>
       <View
         style={{
           width: WIDTH * 0.9,
@@ -76,7 +76,7 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
           <View>{/* <AntDesign name="arrowright" size={28} /> */}</View>
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 1, backgroundColor: "#F1F3F6" }}>
+      <View style={{ flex: 1, backgroundColor: "#F1F3F6", paddingBottom: 40 }}>
         {selectedCity.map((item, index) => (
           <Surface style={styles.surfaces} key={index}>
             <View>

@@ -21,7 +21,7 @@ const SelfPlanningScreen = ({ navigation }) => {
     let mounted = true;
     if (mounted) {
       if (!isLoggedIn) {
-        navigation.replace("SignInScreen");
+        navigation.navigate("SignInScreen");
       }
     }
     return () => (mounted = false);

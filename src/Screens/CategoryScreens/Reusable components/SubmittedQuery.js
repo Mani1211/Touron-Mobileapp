@@ -59,7 +59,7 @@ const SubmittedQuery = ({ navigation, type }) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.replace("Main")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
             <View style={{ alignItems: "center", margin: 10 }}>
               <Text
                 style={{

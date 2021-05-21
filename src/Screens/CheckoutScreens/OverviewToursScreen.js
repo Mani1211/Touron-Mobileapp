@@ -17,7 +17,7 @@ const OverviewToursScreen = ({ setStep, prevStep }) => {
   const selectedTours = details.selectedTours;
   const [finalTour, setFinalTour] = useState([...selectedTours]);
   return (
-    <ScrollView style={{ backgroundColor: "#fff" }}>
+    <ScrollView style={{ backgroundColor: "#fff", marginBottom: 120 }}>
       <View
         style={{
           width: WIDTH * 0.9,

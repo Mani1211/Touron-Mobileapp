@@ -368,6 +368,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingTop: 20,
+    marginBottom: 100,
   },
   imageContainer: {
     padding: 5,

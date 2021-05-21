@@ -13,7 +13,7 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import * as Notifications from "expo-notifications";
+// import * as Notifications from "expo-notifications";
 import { Surface } from "react-native-paper";
 import * as firebase from "firebase";
 import { Container, Header, Tab, Tabs, TabHeading } from "native-base";
@@ -98,15 +98,15 @@ const RequestInner = ({ navigation, route }) => {
     );
   };
 
-  useEffect(() => {
-    const subscription = Notifications.addNotificationResponseReceivedListener(
-      (response) => {
-        const data = response.notification.request.content.data.data;
-        handleNotification(data);
-      }
-    );
-    return () => subscription.remove();
-  }, [navigation]);
+  // useEffect(() => {
+  //   const subscription = Notifications.addNotificationResponseReceivedListener(
+  //     (response) => {
+  //       const data = response.notification.request.content.data.data;
+  //       handleNotification(data);
+  //     }
+  //   );
+  //   return () => subscription.remove();
+  // }, [navigation]);
 
   const handleNotification = (item) => {
     navigation.navigate("RequestInner", {

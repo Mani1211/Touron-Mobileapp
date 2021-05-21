@@ -98,7 +98,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
   });
 
   return (
-    <ScrollView>
+    <ScrollView style={{ marginBottom: 100 }}>
       <View
         style={{
           alignItems: "flex-end",

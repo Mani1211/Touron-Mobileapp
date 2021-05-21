@@ -272,7 +272,13 @@ const Checkout = ({
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="position">
-        <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 60,
+          }}
+        >
           <View
             style={{
               width: WIDTH * 0.9,
@@ -334,6 +340,7 @@ export default Checkout;
 const styles = new StyleSheet.create({
   checkContainer: {
     alignItems: "center",
+    marginBottom: 50,
     justifyContent: "center",
   },
   checkCont: {
@@ -379,8 +386,9 @@ const styles = new StyleSheet.create({
   submitCont: {
     height: HEIGHT / 13,
     width: WIDTH * 0.9,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
+    marginBottom: 20,
   },
   subC: {
     borderColor: "black",

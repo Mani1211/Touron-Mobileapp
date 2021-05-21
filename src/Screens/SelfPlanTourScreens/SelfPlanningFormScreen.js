@@ -127,7 +127,7 @@ const SelfPlanForm = ({ navigation }) => {
   }, []);
 
   const getCity = () => {
-    if (destination === "") return cities.reverse();
+    if (destination === "") return cities;
     const c = cities.filter((c) => {
       return c.cityName
         .trim()
@@ -885,7 +885,6 @@ const SelfPlanForm = ({ navigation }) => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 marginHorizontal: 30,
-                paddingBottom: 10,
                 position: "relative",
                 marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
               }}
@@ -928,7 +927,12 @@ const SelfPlanForm = ({ navigation }) => {
             </View>
             {selectedCity.length === 0 ? null : (
               <TouchableOpacity
-                style={{ position: "absolute", bottom: 0, zIndex: 10 }}
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  zIndex: 10,
+                  paddingBottom: 100,
+                }}
                 onPress={() => {
                   setStep(2);
                 }}
@@ -965,6 +969,8 @@ const SelfPlanForm = ({ navigation }) => {
                     flexWrap: "wrap",
                     alignItems: "center",
                     justifyContent: "center",
+                    paddingBottom: 100,
+                    marginBottom: 60,
                   }}
                 >
                   {getCity().map((item, index) => {
