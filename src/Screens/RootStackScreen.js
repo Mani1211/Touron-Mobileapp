@@ -22,10 +22,10 @@ export const RootStackScreen = ({ navigation }) => {
       screenOptions={{ headerShown: false }}
       initialRouteName={initialRouteName}
     >
-      <RootStack.Screen
+      {/* <RootStack.Screen
         name="GettingStarted"
         component={GettingStartedScreen}
-      />
+      /> */}
       <RootStack.Screen name="Main" component={MainTabScreen} />
       <RootStack.Screen name="SignInScreen" component={SignInScreen} />
       <RootStack.Screen name="SignUpScreen" component={SignUpScreen} />

@@ -50,7 +50,7 @@ const Touristnumber = ({
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
             flex: adult > 0 ? 0 : 0.5,
           }}
@@ -69,7 +69,12 @@ const Touristnumber = ({
         </TouchableOpacity>
       </View>
       <View style={{ marginTop: HEIGHT / 20 }}>
-        <Text style={{ fontSize: 22, fontFamily: "NewYorkl" }}>
+        <Text
+          style={{
+            fontSize: 22,
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+          }}
+        >
           No of Persons
         </Text>
       </View>

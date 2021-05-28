@@ -116,7 +116,7 @@ const NationalPark = ({ nationalPark, setNationalPark, tourName }) => {
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
             flex: 0.4,
           }}

@@ -10,32 +10,76 @@ import {
 
 const WIDTH = Dimensions.get("window").width;
 const Categories = React.memo(({ navigation }) => {
+  const categories = [
+    {
+      name: "Planned",
+      navigation: "Planned",
+      image:
+        "https://images.pexels.com/photos/885880/pexels-photo-885880.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
+    {
+      name: "Road",
+      navigation: "Road",
+      image:
+        "https://images.pexels.com/photos/3593923/pexels-photo-3593923.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
+    {
+      name: "Surprise",
+      navigation: "Surprise",
+      image:
+        "https://images.pexels.com/photos/4254562/pexels-photo-4254562.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
+    {
+      name: "Honeymoon",
+      navigation: "Honeymoon",
+      image:
+        "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
+    {
+      name: "Luxury",
+      navigation: "Luxury",
+      image:
+        "https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
+    {
+      name: "WildLife",
+      navigation: "WildLife",
+      image:
+        "https://www.udaipurblog.com/wp-content/uploads/2018/04/travel-triangle.jpg",
+    },
+  ];
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Planned")}>
-          <View
-            style={{
-              marginHorizontal: 5,
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 10,
-            }}
-          >
-            <View>
-              <Image
-                style={styles.categoryImage}
-                source={{
-                  uri:
-                    "https://images.pexels.com/photos/885880/pexels-photo-885880.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        {categories.map((item, index) => {
+          return (
+            <TouchableOpacity
+              key={index}
+              onPress={() => navigation.navigate(item.navigation)}
+            >
+              <View
+                style={{
+                  marginHorizontal: 5,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: 10,
                 }}
-              />
-            </View>
-            <Text style={styles.text}>Planned </Text>
-          </View>
-        </TouchableOpacity>
+              >
+                <View>
+                  <Image
+                    style={styles.categoryImage}
+                    source={{
+                      uri: item.image,
+                    }}
+                  />
+                </View>
+                <Text style={styles.text}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
 
-        <TouchableOpacity onPress={() => navigation.navigate("Road")}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate("Road")}>
           <View
             style={{
               marginHorizontal: 5,
@@ -47,8 +91,7 @@ const Categories = React.memo(({ navigation }) => {
               <Image
                 style={styles.categoryImage}
                 source={{
-                  uri:
-                    "https://images.pexels.com/photos/3593923/pexels-photo-3593923.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                  uri: "https://images.pexels.com/photos/3593923/pexels-photo-3593923.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                 }}
               />
             </View>
@@ -68,8 +111,7 @@ const Categories = React.memo(({ navigation }) => {
               <Image
                 style={styles.categoryImage}
                 source={{
-                  uri:
-                    "https://images.pexels.com/photos/4254562/pexels-photo-4254562.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                  uri: "https://images.pexels.com/photos/4254562/pexels-photo-4254562.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                 }}
               />
             </View>
@@ -88,8 +130,7 @@ const Categories = React.memo(({ navigation }) => {
               <Image
                 style={styles.categoryImage}
                 source={{
-                  uri:
-                    "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                  uri: "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                 }}
               />
             </View>
@@ -108,8 +149,7 @@ const Categories = React.memo(({ navigation }) => {
               <Image
                 style={styles.categoryImage}
                 source={{
-                  uri:
-                    "https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                  uri: "https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                 }}
               />
             </View>
@@ -129,14 +169,13 @@ const Categories = React.memo(({ navigation }) => {
               <Image
                 style={styles.categoryImage}
                 source={{
-                  uri:
-                    "https://www.udaipurblog.com/wp-content/uploads/2018/04/travel-triangle.jpg",
+                  uri: "https://www.udaipurblog.com/wp-content/uploads/2018/04/travel-triangle.jpg",
                 }}
               />
             </View>
             <Text style={styles.text}>WildLife</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

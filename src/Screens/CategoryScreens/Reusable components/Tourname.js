@@ -8,7 +8,6 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -22,15 +21,16 @@ const Tourname = ({ imgSrc, step, description, tourName, navigation }) => {
           alignItems: "flex-end",
           justifyContent: "center",
           flexDirection: "row",
-          justifyContent: "space-between",
+          // justifyContent: "space-between",
           marginHorizontal: 30,
           position: "relative",
         }}
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.goBack("Home");
+            navigation.goBack();
           }}
+          style={{ flex: 1 }}
         >
           <View>
             <AntDesign name="arrowleft" size={28} />
@@ -40,17 +40,16 @@ const Tourname = ({ imgSrc, step, description, tourName, navigation }) => {
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
-            flex: 0.6,
+            // flex: 0.6,
+            flex: tourName === "Honeymoon Tour" ? 2.6 : 2,
+            // alignSelf: "center",
           }}
         >
           {tourName}
         </Text>
-
-        <TouchableOpacity>
-          <View></View>
-        </TouchableOpacity>
+        {/* <View></View> */}
       </View>
       <View
         style={{
@@ -65,7 +64,7 @@ const Tourname = ({ imgSrc, step, description, tourName, navigation }) => {
         />
       </View>
 
-      <View style={{ marginHorizontal: WIDTH / 9 }}>
+      <View style={{ marginHorizontal: WIDTH / 9, paddingTop: 15 }}>
         <Text
           style={{
             fontSize: Platform.OS === "ios" ? 14 : 13,
@@ -78,12 +77,7 @@ const Tourname = ({ imgSrc, step, description, tourName, navigation }) => {
 
       <TouchableOpacity onPress={step}>
         <View style={styles.buttonContainer}>
-          <LinearGradient
-            colors={["#9EB19E", "#9EB19E"]}
-            style={styles.buttonContainer}
-          >
-            <Text style={styles.buttonText}>Get Started</Text>
-          </LinearGradient>
+          <Text style={styles.buttonText}>Get Started</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -94,14 +88,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 65,
-    marginTop: 10,
-    borderRadius: 10,
+    // marginBottom: 65,
+    marginVertical: 30,
   },
   buttonText: {
+    borderRadius: 10,
+    backgroundColor: "#E28633",
     padding: 15,
     fontSize: 16,
     fontFamily: "Andika",
+    color: "#fff",
   },
 });
 

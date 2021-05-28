@@ -7,13 +7,14 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
-import { LinearGradient } from "expo-linear-gradient";
 
 import { AuthContext } from "../../context/AuthContext";
+import { AntDesign } from "@expo/vector-icons";
 const SelfPlanningScreen = ({ navigation }) => {
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -28,10 +29,30 @@ const SelfPlanningScreen = ({ navigation }) => {
   }, []);
   return (
     <ScrollView style={styles.container}>
-      <View style={{ marginTop: HEIGHT / 12 }}>
-        <Text style={{ textAlign: "center", fontSize: 20 }}>
-          Self Planned Tour
-        </Text>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingLeft: 20,
+          paddingTop: Platform.OS === "ios" ? 60 : 30,
+        }}
+      >
+        <AntDesign name="arrowleft" size={28} />
+
+        <View>
+          <Text
+            style={{
+              fontSize: 23,
+              paddingRight: 20,
+              fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+            }}
+          >
+            Self Planned Tour
+          </Text>
+        </View>
+        <View></View>
       </View>
 
       <View>
@@ -60,12 +81,7 @@ const SelfPlanningScreen = ({ navigation }) => {
 
         <TouchableOpacity onPress={() => navigation.navigate("SelfPlanForm")}>
           <View style={styles.buttonContainer}>
-            <LinearGradient
-              colors={["#9EB19E", "#9EB19E"]}
-              style={styles.buttonContainer}
-            >
-              <Text style={styles.buttonText}>Get Started</Text>
-            </LinearGradient>
+            <Text style={styles.buttonText}>Get Started</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -87,13 +103,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 20,
-    borderRadius: 10,
-    marginBottom: 80,
+    // marginBottom: 65,
+    marginVertical: 30,
   },
   buttonText: {
+    borderRadius: 10,
+    backgroundColor: "#E28633",
     padding: 15,
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: "Andika",
+    color: "#fff",
   },
 });
 export default SelfPlanningScreen;

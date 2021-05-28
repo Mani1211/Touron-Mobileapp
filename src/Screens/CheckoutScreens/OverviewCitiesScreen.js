@@ -16,11 +16,12 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { Surface } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
-import { SelfTourContext } from "../../context/ SelfTourContext";
+// import { SelfTourContext } from "../../context/ SelfTourContext";
 import Card from "../../../assets/Board.jpg";
 import { AntDesign } from "@expo/vector-icons";
+import { AuthContext } from "./../../context/AuthContext";
 const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
-  const { setDetails, details } = useContext(SelfTourContext);
+  const { setDetails, details } = useContext(AuthContext);
   const [selectedCity, setSelectedCity] = useState(selectedCitys);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -38,7 +39,7 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
   };
 
   return (
-    <ScrollView style={{ marginBottom: 70 }}>
+    <ScrollView style={{ marginBottom: 0, backgroundColor: "white" }}>
       <View
         style={{
           width: WIDTH * 0.9,
@@ -65,7 +66,7 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             flex: 0.5,
           }}
         >
@@ -76,7 +77,7 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
           <View>{/* <AntDesign name="arrowright" size={28} /> */}</View>
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 1, backgroundColor: "#F1F3F6", paddingBottom: 40 }}>
+      <View style={{ flex: 1, backgroundColor: "#fff", paddingBottom: 0 }}>
         {selectedCity.map((item, index) => (
           <Surface style={styles.surfaces} key={index}>
             <View>
@@ -422,7 +423,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonContainer: {
-    backgroundColor: "#626E7B",
+    backgroundColor: "#E28633",
     borderRadius: 10,
     alignItems: "center",
     width: WIDTH * 0.9,
@@ -433,7 +434,7 @@ const styles = StyleSheet.create({
   exploreButton: {
     fontSize: 15,
     color: "white",
-    fontFamily: "Avenir",
+    fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
     padding: WIDTH / 25,
   },
   cityName: {
@@ -527,259 +528,3 @@ const styles = StyleSheet.create({
     width: 40,
   },
 });
-
-//  <ScrollView>
-//    <View style={{ flex: 1, backgroundColor: "#F1F3F6" }}>
-//      <View style={{ marginTop: HEIGHT / 13, marginBottom: HEIGHT / 30 }}>
-//        <Text style={{ textAlign: "center", fontSize: 20 }}>
-//          Overview of the seletecd cities
-//        </Text>
-//      </View>
-
-//      {cities.map((item, index) => (
-//        <Surface style={styles.surfaces} key={index}>
-//          <View>
-//            <Surface style={styles.surface}>
-//              <Image style={styles.cityimage} source={{ uri: item.imageUrl }} />
-//            </Surface>
-
-//            <Text style={styles.cityName}>{item.name}</Text>
-//          </View>
-
-//          <View>
-//            <Image
-//              style={{ height: 40, width: 40 }}
-//              source={require("../../../assets/Calendar.png")}
-//            />
-//          </View>
-//          <View
-//            style={{
-//              marginHorizontal: 20,
-//              alignItems: "center",
-//            }}
-//          >
-//            <Text
-//              style={{
-//                textAlign: "center",
-//                fontSize: 14,
-//                fontWeight: "bold",
-//              }}
-//            >
-//              Enter No Of Days
-//            </Text>
-
-//            <View style={styles.inputContainer}>
-//              <TextInput
-//                keyboardType="number-pad"
-//                style={{
-//                  fontSize: 25,
-//                  marginTop: 5,
-//                }}
-//                editable={true}
-//                onChangeText={(value) => {
-//                  const date = updatedDate(item);
-//                  const specificCity = getCurrentCity(item);
-//                  setCityDetails([
-//                    ...date,
-//                    {
-//                      name: specificCity.name,
-//                      days: value,
-//                      imageUrl: item.imageUrl,
-//                    },
-//                  ]);
-//                }}
-//              />
-//            </View>
-//          </View>
-//        </Surface>
-//      ))}
-
-//      <View style={{ width: WIDTH, marginLeft: -20 }}>
-//        <Image
-//          style={styles.calendarImage}
-//          source={require("../../../assets/Boardingcard.png")}
-//        />
-//      </View>
-//      <View>
-//        <View style={styles.embark}>
-//          <Text
-//            style={{
-//              fontSize: WIDTH / 22,
-//              color: "#F1F3F6",
-//              fontFamily: "Avenir",
-//            }}
-//          >
-//            When do you embark your journey
-//          </Text>
-//        </View>
-//        <View style={styles.dateContainer}>
-//          <View style={styles.from}>
-//            <Text style={{ fontSize: 20, color: "#fff" }}>From</Text>
-//          </View>
-//          <View style={styles.picker}>
-//            <DatePicker
-//              style={{ width: 200 }}
-//              date={fromDate}
-//              mode="date"
-//              placeholder=""
-//              format="YYYY-MM-DD"
-//              confirmBtnText="Confirm"
-//              cancelBtnText="Cancel"
-//              onDateChange={(date) => {
-//                handleFromDate(date);
-//              }}
-//              showIcon={false}
-//              customStyles={{
-//                dateInput: {
-//                  borderWidth: 0,
-//                },
-//              }}
-//            />
-
-//            <Image
-//              style={{ width: 20, height: 20, marginLeft: 5 }}
-//              source={require("../../../assets/c.png")}
-//            />
-//          </View>
-//        </View>
-//        <View style={styles.planeContainer}>
-//          <Image
-//            source={require("../../../assets/Plane.png")}
-//            style={{ height: 35, width: 35 }}
-//          />
-//        </View>
-//        <View style={styles.toContainer}>
-//          <View style={styles.from}>
-//            <Text style={{ fontSize: 20, color: "#fff" }}>To</Text>
-//          </View>
-//          <View style={styles.picker}>
-//            {fromDate === "" ? (
-//              <Text>Select Date</Text>
-//            ) : (
-//              <DatePicker
-//                style={{ width: 200 }}
-//                date={toDate}
-//                mode="date"
-//                placeholder=""
-//                format="YYYY-MM-DD"
-//                maxDate="2021-06-01"
-//                confirmBtnText="Confirm"
-//                cancelBtnText="Cancel"
-//                showIcon={false}
-//                customStyles={{
-//                  dateInput: {
-//                    borderWidth: 0,
-//                  },
-//                }}
-//              />
-//            )}
-//            <Image
-//              style={{ width: 20, height: 20, marginLeft: 5 }}
-//              source={require("../../../assets/c.png")}
-//            />
-//          </View>
-//        </View>
-
-//        <View style={styles.numbers}>
-//          <Text
-//            style={{
-//              fontSize: 20,
-//              textAlign: "center",
-//              fontFamily: "Avenir",
-//            }}
-//          >
-//            No of Persons
-//          </Text>
-//          <View
-//            style={{
-//              flexDirection: "row",
-//              justifyContent: "space-around",
-//              marginVertical: 1,
-//            }}
-//          >
-//            <View style={{ alignItems: "center" }}>
-//              <Text style={styles.personText}>Adults</Text>
-//              <Image
-//                style={styles.image}
-//                source={{
-//                  uri:
-//                    "https://image.freepik.com/free-vector/illustration-with-young-people-concept_23-2148467324.jpg",
-//                }}
-//              />
-//              <View style={styles.personContainer}>
-//                <TouchableOpacity onPress={() => setAdult(adult - 1)}>
-//                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>-</Text>
-//                </TouchableOpacity>
-//                <View style={styles.inputContainer}>
-//                  <TextInput
-//                    keyboardType="number-pad"
-//                    style={{
-//                      fontSize: 20,
-//                      marginTop: 10,
-//                    }}
-//                    value={adult.toString()}
-//                    editable={true}
-//                    onChangeText={(value) => setAdult(+value)}
-//                  />
-//                </View>
-//                <TouchableOpacity onPress={() => setAdult(adult + 1)}>
-//                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>+</Text>
-//                </TouchableOpacity>
-//              </View>
-//            </View>
-//            <View style={{ alignItems: "center" }}>
-//              <Text style={styles.personText}>Childrens</Text>
-//              <Image
-//                style={styles.image}
-//                source={{
-//                  uri:
-//                    "https://image.freepik.com/free-vector/smiling-boy-girl-kids-holding-hands-childhood-friendship-concept-love-romance-children-cartoon-characters-flat-vector-illustration-isolated-white-background_71593-450.jpg",
-//                }}
-//              />
-//              <View style={styles.personContainer}>
-//                <TouchableOpacity onPress={() => setChildren(children - 1)}>
-//                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>-</Text>
-//                </TouchableOpacity>
-//                <View style={styles.inputContainer}>
-//                  <TextInput
-//                    style={{
-//                      marginTop: 10,
-//                      fontSize: 20,
-//                    }}
-//                    editable={true}
-//                    value={children.toString()}
-//                    onChangeText={(value) => setChildren(+value)}
-//                    keyboardType="number-pad"
-//                  />
-//                </View>
-//                <TouchableOpacity onPress={() => setChildren(children + 1)}>
-//                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>+</Text>
-//                </TouchableOpacity>
-//              </View>
-//            </View>
-//          </View>
-//        </View>
-//      </View>
-//      <TouchableOpacity
-//        style={{
-//          marginTop: HEIGHT < 550 ? -WIDTH / 10 - 20 : -WIDTH / 10 - 20,
-//        }}
-//        onPress={() => {
-//          setDetails({
-//            fromDate: fromDate,
-//            toDate: toDate,
-//            adult: adult,
-//            children: children,
-//          });
-//          navigation.navigate("SelfTourHome", {
-//            selectedCity: selectedCity,
-//            cityDetails: cityDetails,
-//          });
-//        }}
-//      >
-//        <View style={styles.buttonContainer}>
-//          <Text style={styles.exploreButton}>Explore Tours</Text>
-//        </View>
-//      </TouchableOpacity>
-//    </View>
-//  </ScrollView>;

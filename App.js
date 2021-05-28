@@ -1,12 +1,12 @@
-import { Dimensions, Image } from "react-native";
+import { Dimensions, Image, View } from "react-native";
 import React, { useState, useEffect } from "react";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import firebase from "firebase/app";
+import * as firebase from "firebase";
 import SubApp from "./SubApp";
 import * as Font from "expo-font";
 
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
   authDomain: "touronapp-248e4.firebaseapp.com",
   databaseURL: "https://touronapp-248e4.firebaseio.com",
@@ -17,10 +17,8 @@ const firebaseConfig = {
   measurementId: "G-KCPSW6WFC9",
 };
 
-if (firebase.apps.length === 0) {
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app();
 }
 
 const App = () => {
@@ -48,29 +46,32 @@ const App = () => {
     return () => (mounted = false);
   });
 
-  // if (appLoading) {
-  //   return (
-  //     <Surface
+  // return (
+  //   <>
+  //     {/* {!appLoading && ( */}
+  //     <View
   //       style={{
   //         backgroundColor: "#fff",
-  //         flex: 1,
-  //         alignItems: "center",
-  //         justifyContent: "center",
   //         elevation: 20,
   //       }}
   //     >
-  //       <Image
-  //         source={require("./assets/playstore.png")}
-  //         style={{ width: WIDTH, height: HEIGHT / 2 }}
+  //       <LottieView
+  //         style={{
+  //           width: 400,
+  //           height: 400,
+  //           backgroundColor: "#eee",
+  //         }}
+  //         autoPlay
+  //         loop
+  //         source={require("./assets/intros/Lottie.json")}
   //       />
-  //     </Surface>
-  //   );
-  // }
-  // if (!appLoading) {
-  //   <SubApp />;
-  // }
+  //     </View>
+  //     {/* )} */}
+  //   </>
+  // );
 
   // return <GettingStartedScreen />;
+  // return <>{!appLoading && <TourInnerScreen />}</>;
   return <>{!appLoading && <SubApp />}</>;
 };
 

@@ -31,6 +31,7 @@ import {
 } from "./utils/PushNotification";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
+import { useIsFocused } from "@react-navigation/native";
 
 const Luxury = ({ navigation, route }) => {
   const [adult, setAdult] = React.useState(0);
@@ -47,27 +48,7 @@ const Luxury = ({ navigation, route }) => {
   const [number, setNumber] = useState("");
   const [step, setStep] = useState(1);
   const { isLoggedIn, userInfo } = useContext(AuthContext);
-  const [date, setDate] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
-
-  let random;
-  let formatedMonth;
-
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      random = Math.floor((Math.random() + 4) * 345334);
-      const requestDate = new Date();
-      let currentYear = requestDate.getFullYear();
-      setDate(requestDate.getDate());
-      setMonth(requestDate.getMonth() + 1);
-      setYear(currentYear.toString().slice(2, 5));
-      formatedMonth = month < 10 ? "0" + month : month;
-    }
-    return () => (mounted = false);
-  }, []);
-
+  const isFocused = useIsFocused();
   useEffect(() => {
     let mounted = true;
     if (mounted) {
@@ -88,11 +69,11 @@ const Luxury = ({ navigation, route }) => {
     let mounted = true;
     if (mounted) {
       if (!isLoggedIn) {
-        navigation.replace("SignInScreen");
+        navigation.jumpTo("SignInScreen");
       }
     }
     return () => (mounted = false);
-  }, []);
+  }, [isFocused]);
 
   const handleFromDate = (date) => {
     setFromDate(date);
@@ -349,9 +330,11 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
 
   const submitData = () => {
     const userID = userInfo.userID;
+    const v = moment().format("L");
+    const r = Math.floor((Math.random() + 4) * 345334);
 
     const data = {
-      requestID: `TO-${date}${formatedMonth}${year}-${random}`,
+      requestID: `TO-${v.slice(3, 5)}${v.slice(0, 2)}${v.slice(8)}-${r}`,
       tourCategory: "Luxury Tour",
       adult: adult,
       children: children,

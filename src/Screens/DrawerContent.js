@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { auth } from "firebase";
 
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
 import { FontAwesome5, Fontisto, AntDesign } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
@@ -20,9 +20,8 @@ import { AuthContext } from "../context/AuthContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const DrawerContent = (props) => {
-  const { isLoggedIn, setIsLoggedIn, setUser, setUserInfo } = useContext(
-    AuthContext
-  );
+  const { isLoggedIn, setIsLoggedIn, setUser, setUserInfo } =
+    useContext(AuthContext);
 
   const removeToken = async () => {
     try {
@@ -42,8 +41,7 @@ const DrawerContent = (props) => {
           opacity: Platform.OS === "ios" ? 0.4 : 1,
         }}
         source={{
-          uri:
-            "https://images.pexels.com/photos/2108813/pexels-photo-2108813.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          uri: "https://images.pexels.com/photos/2108813/pexels-photo-2108813.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         }}
       />
 
@@ -198,6 +196,17 @@ const DrawerContent = (props) => {
                   }}
                 />
                 <DrawerItem
+                  label={() => <Text style={styles.label}>Feedback</Text>}
+                  icon={() => (
+                    <View style={{ marginHorizontal: 5 }}>
+                      <AntDesign name="contacts" size={23} color="#C1C5C6" />
+                    </View>
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("Feedback");
+                  }}
+                />
+                <DrawerItem
                   label={() => (
                     <Text
                       style={{
@@ -216,7 +225,7 @@ const DrawerContent = (props) => {
                     removeToken();
                     setIsLoggedIn(false);
                     auth().signOut();
-                    props.navigation.navigate("Home");
+                    props.navigation.navigate("Main");
                   }}
                   icon={() => (
                     <Image

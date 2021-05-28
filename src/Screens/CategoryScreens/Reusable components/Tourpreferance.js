@@ -51,7 +51,7 @@ const Tourpreferance = ({
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
             flex: 0.6,
           }}
@@ -69,7 +69,11 @@ const Tourpreferance = ({
       </View>
       <View style={{ marginVertical: HEIGHT / 20, marginHorizontal: 5 }}>
         <Text
-          style={{ fontSize: 18, textAlign: "center", fontFamily: "NewYorkl" }}
+          style={{
+            fontSize: 18,
+            textAlign: "center",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+          }}
         >
           When you travel,you prefer?
         </Text>

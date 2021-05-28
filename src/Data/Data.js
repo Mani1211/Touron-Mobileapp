@@ -3,7 +3,7 @@ import { database, auth } from "firebase";
 import touron from "../api/touron";
 import axios from "axios";
 
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Data = () => {
   const [user, setUser] = useState({});
@@ -11,6 +11,7 @@ const Data = () => {
   const [tours, setTour] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   //  return () => {
   //    source.cancel();
@@ -23,14 +24,13 @@ const Data = () => {
   useEffect(() => {
     const source = axios.CancelToken.source();
     const getCities = async () => {
-      const cityResponse = await touron.get(`/city/search`);
+      const cityResponse = await touron.get(`/city`);
       setCities(cityResponse.data);
     };
     getCities();
     return () => {
       source.cancel();
     };
-    console.log(`object`, source);
   }, []);
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -40,6 +40,18 @@ const Data = () => {
     };
 
     getTours();
+    return () => {
+      source.cancel();
+    };
+  }, []);
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    const getBlogs = async () => {
+      const tourResponse = await touron.get(`/blog/search?page=1&pageSize=200`);
+      setBlogs(tourResponse.data.reverse());
+    };
+
+    getBlogs();
     return () => {
       source.cancel();
     };
@@ -73,7 +85,7 @@ const Data = () => {
 
   useEffect(() => {
     let mounted = true;
-    console.log(`mounted`, mounted);
+    // console.log(`mounted`, mounted);
 
     if (mounted) {
       const getToken = async () => {
@@ -96,7 +108,7 @@ const Data = () => {
 
       return () => {
         mounted = false;
-        console.log(`m`, mounted);
+        // console.log(`m`, mounted);
       };
     }
   }, []);
@@ -111,6 +123,7 @@ const Data = () => {
     cities,
     countries,
     tours,
+    blogs,
   ];
 };
 

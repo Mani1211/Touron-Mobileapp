@@ -8,7 +8,6 @@ import {
   FlatList,
   Platform,
   Dimensions,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
@@ -18,16 +17,21 @@ import { database } from "firebase";
 
 import touron from "../../api/touron";
 
-import { LinearGradient } from "expo-linear-gradient";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { Chip, Surface } from "react-native-paper";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
-import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
+import {
+  Feather,
+  FontAwesome,
+  MaterialIcons,
+  Fontisto,
+  EvilIcons,
+} from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import axios from "axios";
+import SearchBar from "./../../Reusable Components/SearchBar";
 
 const TourHomeScreen = ({ navigation, route }) => {
   const { isLoggedIn, user, countries, cities, tours } =
@@ -64,6 +68,7 @@ const TourHomeScreen = ({ navigation, route }) => {
   const [loader, setLoader] = useState(false);
   const [filterLoaded, setfilterLoaded] = useState(false);
   const [tourName, setTourName] = useState("");
+  const [pageSize, setPageSize] = useState(10);
 
   const [tourCategory, setTourCategory] = useState("");
   const [idealType, setIdealType] = useState("");
@@ -325,7 +330,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                         width: WIDTH / 2.6,
                       }}
                     >
-                      {tourCategory === item.name ? (
+                      {tourCategory === item.queryName ? (
                         <View
                           style={{
                             top: 0,
@@ -450,6 +455,7 @@ const TourHomeScreen = ({ navigation, route }) => {
                         height: WIDTH / 2.6,
                         borderRadius: 20,
                         width: WIDTH / 2.6,
+                        padding: 5,
                       }}
                     >
                       {countryName == item.countryName ? (
@@ -478,7 +484,9 @@ const TourHomeScreen = ({ navigation, route }) => {
                         }}
                         source={{ uri: item.imageUrl }}
                       />
-                      <Text style={{ fontFamily: "Andika" }}>
+                      <Text
+                        style={{ fontFamily: "Andika", textAlign: "center" }}
+                      >
                         {item.countryName}
                       </Text>
                     </Surface>
@@ -555,438 +563,423 @@ const TourHomeScreen = ({ navigation, route }) => {
     switch (step) {
       case 0:
         return (
-          <View
-            style={
-              ([styles.container],
-              {
-                backgroundColor: tour.length === 0 ? "white" : "transparent",
-                flex: 1,
-              })
-            }
-          >
-            {loader ? (
-              <ScrollView
-                style={{ flex: 1 }}
-                contentContainerStyle={{
+          <View style={[styles.container]}>
+            {/* <View
+              style={{
+                backgroundColor: "#fff",
+                paddingVertical: 30,
+              }}
+            > */}
+            <View
+              style={{
+                height: HEIGHT / 8,
+                padding: 10,
+                marginTop: Platform.OS === "ios" ? 40 : 20,
+                width: WIDTH,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                   alignItems: "center",
-                  justifyContent: "center",
+                  paddingLeft: 20,
                 }}
               >
-                <SkeletonPlaceholder>
-                  <View
-                    style={{
-                      margin: 10,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: WIDTH * 0.9,
-                        height: 50,
-                        borderRadius: 50,
-                        marginVertical: 30,
-                      }}
-                    />
-                    <View
-                      style={{
-                        width: WIDTH * 0.9,
-                        height: HEIGHT / 3.2,
-                        borderRadius: 10,
-                      }}
-                    />
-                    <View
-                      style={{
-                        width: 120,
-                        height: 20,
-                        borderRadius: 4,
-                        marginTop: 10,
-                      }}
-                    />
-                    <View
-                      style={{
-                        width: WIDTH * 0.7,
-                        height: 20,
-                        marginTop: 10,
-                        borderRadius: 4,
-                      }}
-                    />
-                    <View
-                      style={{
-                        marginTop: 6,
-                        width: 80,
-                        height: 20,
-                        borderRadius: 4,
-                      }}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      margin: 10,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: WIDTH * 0.9,
-                        height: HEIGHT / 3.2,
-                        borderRadius: 10,
-                      }}
-                    />
-                    <View
-                      style={{
-                        width: 120,
-                        height: 20,
-                        borderRadius: 4,
-                        marginTop: 10,
-                      }}
-                    />
-                    <View
-                      style={{
-                        width: WIDTH * 0.7,
-                        height: 20,
-                        marginTop: 10,
-                        borderRadius: 4,
-                      }}
-                    />
-                    <View
-                      style={{
-                        marginTop: 6,
-                        width: 80,
-                        height: 20,
-                        borderRadius: 4,
-                      }}
-                    />
-                  </View>
-                </SkeletonPlaceholder>
-              </ScrollView>
-            ) : (
-              <View>
-                <View
-                  style={{
-                    height: HEIGHT / 8,
-                    padding: 10,
-                    marginTop: Platform.OS === "ios" ? HEIGHT / 12 : 40,
-                    width: WIDTH,
-                    justifyContent: "center",
-                  }}
-                >
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      paddingLeft: 20,
-                    }}
-                  >
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                      <Feather name="arrow-left" style={{ fontSize: 30 }} />
-                    </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <FontAwesome
+                    name="arrow-circle-left"
+                    size={34}
+                    color="black"
+                  />
+                </TouchableOpacity>
 
-                    <View>
-                      <Text style={{ fontSize: 23, fontFamily: "Avenir" }}>
-                        Tours
-                      </Text>
-                    </View>
-                    <TouchableOpacity onPress={() => setStep(step + 1)}>
-                      <MaterialIcons
-                        name="sort"
-                        size={24}
-                        color="black"
-                        style={{ paddingRight: 10 }}
-                      />
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={styles.background}>
-                    <Feather name="search" style={styles.iconStyle}></Feather>
-                    <TextInput
-                      style={styles.inputStyle}
-                      placeholder="Ex.Universal studious singapore"
-                      onChangeText={(value) => setTourName(value)}
-                      onSubmitEditing={search}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      keyboardType="email-address"
-                    />
-                  </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 23,
+                      fontFamily:
+                        Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                    }}
+                  >
+                    Discover Tours
+                  </Text>
                 </View>
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  style={{ marginHorizontal: 10 }}
+                <TouchableOpacity onPress={() => setStep(step + 1)}>
+                  <MaterialIcons
+                    name="sort"
+                    size={24}
+                    color="black"
+                    style={{ paddingRight: 10 }}
+                  />
+                </TouchableOpacity>
+              </View>
+              <SearchBar
+                onChangeText={(value) => setTourName(value)}
+                placeholder={"Search Tours...."}
+              />
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{ marginHorizontal: 10 }}
+            >
+              {tourCategory == "" ? null : (
+                <Chip
+                  style={{
+                    backgroundColor: "#34ace0",
+                    alignItems: "center",
+                    marginRight: 10,
+                    color: "#fff",
+                  }}
+                  disabled={true}
+                  textStyle={{
+                    color: "#fff",
+                    fontFamily: "Avenir",
+                    marginBottom: 10,
+                  }}
+                  mode="outlined"
                 >
-                  {tourCategory == "" ? null : (
-                    <Chip
-                      style={{
-                        backgroundColor: "#34ace0",
-                        alignItems: "center",
-                        marginRight: 10,
-                        color: "#fff",
-                      }}
-                      disabled={true}
-                      textStyle={{
-                        color: "#fff",
-                        fontFamily: "Avenir",
-                        marginBottom: 10,
-                      }}
-                      mode="outlined"
-                    >
-                      {tourCategory}
-                    </Chip>
-                  )}
-                  {countryName == "" ? null : (
-                    <Chip
-                      style={{
-                        backgroundColor: "#34ace0",
-                        alignItems: "center",
-                        marginRight: 10,
-                        color: "#fff",
-                      }}
-                      disabled={true}
-                      textStyle={{
-                        color: "#fff",
-                        fontFamily: "Avenir",
-                        marginBottom: 10,
-                      }}
-                      mode="outlined"
-                    >
-                      {countryName}
-                    </Chip>
-                  )}
-                  {cityName == "" ? null : (
-                    <Chip
-                      style={{
-                        backgroundColor: "#34ace0",
-                        alignItems: "center",
-                        marginRight: 10,
-                        color: "#fff",
-                      }}
-                      disabled={true}
-                      textStyle={{
-                        color: "#fff",
-                        fontFamily: "Avenir",
-                        marginBottom: 10,
-                      }}
-                      mode="outlined"
-                    >
-                      {cityName}
-                    </Chip>
-                  )}
-                  {idealType == "" ? null : (
-                    <Chip
-                      style={{
-                        backgroundColor: "#34ace0",
-                        alignItems: "center",
-                        marginRight: 10,
-                        color: "#fff",
-                      }}
-                      disabled={true}
-                      textStyle={{
-                        color: "#fff",
-                        fontFamily: "Avenir",
-                        marginBottom: 10,
-                      }}
-                      mode="outlined"
-                    >
-                      {idealType}
-                    </Chip>
-                  )}
-                  {tourType == "" ? null : (
-                    <Chip
-                      style={{
-                        backgroundColor: "#34ace0",
-                        alignItems: "center",
-                        marginRight: 10,
-                        color: "#fff",
-                      }}
-                      disabled={true}
-                      textStyle={{
-                        color: "#fff",
-                        fontFamily: "Avenir",
-                        marginBottom: 10,
-                      }}
-                      mode="outlined"
-                    >
-                      {tourType}
-                    </Chip>
-                  )}
-                </ScrollView>
+                  {tourCategory}
+                </Chip>
+              )}
+              {countryName == "" ? null : (
+                <Chip
+                  style={{
+                    backgroundColor: "#34ace0",
+                    alignItems: "center",
+                    marginRight: 10,
+                    color: "#fff",
+                  }}
+                  disabled={true}
+                  textStyle={{
+                    color: "#fff",
+                    fontFamily: "Avenir",
+                    marginBottom: 10,
+                  }}
+                  mode="outlined"
+                >
+                  {countryName}
+                </Chip>
+              )}
+              {cityName == "" ? null : (
+                <Chip
+                  style={{
+                    backgroundColor: "#34ace0",
+                    alignItems: "center",
+                    marginRight: 10,
+                    color: "#fff",
+                  }}
+                  disabled={true}
+                  textStyle={{
+                    color: "#fff",
+                    fontFamily: "Avenir",
+                    marginBottom: 10,
+                  }}
+                  mode="outlined"
+                >
+                  {cityName}
+                </Chip>
+              )}
+              {idealType == "" ? null : (
+                <Chip
+                  style={{
+                    backgroundColor: "#34ace0",
+                    alignItems: "center",
+                    marginRight: 10,
+                    color: "#fff",
+                  }}
+                  disabled={true}
+                  textStyle={{
+                    color: "#fff",
+                    fontFamily: "Avenir",
+                    marginBottom: 10,
+                  }}
+                  mode="outlined"
+                >
+                  {idealType}
+                </Chip>
+              )}
+              {tourType == "" ? null : (
+                <Chip
+                  style={{
+                    backgroundColor: "#34ace0",
+                    alignItems: "center",
+                    marginRight: 10,
+                    color: "#fff",
+                  }}
+                  disabled={true}
+                  textStyle={{
+                    color: "#fff",
+                    fontFamily: "Avenir",
+                    marginBottom: 10,
+                  }}
+                  mode="outlined"
+                >
+                  {tourType}
+                </Chip>
+              )}
+            </ScrollView>
 
-                {(tour.length === 0 && route.params.name) ||
-                tour.length === 0 ? (
-                  <View
-                    style={{ alignItems: "center", justifyContent: "center" }}
-                  >
-                    <View>
-                      <Image
-                        style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 }}
-                        source={require("../../../assets/oops.jpg")}
-                      />
-                    </View>
-                    <Text style={{ fontFamily: "Avenir", fontSize: 23 }}>
-                      No Tours Found
-                    </Text>
-                  </View>
-                ) : (
-                  <>
-                    <FlatList
-                      showsVerticalScrollIndicator={false}
-                      keyExtractor={(c) => c._id}
-                      data={search()}
-                      renderItem={({ item, index }) => {
-                        return (
-                          <>
-                            <TouchableOpacity
-                              onPress={() => {
-                                navigation.navigate("TourInner", {
-                                  item: item,
-                                });
+            {(tour.length === 0 && route.params.name) || tour.length === 0 ? (
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <View>
+                  <Image
+                    style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 }}
+                    source={require("../../../assets/oops.jpg")}
+                  />
+                </View>
+                <Text style={{ fontFamily: "Avenir", fontSize: 23 }}>
+                  No Tours Found
+                </Text>
+              </View>
+            ) : (
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {search().map((item, index) => {
+                  if (index < pageSize)
+                    return (
+                      <>
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate("TourInner", {
+                              item: item,
+                            });
+                          }}
+                        >
+                          <View
+                            style={{
+                              flex: 1,
+                              alignItems: "center",
+                              justifyContent: "center",
+                              marginBottom: 15,
+                            }}
+                          >
+                            <View
+                              style={{
+                                alignItems: "center",
+                                justifyContent: "center",
                               }}
                             >
-                              <View style={styles.imageContainer}>
-                                <View style={styles.shadow}>
-                                  <ProgressiveImage
-                                    style={styles.image}
-                                    source={{ uri: item.imageUrl }}
-                                  />
+                              <View style={{ position: "relative" }}>
+                                <Image
+                                  style={{
+                                    height: HEIGHT / 3,
+                                    width: WIDTH * 0.9,
+                                    borderRadius: 30,
+                                  }}
+                                  source={{ uri: item.imageUrl }}
+                                />
+                              </View>
+
+                              <View
+                                style={{
+                                  width: "12%",
+                                  backgroundColor: "#D9D9D9",
+                                  position: "absolute",
+                                  blurRadius: 10,
+                                  opacity: 0.8,
+                                  top: 10,
+                                  right: 10,
+                                  borderRadius: 6,
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  padding: 5,
+                                }}
+                              >
+                                <View>
+                                  {savedTours.includes(item.tourName) ? (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        let filterData = savedTours.filter(
+                                          (c) => {
+                                            return c != item.tourName;
+                                          }
+                                        );
+
+                                        setSavedTours(filterData);
+
+                                        const filterDetails =
+                                          savedToursDetails.filter((c) => {
+                                            return c.tourName !== item.tourName;
+                                          });
+
+                                        setSavedToursDetails(filterDetails);
+                                      }}
+                                    >
+                                      <Fontisto
+                                        style={{ marginRight: 0 }}
+                                        name="bookmark-alt"
+                                        size={30}
+                                        style={{
+                                          zIndex: 10,
+                                          opacity: 1,
+                                        }}
+                                        color="#E28633"
+                                      />
+                                    </TouchableOpacity>
+                                  ) : (
+                                    <TouchableOpacity
+                                      style={{ zIndex: 10 }}
+                                      onPress={() => {
+                                        if (isLoggedIn) {
+                                          setSavedTours([
+                                            ...savedTours,
+                                            item.tourName,
+                                          ]);
+                                          setSavedToursDetails([
+                                            ...savedToursDetails,
+                                            item,
+                                          ]);
+                                        } else {
+                                          navigation.navigate("SignUpScreen");
+                                        }
+                                      }}
+                                    >
+                                      <Fontisto
+                                        style={{ marginRight: 0 }}
+                                        name="bookmark-alt"
+                                        size={30}
+                                        style={{
+                                          opacity: 1,
+                                          zIndex: 10,
+                                        }}
+                                        color="#fff"
+                                      />
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              </View>
+
+                              <View
+                                style={{
+                                  width: "80%",
+                                  backgroundColor: "#D9D9D9",
+                                  position: "absolute",
+                                  opacity: 0.8,
+                                  bottom: 20,
+                                  borderRadius: 10,
+                                  padding: 10,
+                                }}
+                              >
+                                <View>
                                   <View
                                     style={{
                                       flexDirection: "row",
-                                      position: "absolute",
-                                      width: WIDTH * 0.9,
-                                      justifyContent: "space-between",
                                       alignItems: "center",
                                     }}
                                   >
-                                    <LinearGradient
-                                      colors={["#FFA26E", "#E36D5D"]}
+                                    <EvilIcons name="location" size={30} />
+                                    <Text
                                       style={{
-                                        marginHorizontals: 15,
-                                        marginTop: 10,
-                                        padding: 2,
-                                        borderRadius: 5,
-                                        left: 10,
+                                        fontFamily: "Andika",
+                                        paddingLeft: 4,
                                       }}
                                     >
-                                      <View>
-                                        <Text style={styles.cityname}>
-                                          {item.cityName}
-                                        </Text>
-                                      </View>
-                                    </LinearGradient>
+                                      {item.cityName}
+                                    </Text>
                                   </View>
-                                  <View style={styles.tourDetails}>
+                                  <Text
+                                    style={{
+                                      paddingVertical: 10,
+                                      fontSize: 18,
+                                      paddingLeft: 8,
+
+                                      fontFamily:
+                                        Platform.OS === "ios"
+                                          ? "AvenirNext-Bold"
+                                          : "Avenir",
+                                    }}
+                                  >
+                                    {item.tourName}
+                                  </Text>
+                                  <View
+                                    style={{
+                                      flexDirection: "row",
+                                      justifyContent: "space-between",
+                                      paddingLeft: 6,
+                                    }}
+                                  >
                                     <View
                                       style={{
                                         flexDirection: "row",
-                                        justifyContent: "space-between",
+                                        flexGrow: 1,
+                                        alignItems: "center",
+                                        flexWrap: "wrap",
                                       }}
                                     >
+                                      <Fontisto
+                                        name="plane-ticket"
+                                        size={20}
+                                        color="black"
+                                      />
                                       <Text
                                         style={{
-                                          color: "#8395A7",
-                                          fontSize: 15,
                                           fontFamily: "Andika",
+                                          paddingLeft: 10,
+                                          // fontSize: 10,
                                         }}
                                       >
-                                        {item.tourCategory.join(",")}
+                                        {item.tourCategory[0]}
                                       </Text>
-                                      <View>
-                                        {savedTours.includes(item.tourName) ? (
-                                          <TouchableOpacity
-                                            onPress={() => {
-                                              let filterData =
-                                                savedTours.filter((c) => {
-                                                  return c != item.tourName;
-                                                });
-
-                                              setSavedTours(filterData);
-
-                                              const filterDetails =
-                                                savedToursDetails.filter(
-                                                  (c) => {
-                                                    return (
-                                                      c.tourName !==
-                                                      item.tourName
-                                                    );
-                                                  }
-                                                );
-
-                                              setSavedToursDetails(
-                                                filterDetails
-                                              );
-                                            }}
-                                          >
-                                            <AntDesign
-                                              style={{ marginRight: 0 }}
-                                              name="heart"
-                                              size={24}
-                                              color="#FF4500"
-                                            />
-                                          </TouchableOpacity>
-                                        ) : (
-                                          <TouchableOpacity
-                                            onPress={() => {
-                                              if (isLoggedIn) {
-                                                setSavedTours([
-                                                  ...savedTours,
-                                                  item.tourName,
-                                                ]);
-                                                setSavedToursDetails([
-                                                  ...savedToursDetails,
-                                                  item,
-                                                ]);
-                                              } else {
-                                                navigation.navigate(
-                                                  "SignUpScreen"
-                                                );
-                                              }
-                                            }}
-                                          >
-                                            <Image
-                                              style={{
-                                                height: 35,
-
-                                                width: 35,
-                                              }}
-                                              source={require("../../../assets/heart.png")}
-                                            />
-                                          </TouchableOpacity>
-                                        )}
-                                      </View>
                                     </View>
+                                    <View
+                                      style={{
+                                        flexDirection: "row",
+                                        flexGrow: 1,
 
-                                    <Text
-                                      style={{
-                                        fontSize: 18,
-                                        // fontWeight: "bold",
-                                        fontFamily: "NewYorkl",
-                                        marginTop: 2,
+                                        alignItems: "center",
                                       }}
                                     >
-                                      {item.tourName}
-                                    </Text>
-                                    <Text
-                                      style={{
-                                        color: "#8395A7",
-                                        fontSize: 15,
-                                        marginVertical: 5,
-                                        fontFamily: "Andika",
-                                      }}
-                                    >
-                                      {item.tourType}
-                                    </Text>
+                                      <Fontisto
+                                        name="clock"
+                                        size={20}
+                                        color="black"
+                                      />
+                                      <Text
+                                        style={{
+                                          fontFamily: "Andika",
+                                          paddingLeft: 10,
+                                        }}
+                                      >
+                                        {item.tourType}
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
-                            </TouchableOpacity>
-                          </>
-                        );
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      </>
+                    );
+                })}
+                {tourName === "" && (
+                  <TouchableOpacity
+                    onPress={() => setPageSize(pageSize + 10)}
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      paddingVertical: 20,
+                      backgroundColor: "#fff",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#E28633",
+                        padding: 10,
+                        borderRadius: 10,
                       }}
-                    />
-                  </>
+                    >
+                      Load More ...
+                    </Text>
+                  </TouchableOpacity>
                 )}
-              </View>
+              </ScrollView>
             )}
+            {/* </View> */}
           </View>
         );
       case 1:
@@ -1230,65 +1223,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    // paddingTop: 20,
-  },
-  imageContainer: {
-    padding: 5,
-    position: "relative",
-    paddingTop: 20,
-  },
-  image: {
-    height: Dimensions.get("window").height / 4.5,
-    width: WIDTH * 0.9,
-    borderRadius: 20,
-  },
-  shadow: {
-    width: WIDTH * 0.9,
-    backgroundColor: "#fff",
-    borderRadius: 18,
-    marginHorizontal: 10,
-  },
-  cityname: {
-    padding: 5,
-    fontSize: 12,
-    color: "#fff",
-    fontWeight: "bold",
-    fontStyle: "normal",
-
-    zIndex: 1,
-    left: 0,
-  },
-
-  view: {
-    width: 100,
-    height: 100,
-    marginTop: 20,
-    backgroundColor: "red",
-  },
-  tourDetails: {
-    margin: 15,
-  },
-  background: {
-    // backgroundColor: "#fff",
-    height: HEIGHT / 15,
-    flexDirection: "row",
-    marginTop: 20,
-    marginBottom: 30,
-    marginHorizontal: 10,
-    borderRadius: 20,
-    borderWidth: 1,
-  },
-  inputStyle: {
-    fontSize: 16,
-    flex: 1,
-  },
-  iconStyle: {
-    fontSize: 28,
-    alignSelf: "center",
-    marginHorizontal: 15,
-    // backgroundColor: "red",
-    // padding: 10,
-    // borderTopRightRadius: 10,
-    // borderBottomRightRadius: 10,
+    backgroundColor: "white",
+    paddingTop: 40,
   },
 });

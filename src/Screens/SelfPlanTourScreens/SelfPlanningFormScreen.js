@@ -28,13 +28,16 @@ import OverviewToursScreen from "../CheckoutScreens/OverviewToursScreen";
 import ProgressScreen from "../CheckoutScreens/ProgressScreen";
 import OverviewCitiesScreen from "../CheckoutScreens/OverviewCitiesScreen";
 import Card from "../../../assets/Board.jpg";
+import SearchBar from "../../Reusable Components/SearchBar";
 
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 const SelfPlanForm = ({ navigation }) => {
-  const { cities, userInfo } = useContext(AuthContext);
+  const { cities, userInfo, countries } = useContext(AuthContext);
   const [destination, setDestination] = useState("");
   const [selectedCity, setSelectedCity] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState([]);
+  const [selectedCountryNames, setSelectedCountryNames] = useState([]);
   const [selectedCityNames, setSelectedCityNames] = useState([]);
   const [loader, setLoader] = useState(true);
   const [tourType, setTourType] = useState("");
@@ -44,105 +47,37 @@ const SelfPlanForm = ({ navigation }) => {
   const [selectedState, setSelectedState] = useState("");
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [dcities, setDCities] = useState([]);
   const [states, setStates] = useState([]);
   const [hotelType, setHoteltype] = useState("");
   const [travelmode, setTravelmode] = useState("");
   const [flightType, setFlightType] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const [date, setDate] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
-  let random;
-  let formatedMonth;
-
-  const renderCity = ({ item }) => (
-    <View style={{ alignItems: "center", width: "33%" }}>
-      <View>
-        {selectedCityNames.includes(item.cityName) ? (
-          <Feather
-            name="check-circle"
-            size={24}
-            color="green"
-            style={{
-              bottom: 20,
-              right: 0,
-              zIndex: 10,
-              position: "absolute",
-            }}
-          />
-        ) : null}
-        <TouchableOpacity
-          onPress={() => {
-            if (selectedCityNames.includes(item.cityName)) {
-              const filter = selectedCity.filter((sa) => {
-                return sa.cityName !== item.cityName;
-              });
-              setSelectedCity(filter);
-              const filters = selectedCityNames.filter((sa) => {
-                return sa !== item.cityName;
-              });
-              setSelectedCityNames(filters);
-            } else {
-              setSelectedCityNames([...selectedCityNames, item.cityName]);
-              setSelectedCity([
-                ...selectedCity,
-                {
-                  cityName: item.cityName,
-                  imageUrl: item.imageUrl,
-                  days: 0,
-                  countryName: item.countryName,
-                },
-              ]);
-            }
-          }}
-        >
-          <ProgressiveImage
-            style={styles.cityImage}
-            source={{ uri: item.imageUrl }}
-          />
-        </TouchableOpacity>
-        <Text style={{ textAlign: "center", marginBottom: 5 }}>
-          {item.cityName}
-        </Text>
-      </View>
-    </View>
-  );
-
-  // const memoCity = useMemo(() => renderCity, [city]);
-
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      random = Math.floor((Math.random() + 4) * 345334);
-      const requestDate = new Date();
-      let currentYear = requestDate.getFullYear();
-      setDate(requestDate.getDate());
-      setMonth(requestDate.getMonth() + 1);
-      setYear(currentYear.toString().slice(2, 5));
-      formatedMonth = month < 10 ? "0" + month : month;
-    }
-    return () => (mounted = false);
-  }, []);
 
   const getCity = () => {
-    if (destination === "") return cities;
     const c = cities.filter((c) => {
-      return c.cityName
-        .trim()
-        .toUpperCase()
-        .includes(destination.toUpperCase().trim());
+      return c.countryName === selectedCountryNames[0];
     });
 
     const countries = cities.filter((c) => {
+      return c.countryName === selectedCountryNames[1];
+    });
+
+    const result = [...c, ...countries];
+    return result;
+  };
+  const getCountries = () => {
+    if (destination === "") return countries;
+    const c = countries.filter((c) => {
       return c.countryName
         .trim()
         .toUpperCase()
         .includes(destination.toUpperCase().trim());
     });
 
-    const result = [...c, ...countries];
+    const result = [...c];
+    console.log(`result.length`, result.length);
     return result;
   };
 
@@ -204,10 +139,13 @@ const SelfPlanForm = ({ navigation }) => {
     return state;
   };
   const submitD = () => {
+    const v = moment().format("L");
+    const r = Math.floor((Math.random() + 4) * 345334);
+
     database()
       .ref(`self-planned-tours`)
       .push({
-        requestID: `TO-${date}${formatedMonth}${year}-${random}`,
+        requestID: `TO-${v.slice(3, 5)}${v.slice(0, 2)}${v.slice(8)}-${r}`,
         tourType: tourType,
         userId: userInfo.userID,
         adult: adult,
@@ -228,6 +166,13 @@ const SelfPlanForm = ({ navigation }) => {
         tourCost: 0,
       })
       .then((data) => {
+        setSelectedState("");
+        setSelectedCity("");
+        setTotalDays("");
+        setAdult("");
+        setChildren("");
+        setFromDate("");
+        setToDate("");
         setStep(5);
       })
       .catch((err) => console.log(err));
@@ -237,14 +182,10 @@ const SelfPlanForm = ({ navigation }) => {
       case 1:
         return (
           <View style={styles.container}>
-            <View style={styles.background}>
-              <Feather name="search" style={styles.iconStyle}></Feather>
-              <TextInput
-                style={styles.inputStyle}
-                placeholder="Search"
+            <View style={{ paddingHorizontal: 10, alignSelf: "stretch" }}>
+              <SearchBar
                 onChangeText={(text) => setDestination(text)}
-                autoCapitalize="none"
-                autoCorrect={false}
+                placeholder={"Search"}
               />
             </View>
 
@@ -267,6 +208,7 @@ const SelfPlanForm = ({ navigation }) => {
                     flexWrap: "wrap",
                     alignItems: "center",
                     justifyContent: "center",
+                    paddingBottom: 30,
                   }}
                 >
                   {filterState().map((item, index) => {
@@ -307,26 +249,32 @@ const SelfPlanForm = ({ navigation }) => {
               </ScrollView>
             )}
 
-            <TouchableOpacity
-              onPress={() => {
-                getDomesticCities(selectedState);
-                setStep(step + 1);
-              }}
-            >
-              <View style={styles.proceedButton}>
-                <Text
-                  style={{ fontSize: 20, color: "white", fontFamily: "Andika" }}
-                >
-                  Select State and Proceed
-                </Text>
-              </View>
-            </TouchableOpacity>
+            {selectedState !== "" && (
+              <TouchableOpacity
+                onPress={() => {
+                  getDomesticCities(selectedState);
+                  setStep(step + 1);
+                }}
+              >
+                <View style={styles.proceedButton}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: "white",
+                      fontFamily: "Andika",
+                    }}
+                  >
+                    Proceed
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
         );
       case 2:
         return (
           <View style={styles.container}>
-            <View>
+            {/* <View>
               <Text
                 style={{
                   textAlign: "center",
@@ -336,7 +284,7 @@ const SelfPlanForm = ({ navigation }) => {
               >
                 Select Citiess
               </Text>
-            </View>
+            </View> */}
 
             {loaded ? (
               <ActivityIndicator
@@ -379,6 +327,7 @@ const SelfPlanForm = ({ navigation }) => {
                       flexWrap: "wrap",
                       alignItems: "center",
                       justifyContent: "center",
+                      marginTop: 30,
                     }}
                   >
                     {dcities.map((t, index) => {
@@ -460,7 +409,7 @@ const SelfPlanForm = ({ navigation }) => {
                       fontFamily: "Andika",
                     }}
                   >
-                    Select State and Proceed
+                    Proceed
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -470,13 +419,14 @@ const SelfPlanForm = ({ navigation }) => {
       case 3:
         return (
           <ScrollView>
-            <View style={{ flex: 1, backgroundColor: "#F1F3F6" }}>
+            <View style={{ flex: 1, backgroundColor: "#fff" }}>
               <View>
                 <Text
                   style={{
                     textAlign: "center",
                     fontSize: 20,
                     fontFamily: "Andika",
+                    marginTop: Platform.OS == "android" ? 0 : 30,
                   }}
                 >
                   Overview of the seletecd cities
@@ -622,15 +572,6 @@ const SelfPlanForm = ({ navigation }) => {
                     </View>
                   </View>
                   <View style={styles.numbers}>
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        textAlign: "center",
-                        fontFamily: "Avenir",
-                      }}
-                    >
-                      No of Persons
-                    </Text>
                     <View
                       style={{
                         flexDirection: "row",
@@ -716,19 +657,21 @@ const SelfPlanForm = ({ navigation }) => {
                       </View>
                     </View>
                   </View>
-                  <TouchableOpacity
-                    style={{
-                      marginTop:
-                        HEIGHT < 550 ? -WIDTH / 10 - 20 : -WIDTH / 10 - 20,
-                    }}
-                    onPress={() => {
-                      setStep(step + 1);
-                    }}
-                  >
-                    <View style={styles.buttonContainer}>
-                      <Text style={styles.exploreButton}>Proceed</Text>
-                    </View>
-                  </TouchableOpacity>
+                  {fromDate !== "" && adult > 0 && totalDays > 0 && (
+                    <TouchableOpacity
+                      style={{
+                        marginTop:
+                          HEIGHT < 550 ? -WIDTH / 10 - 20 : -WIDTH / 10 - 20,
+                      }}
+                      onPress={() => {
+                        setStep(step + 1);
+                      }}
+                    >
+                      <View style={styles.buttonContainer}>
+                        <Text style={styles.exploreButton}>Proceed</Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>
@@ -746,7 +689,7 @@ const SelfPlanForm = ({ navigation }) => {
               width: WIDTH,
               alignItems: "center",
               flex: 1,
-              marginTop: 30,
+              // marginTop: 30,
             }}
           >
             <View style={{ alignItems: "flex-start", marginBottom: 15 }}>
@@ -855,6 +798,7 @@ const SelfPlanForm = ({ navigation }) => {
                 // marginTop: 0,
                 bottom: 10,
                 position: "absolute",
+                paddingBottom: 30,
               }}
             >
               <View style={styles.buttonContainer}>
@@ -864,7 +808,15 @@ const SelfPlanForm = ({ navigation }) => {
           </View>
         );
       case 5:
-        return <SubmittedQuery navigation={navigation} type={"Self Plan"} />;
+        return (
+          <SubmittedQuery
+            navigation={navigation}
+            type={"Self Plan"}
+            setSteps={() => {
+              setStep(1);
+            }}
+          />
+        );
     }
   };
 
@@ -883,7 +835,7 @@ const SelfPlanForm = ({ navigation }) => {
                 alignItems: "flex-end",
                 justifyContent: "center",
                 flexDirection: "row",
-                justifyContent: "space-between",
+                // justifyContent: "space-between",
                 marginHorizontal: 30,
                 position: "relative",
                 marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
@@ -893,6 +845,7 @@ const SelfPlanForm = ({ navigation }) => {
                 onPress={() => {
                   setTourType("");
                 }}
+                style={{ flex: 0.5 }}
               >
                 <View>
                   <AntDesign name="arrowleft" size={28} />
@@ -902,36 +855,30 @@ const SelfPlanForm = ({ navigation }) => {
               <Text
                 style={{
                   fontSize: 20,
-                  fontFamily: "NewYorkl",
-                  flex: 0.7,
+                  fontFamily:
+                    Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                  flex: 2,
                   marginBottom: Platform.OS == "ios" ? 5 : 0,
                 }}
               >
-                Select your cities
+                Select One/Two countries
               </Text>
 
-              <TouchableOpacity>
-                <View>{/* <AntDesign name="arrowright" size={28} /> */}</View>
-              </TouchableOpacity>
+              <View>{/* <AntDesign name="arrowright" size={28} /> */}</View>
             </View>
-            <View style={styles.background}>
-              <Feather name="search" style={styles.iconStyle}></Feather>
-              <TextInput
-                style={styles.inputStyle}
-                placeholder="Search"
+            <View style={{ paddingHorizontal: 10, alignSelf: "stretch" }}>
+              <SearchBar
+                placeholder={"Search"}
                 onChangeText={(value) => setDestination(value)}
-                onSubmitEditing={getCity}
-                autoCapitalize="none"
-                autoCorrect={false}
               />
             </View>
-            {selectedCity.length === 0 ? null : (
+            {selectedCountry.length === 0 ? null : (
               <TouchableOpacity
                 style={{
                   position: "absolute",
                   bottom: 0,
                   zIndex: 10,
-                  paddingBottom: 100,
+                  // paddingBottom: 30,
                 }}
                 onPress={() => {
                   setStep(2);
@@ -969,7 +916,167 @@ const SelfPlanForm = ({ navigation }) => {
                     flexWrap: "wrap",
                     alignItems: "center",
                     justifyContent: "center",
-                    paddingBottom: 100,
+                    paddingBottom: 0,
+                    marginBottom: 60,
+                  }}
+                >
+                  {getCountries().map((item, index) => {
+                    return (
+                      <View style={{ alignItems: "center" }} key={index}>
+                        <View>
+                          {selectedCountryNames.includes(item.countryName) ? (
+                            <Feather
+                              name="check-circle"
+                              size={24}
+                              color="green"
+                              style={{
+                                bottom: 20,
+                                right: 0,
+                                zIndex: 10,
+                                position: "absolute",
+                              }}
+                            />
+                          ) : null}
+                          <TouchableOpacity
+                            onPress={() => {
+                              if (
+                                selectedCountryNames.includes(item.countryName)
+                              ) {
+                                const filter = selectedCountry.filter((sa) => {
+                                  return sa.countryName !== item.countryName;
+                                });
+                                setSelectedCountry(filter);
+                                const filters = selectedCountryNames.filter(
+                                  (sa) => {
+                                    return sa !== item.countryName;
+                                  }
+                                );
+                                setSelectedCountryNames(filters);
+                              } else {
+                                if (selectedCountryNames.length < 2) {
+                                  setSelectedCountryNames([
+                                    ...selectedCountryNames,
+                                    item.countryName,
+                                  ]);
+                                  setSelectedCountry([
+                                    ...selectedCountry,
+                                    {
+                                      countryName: item.countryName,
+                                      imageUrl: item.imageUrl,
+                                    },
+                                  ]);
+                                }
+                              }
+                            }}
+                          >
+                            <ProgressiveImage
+                              style={styles.cityImage}
+                              source={{ uri: item.imageUrl }}
+                            />
+                          </TouchableOpacity>
+                          <Text
+                            style={{ textAlign: "center", marginBottom: 5 }}
+                          >
+                            {item.countryName === "United Arab Emirates"
+                              ? "UAE"
+                              : item.countryName}
+                          </Text>
+                        </View>
+                      </View>
+                    );
+                  })}
+                </View>
+              </ScrollView>
+            )}
+          </View>
+        );
+      case 2:
+        return (
+          <View style={styles.container}>
+            <View
+              style={{
+                width: WIDTH * 0.9,
+                alignItems: "flex-end",
+                justifyContent: "center",
+                flexDirection: "row",
+                // justifyContent: "space-between",
+                marginHorizontal: 30,
+                position: "relative",
+                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                marginBottom: 30,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  setStep(1);
+                }}
+                style={{ flex: 1 }}
+              >
+                <View>
+                  <AntDesign name="arrowleft" size={28} />
+                </View>
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily:
+                    Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                  flex: 2.5,
+                  marginBottom: Platform.OS == "ios" ? 5 : 0,
+                }}
+              >
+                Select your cities
+              </Text>
+
+              <View>{/* <AntDesign name="arrowright" size={28} /> */}</View>
+            </View>
+
+            {selectedCity.length === 0 ? null : (
+              <TouchableOpacity
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  zIndex: 10,
+                  // paddingBottom: 30,
+                }}
+                onPress={() => {
+                  setStep(3);
+                }}
+              >
+                <View style={styles.proceedButton}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: "white",
+                      fontFamily: "Andika",
+                    }}
+                  >
+                    Proceed
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            {!loader ? (
+              <ActivityIndicator
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                size="large"
+              />
+            ) : (
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <View
+                  style={{
+                    width: WIDTH,
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingBottom: 0,
                     marginBottom: 60,
                   }}
                 >
@@ -1039,47 +1146,56 @@ const SelfPlanForm = ({ navigation }) => {
             )}
           </View>
         );
-      case 2:
+      case 3:
         return (
           <OverviewCitiesScreen
             selectedCitys={selectedCity}
             selectedCityNamess={selectedCityNames}
-            setStep={() => setStep(3)}
-            prevStep={() => prevStep()}
-          />
-        );
-      case 3:
-        return (
-          <SelfTourHome
-            selectedCitys={selectedCity}
-            selectedCityNamess={selectedCityNames}
             setStep={() => setStep(4)}
             prevStep={() => prevStep()}
-            navigation={navigation}
           />
         );
       case 4:
         return (
-          <OverviewToursScreen
+          <SelfTourHome
             selectedCitys={selectedCity}
-            prevStep={() => prevStep()}
+            selectedCityNamess={selectedCityNames}
             setStep={() => setStep(5)}
+            prevStep={() => prevStep()}
+            navigation={navigation}
           />
         );
       case 5:
         return (
-          <ProgressScreen
-            prevStep={() => prevStep()}
+          <OverviewToursScreen
             selectedCitys={selectedCity}
+            prevStep={() => prevStep()}
             setStep={() => setStep(6)}
           />
         );
       case 6:
-        return <SubmittedQuery navigation={navigation} type={"Self Plan"} />;
+        return (
+          <ProgressScreen
+            prevStep={() => prevStep()}
+            selectedCitys={selectedCity}
+            setStep={() => setStep(7)}
+          />
+        );
+      case 7:
+        return (
+          <SubmittedQuery
+            navigation={navigation}
+            type={"Self Plan"}
+            setSteps={() => {
+              setTourType("");
+              setStep(1);
+            }}
+          />
+        );
     }
   };
   return (
-    <>
+    <View style={{ backgroundColor: "#fff", flex: 1 }}>
       {tourType === "" ? (
         <View style={{ marginTop: Platform.OS === "ios" ? 30 : 0 }}>
           <Tourtype
@@ -1088,9 +1204,23 @@ const SelfPlanForm = ({ navigation }) => {
             nextStep={() => setStep(1)}
             prevStep={() => navigation.goBack()}
             tourType={tourType}
-            tourName={"Self Tour"}
-            setDomestic={() => setTourType("Domestic")}
-            setInternational={() => setTourType("International")}
+            tourName={"Plan It Yourself"}
+            setDomestic={() => {
+              setSelectedCity([]);
+              setSelectedState("");
+              setSelectedCityNames([]);
+              setSelectedCountryNames([]);
+              setSelectedCountry([]);
+              setTourType("Domestic");
+            }}
+            setInternational={() => {
+              setSelectedCity([]);
+              setSelectedState("");
+              setSelectedCountryNames([]);
+              setSelectedCountry([]);
+              setSelectedCityNames([]);
+              setTourType("International");
+            }}
           />
         </View>
       ) : (
@@ -1105,7 +1235,8 @@ const SelfPlanForm = ({ navigation }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     marginHorizontal: WIDTH / 15,
-                    marginVertical: Platform.OS === "ios" ? 30 : 20,
+                    marginTop: Platform.OS === "ios" ? 30 : 20,
+                    backgroundColor: "#fff",
                   }}
                 >
                   <TouchableOpacity
@@ -1122,18 +1253,25 @@ const SelfPlanForm = ({ navigation }) => {
                   <Text
                     style={{
                       fontSize: 20,
-                      fontFamily: "NewYorkl",
+                      fontFamily:
+                        Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
                       marginTop: Platform.OS == "android" ? 30 : 40,
                     }}
                   >
                     Domestic
                   </Text>
 
-                  <TouchableOpacity onPress={() => setStep(step + 1)}>
+                  {step === 1 ? (
                     <View>
-                      <AntDesign name="arrowright" size={28} />
+                      <AntDesign name="arrowright" size={28} color="#fff" />
                     </View>
-                  </TouchableOpacity>
+                  ) : (
+                    // <TouchableOpacity onPress={() => setStep(step + 1)}>
+                    <View>
+                      <AntDesign name="arrowright" size={28} color="#fff" />
+                    </View>
+                    // </TouchableOpacity>
+                  )}
                 </View>
               )}
               {renderDomesticForm()}
@@ -1143,7 +1281,7 @@ const SelfPlanForm = ({ navigation }) => {
           )}
         </>
       )}
-    </>
+    </View>
   );
 };
 
@@ -1237,7 +1375,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonContainer: {
-    backgroundColor: "#626E7B",
+    backgroundColor: "#E28633",
     borderRadius: 10,
     alignItems: "center",
     width: WIDTH * 0.9,
@@ -1284,16 +1422,17 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   proceedButton: {
-    width: WIDTH * 0.9,
-    backgroundColor: "#626E7B",
+    width: WIDTH * 0.8,
+    backgroundColor: "#E28633",
     borderRadius: 10,
     padding: 5,
     alignItems: "center",
-    marginBottom: 5,
+    marginBottom: Platform.OS === "ios" ? 25 : 5,
   },
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#fff",
   },
 
   background: {

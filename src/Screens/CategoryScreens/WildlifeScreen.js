@@ -25,6 +25,7 @@ import { AuthContext } from "../../context/AuthContext";
 import NationalPark from "./Reusable components/NationalPark";
 import SubmittedQuery from "./Reusable components/SubmittedQuery";
 import moment from "moment";
+import { useIsFocused } from "@react-navigation/native";
 import {
   getExpoToken,
   sendPushNotification,
@@ -48,27 +49,8 @@ const WildLife = ({ navigation, route }) => {
   const [number, setNumber] = useState(0);
   const [step, setStep] = useState(1);
   const { isLoggedIn, userInfo } = useContext(AuthContext);
-  const [date, setDate] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
-
+  const isFocused = useIsFocused();
   const [destination, setDestination] = useState(nationalPark);
-  let random;
-  let formatedMonth;
-
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      random = Math.floor((Math.random() + 4) * 345334);
-      const requestDate = new Date();
-      let currentYear = requestDate.getFullYear();
-      setDate(requestDate.getDate());
-      setMonth(requestDate.getMonth() + 1);
-      setYear(currentYear.toString().slice(2, 5));
-      formatedMonth = month < 10 ? "0" + month : month;
-    }
-    return () => (mounted = false);
-  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -90,11 +72,11 @@ const WildLife = ({ navigation, route }) => {
     let mounted = true;
     if (mounted) {
       if (!isLoggedIn) {
-        navigation.replace("SignInScreen");
+        navigation.jumpTo("SignInScreen");
       }
     }
     return () => (mounted = false);
-  }, []);
+  }, [isFocused]);
 
   const handleFromDate = (date) => {
     setFromDate(date);
@@ -367,9 +349,11 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
 
   const submitData = () => {
     const userID = userInfo.userID;
+    const v = moment().format("L");
+    const r = Math.floor((Math.random() + 4) * 345334);
 
     const data = {
-      requestID: `TO-${date}${formatedMonth}${year}-${random}`,
+      requestID: `TO-${v.slice(3, 5)}${v.slice(0, 2)}${v.slice(8)}-${r}`,
       nationalPark: nationalPark,
       tourCategory: "Wildlife",
       travellerType: travellerType,

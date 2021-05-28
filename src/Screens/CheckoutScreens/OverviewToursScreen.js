@@ -4,20 +4,22 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  Platform,
   View,
   ScrollView,
   Dimensions,
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 import { AntDesign } from "@expo/vector-icons";
-import { SelfTourContext } from "../../context/ SelfTourContext";
+// import { SelfTourContext } from "../../context/ SelfTourContext";
+import { AuthContext } from "./../../context/AuthContext";
 
 const OverviewToursScreen = ({ setStep, prevStep }) => {
-  const { details, setDetails } = useContext(SelfTourContext);
+  const { details, setDetails } = useContext(AuthContext);
   const selectedTours = details.selectedTours;
   const [finalTour, setFinalTour] = useState([...selectedTours]);
   return (
-    <ScrollView style={{ backgroundColor: "#fff", marginBottom: 120 }}>
+    <ScrollView style={{ backgroundColor: "#fff", marginBottom: 20 }}>
       <View
         style={{
           width: WIDTH * 0.9,
@@ -43,7 +45,7 @@ const OverviewToursScreen = ({ setStep, prevStep }) => {
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             flex: 0.45,
           }}
         >
@@ -163,7 +165,7 @@ const styles = new StyleSheet.create({
     fontFamily: "Avenir",
   },
   buttonContainer: {
-    backgroundColor: "#28C9E1",
+    backgroundColor: "#E28633",
     borderRadius: 10,
     padding: 15,
     alignItems: "center",

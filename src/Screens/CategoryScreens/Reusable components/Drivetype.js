@@ -49,7 +49,7 @@ const Drivetype = ({
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
           }}
         >
@@ -77,7 +77,12 @@ const Drivetype = ({
         )}
       </View>
       <View style={{ width: WIDTH, marginHorizontal: 30, marginVertical: 30 }}>
-        <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+          }}
+        >
           1.Would you Prefer ?
         </Text>
       </View>
@@ -100,8 +105,7 @@ const Drivetype = ({
                     marginTop: 40,
                   }}
                   source={{
-                    uri:
-                      "https://thumbs.dreamstime.com/b/vintage-car-sketch-coloring-book-black-white-drawing-monochrome-retro-cartoon-transport-vector-illustration-78499966.jpg",
+                    uri: "https://thumbs.dreamstime.com/b/vintage-car-sketch-coloring-book-black-white-drawing-monochrome-retro-cartoon-transport-vector-illustration-78499966.jpg",
                   }}
                 />
                 <Text
@@ -156,7 +160,13 @@ const Drivetype = ({
       {driveType == "Rented Bike/Car" ? (
         <View>
           <View style={{ width: WIDTH, marginHorizontal: 30, marginTop: 20 }}>
-            <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily:
+                  Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+              }}
+            >
               2.If rented Car/Bike ?
             </Text>
           </View>
@@ -179,8 +189,7 @@ const Drivetype = ({
                       marginTop: 40,
                     }}
                     source={{
-                      uri:
-                        "https://thumbs.dreamstime.com/b/vintage-car-sketch-coloring-book-black-white-drawing-monochrome-retro-cartoon-transport-vector-illustration-78499966.jpg",
+                      uri: "https://thumbs.dreamstime.com/b/vintage-car-sketch-coloring-book-black-white-drawing-monochrome-retro-cartoon-transport-vector-illustration-78499966.jpg",
                     }}
                   />
                   <Text

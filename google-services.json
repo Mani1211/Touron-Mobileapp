@@ -30,6 +30,14 @@
             {
               "client_id": "813320271971-g7bth4oej5kc7ljd3jfcs1it76bqimgf.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "813320271971-kc459f1555144ufj9ds6j7kv859akjqh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.touron.travelapp",
+                "app_store_id": "1544389334"
+              }
             }
           ]
         }

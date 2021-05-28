@@ -9,14 +9,14 @@ import {
   Dimensions,
   Linking,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 const CountryInnerScreen = ({ navigation, route }) => {
   const item = route.params.item;
+
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const openWhatsApp = (name) => {
@@ -34,6 +34,25 @@ const CountryInnerScreen = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
+        <TouchableOpacity
+          style={{
+            // height: HEIGHT * 0.8,
+            alignSelf: "flex-start",
+            width: "10%",
+            opacity: 0.6,
+            top: Platform.OS === "ios" ? 60 : 20,
+
+            zIndex: 10,
+            left: 15,
+            position: "absolute",
+            alignItems: "center",
+          }}
+          onPress={() => navigation.goBack()}
+        >
+          <View>
+            <FontAwesome name="arrow-circle-left" size={34} color="black" />
+          </View>
+        </TouchableOpacity>
         <ProgressiveImage
           style={styles.image}
           source={{ uri: item.imageUrl }}
@@ -45,19 +64,22 @@ const CountryInnerScreen = ({ navigation, route }) => {
             zIndex: 1,
             bottom: -40,
             padding: 15,
-            borderRadius: 20,
             position: "absolute",
           }}
           onPress={() =>
             navigation.navigate("CityHome", { name: item.countryName })
           }
         >
-          <LinearGradient
-            colors={["#E28633", "#E28633"]}
-            style={{ padding: 15, alignItems: "center", borderRadius: 15 }}
+          <View
+            style={{
+              padding: 15,
+              alignItems: "center",
+              borderRadius: 18,
+              backgroundColor: "#E28633",
+            }}
           >
             <Text style={styles.button}>Explore Cities</Text>
-          </LinearGradient>
+          </View>
         </TouchableOpacity>
       </View>
       <View
@@ -227,7 +249,7 @@ const CountryInnerScreen = ({ navigation, route }) => {
           style={{
             flexDirection: "row",
             justifyContent: "space-evenly",
-            marginBottom: 20,
+            marginBottom: 40,
           }}
         >
           <TouchableOpacity
@@ -259,7 +281,13 @@ const CountryInnerScreen = ({ navigation, route }) => {
               Shopp
             </Text>
           </TouchableOpacity>
-          <View style={{ position: "absolute", top: HEIGHT / 2, zIndex: 20 }}>
+          <View
+            style={{
+              position: "absolute",
+              top: HEIGHT / 2,
+              zIndex: 20,
+            }}
+          >
             <TouchableOpacity
               onPress={() => {
                 showModal();

@@ -29,6 +29,8 @@ import {
 } from "./utils/PushNotification";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
+import { useIsFocused } from "@react-navigation/native";
+
 const Honeymoon = ({ navigation, route }) => {
   const [fromDate, setFromDate] = useState("");
   const [tourType, setTourType] = React.useState("");
@@ -42,26 +44,7 @@ const Honeymoon = ({ navigation, route }) => {
   const [number, setNumber] = useState("");
   const [step, setStep] = useState(1);
   const { isLoggedIn, user, userInfo } = useContext(AuthContext);
-  const [date, setDate] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
-  let random;
-  let formatedMonth;
-
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      random = Math.floor((Math.random() + 4) * 345334);
-      const requestDate = new Date();
-      let currentYear = requestDate.getFullYear();
-      setDate(requestDate.getDate());
-      setMonth(requestDate.getMonth() + 1);
-      setYear(currentYear.toString().slice(2, 5));
-      formatedMonth = month < 10 ? "0" + month : month;
-    }
-    return () => (mounted = false);
-  }, []);
-
+  const isFocused = useIsFocused();
   useEffect(() => {
     let mounted = true;
     if (mounted) {
@@ -82,11 +65,11 @@ const Honeymoon = ({ navigation, route }) => {
     let mounted = true;
     if (mounted) {
       if (!isLoggedIn) {
-        navigation.replace("SignInScreen");
+        navigation.jumpTo("SignInScreen");
       }
     }
     return () => (mounted = false);
-  }, []);
+  }, [isFocused]);
 
   const handleFromDate = (date) => {
     setFromDate(date);
@@ -113,7 +96,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 1:
         return (
           <Tourname
-            tourName={"Honeymoon Trip"}
+            tourName={"Honeymoon Tour"}
             navigation={navigation}
             step={() => nextStep()}
             imgSrc={
@@ -128,7 +111,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
           <Tourtype
             imgSrc1={require("../../../assets/planned-tour/india.png")}
             imgScr2={require("../../../assets/planned-tour/International.png")}
-            tourName={"Honeymoon Trip"}
+            tourName={"Honeymoon Tour"}
             nextStep={() => nextStep()}
             prevStep={() => prevStep()}
             tourType={tourType}
@@ -140,7 +123,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 3:
         return (
           <Travelmode
-            tourName={"Honeymoon Trip"}
+            tourName={"Honeymoon Tour"}
             nextStep={() => nextStep()}
             prevStep={() => prevStep()}
             imgSrc1={
@@ -282,7 +265,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 5:
         return (
           <Destination
-            tourName={"Honeymoon Trip"}
+            tourName={"Honeymoon Tour"}
             nextStep={() => nextStep()}
             prevStep={() => prevStep()}
             imgSrc={
@@ -299,7 +282,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       case 6:
         return (
           <Checkout
-            tourName={"Honeymoon Trip"}
+            tourName={"Honeymoon Tour"}
             nextStep={() => nextStep()}
             prevStep={() => prevStep()}
             imgSrc={
@@ -325,9 +308,11 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
 
   const submitData = () => {
     const userID = userInfo.userID;
+    const v = moment().format("L");
+    const r = Math.floor((Math.random() + 4) * 345334);
 
     const data = {
-      requestID: `TO-${date}${formatedMonth}${year}-${random}`,
+      requestID: `TO-${v.slice(3, 5)}${v.slice(0, 2)}${v.slice(8)}-${r}`,
       tourCategory: "Honeymoon Trip",
       fromDate: fromDate,
       travelMode: travelMode,

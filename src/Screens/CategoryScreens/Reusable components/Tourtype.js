@@ -48,7 +48,7 @@ const Tourtype = ({
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
           }}
         >
@@ -60,15 +60,21 @@ const Tourtype = ({
         </TouchableOpacity>
       </View>
       <View style={{ marginTop: HEIGHT / 20 }}>
-        <Text style={{ fontSize: 20, fontFamily: "NewYorkl" }}>
-          Pick the type of tour!{" "}
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+          }}
+        >
+          Pick the type of tour!
         </Text>
       </View>
 
-      <View style={{ marginHorizontal: 10 }}>
+      <View style={{ marginHorizontal: 30 }}>
         <View
           style={{
             height: HEIGHT / 3.3,
+            marginTop: 30,
           }}
         >
           <TouchableOpacity

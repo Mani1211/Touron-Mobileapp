@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StatusBar,
-  FlatList,
   Image,
   TouchableOpacity,
   Platform,
@@ -12,7 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import moment from "moment";
-import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import touron from "../../api/touron";
 import HTMLView from "react-native-htmlview";
 const WIDTH = Dimensions.get("window").width;
@@ -21,20 +20,15 @@ import axios from "axios";
 
 const BlogInnerScreen = ({ navigation, route }) => {
   const { title, id } = route.params;
-  const [blogid, setBlogid] = useState(id);
-  console.log(`deep Item`, title, id, blogid);
+  // const [blogid, setBlogid] = useState(id);
+  // console.log(`deep Item`, title, id, blogid);
   const [blogDetails, setBlogDetails] = useState({});
   const [loaded, setLoaded] = useState(false);
-
-  const filteredTour = async (name) => {
-    const tourResponse = await touron.get(`/tour/countryname/${name}`);
-    return tourResponse.data;
-  };
 
   const getBlogDetails = async () => {
     try {
       setLoaded(true);
-      const blogResponse = await touron.get(`/blog/edit/${blogid}`);
+      const blogResponse = await touron.get(`/blog/edit/${id}`);
       setBlogDetails(blogResponse.data);
       setLoaded(false);
     } catch (err) {
@@ -47,14 +41,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
     getBlogDetails();
 
     return () => source.cancel();
-  }, []);
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      filteredTour();
-    }
-    return () => (mounted = false);
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -70,21 +57,20 @@ const BlogInnerScreen = ({ navigation, route }) => {
               flexDirection: "row",
               top: 0,
               left: 0,
-              marginTop: Platform.OS === "ios" ? 20 : 25,
+              marginTop: Platform.OS === "ios" ? 55 : 25,
             }}
           >
             <TouchableOpacity
               onPress={() => {
-                setBlogid("");
                 navigation.navigate("BlogHome");
               }}
             >
               <View
                 style={{
-                  paddingLeft: 16,
+                  paddingLeft: 20,
                 }}
               >
-                <AntDesign name="arrowleft" size={30} color="black" />
+                <FontAwesome name="arrow-circle-left" size={34} color="black" />
               </View>
             </TouchableOpacity>
           </View>
@@ -100,21 +86,20 @@ const BlogInnerScreen = ({ navigation, route }) => {
               zIndex: 2,
               alignItems: "center",
               flexDirection: "row",
-              marginTop: Platform.OS === "ios" ? 20 : 25,
+              marginTop: Platform.OS === "ios" ? 55 : 25,
             }}
           >
             <TouchableOpacity
               onPress={() => {
-                setBlogid("");
                 navigation.navigate("BlogHome");
               }}
             >
               <View
                 style={{
-                  paddingLeft: 16,
+                  paddingLeft: 20,
                 }}
               >
-                <AntDesign name="arrowleft" size={30} color="black" />
+                <FontAwesome name="arrow-circle-left" size={34} color="black" />
               </View>
             </TouchableOpacity>
           </View>
@@ -145,7 +130,8 @@ const BlogInnerScreen = ({ navigation, route }) => {
                     padding: 8,
                     margin: 8,
                     fontSize: 12,
-                    fontFamily: "NewYorkl",
+                    fontFamily:
+                      Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
                     borderWidth: 1,
                     borderRadius: 10,
                   }}
@@ -157,7 +143,8 @@ const BlogInnerScreen = ({ navigation, route }) => {
 
             <Text
               style={{
-                fontFamily: "NewYorkl",
+                fontFamily:
+                  Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
 
                 fontSize: 26,
                 margin: 10,
@@ -220,7 +207,13 @@ const BlogInnerScreen = ({ navigation, route }) => {
 
             {blogDetails.subHeading1 == "" ? null : (
               <View style={{ margin: 10 }}>
-                <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
+                <Text
+                  style={{
+                    fontFamily:
+                      Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                    fontSize: 18,
+                  }}
+                >
                   {blogDetails.subHeading1}
                 </Text>
               </View>
@@ -272,7 +265,13 @@ const BlogInnerScreen = ({ navigation, route }) => {
 
             {blogDetails.subHeading2 == "" ? null : (
               <View style={{ margin: 10 }}>
-                <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
+                <Text
+                  style={{
+                    fontFamily:
+                      Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                    fontSize: 18,
+                  }}
+                >
                   {blogDetails.subHeading2}
                 </Text>
               </View>
@@ -324,7 +323,13 @@ const BlogInnerScreen = ({ navigation, route }) => {
 
             {blogDetails.subHeading3 == "" ? null : (
               <View style={{ margin: 10 }}>
-                <Text style={{ fontFamily: "NewYorkl", fontSize: 18 }}>
+                <Text
+                  style={{
+                    fontFamily:
+                      Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                    fontSize: 18,
+                  }}
+                >
                   {blogDetails.subHeading3}
                 </Text>
               </View>
@@ -374,73 +379,6 @@ const BlogInnerScreen = ({ navigation, route }) => {
               </>
             )}
           </View>
-
-          {/* <View
-        style={{
-          padding: 5,
-          paddingLeft: 10,
-          backgroundColor: "#EBE5E5",
-          borderRadius: 15,
-          marginTop: HEIGHT / 10,
-          alignItems: "center",
-          paddingVertical: HEIGHT / 17,
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: "Avenir",
-            fontSize: 20,
-            paddingBottom: 20,
-          }}
-        >
-          Explore Tours in {blogDetails.countryName}
-        </Text>
-        <FlatList
-          data={filteredTour(blogDetails.countryName)}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("TourInner", { item: item })}
-              >
-                <Surface
-                  style={{
-                    width: WIDTH / 2.3,
-                    marginHorizontal: 5,
-                    marginVertical: 10,
-                    height: HEIGHT / 4,
-                    elevation: 5,
-                    borderRadius: 10,
-                  }}
-                >
-                  <View>
-                    <Image
-                      style={{
-                        height: WIDTH / 2.3,
-                        height: HEIGHT / 6,
-                        borderRadius: 10,
-                      }}
-                      source={{ uri: item.imageUrl }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        fontFamily: "Andika",
-                        paddingHorizontal: 5,
-                        paddingLeft: 10,
-                      }}
-                    >
-                      {item.tourName}
-                    </Text>
-                  </View>
-                </Surface>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View> */}
         </ScrollView>
       )}
     </>

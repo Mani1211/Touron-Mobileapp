@@ -41,3 +41,18 @@ export const sendEmail = async (email, countryname) => {
     .then((d) => console.log("d", d))
     .catch((err) => console.log("err", err));
 };
+
+export const isSubmittedFeedback = (uid) => {
+  // console.log(`uilnd`, uid);
+  let result = [];
+  database()
+    .ref("customerFeedbacks")
+    .on("value", (data) => {
+      data.forEach((d) => {
+        // console.log(`d.val().uselklkjbbrId`, d.val().userId);
+        result.push(d.val().userId);
+      });
+    });
+
+  return result.includes(uid);
+};

@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   Image,
   Linking,
+  TouchableOpacity,
+  ScrollView,
   Alert,
   View,
+  Platform,
   Dimensions,
 } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import touron from "../../api/touron";
 import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
+import { FontAwesome } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -30,17 +34,28 @@ const CityInnerScreen = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View>
-          <ProgressiveImage
-            style={styles.image}
-            source={{ uri: item.imageUrl }}
-          />
-        </View>
+        <TouchableOpacity
+          style={{
+            top: 22,
+            zIndex: 10,
+            left: 25,
+            position: "absolute",
+            top: Platform.OS === "ios" ? 60 : 30,
+          }}
+          onPress={() => navigation.goBack()}
+        >
+          <View>
+            <FontAwesome name="arrow-circle-left" size={34} color="black" />
+          </View>
+        </TouchableOpacity>
+        <ProgressiveImage
+          style={styles.image}
+          source={{ uri: item.imageUrl }}
+        />
         <View style={styles.innerDetail}>
           <Text style={styles.cityName}>{item.cityName}</Text>
           <Text style={styles.about}>{item.aboutCity}</Text>
         </View>
-
         <View
           style={{
             flexDirection: "row",
@@ -96,7 +111,6 @@ const CityInnerScreen = ({ navigation, route }) => {
             <Text style={{ fontSize: 15 }}>{item.idealDays} Required</Text>
           </View>
         </View>
-
         <View
           style={{
             flexDirection: "row",
@@ -139,12 +153,12 @@ const CityInnerScreen = ({ navigation, route }) => {
             {item.famousPlacesToVisit}
           </Text>
         </View>
-
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-evenly",
             marginVertical: 10,
+            marginBottom: 40,
           }}
         >
           <TouchableOpacity
@@ -245,9 +259,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F1F3F6",
   },
   image: {
+    position: "relative",
     height: HEIGHT / 1.6,
     width: WIDTH,
-    position: "relative",
   },
   cityName: {
     marginTop: 60,

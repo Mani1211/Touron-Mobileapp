@@ -14,37 +14,19 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { PieChart } from "react-native-svg-charts";
 import { Surface } from "react-native-paper";
-import { AuthContext } from "../../context/AuthContext";
-import { SelfTourContext } from "../../context/ SelfTourContext";
 import { AntDesign } from "@expo/vector-icons";
+import { AuthContext } from "./../../context/AuthContext";
+import moment from "moment";
 const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
-  const { details } = useContext(SelfTourContext);
+  const { details } = useContext(AuthContext);
   const { userInfo } = useContext(AuthContext);
   const finalTour = details.selectedTours;
   const selectedCity = selectedCitys;
-  const [date, setDate] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
-  let random;
-  let formatedMonth;
 
   const cityTourNames = [];
   finalTour.forEach((tour) => {
     cityTourNames.push(tour);
   });
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      random = Math.floor((Math.random() + 4) * 345334 * Math.random());
-      const requestDate = new Date();
-      let currentYear = requestDate.getFullYear();
-      setDate(requestDate.getDate());
-      setMonth(requestDate.getMonth() + 1);
-      setYear(currentYear.toString().slice(2, 5));
-      formatedMonth = month < 10 ? "0" + month : month;
-    }
-    return () => (mounted = false);
-  }, []);
 
   let selectedCityNames = [];
   let specificCityTours = [];
@@ -98,7 +80,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
   });
 
   return (
-    <ScrollView style={{ marginBottom: 100 }}>
+    <ScrollView style={{ marginBottom: 10 }}>
       <View
         style={{
           alignItems: "flex-end",
@@ -108,7 +90,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
           paddingHorizontal: 30,
           paddingBottom: 50,
           position: "relative",
-          backgroundColor: "#28C9E1",
+          backgroundColor: "#E28633",
         }}
       >
         <TouchableOpacity
@@ -124,7 +106,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
             flex: 0.6,
             color: "#fff",
@@ -261,7 +243,10 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
                           style={{
                             fontSize: 18,
                             color: "#626E7B",
-                            fontFamily: "Avenir",
+                            fontFamily:
+                              Platform.OS === "ios"
+                                ? "AvenirNext-Bold"
+                                : "Avenir",
                           }}
                         >
                           {item.cityDays} Days
@@ -532,10 +517,16 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
         <TouchableOpacity
           style={{ flex: 1.5 }}
           onPress={() => {
+            const v = moment().format("L");
+            const r = Math.floor((Math.random() + 4) * 345334);
+
             database()
               .ref(`self-planned-tours`)
               .push({
-                requestID: `TO-${date}${formatedMonth}${year}-${random}`,
+                requestID: `TO-${v.slice(3, 5)}${v.slice(0, 2)}${v.slice(
+                  8
+                )}-${r}`,
+
                 userId: userInfo.userID,
                 adult: details.adult,
                 children: details.children,
@@ -560,7 +551,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
         >
           <View
             style={{
-              backgroundColor: "#28C9E1",
+              backgroundColor: "#E28633",
               borderRadius: 10,
               padding: 15,
               alignItems: "center",

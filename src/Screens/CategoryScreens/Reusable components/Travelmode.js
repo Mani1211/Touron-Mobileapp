@@ -50,7 +50,7 @@ const Travelmode = ({
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
             flex: 0.6,
           }}
@@ -70,7 +70,11 @@ const Travelmode = ({
         }}
       >
         <Text
-          style={{ fontSize: 20, textAlign: "center", fontFamily: "NewYorkl" }}
+          style={{
+            fontSize: 20,
+            textAlign: "center",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+          }}
         >
           Preferred mode of travel
         </Text>

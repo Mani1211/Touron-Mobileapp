@@ -22,7 +22,7 @@ const Slider = ({
   showDots,
   setActiveSlide,
 }) => {
-  console.log(`objecat`, typeof setActiveSlide);
+  // console.log(`objecat`, typeof setActiveSlide);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
@@ -30,7 +30,7 @@ const Slider = ({
   const viewableItemChanged = useRef(({ viewableItems }) => {
     setCurrentIndex(viewableItems[0].index);
     if (typeof setActiveSlide == "function") {
-      console.log(`calling`);
+      // console.log(`calling`);
       setActiveSlide(viewableItems[0].index);
     }
   }).current;

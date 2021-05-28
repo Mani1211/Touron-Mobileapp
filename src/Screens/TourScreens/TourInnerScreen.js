@@ -1,431 +1,495 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   StyleSheet,
   Text,
   Image,
   View,
   Dimensions,
+  Platform,
+  TouchableOpacity,
   ScrollView,
 } from "react-native";
 import HTMLView from "react-native-htmlview";
-
 import {
-  AntDesign,
   MaterialCommunityIcons,
-  MaterialIcons,
-  Ionicons,
+  EvilIcons,
+  FontAwesome,
+  Fontisto,
+  Entypo,
 } from "@expo/vector-icons";
 
 const WIDTH = Dimensions.get("window").width;
-import { LinearGradient } from "expo-linear-gradient";
-
 const HEIGHT = Dimensions.get("window").height;
 
-const TourInnerScreen = ({ route }) => {
+const TourInnerScreen = ({ route, navigation }) => {
+  const [step, setStep] = useState("About");
+
   const header = () => {
     const random = Math.floor(Math.random() * 6);
     const suggestion = [
       "Get to know more about the fascinating locations and activities which awaits you on this tour!",
       "Here are the magnificent places you will visit and things you get to do on the tour.",
-      "This tour will take you to breathtaking places and give you the experience of a lifetime. Learn more about the tour below.",
+      "This tour will take you to breathtaking places and give you the experience of a lifetime.Learn More",
       "Learn more about the exhilarating activities awaiting you when you embark on this journey!",
       "What are the most thrilling experiences you get to enjoy on this trip? More tour details below!",
       "This getaway is going to be everything you dreamed of and more! Read on to know the details.",
     ];
     return suggestion[random];
   };
+  const head = useMemo(() => header(), []);
 
-  const item = route.params.item;
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View>
-          <Image
-            style={styles.image}
-            source={{ uri: item.imageUrl }}
-            backfaceVisibility="hidden"
-          />
+  const renderNode = (node, index, siblings, parent, defaultRenderer) => {
+    if (node.name == "li") {
+      return (
+        <View key={index} style={{ marginTop: index === 0 ? 10 : 0 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "column",
+                alignSelf: "flex-start",
+              }}
+            >
+              <Text style={{ fontSize: 30, color: "#e7e7e7" }}>{"\u2022"}</Text>
+            </View>
+            <View
+              style={{
+                alignSelf: "flex-start",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#e7e7e7",
+                  fontFamily: "Andika",
+                  padding: 7,
+                }}
+              >
+                {defaultRenderer(node.children, parent)}
+              </Text>
+            </View>
+          </View>
+        </View>
+      );
+    } else if (node.name == "ul") {
+      return <View>{defaultRenderer(node.children, parent)}</View>;
+    }
+  };
+
+  const render = () => {
+    switch (step) {
+      case "About":
+        return (
+          <Text
+            style={[
+              styles.heading,
+              { paddingVertical: 10, fontFamily: "Andika", fontSize: 13 },
+            ]}
+          >
+            {item.aboutTour}
+          </Text>
+        );
+
+      case "Elements":
+        return (
           <View
             style={{
               alignItems: "flex-start",
-              justifyContent: "flex-end",
-              position: "absolute",
-              top: WIDTH - 30,
+              justifyContent: "center",
+              paddingLeft: WIDTH / 15,
+              paddingTop: 20,
             }}
           >
-            <LinearGradient
-              colors={["#d5e1d9ff", "#d5e1d9ff"]}
-              style={{
-                padding: 8,
-                borderRadius: 10,
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                margin: 10,
-              }}
-            >
-              <Text style={{ fontSize: 18, fontFamily: "NewYorkl" }}>
-                {item.cityName}
+            <View style={styles.iconContainer}>
+              <MaterialCommunityIcons
+                name="car"
+                size={35}
+                color="#fff"
+                style={{ paddingHorizontal: 20 }}
+              />
+              <Text
+                style={[
+                  styles.heading,
+                  { fontSize: 18, fontFamily: "Andika", paddingBottom: 0 },
+                ]}
+              >
+                {item.tourPreferance}
               </Text>
-            </LinearGradient>
+            </View>
+            <View style={styles.iconContainer}>
+              <MaterialCommunityIcons
+                name="tag-heart"
+                size={35}
+                color="#fff"
+                style={{ paddingHorizontal: 20 }}
+              />
+              <Text
+                style={[
+                  styles.heading,
+                  { fontSize: 18, fontFamily: "Andika", paddingBottom: 0 },
+                ]}
+              >
+                {item.idealType[0]}
+              </Text>
+            </View>
+            <View style={styles.iconContainer}>
+              <Entypo
+                name="hour-glass"
+                size={35}
+                color="#fff"
+                style={{
+                  paddingHorizontal: 20,
+                  transform: [{ rotateX: "180deg" }],
+                }}
+              />
+              <Text
+                style={[
+                  styles.heading,
+                  { fontSize: 18, fontFamily: "Andika", paddingBottom: 0 },
+                ]}
+              >
+                {item.tourDuration}
+              </Text>
+            </View>
+            <View style={styles.iconContainer}>
+              <MaterialCommunityIcons
+                name="map-marker-radius"
+                size={35}
+                color="#fff"
+                style={{ paddingHorizontal: 20 }}
+              />
+              <Text
+                style={[
+                  styles.heading,
+                  { fontSize: 18, fontFamily: "Andika", paddingBottom: 0 },
+                ]}
+              >
+                {item.pickUpPoint}
+              </Text>
+            </View>
           </View>
-          <View
-            style={{
-              // position: "absolute",
-              // top: 100,
-              marginHorizontal: 10,
-              marginTop: 5,
-              justifyContent: "flex-end",
-            }}
-          >
-            <Text style={styles.tourName}>{item.tourName}</Text>
-            <Text style={styles.tourCategory}>
-              Tour Type : {item.tourCategory.join(", ")}
-            </Text>
-            <Text
-              style={{
-                lineHeight: 25,
-                marginLeft: 10,
-                marginTop: 0,
-                fontFamily: "Andika",
-              }}
-            >
-              {header()}
-            </Text>
-          </View>
+        );
+      case "Itinerary":
+        return (
+          <ScrollView showsVerticalScrollIndicator={true}>
+            {item.itinerary === "-" || item.itinerary === " " ? (
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: "#e7e7e7",
+                  fontFamily: "Andika",
+                  textAlign: "center",
+                  alignItems: "center",
+                  paddingTop: 100,
+                  justifyContent: "center",
+                }}
+              >
+                Contact us to know more about this tour.
+              </Text>
+            ) : (
+              <HTMLView
+                value={item.itinerary}
+                renderNode={(node, index, siblings, parent, defaultRenderer) =>
+                  renderNode(node, index, siblings, parent, defaultRenderer)
+                }
+              />
+            )}
+          </ScrollView>
+        );
+      case "Additional":
+        return (
+          <ScrollView showsVerticalScrollIndicator={true}>
+            {item.additionalInformation === "-" ||
+            item.additionalInformation === " " ||
+            item.additionalInformation === "NA" ? (
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: "#e7e7e7",
+                  fontFamily: "Andika",
+                  textAlign: "center",
+                  alignItems: "center",
+                  paddingTop: 100,
+                  justifyContent: "center",
+                }}
+              >
+                Contact us to know more about this tour.
+              </Text>
+            ) : (
+              <HTMLView
+                value={item.additionalInformation}
+                renderNode={(node, index, siblings, parent, defaultRenderer) =>
+                  renderNode(node, index, siblings, parent, defaultRenderer)
+                }
+              />
+            )}
+          </ScrollView>
+        );
+
+      default:
+        break;
+    }
+  };
+  const item = route.params.item;
+
+  return (
+    <View>
+      <View style={{ position: "relative" }}>
+        <Image
+          source={{
+            uri: item.imageUrl,
+          }}
+          style={{ height: HEIGHT, width: WIDTH }}
+        />
+      </View>
+      <TouchableOpacity
+        style={{
+          // height: HEIGHT * 0.8,
+          alignSelf: "flex-start",
+          width: "10%",
+          opacity: 0.6,
+          top: Platform.OS === "ios" ? 50 : 10,
+          left: 15,
+          position: "absolute",
+          alignItems: "center",
+        }}
+        onPress={() => navigation.goBack()}
+      >
+        <View>
+          <FontAwesome name="arrow-circle-left" size={34} color="black" />
         </View>
-
-        {/* Inner deatil */}
-
-        <View style={[styles.innerDetail]}>
-          <Text
-            style={{
-              fontSize: 20,
-              backgroundColor: "#d5e1d9ff",
-              fontFamily: "NewYorkl",
-              padding: 5,
-              marginLeft: 10,
-              borderRadius: 10,
-            }}
-          >
-            About Tour
-          </Text>
-          <View
-            style={{
-              borderRadius: 40,
-              borderColor: "#fff",
-            }}
-          >
-            <Text
-              style={{
-                lineHeight: 25,
-                marginLeft: 20,
-                marginTop: 15,
-                fontFamily: "Andika",
-              }}
-            >
-              {item.aboutTour}
-            </Text>
-          </View>
-        </View>
-
+      </TouchableOpacity>
+      <View
+        intensity={140}
+        style={[
+          {
+            height: HEIGHT * 0.8,
+            backgroundColor: "black",
+            opacity: 0.8,
+            width: WIDTH,
+            bottom: 0,
+            position: "absolute",
+            alignItems: "center",
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+          },
+        ]}
+      >
         <View
           style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            marginHorizontal: 5,
-            justifyContent: "space-evenly",
+            height: 8,
+            width: WIDTH * 0.2,
+            borderRadius: 20,
+            marginTop: 10,
+            backgroundColor: "#fff",
           }}
-        >
-          {item.pickUpTime === "N.A" || item.pickUpTime === "NA" ? null : (
-            <>
+        />
+        <View style={{ alignSelf: "flex-start", padding: 15 }}>
+          <View
+            style={{
+              borderRadius: 10,
+              width: WIDTH * 0.9,
+              padding: 10,
+            }}
+          >
+            <View>
               <View
                 style={{
-                  height: WIDTH / 4,
-                  width: WIDTH / 5,
-                  backgroundColor: "#d5e1d9ff",
-
-                  borderRadius: 10,
-                  marginVertical: 10,
-                  marginLeft: 15,
-                  justifyContent: "center",
+                  flexDirection: "row",
                   alignItems: "center",
-                  paddingVertical: 10,
                 }}
               >
-                <Text style={{ fontSize: 10 }}>Pick up</Text>
-                <MaterialCommunityIcons
-                  name="car-convertible"
-                  size={40}
-                  color="black"
-                />
-                <Text style={{ fontSize: 12, textAlign: "center" }}>
-                  {item.pickUpTime}
+                <EvilIcons name="location" size={30} color="#e7e7e7" />
+                <Text
+                  style={{
+                    fontFamily: "Andika",
+                    color: "#e7e7e7",
+                    paddingLeft: 6,
+                  }}
+                >
+                  {item.cityName}
                 </Text>
               </View>
-
-              <View
+              <Text
                 style={{
-                  // height: WIDTH / 4,
-                  height: WIDTH / 4,
-                  width: WIDTH / 2.8,
-                  backgroundColor: "#d5e1d9ff",
-                  borderRadius: 10,
-                  marginVertical: 10,
-                  marginHorizontal: 5,
-                  justifyContent: "center",
-                  alignItems: "center",
                   paddingVertical: 10,
+                  fontSize: 18,
+                  fontFamily:
+                    Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                  color: "#E28633",
+                  paddingLeft: 8,
                 }}
               >
-                <MaterialCommunityIcons
-                  name="bus-clock"
-                  size={35}
-                  color="black"
-                  style={{ marginBottom: 10 }}
-                />
-
-                <Text style={{ fontSize: 12, textAlign: "center" }}>
-                  {item.pickUpPoint[0]}
-                </Text>
-                {item.pickUpPoint[1] == null ? null : (
-                  <Text style={{ fontSize: 10, textAlign: "center" }}>
-                    {item.pickUpPoint[1]}
+                {item.tourName}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: 8,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flexGrow: 1,
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <Fontisto name="plane-ticket" size={20} color="#e7e7e7" />
+                  <Text
+                    style={{
+                      fontFamily: "Andika",
+                      paddingLeft: 10,
+                      // fontSize: 10,
+                      color: "#e7e7e7",
+                    }}
+                  >
+                    {item.tourCategory[0]}
                   </Text>
-                )}
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flexGrow: 1,
+                    alignItems: "center",
+                  }}
+                >
+                  <Fontisto name="clock" size={20} color="#e7e7e7" />
+                  <Text
+                    style={{
+                      fontFamily: "Andika",
+                      paddingLeft: 10,
+                      color: "#e7e7e7",
+                    }}
+                  >
+                    {item.tourType}
+                  </Text>
+                </View>
               </View>
-              <View
-                style={{
-                  height: WIDTH / 4,
-                  width: WIDTH / 4.6,
-                  backgroundColor: "#d5e1d9ff",
-                  borderRadius: 10,
-                  marginVertical: 10,
-                  marginRight: 15,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 10,
-                }}
-              >
-                <Text style={{ fontSize: 10 }}>Drop</Text>
-                <MaterialCommunityIcons
-                  name="car-convertible"
-                  size={40}
-                  color="black"
-                />
-                <Text style={{ fontSize: 12, textAlign: "center" }}>
-                  {item.dropTime}
+            </View>
+          </View>
+          <View style={{ height: 100, maxHeight: 100 }}>
+            <Text
+              style={{
+                fontFamily: "Andika",
+                color: "#e7e7e7",
+                // paddingTop: 10,
+                paddingHorizontal: 19,
+                paddingVertical: 10,
+              }}
+            >
+              {head}
+            </Text>
+          </View>
+          <View>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-around" }}
+            >
+              <TouchableOpacity onPress={() => setStep("About")}>
+                <Text
+                  style={[
+                    // { borderBottomWidth: step === "About" ? 5 : 5 },
+                    {
+                      color: step === "About" ? "#E28633" : "#fff",
+                      // color:'E28633',
+                      fontFamily:
+                        Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                      paddingBottom: 5,
+                      borderRadius: 5,
+                    },
+                  ]}
+                >
+                  About
                 </Text>
-              </View>
-            </>
-          )}
-          <View
-            style={{
-              height: WIDTH / 4,
-              width: WIDTH / 5,
-              backgroundColor: "#d5e1d9ff",
-
-              borderRadius: 10,
-              marginVertical: 10,
-              marginLeft: 15,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingVertical: 10,
-            }}
-          >
-            <Text style={{ fontSize: 11 }}>Tour</Text>
-            <AntDesign
-              name="star"
-              size={28}
-              color="black"
-              style={{ marginVertical: 5 }}
-            />
-            <Text style={{ fontSize: 12 }}>{item.tourPreferance}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setStep("Elements")}>
+                <Text
+                  style={[
+                    {
+                      color: step === "Elements" ? "#E28633" : "#fff",
+                      // color:'E28633',
+                      fontFamily:
+                        Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                      paddingBottom: 5,
+                      borderRadius: 5,
+                    },
+                  ]}
+                >
+                  Elements
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setStep("Itinerary")}>
+                <Text
+                  style={[
+                    {
+                      color: step === "Itinerary" ? "#E28633" : "#fff",
+                      // color:'E28633',
+                      fontFamily:
+                        Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                      paddingBottom: 5,
+                      borderRadius: 5,
+                    },
+                  ]}
+                >
+                  Itinerary
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setStep("Additional")}>
+                <Text
+                  style={[
+                    {
+                      color: step === "Additional" ? "#E28633" : "#fff",
+                      // color:'E28633',
+                      fontFamily:
+                        Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                      paddingBottom: 5,
+                      borderRadius: 5,
+                    },
+                  ]}
+                >
+                  More Info
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View
-            style={{
-              height: WIDTH / 4,
-              width: WIDTH / 2.8,
-              backgroundColor: "#d5e1d9ff",
-              borderRadius: 10,
-              marginVertical: 10,
-              marginHorizontal: 5,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingVertical: 10,
-            }}
+          <ScrollView
+            style={{ paddingHorizontal: 18, marginTop: 14, marginBottom: 20 }}
           >
-            <MaterialIcons
-              name="loyalty"
-              size={35}
-              color="black"
-              style={{ marginBottom: 10 }}
-            />
-            <Text style={{ fontSize: 12 }}>{item.idealType[0]}</Text>
-            {item.idealType[1] == null ? null : (
-              <Text style={{ fontSize: 10 }}>{item.idealType[1]}</Text>
-            )}
-          </View>
-
-          <View
-            style={{
-              height: WIDTH / 4,
-              width: WIDTH / 4.6,
-              backgroundColor: "#d5e1d9ff",
-              borderRadius: 10,
-              marginVertical: 10,
-              marginRight: 15,
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 5,
-            }}
-          >
-            <Text style={{ fontSize: 10 }}>{item.tourType}</Text>
-            <Ionicons
-              name="md-time"
-              size={30}
-              color="black"
-              style={{ marginVertical: 5 }}
-            />
-            <Text style={{ fontSize: 12 }}>{item.tourDuration}</Text>
-          </View>
+            {render()}
+          </ScrollView>
         </View>
-
-        {item.itinerary === "-" ? null : (
-          <View
-            style={{
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              margin: 10,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                backgroundColor: "#d5e1d9ff",
-                padding: 5,
-                marginLeft: 10,
-
-                fontFamily: "NewYorkl",
-                borderRadius: 10,
-              }}
-            >
-              Itinerary
-            </Text>
-
-            <View
-              style={{
-                borderRadius: 40,
-                marginVertical: 5,
-                borderColor: "#fff",
-              }}
-            >
-              {item.itinerary.startsWith("<") ? (
-                <HTMLView
-                  value={item.itinerary}
-                  stylesheet={{
-                    p: {
-                      marginLeft: 20,
-                      // marginTop: 15,
-                      padding: 0,
-                      fontFamily: "Andika",
-                    },
-                    ul: {
-                      marginLeft: 20,
-                      // marginTop: 15,
-                      padding: 0,
-                      fontFamily: "Andika",
-                    },
-                  }}
-                />
-              ) : (
-                <Text
-                  style={{
-                    marginLeft: 20,
-                    marginTop: 15,
-                    fontFamily: "Andika",
-                  }}
-                >
-                  {item.itinerary}
-                </Text>
-              )}
-            </View>
-          </View>
-        )}
-
-        {item.additionalInformation == "-" ||
-        item.additionalInformation == "NA" ? null : (
-          <View
-            style={{
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              margin: 10,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                backgroundColor: "#d5e1d9ff",
-                fontFamily: "NewYorkl",
-                marginLeft: 10,
-
-                padding: 5,
-                borderRadius: 10,
-              }}
-            >
-              Additional Information
-            </Text>
-
-            <View
-              style={{
-                borderRadius: 40,
-                marginVertical: 5,
-                borderColor: "#fff",
-              }}
-            >
-              {item.additionalInformation.startsWith("<") ? (
-                <HTMLView
-                  value={item.additionalInformation}
-                  stylesheet={{
-                    p: {
-                      marginLeft: 20,
-                      marginVertical: 0,
-                      padding: 0,
-                      fontFamily: "Andika",
-                    },
-                    ul: {
-                      marginLeft: 20,
-                      marginVertical: 0,
-
-                      padding: 0,
-                      fontFamily: "Andika",
-                    },
-                  }}
-                />
-              ) : (
-                <Text
-                  style={{
-                    lineHeight: 20,
-                    marginLeft: 20,
-                    marginTop: 15,
-                    fontFamily: "Andika",
-                  }}
-                >
-                  {item.additionalInformation}
-                </Text>
-              )}
-            </View>
-          </View>
-        )}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
 export default TourInnerScreen;
 
 const styles = StyleSheet.create({
+  heading: {
+    color: "#fff",
+    fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+    paddingBottom: 5,
+    borderBottomColor: "#E28633",
+    borderRadius: 5,
+  },
+
+  iconContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 15,
+  },
+
   container: {
     backgroundColor: "#fff",
+    paddingBottom: 80,
   },
   image: {
     height: HEIGHT / 1.8,
@@ -457,6 +521,7 @@ const styles = StyleSheet.create({
     margin: 10,
     alignItems: "flex-start",
     justifyContent: "flex-start",
+    // marginBottom: HEIGHT / 7,
   },
   tourCategory: {
     fontSize: 16,
@@ -471,110 +536,3 @@ const styles = StyleSheet.create({
   },
   itinerary: {},
 });
-
-// {/* <View style={styles.features}>
-//     <View
-//       style={{
-//         flexDirection: "row",
-//         justifyContent: "center",
-
-//         alignItems: "center",
-//       }}
-//     >
-//       <Image
-//         style={{ height: 40, width: 40 }}
-//         source={require("../../../assets/Scooter.png")}
-//       />
-//       <Text>{item.pickUpPoint.join(",")}</Text>
-//     </View>
-//     <View
-//       style={{
-//         flexDirection: "row",
-//         justifyContent: "center",
-
-//         alignItems: "center",
-//       }}
-//     >
-//       {/* <Image
-//         style={{ height: 40, width: 40 }}
-//         source={require("../../../assets/Star.png")}
-//       />
-//       <Text>{item.tourPreferance}</Text> */}
-//       </View>
-
-//       <View
-//         style={{
-//           flexDirection: "row",
-//           justifyContent: "center",
-//           alignItems: "center",
-//         }}
-//       >
-//         <Image
-//           style={{ height: 40, width: 40 }}
-//           source={require("../../../assets/Signs.png")}
-//         />
-//         <Text>{item.tourType}</Text>
-//       </View>
-//       <View
-//         style={{
-//           flexDirection: "row",
-//           justifyContent: "center",
-//           alignItems: "center",
-//         }}
-//       >
-//         <Image
-//           style={{ height: 40, width: 40 }}
-//           source={require("../../../assets/Umbrella.png")}
-//         />
-//         <Text>{item.tourDuration}</Text>
-//       </View>
-//       <View
-//         style={{
-//           flexDirection: "row",
-//           justifyContent: "center",
-
-//           alignItems: "center",
-//         }}
-//       >
-//         <Image
-//           style={{ height: 40, width: 40 }}
-//           source={require("../../../assets/Cocktail.png")}
-//         />
-//         <Text>{item.idealType.join(",")}</Text>
-//       </View>
-
-//       {item.pickUpTime !== "-" ? (
-//         <View
-//           style={{
-//             marginVertical: 10,
-//           }}
-//         >
-//           <View
-//             style={{
-//               flexDirection: "row",
-//               justifyContent: "center",
-//               alignItems: "center",
-//             }}
-//           >
-//             <Image
-//               style={{ height: 40, width: 40 }}
-//               source={require("../../../assets/Flag.png")}
-//             />
-//             <Text>{item.pickUpTime} Pick up</Text>
-//           </View>
-//           <View
-//             style={{
-//               flexDirection: "row",
-//               justifyContent: "center",
-//               alignItems: "center",
-//             }}
-//           >
-//             <Image
-//               style={{ height: 40, width: 40 }}
-//               source={require("../../../assets/Scooter.png")}
-//             />
-//             <Text>{item.dropTime} Drop</Text>
-//           </View>
-//         </View>
-//       ) : null}
-//     </View>

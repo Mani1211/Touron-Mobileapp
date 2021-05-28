@@ -330,7 +330,7 @@ const MyPlansInner = ({ navigation, route }) => {
 
                     <View
                       style={{
-                        flexDirection: "row",
+                        // flexDirection: "row",
                         justifyContent: "center",
                       }}
                     >
@@ -338,6 +338,7 @@ const MyPlansInner = ({ navigation, route }) => {
                         style={{
                           fontSize: 16,
                           fontFamily: "Andika",
+                          width: WIDTH * 0.8,
                           color: "#333",
                           paddingVertical: 10,
                           paddingHorizontal: 9,
@@ -345,6 +346,8 @@ const MyPlansInner = ({ navigation, route }) => {
                           borderRadius: 5,
                           borderColor: "#333",
                           marginRight: 20,
+                          marginBottom: 10,
+                          textAlign: "center",
                         }}
                       >
                         Onward : {item.fromData}
@@ -352,6 +355,8 @@ const MyPlansInner = ({ navigation, route }) => {
                       <Text
                         style={{
                           fontSize: 16,
+                          width: WIDTH * 0.8,
+                          textAlign: "center",
                           fontFamily: "Andika",
                           color: "#333",
                           paddingVertical: 10,

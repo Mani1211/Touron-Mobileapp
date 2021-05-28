@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
+import React, { useContext, useState } from "react";
+
 import { AntDesign } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;

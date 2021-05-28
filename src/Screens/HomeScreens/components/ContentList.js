@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
 
 const ContentList = ({ title, more, navigation, route, content }) => {
   return (
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 0,
     marginBottom: 1,
-    fontFamily: "NewYorkl",
+    fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
     fontStyle: "normal",
   },
   more: {

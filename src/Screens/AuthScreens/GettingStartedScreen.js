@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
-import { AuthContext } from "./../../context/AuthContext";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -12,11 +11,9 @@ import {
   useWindowDimensions,
 } from "react-native";
 
-const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 
 const GettingStartedScreen = ({ navigation }) => {
-  const { isLoggedIn } = useContext(AuthContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
@@ -24,31 +21,32 @@ const GettingStartedScreen = ({ navigation }) => {
   const viewableItemChanged = useRef(({ viewableItems }) => {
     setCurrentIndex(viewableItems[0].index);
   }).current;
-  useEffect(() => {
-    console.log("objelknnlct");
-    if (!isLoggedIn) {
-      console.log("object");
-      // navigation.jumpTo("HomeDrawer");
-    }
-  }, []);
+  // useEffect(() => {
+  //   console.log(`isLogkjbkhbhkkbgedIn`, isLoggedIn);
+  //   setTimeout(() => {
+  //     if (isLoggedIn) {
+  //       navigation.navigate("HomeDrawer");
+  //     }
+  //   }, 100);
+  // }, []);
 
   const { width, height } = useWindowDimensions();
   const slides = [
     {
       key: "1",
-      image: require("../../../assets/intros/1.png"),
+      image: require("../../../assets/intros/1.jpg"),
     },
     {
       key: "2",
-      image: require("../../../assets/intros/2.png"),
+      image: require("../../../assets/intros/2.jpg"),
     },
     {
       key: "3",
-      image: require("../../../assets/intros/3.png"),
+      image: require("../../../assets/intros/3.jpg"),
     },
     {
       key: "4",
-      image: require("../../../assets/intros/4.png"),
+      image: require("../../../assets/intros/4.jpg"),
     },
   ];
 
@@ -74,7 +72,7 @@ const GettingStartedScreen = ({ navigation }) => {
               <Image
                 source={item.image}
                 resizeMode="cover"
-                style={{ height: height * 0.8, width: width }}
+                style={{ height: height, width: width }}
               />
             </View>
           )}
@@ -100,7 +98,7 @@ const GettingStartedScreen = ({ navigation }) => {
                 borderRadius: 5,
                 paddingHorizontal: 20,
                 paddingVertical: 6,
-                backgroundColor: "#ff6b81",
+                backgroundColor: "#E28633",
               }}
             >
               <Text
@@ -144,7 +142,7 @@ const styles = new StyleSheet.create({
   dot: {
     height: 10,
     borderRadius: 5,
-    backgroundColor: "#ff6b81",
+    backgroundColor: "#E28633",
     marginHorizontal: 8,
   },
   loginButton: {

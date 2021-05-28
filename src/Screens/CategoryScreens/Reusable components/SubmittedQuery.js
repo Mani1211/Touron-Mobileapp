@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
-const SubmittedQuery = ({ navigation, type }) => {
+const SubmittedQuery = ({ navigation, type, setSteps }) => {
   return (
     <View
       style={{
@@ -39,8 +39,11 @@ const SubmittedQuery = ({ navigation, type }) => {
           <TouchableOpacity
             onPress={() => {
               if (type === "Self Plan") {
+                setSteps();
                 navigation.navigate("MyPlans");
               } else {
+                setSteps();
+
                 navigation.navigate("MyRequest");
               }
             }}
@@ -59,7 +62,12 @@ const SubmittedQuery = ({ navigation, type }) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <TouchableOpacity
+            onPress={() => {
+              setSteps();
+              navigation.navigate("Main");
+            }}
+          >
             <View style={{ alignItems: "center", margin: 10 }}>
               <Text
                 style={{

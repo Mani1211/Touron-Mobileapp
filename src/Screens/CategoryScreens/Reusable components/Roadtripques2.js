@@ -60,7 +60,8 @@ const Roadtripques2 = ({
             <Text
               style={{
                 fontSize: 20,
-                fontFamily: "NewYorkl",
+                fontFamily:
+                  Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
                 marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
               }}
             >
@@ -106,7 +107,8 @@ const Roadtripques2 = ({
               style={{
                 fontSize: 20,
                 textAlign: "center",
-                fontFamily: "NewYorkl",
+                fontFamily:
+                  Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
               }}
             >
               Get the best planned road trip

@@ -54,7 +54,7 @@ const Destination = ({
           <Text
             style={{
               fontSize: 20,
-              fontFamily: "NewYorkl",
+              fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
               marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
             }}
           >
@@ -101,7 +101,8 @@ const Destination = ({
               style={{
                 fontSize: 18,
                 textAlign: "center",
-                fontFamily: "NewYorkl",
+                fontFamily:
+                  Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
               }}
             >
               FIND THE BEST PLANNED TOUR

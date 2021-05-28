@@ -65,14 +65,14 @@ const ContactUs = ({ navigation }) => {
         <Text style={{ fontFamily: "Andika", fontSize: 15, margin: 15 }}>
           tour On{"\n"}Workafella, Rathha Towers,{"\n"}Tek Meadows - A Block,
           4th Floor,{"\n"}Opposite to Accenture, Sholinganallur,{"\n"}OMR,
-          Chennai-119{"\n"}Contact No:8667801206
+          Chennai-119{"\n"}Contact No:9751009400
         </Text>
       </View>
       <View style={{ marginHorizontal: 5 }}>
         <Text style={{ fontFamily: "Andika", fontSize: 15, margin: 15 }}>
           tour On{"\n"}The Hive,{"\n"}Level 3 VR Mall Next to Madras
           House(Landmark),{"\n"}Thirumangalam, Chennai-40
-          {"\n"}Contact No:8667801206
+          {"\n"}Contact No:9751009500
         </Text>
       </View>
     </ScrollView>

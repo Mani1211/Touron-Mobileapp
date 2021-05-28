@@ -110,15 +110,6 @@ const MyVisaRequestsScreen = ({ navigation }) => {
                 >
                   No Visa Request Yet
                 </Text>
-                <Text
-                  style={{
-                    fontFamily: "Andika",
-                    fontSize: 20,
-                    textAlign: "center",
-                  }}
-                >
-                  Go to Visa Page and put some request
-                </Text>
               </View>
             ) : (
               <View>

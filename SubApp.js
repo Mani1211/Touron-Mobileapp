@@ -1,5 +1,5 @@
 import { Dimensions } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DrawerContent from "./src/Screens/DrawerContent";
@@ -16,7 +16,6 @@ import MyPlansInner from "./src/Screens/AccountScreens/MyPlansInner";
 import MainTabScreen from "./src/Screens/MainTabScreen";
 import AboutUs from "./src/Screens/AccountScreens/AboutUs";
 import ContactUs from "./src/Screens/AccountScreens/ContactUs";
-import { RootStackScreen } from "./src/Screens/RootStackScreen";
 import { AuthContext } from "./src/context/AuthContext";
 import Data from "./src/Data/Data";
 const Drawer = createDrawerNavigator();
@@ -25,10 +24,32 @@ import * as Linking from "expo-linking";
 import SignInScreen from "./src/Screens/AuthScreens/SignInScreen";
 import SignUpScreen from "./src/Screens/AuthScreens/SignUpScreen";
 import GettingStartedScreen from "./src/Screens/AuthScreens/GettingStartedScreen";
+import FeedbackScreen from "./src/Screens/Review Component/FeedbackScreen";
+import TourInnerScreen from "./src/Screens/TourScreens/TourInnerScreen";
+import CityInnerScreen from "./src/Screens/CityScreens/CityInnerScreen";
+import CountryInnerScreen from "./src/Screens/CountryScreens/CountryInnerScreen";
+import BlogInnerScreen from "./src/Screens/BlogScreens/BlogInnerScreen";
+import SelfPlanForm from "./src/Screens/SelfPlanTourScreens/SelfPlanningFormScreen";
+import OverviewCitiesScreen from "./src/Screens/CheckoutScreens/OverviewCitiesScreen";
+import PlannedTourScreen from "./src/Screens/CategoryScreens/PlannedTourScreen";
+import SurpriseTourScreen from "./src/Screens/CategoryScreens/SupriseTourScreen";
+import WildLife from "./src/Screens/CategoryScreens/WildlifeScreen";
+import Luxury from "./src/Screens/CategoryScreens/Luxury";
+import Honeymoon from "./src/Screens/CategoryScreens/Honeymoon";
+import CountryHomeScreen from "./src/Screens/CountryScreens/CountryHomeScreen";
+import CityHomeScreen from "./src/Screens/CityScreens/CityHomeScreen";
+import TourHomeScreen from "./src/Screens/TourScreens/TourHomeScreen";
+import SelfTourHome from "./src/Screens/SelfPlanTourScreens/SelfTourHome";
+import SelfTourInner from "./src/Screens/SelfPlanTourScreens/SelfTourInner";
+import OverviewToursScreen from "./src/Screens/CheckoutScreens/OverviewToursScreen";
+import ProgressScreen from "./src/Screens/CheckoutScreens/ProgressScreen";
+import RoadTripScreen from "./src/Screens/CategoryScreens/RoadTripScreen";
 
 const prefix = Linking.makeUrl("/");
 
 const SubApp = () => {
+  const [details, setDetails] = useState();
+
   const linking = {
     prefixes: [prefix],
     // prefixes: [
@@ -77,7 +98,7 @@ const SubApp = () => {
     cities,
     countries,
     tours,
-    promotions,
+    blogs,
   ] = Data();
   console.log(`isLoggedIn`, isLoggedIn);
   return (
@@ -93,13 +114,16 @@ const SubApp = () => {
           tours,
           cities,
           countries,
-          promotions,
+          blogs,
+          details,
+          setDetails,
         }}
       >
         <Drawer.Navigator
           drawerType="slides"
           screenOptions={{
             gestureEnabled: true,
+            headerShown: false,
           }}
           edgeWidth={0}
           drawerStyle={{
@@ -111,15 +135,15 @@ const SubApp = () => {
           overlayColor={0}
           drawerContent={(props) => <DrawerContent {...props} />}
         >
-          {/* <Drawer.Screen name="Get" component={RootStackScreen} /> */}
-          {!isLoggedIn && (
+          {/* {!isLoggedIn && (
             <Drawer.Screen name="Get" component={GettingStartedScreen} />
-          )}
+          )} */}
           <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
           <Drawer.Screen name="Profile" component={ProfileScreen} />
           <Drawer.Screen name="MyRequest" component={MyRequestScreen} />
           <Drawer.Screen name="WishList" component={WishListScreen} />
           <Drawer.Screen name="MyPlans" component={MyPlansScreen} />
+          <Drawer.Screen name="MyPlanInner" component={MyPlansInner} />
           <Drawer.Screen
             name="MyVisaRequestScreen"
             component={MyVisaRequestsScreen}
@@ -147,6 +171,76 @@ const SubApp = () => {
             name="ContactUs"
             component={ContactUs}
           />
+          <Drawer.Screen
+            options={{
+              title: "",
+              headerShown: false,
+              headerTransparent: true,
+            }}
+            name="Feedback"
+            component={FeedbackScreen}
+          />
+          <Drawer.Screen
+            options={{
+              title: "",
+              headerShown: false,
+              headerTransparent: true,
+            }}
+            name="CountryInner"
+            component={CountryInnerScreen}
+          />
+          <Drawer.Screen
+            options={{
+              title: "",
+              headerShown: false,
+              headerTransparent: true,
+            }}
+            name="CityInner"
+            component={CityInnerScreen}
+          />
+          <Drawer.Screen
+            options={{
+              title: "",
+              headerShown: false,
+              headerTransparent: true,
+            }}
+            name="TourInner"
+            component={TourInnerScreen}
+          />
+          <Drawer.Screen
+            options={{
+              title: "",
+              headerShown: false,
+              headerTransparent: true,
+            }}
+            name="BlogInner"
+            component={BlogInnerScreen}
+          />
+
+          {/* Self stck screen */}
+          <Drawer.Screen name="SelfPlanForm" component={SelfPlanForm} />
+          <Drawer.Screen
+            name="OverviewCities"
+            component={OverviewCitiesScreen}
+          />
+          <Drawer.Screen name="SelfTourHome" component={SelfTourHome} />
+          <Drawer.Screen name="SelfTourInner" component={SelfTourInner} />
+          <Drawer.Screen name="OverviewTours" component={OverviewToursScreen} />
+          <Drawer.Screen name="Progress" component={ProgressScreen} />
+          {/* Self stck screen */}
+
+          {/* Home Stack Screen */}
+          <Drawer.Screen name="Planned" component={PlannedTourScreen} />
+          <Drawer.Screen name="Surprise" component={SurpriseTourScreen} />
+          <Drawer.Screen name="Road" component={RoadTripScreen} />
+          <Drawer.Screen name="Wildlife" component={WildLife} />
+          <Drawer.Screen name="Luxury" component={Luxury} />
+          <Drawer.Screen name="Honeymoon" component={Honeymoon} />
+          <Drawer.Screen name="CountryHome" component={CountryHomeScreen} />
+          <Drawer.Screen name="CityHome" component={CityHomeScreen} />
+          <Drawer.Screen name="TourHome" component={TourHomeScreen} />
+
+          {/* Home Stack Screen */}
         </Drawer.Navigator>
       </AuthContext.Provider>
     </NavigationContainer>

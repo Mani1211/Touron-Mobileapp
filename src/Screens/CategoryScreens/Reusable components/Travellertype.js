@@ -48,7 +48,7 @@ const Travellertype = ({
         <Text
           style={{
             fontSize: 20,
-            fontFamily: "NewYorkl",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginTop: Platform.OS == "android" ? HEIGHT / 14 : 40,
             flex: 0.6,
           }}
@@ -66,7 +66,11 @@ const Travellertype = ({
       </View>
       <View style={{ marginVertical: HEIGHT / 20, marginHorizontal: 5 }}>
         <Text
-          style={{ fontSize: 15, textAlign: "center", fontFamily: "NewYorkl" }}
+          style={{
+            fontSize: 15,
+            textAlign: "center",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+          }}
         >
           Are you the Solo traveller kind or the more the merrier kind? Select
           your tour companions.
@@ -91,8 +95,7 @@ const Travellertype = ({
                     marginVertical: 10,
                   }}
                   source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/local-tourism-concept_23-2148606915.jpg",
+                    uri: "https://image.freepik.com/free-vector/local-tourism-concept_23-2148606915.jpg",
                   }}
                 />
                 <Text
@@ -126,8 +129,7 @@ const Travellertype = ({
                     marginVertical: 10,
                   }}
                   source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/big-happy-family-with-flat-design_23-2147834774.jpg",
+                    uri: "https://image.freepik.com/free-vector/big-happy-family-with-flat-design_23-2147834774.jpg",
                   }}
                 />
                 <Text
@@ -165,8 +167,7 @@ const Travellertype = ({
                     marginVertical: 10,
                   }}
                   source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/group-happy-students-with-backpacks-books-stand-together_131590-216.jpg",
+                    uri: "https://image.freepik.com/free-vector/group-happy-students-with-backpacks-books-stand-together_131590-216.jpg",
                   }}
                 />
                 <Text
@@ -201,8 +202,7 @@ const Travellertype = ({
                     resizeMode: "center",
                   }}
                   source={{
-                    uri:
-                      "https://image.freepik.com/free-vector/people-holding-travel-related-icons_53876-64662.jpg",
+                    uri: "https://image.freepik.com/free-vector/people-holding-travel-related-icons_53876-64662.jpg",
                   }}
                 />
                 <Text

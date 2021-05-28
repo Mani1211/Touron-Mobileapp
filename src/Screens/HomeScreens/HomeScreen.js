@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,7 +17,7 @@ import HTMLView from "react-native-htmlview";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import Categories from "./components/CategoriesScreen";
 import ContentList from "./components/ContentList";
-import { Feather, FontAwesome } from "@expo/vector-icons";
+import { Feather, FontAwesome, EvilIcons, Fontisto } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { Portal, Provider } from "react-native-paper";
@@ -26,14 +26,32 @@ import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import { database } from "firebase";
 import axios from "axios";
 import Slider from "./../../Reusable Components/Slider";
-
+import Banner from "../Review Component/Reusable/Banner";
+import { AuthContext } from "./../../context/AuthContext";
+import { isSubmittedFeedback } from "../CategoryScreens/utils/PushNotification";
+import Header from "./components/Header";
 const HomeScreen = ({ navigation }) => {
   const [promotions, setPromotions] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [review, setReview] = useState(false);
   const [googleStats, setGoogleStats] = useState({});
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedPromotion, setSelectedPromotion] = useState({});
   const [testimonials, setTestimonials] = useState([]);
+  const { isLoggedIn, userInfo } = useContext(AuthContext);
+  useEffect(() => {
+    let mounted = true;
+    // console.log(
+    //   `isSubmittedFeedback(userInfo.userID)`,
+    //   isSubmittedFeedback(userInfo.userID)
+    // );
+    if (mounted) {
+      if (isLoggedIn && isSubmittedFeedback(userInfo.userID) === false) {
+        setTimeout(() => setReview(true), 30000);
+      }
+    }
+    return () => (mounted = false);
+  }, [userInfo]);
   const city = [
     {
       coordinates: {
@@ -714,23 +732,121 @@ const HomeScreen = ({ navigation }) => {
   const renderTour = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("TourInner", { item: item });
+        navigation.navigate("TourInner", {
+          item: item,
+        });
       }}
     >
-      <View style={styles.tileStyle}>
-        <Text style={styles.name}>{item.tourName}</Text>
-
-        <ProgressiveImage
-          fadeDuration={1000}
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          marginRight: 10,
+          marginTop: 10,
+          marginBottom: 40,
+        }}
+      >
+        <View
           style={{
-            height: HEIGHT / 3.8,
-            width: WIDTH / 1.2,
-            borderRadius: 10,
-            marginVertical: 10,
-            marginRight: 10,
+            alignItems: "center",
+            justifyContent: "center",
           }}
-          source={{ uri: item.imageUrl }}
-        />
+        >
+          <View style={{ position: "relative" }}>
+            <Image
+              style={{
+                height: HEIGHT / 3,
+                width: WIDTH * 0.9,
+                borderRadius: 10,
+              }}
+              source={{ uri: item.imageUrl }}
+            />
+          </View>
+
+          <View
+            style={{
+              width: "90%",
+              backgroundColor: "#D9D9D9",
+              position: "absolute",
+              opacity: 0.8,
+              bottom: 20,
+              borderRadius: 10,
+              padding: 10,
+            }}
+          >
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <EvilIcons name="location" size={30} />
+                <Text style={{ fontFamily: "Andika", paddingLeft: 4 }}>
+                  {item.cityName}
+                </Text>
+              </View>
+              <Text
+                style={{
+                  paddingVertical: 10,
+                  paddingLeft: 8,
+                  fontSize: 18,
+                  fontFamily:
+                    Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+                }}
+              >
+                {item.tourName}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  paddingLeft: 6,
+
+                  justifyContent: "space-between",
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flexGrow: 1,
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <Fontisto name="plane-ticket" size={20} color="black" />
+                  <Text
+                    style={{
+                      fontFamily: "Andika",
+                      paddingLeft: 6,
+                      // fontSize: 10,
+                    }}
+                  >
+                    {item.tourCategory[0]}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flexGrow: 1,
+
+                    alignItems: "center",
+                  }}
+                >
+                  <Fontisto name="clock" size={20} color="black" />
+                  <Text
+                    style={{
+                      fontFamily: "Andika",
+                      paddingLeft: 6,
+                    }}
+                  >
+                    {item.tourType}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -738,9 +854,18 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <Provider>
-      <Portal>
+      <Portal style={{ position: "relative" }}>
         <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
-
+        {review && (
+          <Banner
+            navigation={navigation}
+            close={() => setReview(false)}
+            setReview={() => {
+              setReview(false);
+              navigation.navigate("Feedback");
+            }}
+          />
+        )}
         <ScrollView
           style={{ backgroundColor: "#fff" }}
           showsVerticalScrollIndicator={false}
@@ -809,45 +934,7 @@ const HomeScreen = ({ navigation }) => {
                   </View>
                 </ScrollView>
               </Modal>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignContent: "center",
-                  paddingTop: Platform.OS === "ios" ? 35 : 0,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => navigation.toggleDrawer()}
-                  style={{
-                    flexBasis: "40%",
-                  }}
-                >
-                  <Feather
-                    name="menu"
-                    color="#000"
-                    style={{
-                      fontSize: 30,
-                      paddingTop: Platform.OS === "ios" ? 10 : 10,
-
-                      fontWeight: "bold",
-                    }}
-                  />
-                </TouchableOpacity>
-                <View>
-                  <Text
-                    style={{
-                      flexBasis: "60%",
-                      alignSelf: "flex-start",
-                      fontSize: 30,
-                      fontFamily: "PlaylistScript",
-                      color: "#263768",
-                    }}
-                  >
-                    tour On
-                  </Text>
-                </View>
-              </View>
+              <Header navigation={navigation} />
 
               {promotions.length === 0 ? (
                 <>
@@ -878,7 +965,7 @@ const HomeScreen = ({ navigation }) => {
                     data={promotions}
                     dotStyle={{
                       height: 10,
-                      backgroundColor: "#8E8E8F",
+                      backgroundColor: "#E28633",
                       marginHorizontal: 10,
                       borderRadius: 5,
                     }}
@@ -1194,7 +1281,7 @@ const HomeScreen = ({ navigation }) => {
                     </SkeletonPlaceholder>
                   </>
                 ) : (
-                  <>
+                  <View style={{ paddingBottom: 100 }}>
                     <View style={{ width: WIDTH, position: "relative" }}>
                       <Text
                         style={{
@@ -1204,7 +1291,7 @@ const HomeScreen = ({ navigation }) => {
                           textAlign: "right",
                           padding: 5,
                           paddingHorizontal: 8,
-                          borderRadius: 20,
+                          borderRadius: 8,
                           color: "#fff",
                         }}
                       >
@@ -1222,10 +1309,10 @@ const HomeScreen = ({ navigation }) => {
                       setActiveSlide={(s) => {
                         set(s);
                       }}
-                      showDots={true}
+                      showDots={false}
                       renderItem={_renderItem}
                     />
-                  </>
+                  </View>
                 )}
               </>
             </>
