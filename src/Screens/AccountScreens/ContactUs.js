@@ -5,6 +5,7 @@ import {
   Image,
   View,
   Dimensions,
+  Platform,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
@@ -44,7 +45,7 @@ const ContactUs = ({ navigation }) => {
           <Text
             style={{
               fontSize: 25,
-              fontFamily: "NewYorkl",
+              fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
               paddingHorizontal: 15,
             }}
           >
@@ -61,7 +62,14 @@ const ContactUs = ({ navigation }) => {
         />
       </View>
       <View style={{ marginHorizontal: 5 }}>
-        <Text style={{ fontSize: 25, fontFamily: "NewYorkl" }}>Contact Us</Text>
+        <Text
+          style={{
+            fontSize: 25,
+            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+          }}
+        >
+          Contact Us
+        </Text>
         <Text style={{ fontFamily: "Andika", fontSize: 15, margin: 15 }}>
           tour On{"\n"}Workafella, Rathha Towers,{"\n"}Tek Meadows - A Block,
           4th Floor,{"\n"}Opposite to Accenture, Sholinganallur,{"\n"}OMR,

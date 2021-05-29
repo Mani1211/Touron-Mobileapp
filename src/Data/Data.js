@@ -13,9 +13,7 @@ const Data = () => {
   const [cities, setCities] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [userInfo, setUserInfo] = useState({});
-  //  return () => {
-  //    source.cancel();
-  //  };
+
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       setUser(user);

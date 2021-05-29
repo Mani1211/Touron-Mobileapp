@@ -5,6 +5,7 @@ import {
   View,
   Dimensions,
   Linking,
+  Platform,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
@@ -60,7 +61,14 @@ const AboutUs = ({ navigation }) => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontSize: 25, fontFamily: "NewYorkl" }}>About US</Text>
+          <Text
+            style={{
+              fontSize: 25,
+              fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+            }}
+          >
+            About US
+          </Text>
         </View>
       </View>
       <View
@@ -72,7 +80,12 @@ const AboutUs = ({ navigation }) => {
         />
       </View>
       <View style={{ marginHorizontal: 15 }}>
-        <Text style={{ fontSize: 25, fontFamily: "NewYorkl" }}>
+        <Text
+          style={{
+            fontSize: 25,
+            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+          }}
+        >
           Travel your dreams today!
         </Text>
         <Text style={{ fontFamily: "Andika", fontSize: 12 }}>
@@ -101,8 +114,21 @@ const AboutUs = ({ navigation }) => {
         />
       </View>
       <View style={{ marginHorizontal: 15 }}>
-        <Text style={{ fontSize: 12, fontFamily: "NewYorkl" }}>WORDS FROM</Text>
-        <Text style={{ fontFamily: "NewYorkl", fontSize: 16, color: "black" }}>
+        <Text
+          style={{
+            fontSize: 12,
+            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+          }}
+        >
+          WORDS FROM
+        </Text>
+        <Text
+          style={{
+            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+            fontSize: 16,
+            color: "black",
+          }}
+        >
           MR.VIKASH MANOHARAN CEO, FOUNDER
         </Text>
       </View>
@@ -119,7 +145,11 @@ const AboutUs = ({ navigation }) => {
       </View>
       <View style={{ marginHorizontal: 5 }}>
         <Text
-          style={{ fontSize: 25, fontFamily: "NewYorkl", marginVertical: 10 }}
+          style={{
+            fontSize: 25,
+            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+            marginVertical: 10,
+          }}
         >
           Follow Us
         </Text>
