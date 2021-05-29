@@ -238,8 +238,8 @@ function SignUpScreen({ navigation }) {
           setIsLoggedIn(true);
           storeToken(user);
           setLoaded(false);
-          navigation.replace("Main");
           prevStep();
+          navigation.replace("Main");
         }
       })
       .catch((err) => {
