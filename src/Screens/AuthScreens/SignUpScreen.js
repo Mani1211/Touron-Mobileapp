@@ -294,7 +294,8 @@ function SignUpScreen({ navigation }) {
                     style={{
                       fontSize: 40,
                       color: "white",
-                      fontFamily: "NewYorkl",
+                      fontFamily:
+                        Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
                     }}
                   >
                     Sign Up
