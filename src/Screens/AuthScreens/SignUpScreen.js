@@ -102,21 +102,23 @@ function SignUpScreen({ navigation }) {
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
           setUser(user.user);
-          database().ref(`userGeneralInfo/${user.user.uid}`).set({
-            phoneNumber: number,
-            name: name,
-            address: "",
-            age: "",
-            gender: "",
-            aboutMe: "",
-            travellerType: "",
-            admin: false,
-            pushNotificationToken: "",
-            photoURL: "",
-            email: email,
-            profession: "",
-            userID: user.user.uid,
-          });
+          database()
+            .ref(`userGeneralInfo/${user.user.uid}`)
+            .set({
+              phoneNumber: number,
+              name: name,
+              address: "",
+              age: "",
+              gender: "",
+              aboutMe: "",
+              travellerType: "",
+              admin: false,
+              pushNotificationToken: expoToken === "" ? "" : expoToken,
+              photoURL: "",
+              email: email,
+              profession: "",
+              userID: user.user.uid,
+            });
           user.user
             .updateProfile({
               displayName: name,
@@ -238,8 +240,8 @@ function SignUpScreen({ navigation }) {
           setIsLoggedIn(true);
           storeToken(user);
           setLoaded(false);
-          navigation.replace("Main");
           prevStep();
+          navigation.replace("Main");
         }
       })
       .catch((err) => {
@@ -306,7 +308,6 @@ function SignUpScreen({ navigation }) {
                     style={styles.input}
                     value={name}
                     placeholder="Name"
-                    keyboardType="visible-password"
                     keyboardAppearance="dark"
                     keyboardType="default"
                     onChangeText={(value) => setName(value)}
@@ -337,7 +338,6 @@ function SignUpScreen({ navigation }) {
                     placeholder="Email"
                     autoCapitalize="none"
                     value={email}
-                    keyboardType="visible-password"
                     keyboardAppearance="dark"
                     keyboardType="default"
                     onChangeText={(value) => setEmail(value)}

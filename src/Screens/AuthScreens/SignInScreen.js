@@ -112,11 +112,13 @@ function SignInScreen({ navigation }) {
       });
   };
   const updateUserToken = (user) => {
-    if (user !== null) {
-      database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .child("pushNotificationToken")
-        .set(expoToken);
+    if (expoToken !== "") {
+      if (user !== null) {
+        database()
+          .ref(`userGeneralInfo/${user.uid}`)
+          .child("pushNotificationToken")
+          .set(expoToken);
+      }
     }
   };
   const signIn = () => {
@@ -235,7 +237,6 @@ function SignInScreen({ navigation }) {
                   <TextInput
                     style={styles.input}
                     placeholder="Email"
-                    keyboardType="visible-password"
                     keyboardAppearance="dark"
                     keyboardType="default"
                     onChangeText={(value) => setEmail(value)}

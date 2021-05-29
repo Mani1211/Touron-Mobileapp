@@ -45,7 +45,7 @@ const ContactUs = ({ navigation }) => {
           <Text
             style={{
               fontSize: 25,
-              fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+              fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
               paddingHorizontal: 15,
             }}
           >
@@ -65,7 +65,7 @@ const ContactUs = ({ navigation }) => {
         <Text
           style={{
             fontSize: 25,
-            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
           }}
         >
           Contact Us

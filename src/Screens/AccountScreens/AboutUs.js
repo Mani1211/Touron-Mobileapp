@@ -64,7 +64,7 @@ const AboutUs = ({ navigation }) => {
           <Text
             style={{
               fontSize: 25,
-              fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+              fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             }}
           >
             About US
@@ -83,7 +83,7 @@ const AboutUs = ({ navigation }) => {
         <Text
           style={{
             fontSize: 25,
-            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
           }}
         >
           Travel your dreams today!
@@ -117,14 +117,14 @@ const AboutUs = ({ navigation }) => {
         <Text
           style={{
             fontSize: 12,
-            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
           }}
         >
           WORDS FROM
         </Text>
         <Text
           style={{
-            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             fontSize: 16,
             color: "black",
           }}
@@ -147,7 +147,7 @@ const AboutUs = ({ navigation }) => {
         <Text
           style={{
             fontSize: 25,
-            fontFamily: Platform.OS === "ios" ? "AvenirBold-Next" : "Avenir",
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
             marginVertical: 10,
           }}
         >
