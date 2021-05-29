@@ -32,6 +32,7 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import axios from "axios";
 import SearchBar from "./../../Reusable Components/SearchBar";
+import TourpageTile from "./TourpageTile";
 
 const TourHomeScreen = ({ navigation, route }) => {
   const { isLoggedIn, user, countries, cities, tours } =
@@ -564,12 +565,6 @@ const TourHomeScreen = ({ navigation, route }) => {
       case 0:
         return (
           <View style={[styles.container]}>
-            {/* <View
-              style={{
-                backgroundColor: "#fff",
-                paddingVertical: 30,
-              }}
-            > */}
             <View
               style={{
                 height: HEIGHT / 8,
@@ -740,219 +735,34 @@ const TourHomeScreen = ({ navigation, route }) => {
                 {search().map((item, index) => {
                   if (index < pageSize)
                     return (
-                      <>
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.navigate("TourInner", {
-                              item: item,
-                            });
-                          }}
-                        >
-                          <View
-                            style={{
-                              flex: 1,
-                              alignItems: "center",
-                              justifyContent: "center",
-                              marginBottom: 15,
-                            }}
-                          >
-                            <View
-                              style={{
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <View style={{ position: "relative" }}>
-                                <Image
-                                  style={{
-                                    height: HEIGHT / 3,
-                                    width: WIDTH * 0.9,
-                                    borderRadius: 30,
-                                  }}
-                                  source={{ uri: item.imageUrl }}
-                                />
-                              </View>
+                      <TourpageTile
+                        navigation={navigation}
+                        item={item}
+                        savedTours={savedTours}
+                        onPress1={() => {
+                          let filterData = savedTours.filter((c) => {
+                            return c != item.tourName;
+                          });
 
-                              <View
-                                style={{
-                                  width: "12%",
-                                  backgroundColor: "#D9D9D9",
-                                  position: "absolute",
-                                  blurRadius: 10,
-                                  opacity: 0.8,
-                                  top: 10,
-                                  right: 10,
-                                  borderRadius: 6,
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  padding: 5,
-                                }}
-                              >
-                                <View>
-                                  {savedTours.includes(item.tourName) ? (
-                                    <TouchableOpacity
-                                      onPress={() => {
-                                        let filterData = savedTours.filter(
-                                          (c) => {
-                                            return c != item.tourName;
-                                          }
-                                        );
+                          setSavedTours(filterData);
 
-                                        setSavedTours(filterData);
+                          const filterDetails = savedToursDetails.filter(
+                            (c) => {
+                              return c.tourName !== item.tourName;
+                            }
+                          );
 
-                                        const filterDetails =
-                                          savedToursDetails.filter((c) => {
-                                            return c.tourName !== item.tourName;
-                                          });
-
-                                        setSavedToursDetails(filterDetails);
-                                      }}
-                                    >
-                                      <Fontisto
-                                        style={{ marginRight: 0 }}
-                                        name="bookmark-alt"
-                                        size={30}
-                                        style={{
-                                          zIndex: 10,
-                                          opacity: 1,
-                                        }}
-                                        color="#E28633"
-                                      />
-                                    </TouchableOpacity>
-                                  ) : (
-                                    <TouchableOpacity
-                                      style={{ zIndex: 10 }}
-                                      onPress={() => {
-                                        if (isLoggedIn) {
-                                          setSavedTours([
-                                            ...savedTours,
-                                            item.tourName,
-                                          ]);
-                                          setSavedToursDetails([
-                                            ...savedToursDetails,
-                                            item,
-                                          ]);
-                                        } else {
-                                          navigation.navigate("SignUpScreen");
-                                        }
-                                      }}
-                                    >
-                                      <Fontisto
-                                        style={{ marginRight: 0 }}
-                                        name="bookmark-alt"
-                                        size={30}
-                                        style={{
-                                          opacity: 1,
-                                          zIndex: 10,
-                                        }}
-                                        color="#fff"
-                                      />
-                                    </TouchableOpacity>
-                                  )}
-                                </View>
-                              </View>
-
-                              <View
-                                style={{
-                                  width: "80%",
-                                  backgroundColor: "#D9D9D9",
-                                  position: "absolute",
-                                  opacity: 0.8,
-                                  bottom: 20,
-                                  borderRadius: 10,
-                                  padding: 10,
-                                }}
-                              >
-                                <View>
-                                  <View
-                                    style={{
-                                      flexDirection: "row",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <EvilIcons name="location" size={30} />
-                                    <Text
-                                      style={{
-                                        fontFamily: "Andika",
-                                        paddingLeft: 4,
-                                      }}
-                                    >
-                                      {item.cityName}
-                                    </Text>
-                                  </View>
-                                  <Text
-                                    style={{
-                                      paddingVertical: 10,
-                                      fontSize: 18,
-                                      paddingLeft: 8,
-
-                                      fontFamily:
-                                        Platform.OS === "ios"
-                                          ? "AvenirNext-Bold"
-                                          : "Avenir",
-                                    }}
-                                  >
-                                    {item.tourName}
-                                  </Text>
-                                  <View
-                                    style={{
-                                      flexDirection: "row",
-                                      justifyContent: "space-between",
-                                      paddingLeft: 6,
-                                    }}
-                                  >
-                                    <View
-                                      style={{
-                                        flexDirection: "row",
-                                        flexGrow: 1,
-                                        alignItems: "center",
-                                        flexWrap: "wrap",
-                                      }}
-                                    >
-                                      <Fontisto
-                                        name="plane-ticket"
-                                        size={20}
-                                        color="black"
-                                      />
-                                      <Text
-                                        style={{
-                                          fontFamily: "Andika",
-                                          paddingLeft: 10,
-                                          // fontSize: 10,
-                                        }}
-                                      >
-                                        {item.tourCategory[0]}
-                                      </Text>
-                                    </View>
-                                    <View
-                                      style={{
-                                        flexDirection: "row",
-                                        flexGrow: 1,
-
-                                        alignItems: "center",
-                                      }}
-                                    >
-                                      <Fontisto
-                                        name="clock"
-                                        size={20}
-                                        color="black"
-                                      />
-                                      <Text
-                                        style={{
-                                          fontFamily: "Andika",
-                                          paddingLeft: 10,
-                                        }}
-                                      >
-                                        {item.tourType}
-                                      </Text>
-                                    </View>
-                                  </View>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                        </TouchableOpacity>
-                      </>
+                          setSavedToursDetails(filterDetails);
+                        }}
+                        onPress2={() => {
+                          if (isLoggedIn) {
+                            setSavedTours([...savedTours, item.tourName]);
+                            setSavedToursDetails([...savedToursDetails, item]);
+                          } else {
+                            navigation.navigate("SignUpScreen");
+                          }
+                        }}
+                      />
                     );
                 })}
                 {tourName === "" && (
@@ -979,7 +789,6 @@ const TourHomeScreen = ({ navigation, route }) => {
                 )}
               </ScrollView>
             )}
-            {/* </View> */}
           </View>
         );
       case 1:

@@ -12,9 +12,9 @@ import {
 
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
-
 import { AuthContext } from "../../context/AuthContext";
 import { AntDesign } from "@expo/vector-icons";
+import HeaderTile from "./../../Reusable Components/HeaderTile";
 const SelfPlanningScreen = ({ navigation }) => {
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -29,31 +29,7 @@ const SelfPlanningScreen = ({ navigation }) => {
   }, []);
   return (
     <ScrollView style={styles.container}>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingLeft: 20,
-          paddingTop: Platform.OS === "ios" ? 60 : 30,
-        }}
-      >
-        <AntDesign name="arrowleft" size={28} />
-
-        <View>
-          <Text
-            style={{
-              fontSize: 23,
-              paddingRight: 20,
-              fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
-            }}
-          >
-            Self Planned Tour
-          </Text>
-        </View>
-        <View></View>
-      </View>
+      <HeaderTile name={"Self Planned Tour"} navigation={navigation} />
 
       <View>
         <View style={styles.imageContainer}>
@@ -61,7 +37,7 @@ const SelfPlanningScreen = ({ navigation }) => {
             source={{
               uri: "https://image.freepik.com/free-vector/visual-data-concept-illustration_114360-1713.jpg",
             }}
-            style={{ height: HEIGHT / 3.2, width: 230, marginTop: 20 }}
+            style={{ height: HEIGHT / 3.4, width: 230, marginTop: 20 }}
           />
         </View>
 
@@ -70,12 +46,12 @@ const SelfPlanningScreen = ({ navigation }) => {
             style={{ fontSize: 14, fontFamily: "Andika", textAlign: "center" }}
           >
             Do you constantly find yourself getting frustrated with all the
-            rigidly planned itineraries, when your soul yearns to wander on its
-            own? Well, no more settling! Not if tourOn has a say about it. Even
-            though the option reads "Plan it yourself", all you need to do is
-            answer a few questions and leave the rest to us experts. We will
-            help you curate your tour plan, just the way you picture it! So,
-            what're you waiting for?
+            rigidly planned itineraries,when your soul yearns to wander on its
+            own? Well,no more settling!Not if tourOn has a say about it. Even
+            though the option reads "Plan it yourself",all you need to do is
+            answer a few questions and leave the rest to us experts.We will help
+            you curate your tour plan,just the way you picture it! So, what're
+            you waiting for?
           </Text>
         </View>
 
@@ -103,8 +79,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    // marginBottom: 65,
-    marginVertical: 30,
+    // marginBottom: 25,
+    marginVertical: 20,
   },
   buttonText: {
     borderRadius: 10,

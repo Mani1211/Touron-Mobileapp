@@ -43,7 +43,7 @@ const Categories = React.memo(({ navigation }) => {
     },
     {
       name: "WildLife",
-      navigation: "WildLife",
+      navigation: "Wildlife",
       image:
         "https://www.udaipurblog.com/wp-content/uploads/2018/04/travel-triangle.jpg",
     },

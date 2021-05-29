@@ -6,21 +6,20 @@ import {
   StatusBar,
   Platform,
   Dimensions,
-  Image,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
 import touron from "../../api/touron";
-import { Surface } from "react-native-paper";
-import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import HTMLView from "react-native-htmlview";
 import axios from "axios";
 import { AuthContext } from "./../../context/AuthContext";
 import SearchBar from "./../../Reusable Components/SearchBar";
+import BlogTile from "./BlogTile";
+import BlogList from "./BlogList";
+import HeaderTile from "./../../Reusable Components/HeaderTile";
 
 const BlogHomeScreen = ({ navigation, route }) => {
   const { blogs } = useContext(AuthContext);
@@ -79,34 +78,8 @@ const BlogHomeScreen = ({ navigation, route }) => {
     >
       <StatusBar barStyle="dark-content" />
       <>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: Platform.OS === "android" ? 30 : 60,
-            marginLeft: 20,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{ flex: 1 }}
-          >
-            <FontAwesome name="arrow-circle-left" size={34} color="black" />
-          </TouchableOpacity>
-          <View style={{ flex: 2 }}>
-            <Text
-              style={{
-                fontSize: 23,
-                fontFamily:
-                  Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
-                paddingLeft: 20,
-              }}
-            >
-              Blogs
-            </Text>
-          </View>
-        </View>
+        <HeaderTile name={"Blogs"} navigation={navigation} />
+
         <View style={{ paddingHorizontal: 10 }}>
           <SearchBar
             onChangeText={(t) => setSearchText(t)}
@@ -151,119 +124,11 @@ const BlogHomeScreen = ({ navigation, route }) => {
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item, index }) => {
                     return (
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate("BlogInner", {
-                            title: item.blogTitle,
-                            id: item._id,
-                          })
-                        }
-                      >
-                        <Surface
-                          style={{
-                            height: HEIGHT / 2.8,
-                            width: WIDTH * 0.7,
-                            marginHorizontal: 10,
-                            marginVertical: 5,
-                            borderRadius: 20,
-                            elevation: 5,
-                          }}
-                        >
-                          <View style={{ position: "relative" }}>
-                            <ProgressiveImage
-                              style={{
-                                height: HEIGHT / 2.8,
-                                width: WIDTH * 0.7,
-                                borderRadius: 15,
-                              }}
-                              resizeMode="cover"
-                              source={{ uri: item.imageSrc }}
-                            />
-                          </View>
-                          <View
-                            style={{
-                              position: "absolute",
-                              bottom: 0,
-                              backgroundColor: "#0006",
-                              borderBottomRightRadius: 15,
-                              borderBottomLeftRadius: 15,
-                              width: WIDTH * 0.7,
-                              height: HEIGHT / 9,
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontSize: 15,
-                                fontFamily: "NewYorkl",
-                                marginHorizontal: 10,
-                                color: "#fff",
-                                marginTop: 4,
-                              }}
-                            >
-                              {item.blogTitle}
-                            </Text>
-                            <View style={{ marginHorizontal: 10 }}>
-                              {Platform.OS === "ios" ? (
-                                <>
-                                  {Object.keys(item).includes("content") &&
-                                  item.content.charAt(0) === "<" ? (
-                                    <HTMLView
-                                      value={item.content.slice(0, 45)}
-                                      stylesheet={{
-                                        p: {
-                                          fontSize: 14,
-                                          padding: 0,
-                                          fontFamily: "Andika",
-                                          color: "#fff",
-                                        },
-                                      }}
-                                    />
-                                  ) : (
-                                    <Text
-                                      style={{
-                                        fontSize: 14,
-                                        fontFamily: "Andika",
-                                        color: "#fff",
-                                        padding: 0,
-                                      }}
-                                    >
-                                      {item.content.slice(0, 50)}...
-                                    </Text>
-                                  )}
-                                </>
-                              ) : (
-                                <>
-                                  {Object.keys(item).includes("content") &&
-                                  item.content.charAt(0) === "<" ? (
-                                    <HTMLView
-                                      value={item.content.slice(0, 35)}
-                                      stylesheet={{
-                                        p: {
-                                          fontSize: 14,
-                                          padding: 0,
-                                          fontFamily: "Andika",
-                                          color: "#fff",
-                                        },
-                                      }}
-                                    />
-                                  ) : (
-                                    <Text
-                                      style={{
-                                        fontSize: 14,
-                                        fontFamily: "Andika",
-                                        color: "#fff",
-                                        padding: 0,
-                                      }}
-                                    >
-                                      {item.content.slice(0, 55)}...
-                                    </Text>
-                                  )}
-                                </>
-                              )}
-                            </View>
-                          </View>
-                        </Surface>
-                      </TouchableOpacity>
+                      <BlogTile
+                        navigation={navigation}
+                        item={item}
+                        navName={"BlogInner"}
+                      />
                     );
                   }}
                 />
@@ -323,64 +188,12 @@ const BlogHomeScreen = ({ navigation, route }) => {
                       : index >= 0 && index < 20
                   )
                     return (
-                      <View
-                        key={index}
-                        style={{
-                          width: WIDTH * 0.8,
-                          // flexWrap: "wrap",
-                          flexDirection: "row",
-                          marginTop: 20,
-                          alignItems: "center",
-                          borderBottomColor: "#f2f2f2",
-                          borderBottomWidth: 2,
-                          paddingBottom: 20,
-                        }}
-                      >
-                        <View>
-                          <Image
-                            style={{
-                              width: 75,
-                              height: 75,
-                              borderRadius: 10,
-                              marginRight: 20,
-                            }}
-                            source={{ uri: item.imageSrc }}
-                          />
-                        </View>
-                        <View>
-                          <Text style={{ fontSize: 15 }}>{item.blogTitle}</Text>
-                          <TouchableOpacity
-                            onPress={() =>
-                              navigation.navigate("BlogInner", {
-                                title: item.blogTitle,
-                                id: item._id,
-                              })
-                            }
-                          >
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                              }}
-                            >
-                              <MaterialIcons
-                                name="timer"
-                                size={24}
-                                color="black"
-                              />
-                              <Text
-                                style={{
-                                  fontFamily: "Andika",
-                                  fontSize: 16,
-                                  paddingHorizontal: 5,
-                                }}
-                              >
-                                Read More
-                              </Text>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
+                      <BlogList
+                        index={index}
+                        navigation={navigation}
+                        item={item}
+                        navName={"BlogInner"}
+                      />
                     );
                 })}
               </ScrollView>

@@ -838,7 +838,7 @@ const SelfPlanForm = ({ navigation }) => {
                 // justifyContent: "space-between",
                 marginHorizontal: 30,
                 position: "relative",
-                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                marginTop: Platform.OS == "android" ? 30 : 80,
               }}
             >
               <TouchableOpacity
@@ -1002,7 +1002,7 @@ const SelfPlanForm = ({ navigation }) => {
                 // justifyContent: "space-between",
                 marginHorizontal: 30,
                 position: "relative",
-                marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
+                marginTop: Platform.OS == "android" ? 30 : 80,
                 marginBottom: 30,
               }}
             >

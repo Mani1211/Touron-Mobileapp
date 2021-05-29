@@ -12,23 +12,25 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import * as Notifications from "expo-notifications";
-// import * as Permissions from "expo-permissions";
-// import Constants from "expo-constants";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
 import { database, auth } from "firebase";
 import * as Animatable from "react-native-animatable";
 import { Spinner } from "native-base";
+import { Entypo } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-// Notifications.setNotificationHandler({
-//   handleNotification: async () => ({
-//     shouldShowAlert: true,
-//     shouldPlaySound: true,
-//     shouldSetBadge: true,
-//   }),
-// });
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 function SignInScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -41,6 +43,8 @@ function SignInScreen({ navigation }) {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [passVisible, setPassVisible] = useState(false);
+
   const storeToken = async (value) => {
     try {
       const token = AsyncStorage.getItem("userToken");
@@ -140,66 +144,66 @@ function SignInScreen({ navigation }) {
       });
   };
 
-  // const registerForPushNotificationsAsync = async () => {
-  //   let token;
-  //   if (Constants.isDevice) {
-  //     const { status: existingStatus } = await Permissions.getAsync(
-  //       Permissions.NOTIFICATIONS
-  //     );
-  //     let finalStatus = existingStatus;
-  //     console.log(finalStatus, existingStatus, "stst");
+  const registerForPushNotificationsAsync = async () => {
+    let token;
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
+      let finalStatus = existingStatus;
+      console.log(finalStatus, existingStatus, "stst");
 
-  //     if (existingStatus !== "granted" || Platform.OS === "android") {
-  //       const { status } = await Permissions.askAsync(
-  //         Permissions.NOTIFICATIONS
-  //       );
-  //       finalStatus = status;
-  //     }
-  //     if (finalStatus !== "granted") {
-  //       alert("Failed to get push token for push notification!");
-  //       return;
-  //     }
-  //     token = (await Notifications.getExpoPushTokenAsync()).data;
-  //   } else {
-  //     alert("Must use physical device for Push Notifications");
-  //   }
+      if (existingStatus !== "granted" || Platform.OS === "android") {
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
 
-  //   if (Platform.OS === "android") {
-  //     Notifications.setNotificationChannelAsync("default", {
-  //       name: "default",
-  //       importance: Notifications.AndroidImportance.MAX,
-  //       vibrationPattern: [0, 250, 250, 250],
-  //       lightColor: "#FF231F7C",
-  //     });
-  //   }
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
 
-  //   return token;
-  // };
+    return token;
+  };
 
-  // useEffect(() => {
-  //   let mounted = true;
-  //   if (mounted) {
-  //     registerForPushNotificationsAsync().then((token) => setExpoToken(token));
-  //     // This listener is fired whenever a notification is received while the app is foregrounded
-  //     notificationListener.current =
-  //       Notifications.addNotificationReceivedListener((notification) => {
-  //         setNotification(notification);
-  //       });
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      registerForPushNotificationsAsync().then((token) => setExpoToken(token));
+      // This listener is fired whenever a notification is received while the app is foregrounded
+      notificationListener.current =
+        Notifications.addNotificationReceivedListener((notification) => {
+          setNotification(notification);
+        });
 
-  //     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-  //     responseListener.current =
-  //       Notifications.addNotificationResponseReceivedListener((response) => {
-  //         console.log(response);
-  //       });
+      // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+      responseListener.current =
+        Notifications.addNotificationResponseReceivedListener((response) => {
+          console.log(response);
+        });
 
-  //     return () => {
-  //       Notifications.removeNotificationSubscription(notificationListener);
-  //       Notifications.removeNotificationSubscription(responseListener);
-  //     };
-  //   }
+      return () => {
+        Notifications.removeNotificationSubscription(notificationListener);
+        Notifications.removeNotificationSubscription(responseListener);
+      };
+    }
 
-  //   return () => (mounted = false);
-  // }, []);
+    return () => (mounted = false);
+  }, []);
 
   const renderForm = () => {
     switch (step) {
@@ -238,15 +242,29 @@ function SignInScreen({ navigation }) {
                   />
                 </View>
 
-                <View style={styles.inputContainer}>
+                <View
+                  style={[
+                    styles.inputContainer,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 20,
+                      alignItems: "center",
+                    },
+                  ]}
+                >
                   <TextInput
-                    style={styles.input}
+                    style={{ width: WIDTH / 2, color: "#fff" }}
                     placeholder="Password"
-                    keyboardType="visible-password"
-                    keyboardAppearance="dark"
-                    keyboardType="visible-password"
                     onChangeText={(value) => setPassword(value)}
-                    // secureTextEntry={true}
+                    secureTextEntry={passVisible ? true : false}
+                    keyboardType="default"
+                  />
+                  <Entypo
+                    onPress={() => setPassVisible(!passVisible)}
+                    name={!passVisible ? "eye-with-line" : "eye"}
+                    size={24}
+                    color="#fff"
                   />
                 </View>
                 {err !== "" ? (

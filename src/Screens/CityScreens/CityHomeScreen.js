@@ -13,10 +13,11 @@ import { AuthContext } from "../../context/AuthContext";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import touron from "../../api/touron";
-import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import axios from "axios";
 import SearchBar from "./../../Reusable Components/SearchBar";
 import { FontAwesome } from "@expo/vector-icons";
+import CCTile from "./../CountryScreens/CCTile";
+import HeaderTile from "./../../Reusable Components/HeaderTile";
 const CityHomeScreen = ({ navigation, route }) => {
   const { cities } = useContext(AuthContext);
   const [city, setCity] = useState(cities);
@@ -65,47 +66,8 @@ const CityHomeScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={{ paddingHorizontal: 0 }}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            // justifyContent: "space-between",
-            alignItems: "center",
-            paddingLeft: 20,
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              alignSelf: "flex-start",
-              width: "10%",
-              left: 8,
-              paddingTop: Platform.OS === "ios" ? 30 : 0,
-              flex: 1,
-            }}
-            onPress={() => navigation.goBack()}
-          >
-            <View>
-              <FontAwesome name="arrow-circle-left" size={34} color="black" />
-            </View>
-          </TouchableOpacity>
+        <HeaderTile name={"City"} navigation={navigation} />
 
-          <View
-            style={{
-              flex: 1.6,
-              paddingTop: Platform.OS === "ios" ? 30 : 0,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 23,
-                fontFamily: Platform.OS == "ios" ? "AvenirNext-Bold" : "Avenir",
-              }}
-            >
-              Cities
-            </Text>
-          </View>
-          <View></View>
-        </View>
         <View style={{ paddingHorizontal: 10 }}>
           <SearchBar
             onChangeText={(value) => setCityName(value)}
@@ -127,22 +89,13 @@ const CityHomeScreen = ({ navigation, route }) => {
               {search().map((item, index) => {
                 if (index < pageSize)
                   return (
-                    <TouchableOpacity
-                      key={item._id}
-                      onPress={() => {
-                        navigation.navigate("CityInner", { item: item });
-                      }}
-                    >
-                      <View style={styles.imageContainer}>
-                        <View>
-                          <Text style={styles.name}>{item.cityName}</Text>
-                          <ProgressiveImage
-                            style={styles.image}
-                            source={{ uri: item.imageUrl }}
-                          />
-                        </View>
-                      </View>
-                    </TouchableOpacity>
+                    <CCTile
+                      index={index}
+                      navigation={navigation}
+                      item={item}
+                      navName={"CityInner"}
+                      name={item.cityName}
+                    />
                   );
               })}
               {pageSize < 145 && cityName === "" && (
@@ -180,7 +133,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingTop: 40,
   },
   imageContainer: {
     padding: 5,

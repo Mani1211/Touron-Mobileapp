@@ -17,12 +17,11 @@ import HTMLView from "react-native-htmlview";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import Categories from "./components/CategoriesScreen";
 import ContentList from "./components/ContentList";
-import { Feather, FontAwesome, EvilIcons, Fontisto } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { Portal, Provider } from "react-native-paper";
 import touron from "../../api/touron";
-import ProgressiveImage from "./../../Reusable Components/ProgressiveImage";
 import { database } from "firebase";
 import axios from "axios";
 import Slider from "./../../Reusable Components/Slider";
@@ -30,6 +29,10 @@ import Banner from "../Review Component/Reusable/Banner";
 import { AuthContext } from "./../../context/AuthContext";
 import { isSubmittedFeedback } from "../CategoryScreens/utils/PushNotification";
 import Header from "./components/Header";
+import CountryCityTile from "./components/CountryCityTile";
+import TourTile from "./components/TourTile";
+import TestimonialsTile from "./components/TestimonialTile";
+import Promotions from "./components/Promotions";
 const HomeScreen = ({ navigation }) => {
   const [promotions, setPromotions] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -163,107 +166,9 @@ const HomeScreen = ({ navigation }) => {
       airportName: "Tribhuvan International",
       airportType: "Nearest Airport",
     },
-    {
-      coordinates: {
-        latitude: "4.1755",
-        longitude: "73.5093",
-      },
-      _id: "5ef5f193db65dc0017ca6937",
-      cityName: "Male",
-      countryName: "Maldives",
-      aboutCity:
-        "Malé is the densely populated capital of the Maldives, an island nation in the Indian Ocean. It's known for its mosques and colorful buildings. The Islamic Centre (Masjid-al-Sultan Muhammad Thakurufaanu Al Auzam) features a mosque, a library and a distinctive gold dome. Near the harbor, a popular fish market offers the day's catch, and a produce market is stocked with local fruit",
-      idealDays: "3-4 days",
-      imageUrl:
-        "https://images.pexels.com/photos/3601437/pexels-photo-3601437.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      weather: "27 - 31 C",
-      travelDuration: "4-6 hours",
-      famousPlacesToVisit: "Hulhumale, Atoll, Sultan Park",
-      __v: 0,
-      airportName: "Velana International Airport (MLE)",
-      airportType: "Native Airport",
-      createdAt: "2020-09-17T07:22:25.127Z",
-      updatedAt: "2020-09-17T07:22:25.127Z",
-    },
-    {
-      coordinates: {
-        latitude: "14.679442",
-        longitude: "121.038155",
-      },
-      _id: "5ef5f1a1db65dc0017ca6938",
-      cityName: "Quezon City",
-      countryName: "Philippines",
-      aboutCity:
-        "Quezon City is located on the Guadalupe Plateau, just northeast of Manila, in the Philippines",
-      idealDays: "5-6 days",
-      imageUrl:
-        "https://images.summitmedia-digital.com/topgear/images/2020/05/21/quezon-city-travel-pass-guidelines-1590038324.jpg",
-      weather: "30 C",
-      travelDuration: "8-10 hours",
-      famousPlacesToVisit:
-        "Quezon Memorial Circle, Monasterio de Santa Clara,  Eastwood City",
-      __v: 0,
-    },
   ];
 
   const country = [
-    {
-      visa: {
-        onArrival: "NO",
-        cost: 5000,
-      },
-      general: {
-        bestTimeToVisit: [
-          "March",
-          "April",
-          "May",
-          "August",
-          "September",
-          "October",
-        ],
-        currency: "Turkish lira",
-        timeZone: "-2.5 Hours",
-      },
-      _id: "5efddd4dd87364001723459a",
-      countryName: "Turkey",
-      aboutCountry:
-        "Turkey, officially the Republic of Turkey, is a transcontinental country in Eurasia, located mainly on the Anatolian peninsula in Western Asia, with a smaller portion on the Balkan peninsula in Southeastern Europe",
-      idealDays: "8-10 days",
-      imageUrl:
-        "https://images.pexels.com/photos/4242184/pexels-photo-4242184.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      weather: "-2 to 23",
-      bestPlaces: "1.Istanbul 2.Antalya 3.Cappadocia",
-      __v: 0,
-      createdAt: "2020-08-26T10:17:00.720Z",
-      updatedAt: "2021-02-01T09:53:16.919Z",
-      countryFlagImage:
-        "https://www.countryflags.com/wp-content/uploads/turkey-flag-png-large.png",
-    },
-    {
-      visa: {
-        onArrival: "NO",
-        cost: 8000,
-      },
-      general: {
-        bestTimeToVisit: ["May", "June", "July", "August", "September"],
-        currency: "Euro",
-        timeZone: "+3.5 Hours",
-      },
-      _id: "5f1682a1c975160017755de3",
-      countryName: "Germany",
-      aboutCountry:
-        "Germany is a Western European country with a landscape of forests, rivers, mountain ranges and North Sea beaches. It has over 2 millennia of history. Berlin, its capital, is home to art and nightlife scenes",
-      idealDays: "8-10 days",
-      imageUrl:
-        "https://images.pexels.com/photos/3484001/pexels-photo-3484001.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      weather: "0 to 24",
-      bestPlaces: "1. Berlin\n2. Hamburg\n3. Munich\n4. Frankfurt",
-      __v: 0,
-      createdAt: "2020-08-26T10:16:47.450Z",
-      updatedAt: "2021-02-01T09:53:49.883Z",
-      countryFlagImage:
-        "https://www.countryflags.com/wp-content/uploads/germany-flag-png-large.png",
-    },
     {
       visa: {
         onArrival: "no",
@@ -283,9 +188,6 @@ const HomeScreen = ({ navigation }) => {
         "https://images.pexels.com/photos/753339/pexels-photo-753339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       weather: "-5 to 17",
       bestPlaces: "Mosow, Saint Petersburg",
-      createdAt: "2020-07-23T09:05:59.537Z",
-      updatedAt: "2021-02-01T09:54:41.421Z",
-      __v: 0,
       countryFlagImage:
         "https://www.countryflags.com/wp-content/uploads/russia-flag-png-large.png",
     },
@@ -317,9 +219,6 @@ const HomeScreen = ({ navigation }) => {
         "https://www.andbeyond.com/wp-content/uploads/sites/5/Beautiful-Mauritius-Beaches-1920x1080.jpg",
       weather: "19 to 22",
       bestPlaces: "1. Port Louis\n2. Beau Bassin-Rose Hill\n3. Vacoas ",
-      createdAt: "2020-08-07T07:19:00.991Z",
-      updatedAt: "2021-02-01T09:55:25.985Z",
-      __v: 0,
       countryFlagImage:
         "https://www.countryflags.com/wp-content/uploads/mauritius-flag-png-large.png",
     },
@@ -342,9 +241,6 @@ const HomeScreen = ({ navigation }) => {
         "https://images.pexels.com/photos/2956470/pexels-photo-2956470.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       weather: "25 to 30",
       bestPlaces: "1. Mahe\n2. Praslin\n3. La Digue\n4. Beau Vallon",
-      createdAt: "2020-08-07T07:41:36.711Z",
-      updatedAt: "2021-02-01T10:08:31.909Z",
-      __v: 0,
       countryFlagImage:
         "https://www.countryflags.com/wp-content/uploads/seychelles-flag-png-large.png",
     },
@@ -374,9 +270,6 @@ const HomeScreen = ({ navigation }) => {
         "https://images.pexels.com/photos/4552456/pexels-photo-4552456.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       weather: "12 to 25",
       bestPlaces: "1. Krakow\n2. Warsaw\n3. Gdansk\n4. Wrocław",
-      createdAt: "2020-08-07T07:54:55.727Z",
-      updatedAt: "2021-02-01T10:09:07.649Z",
-      __v: 0,
       countryFlagImage:
         "https://www.countryflags.com/wp-content/uploads/poland-flag-png-large.png",
     },
@@ -408,14 +301,11 @@ const HomeScreen = ({ navigation }) => {
       trending: "Yes",
       referanceLink:
         "https://www.klook.com/en-IN/activity/117-universal-studios-singapore/#krt=r20&krid=f4c2d56f-46cb-4443-79af-390bc33948c0",
-      __v: 3,
       countryName: "Singapore",
       dropTime: "-",
       pickUpLocation: "-",
       pickUpTime: "-",
       termsAndCondition: "-",
-      createdAt: "2020-09-09T11:36:12.262Z",
-      updatedAt: "2021-03-15T10:51:10.927Z",
       tourVideoSrc: "",
       videoAuthor: "",
     },
@@ -447,9 +337,6 @@ const HomeScreen = ({ navigation }) => {
       countryName: "Japan",
       pickUpTime: "N.A",
       dropTime: "N.A",
-      __v: 0,
-      createdAt: "2021-02-03T10:20:46.342Z",
-      updatedAt: "2021-03-17T08:44:46.552Z",
     },
     {
       tourCost: { adult: 2000, children: 1200 },
@@ -479,9 +366,6 @@ const HomeScreen = ({ navigation }) => {
       countryName: "Japan",
       pickUpTime: "N.A",
       dropTime: "N.A",
-      __v: 0,
-      createdAt: "2021-02-03T10:21:58.681Z",
-      updatedAt: "2021-03-17T08:45:21.450Z",
     },
 
     {
@@ -513,9 +397,6 @@ const HomeScreen = ({ navigation }) => {
       countryName: "Singapore",
       pickUpTime: "N.A",
       dropTime: "N.A",
-      __v: 1,
-      createdAt: "2021-02-02T09:51:17.191Z",
-      updatedAt: "2021-03-15T11:06:02.465Z",
     },
   ];
 
@@ -588,267 +469,44 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const _renderItem = ({ item, index }) => {
-    return (
-      <View
-        style={{
-          width: WIDTH * 0.9,
-          marginHorizontal: 5,
-          marginTop: 20,
-          justifyContent: "center",
-          // marginBottom: 35,
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            paddingVertical: 10,
-            fontSize: 30,
-            fontFamily: "PlaylistScript",
-          }}
-        >
-          {item.tourPlace}
-        </Text>
-
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image
-            source={{ uri: item.testImage }}
-            style={{
-              height: HEIGHT / 2.8,
-              width: WIDTH / 1.4,
-              borderRadius: 40,
-            }}
-          />
-          <View
-            style={{
-              paddingTop: 30,
-            }}
-          >
-            <HTMLView
-              value={item.comment}
-              stylesheet={{
-                p: {
-                  paddingLeft: 10,
-                  fontFamily: "Andika",
-                  fontSize: 13,
-                  textAlign: "center",
-                },
-              }}
-            />
-          </View>
-          <Text style={{ textAlign: "center", paddingTop: 20 }}>
-            {item.name}
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: "Andika",
-            }}
-          >
-            🚀 <Text style={{ fontWeight: "bold" }}>Mission</Text> to{" "}
-            {item.tourPlace}
-          </Text>
-        </View>
-      </View>
-    );
+    return <TestimonialsTile item={item} index={index} />;
   };
   const _renderPromo = ({ item, index }) => {
     return (
-      <View
-        key={index}
-        style={{
-          width: WIDTH * 0.9,
-          marginHorizontal: 5,
-          marginTop: 20,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setSelectedPromotion(item);
-            setModalVisible(true);
-          }}
-        >
-          <Image
-            style={{
-              width: WIDTH * 0.8,
-              height: HEIGHT / 1.9,
-              borderRadius: 10,
-            }}
-            source={{ uri: item.image }}
-          />
-        </TouchableOpacity>
-      </View>
+      <Promotions
+        item={item}
+        index={index}
+        setModalVisible={() => setModalVisible(true)}
+        setSelectedPromotion={() => setSelectedPromotion(item)}
+      />
     );
   };
 
   const renderCountry = ({ item }) => {
     return (
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("CountryInner", {
-            item: item,
-          });
-        }}
-      >
-        <View style={styles.tileStyle}>
-          <Text style={styles.name}>{item.countryName}</Text>
-
-          <ProgressiveImage
-            fadeDuration={1000}
-            style={styles.cityImage}
-            source={{ uri: item.imageUrl }}
-          />
-        </View>
-      </TouchableOpacity>
+      <CountryCityTile
+        item={item}
+        navigation={navigation}
+        navName={"CountryInner"}
+        name={item.countryName}
+      />
     );
   };
   const memoizedCountry = useMemo(() => renderCountry, [country]);
 
   const renderCity = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("CityInner", { item: item });
-      }}
-    >
-      <View style={styles.tileStyle}>
-        <Text style={styles.name}>{item.cityName}</Text>
-        <ProgressiveImage
-          fadeDuration={1000}
-          style={styles.cityImage}
-          source={{ uri: item.imageUrl }}
-        />
-      </View>
-    </TouchableOpacity>
+    <CountryCityTile
+      item={item}
+      navigation={navigation}
+      navName={"CityInner"}
+      name={item.cityName}
+    />
   );
 
   const memoizedCity = useMemo(() => renderCity, [city]);
 
   const renderTour = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("TourInner", {
-          item: item,
-        });
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          marginRight: 10,
-          marginTop: 10,
-          marginBottom: 40,
-        }}
-      >
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <View style={{ position: "relative" }}>
-            <Image
-              style={{
-                height: HEIGHT / 3,
-                width: WIDTH * 0.9,
-                borderRadius: 10,
-              }}
-              source={{ uri: item.imageUrl }}
-            />
-          </View>
-
-          <View
-            style={{
-              width: "90%",
-              backgroundColor: "#D9D9D9",
-              position: "absolute",
-              opacity: 0.8,
-              bottom: 20,
-              borderRadius: 10,
-              padding: 10,
-            }}
-          >
-            <View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <EvilIcons name="location" size={30} />
-                <Text style={{ fontFamily: "Andika", paddingLeft: 4 }}>
-                  {item.cityName}
-                </Text>
-              </View>
-              <Text
-                style={{
-                  paddingVertical: 10,
-                  paddingLeft: 8,
-                  fontSize: 18,
-                  fontFamily:
-                    Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
-                }}
-              >
-                {item.tourName}
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  paddingLeft: 6,
-
-                  justifyContent: "space-between",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    flexGrow: 1,
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <Fontisto name="plane-ticket" size={20} color="black" />
-                  <Text
-                    style={{
-                      fontFamily: "Andika",
-                      paddingLeft: 6,
-                      // fontSize: 10,
-                    }}
-                  >
-                    {item.tourCategory[0]}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    flexGrow: 1,
-
-                    alignItems: "center",
-                  }}
-                >
-                  <Fontisto name="clock" size={20} color="black" />
-                  <Text
-                    style={{
-                      fontFamily: "Andika",
-                      paddingLeft: 6,
-                    }}
-                  >
-                    {item.tourType}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
+    <TourTile navigation={navigation} item={item} navName={"TourInner"} />
   );
   const memoizedTour = useMemo(() => renderTour, [tours]);
 
@@ -1324,51 +982,13 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  cityImage: {
-    height: HEIGHT / 3.8 + 10,
-    width: WIDTH / 2.8,
-    borderRadius: 10,
-    marginBottom: 15,
-    marginRight: 10,
-  },
-  tourImage: {
-    height: HEIGHT / 3.8,
-    width: WIDTH / 1.2,
-    borderRadius: 10,
-    marginVertical: 10,
-    marginRight: 10,
-  },
-  bannerImage: {
-    height: HEIGHT / 3.8,
-    width: WIDTH * 0.9,
-    borderRadius: 10,
-    marginVertical: 10,
-    marginRight: 10,
-  },
   container: {
     paddingTop: 30,
     flex: 1,
     padding: 15,
     backgroundColor: "#FFF",
   },
-  tileStyle: {
-    flexDirection: "column",
-    position: "relative",
-    marginTop: 15,
-    marginBottom: 40,
-  },
-  name: {
-    fontSize: 17,
-    zIndex: 1,
-    bottom: 23,
-    position: "absolute",
-    color: "white",
-    fontWeight: "300",
-    fontFamily: "Andika",
-    padding: 0,
-    left: 10,
-    margin: 0,
-  },
+
   title: {
     fontSize: 30,
     color: "#626E7B",

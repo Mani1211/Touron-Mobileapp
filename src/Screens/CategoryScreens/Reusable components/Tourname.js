@@ -9,48 +9,14 @@ import {
   Platform,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import HeaderTile from "./../../../Reusable Components/HeaderTile";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 const Tourname = ({ imgSrc, step, description, tourName, navigation }) => {
   return (
     <View>
-      <View
-        style={{
-          width: WIDTH * 0.9,
-          alignItems: "flex-end",
-          justifyContent: "center",
-          flexDirection: "row",
-          // justifyContent: "space-between",
-          marginHorizontal: 30,
-          position: "relative",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack();
-          }}
-          style={{ flex: 1 }}
-        >
-          <View>
-            <AntDesign name="arrowleft" size={28} />
-          </View>
-        </TouchableOpacity>
-
-        <Text
-          style={{
-            fontSize: 20,
-            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
-            marginTop: Platform.OS == "android" ? HEIGHT / 14 : 80,
-            // flex: 0.6,
-            flex: tourName === "Honeymoon Tour" ? 2.6 : 2,
-            // alignSelf: "center",
-          }}
-        >
-          {tourName}
-        </Text>
-        {/* <View></View> */}
-      </View>
+      <HeaderTile name={tourName} navigation={navigation} />
       <View
         style={{
           width: WIDTH,

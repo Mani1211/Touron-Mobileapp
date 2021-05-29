@@ -44,7 +44,10 @@
               "scheme": "touron"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "enableDangerousExperimentalLeanBuilds": true,
@@ -59,7 +62,9 @@
         "WRITE_EXTERNAL_STORAGE"
       ]
     },
-    "assetBundlePatterns": ["./assets/**"],
+    "assetBundlePatterns": [
+      "./assets/**"
+    ],
     "description": "",
     "androidStatusBar": {
       "backgroundColor": "#FFF"
