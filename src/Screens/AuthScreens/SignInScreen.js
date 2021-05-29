@@ -237,7 +237,7 @@ function SignInScreen({ navigation }) {
                     placeholder="Email"
                     keyboardType="visible-password"
                     keyboardAppearance="dark"
-                    keyboardType="email-address"
+                    keyboardType="default"
                     onChangeText={(value) => setEmail(value)}
                   />
                 </View>
