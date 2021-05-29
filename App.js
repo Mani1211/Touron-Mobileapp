@@ -29,7 +29,6 @@ const App = () => {
         Andika: require("./assets/fonts/Andika-Regular.ttf"),
         PlaylistScript: require("./assets/fonts/PlaylistScript.otf"),
         Avenir: require("./assets/fonts/AvenirLTStd-Black.otf"),
-        NewYorkl: require("./assets/fonts/NewYorkLargeBlack.otf"),
       }).then(() => {
         setAppLoading(false);
       });

@@ -52,7 +52,9 @@ const Banner = ({ setReview, close }) => {
         }}
       >
         <Image
-          source={require("../../../../assets/intros/Review.png")}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FReviews%2FReview.png?alt=media&token=5cd290fe-8d00-477f-b5a5-0cf56416de7b",
+          }}
           style={{
             height: WIDTH / 3,
             width: WIDTH / 3,

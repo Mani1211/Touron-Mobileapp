@@ -66,7 +66,9 @@ const OverviewToursScreen = ({ setStep, prevStep }) => {
           <View style={{ alignItems: "center" }}>
             <Image
               style={{ width: 190, height: 185 }}
-              source={require("../../../assets/g2.png")}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2Fg2.png?alt=media&token=93905c8a-2663-4402-9f0e-f8b9501b55e3",
+              }}
             />
           </View>
           <View style={{ alignItems: "center" }}>

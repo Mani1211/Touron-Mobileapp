@@ -124,7 +124,9 @@ const SelfTourHome = ({
                 <View>
                   <Image
                     style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 }}
-                    source={require("../../../assets/oops.jpg")}
+                    source={{
+                      uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2Foops.jpg?alt=media&token=64e05841-6420-4dda-8214-bc2c31254e0f",
+                    }}
                   />
                 </View>
                 <Text style={{ fontFamily: "Avenir", fontSize: 23 }}>

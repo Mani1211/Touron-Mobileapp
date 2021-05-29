@@ -63,7 +63,9 @@ const DrawerContent = (props) => {
                   icon={() => (
                     <Image
                       style={{ height: 30, width: 30 }}
-                      source={require("../../assets/houses.png")}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FSidebar%2Fhouses.png?alt=media&token=84e3c5ee-18d4-43d2-8304-664b103b5b89",
+                      }}
                     />
                   )}
                   onPress={() => props.navigation.navigate("Main")}
@@ -76,7 +78,9 @@ const DrawerContent = (props) => {
                         height: 30,
                         width: 30,
                       }}
-                      source={require("../../assets/Profiles.png")}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FSidebar%2FProfiles.png?alt=media&token=4658a078-2026-481b-b26e-512900244234",
+                      }}
                     />
                   )}
                   onPress={() => {
@@ -89,7 +93,9 @@ const DrawerContent = (props) => {
                   icon={() => (
                     <Image
                       style={{ height: 30, width: 30 }}
-                      source={require("../../assets/Planes.png")}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FSidebar%2FPlanes.png?alt=media&token=5ba83211-b715-42f9-a486-3de1c75d7440",
+                      }}
                     />
                   )}
                   onPress={() => props.navigation.navigate("MyRequest")}
@@ -109,7 +115,9 @@ const DrawerContent = (props) => {
                   icon={() => (
                     <Image
                       style={{ height: 30, width: 30 }}
-                      source={require("../../assets/heart.png")}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FSidebar%2Fheart.png?alt=media&token=6649854f-0d2e-45d1-8e05-bb49f365d404",
+                      }}
                     />
                   )}
                   onPress={() => {
@@ -136,7 +144,9 @@ const DrawerContent = (props) => {
                   icon={() => (
                     <Image
                       style={{ height: 30, width: 30 }}
-                      source={require("../../assets/heart.png")}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FSidebar%2Fheart.png?alt=media&token=6649854f-0d2e-45d1-8e05-bb49f365d404",
+                      }}
                     />
                   )}
                   onPress={() => {
@@ -234,7 +244,9 @@ const DrawerContent = (props) => {
                         width: 30,
                         marginBottom: HEIGHT / 10,
                       }}
-                      source={require("../../assets/log-out.png")}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FSidebar%2Flog-out.png?alt=media&token=21a48757-c78b-4768-95c1-fde359962816",
+                      }}
                     />
                   )}
                 />

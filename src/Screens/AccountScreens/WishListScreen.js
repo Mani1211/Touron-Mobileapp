@@ -104,7 +104,9 @@ const WishListScreen = ({ navigation }) => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                source={require("../../../assets/savedtours.png")}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2Fsavedtours.png?alt=media&token=724a5517-ab6a-4318-93ff-f719de443a74",
+                }}
               />
               <Text
                 style={{

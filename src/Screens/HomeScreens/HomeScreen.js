@@ -766,12 +766,16 @@ const HomeScreen = ({ navigation }) => {
                     }}
                   >
                     <Image
-                      source={require("../../../assets/fonts/google.png")}
-                      style={{ marginRight: 20 }}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FReviews%2Fgoogle.png?alt=media&token=2bad25e1-3652-432e-ae20-c36bea39dcca",
+                      }}
+                      style={{ marginRight: 20, height: 40, width: 40 }}
                     />
                     <Image
                       style={{ height: 40, width: 40 }}
-                      source={require("../../../assets/fonts/facebook.png")}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FReviews%2Ffacebook.png?alt=media&token=cb984a8d-511d-47c8-966e-0cddb1ed09b3",
+                      }}
                     />
                   </View>
                   <View style={{ flexDirection: "row", paddingTop: 20 }}>

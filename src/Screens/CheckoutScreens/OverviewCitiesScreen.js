@@ -17,7 +17,6 @@ const HEIGHT = Dimensions.get("window").height;
 import { Surface } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 // import { SelfTourContext } from "../../context/ SelfTourContext";
-import Card from "../../../assets/Board.jpg";
 import { AntDesign } from "@expo/vector-icons";
 import { AuthContext } from "./../../context/AuthContext";
 const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
@@ -94,7 +93,9 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
             <View>
               <Image
                 style={{ height: 40, width: 40 }}
-                source={require("../../../assets/Calendar.png")}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FCity%20images%2FCalendar.png?alt=media&token=e6b7dfb2-8e95-45ae-9c75-c224ebe4d1a8",
+                }}
               />
             </View>
             <View
@@ -142,7 +143,12 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
         ))}
 
         <View style={{ width: WIDTH, marginLeft: -20 }}>
-          <Image style={styles.calendarImage} source={Card} />
+          <Image
+            style={styles.calendarImage}
+            source={{
+              uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2FBoard.jpg?alt=media&token=be1b5370-9893-41be-b3a4-fef78b592715",
+            }}
+          />
           <View
             style={{
               display: "flex",

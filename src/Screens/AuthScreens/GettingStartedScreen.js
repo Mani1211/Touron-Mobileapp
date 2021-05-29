@@ -34,19 +34,23 @@ const GettingStartedScreen = ({ navigation }) => {
   const slides = [
     {
       key: "1",
-      image: require("../../../assets/intros/1.jpg"),
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FIntros%2F1.jpg?alt=media&token=7fdeff79-3d51-40be-a7c9-514518df01e6",
     },
     {
       key: "2",
-      image: require("../../../assets/intros/2.jpg"),
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FIntros%2F2.jpg?alt=media&token=4b104e55-233d-4876-a0cc-6ad89c962112",
     },
     {
       key: "3",
-      image: require("../../../assets/intros/3.jpg"),
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FIntros%2F3.jpg?alt=media&token=64474172-eba3-40f9-a4b3-494d4621b8a7",
     },
     {
       key: "4",
-      image: require("../../../assets/intros/4.jpg"),
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FIntros%2F4.jpg?alt=media&token=54b2cf06-0f67-4583-878a-8c93c21c3ed6",
     },
   ];
 
@@ -70,7 +74,7 @@ const GettingStartedScreen = ({ navigation }) => {
           renderItem={({ item }) => (
             <View>
               <Image
-                source={item.image}
+                source={{ uri: item.image }}
                 resizeMode="cover"
                 style={{ height: height, width: width }}
               />

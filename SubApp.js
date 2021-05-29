@@ -135,9 +135,9 @@ const SubApp = () => {
           overlayColor={0}
           drawerContent={(props) => <DrawerContent {...props} />}
         >
-          {/* {!isLoggedIn && (
+          {!isLoggedIn && (
             <Drawer.Screen name="Get" component={GettingStartedScreen} />
-          )} */}
+          )}
           <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
           <Drawer.Screen name="Profile" component={ProfileScreen} />
           <Drawer.Screen name="MyRequest" component={MyRequestScreen} />

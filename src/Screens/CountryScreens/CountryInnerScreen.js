@@ -126,15 +126,21 @@ const CountryInnerScreen = ({ navigation, route }) => {
           >
             <Image
               style={{ height: 60, width: 60, marginTop: 25 }}
-              source={require("../../../assets/visa.png")}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fcountry%20Images%2Fvisa.png?alt=media&token=f723f5dc-09a5-40bb-bf87-619fd86aa1dc",
+              }}
             />
             <Image
               style={{ height: 60, width: 60, marginTop: 25 }}
-              source={require("../../../assets/weather.png")}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fcountry%20Images%2Fweather.png?alt=media&token=430fbd08-4ff2-49fa-8930-b5424d824bce",
+              }}
             />
             <Image
               style={{ height: 60, width: 60, marginTop: 25 }}
-              source={require("../../../assets/time-zone.png")}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fcountry%20Images%2Ftime-zone.png?alt=media&token=a5d7b325-b819-46f0-9918-8e8ef3c178f4",
+              }}
             />
             <AntDesign
               style={{ marginTop: 18 }}
@@ -268,7 +274,9 @@ const CountryInnerScreen = ({ navigation, route }) => {
             >
               <Image
                 style={{ height: 40, width: 40 }}
-                source={require("../../../assets/CountryInnericon/shop.png")}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fcountry%20Images%2Fshop.png?alt=media&token=a67aec96-88e6-4f78-a686-86a45252d511",
+                }}
               />
             </View>
             <Text
@@ -281,43 +289,7 @@ const CountryInnerScreen = ({ navigation, route }) => {
               Shopp
             </Text>
           </TouchableOpacity>
-          <View
-            style={{
-              position: "absolute",
-              top: HEIGHT / 2,
-              zIndex: 20,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                showModal();
-              }}
-            >
-              <View
-                style={{
-                  alignItems: "center",
-                  borderRadius: 13,
-                  elevation: 200,
-                  backgroundColor: "#FA3B5A",
-                  padding: 15,
-                }}
-              >
-                <Image
-                  style={{ height: 40, width: 40 }}
-                  source={require("../../../assets/CountryInnericon/shop.png")}
-                />
-              </View>
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Andika",
-                  fontSize: 12,
-                }}
-              >
-                Shopp
-              </Text>
-            </TouchableOpacity>
-          </View>
+
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("Planned", {
@@ -337,7 +309,9 @@ const CountryInnerScreen = ({ navigation, route }) => {
             >
               <Image
                 style={{ height: 40, width: 40 }}
-                source={require("../../../assets/CountryInnericon/travelplan.png")}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fcountry%20Images%2Ftravelplan.png?alt=media&token=fb1e0519-63a0-465a-a463-712d284cda0a",
+                }}
               />
             </View>
             <Text
@@ -362,7 +336,9 @@ const CountryInnerScreen = ({ navigation, route }) => {
             >
               <Image
                 style={{ height: 40, width: 40 }}
-                source={require("../../../assets/CountryInnericon/contact.png")}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fcountry%20Images%2Fcontact.png?alt=media&token=4e591282-e4ce-4a36-8cbc-ea306d366df7",
+                }}
               />
             </View>
             <Text

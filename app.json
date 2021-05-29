@@ -63,7 +63,7 @@
       ]
     },
     "assetBundlePatterns": [
-      "./assets/**"
+      "./assets/*/*"
     ],
     "description": "",
     "androidStatusBar": {

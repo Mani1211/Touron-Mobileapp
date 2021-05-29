@@ -88,7 +88,9 @@ const FeedbackScreen = ({ navigation }) => {
                       }}
                     >
                       <Image
-                        source={require("../../../assets/intros/Greeting.png")}
+                        source={{
+                          uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FReviews%2FGreeting.png?alt=media&token=1234be90-5f46-45dc-9f72-e51c9fec2225",
+                        }}
                         style={{
                           height: height / 2.8,
                           width: width * 0.8,

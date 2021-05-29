@@ -109,7 +109,9 @@ const MyPlansScreen = ({ navigation }) => {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  source={require("../../../assets/myplans.png")}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2Fmyplans.png?alt=media&token=cb00ebb1-1511-4994-ac33-cc1f36e6a399",
+                  }}
                 />
                 <Text
                   style={{

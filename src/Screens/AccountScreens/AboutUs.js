@@ -95,7 +95,9 @@ const AboutUs = ({ navigation }) => {
       <View>
         <Image
           style={{ height: HEIGHT / 2, width: WIDTH, marginBottom: 10 }}
-          source={require("../../../assets/stats.jpg")}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2Fstats.jpg?alt=media&token=cedcf91e-d051-4b9f-bc54-aa74afcb1b19",
+          }}
         />
       </View>
       <View style={{ marginHorizontal: 15 }}>

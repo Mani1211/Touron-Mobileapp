@@ -27,7 +27,6 @@ import SelfTourHome from "./SelfTourHome";
 import OverviewToursScreen from "../CheckoutScreens/OverviewToursScreen";
 import ProgressScreen from "../CheckoutScreens/ProgressScreen";
 import OverviewCitiesScreen from "../CheckoutScreens/OverviewCitiesScreen";
-import Card from "../../../assets/Board.jpg";
 import SearchBar from "../../Reusable Components/SearchBar";
 
 const HEIGHT = Dimensions.get("window").height;
@@ -311,7 +310,9 @@ const SelfPlanForm = ({ navigation }) => {
                     <View>
                       <Image
                         style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 }}
-                        source={require("../../../assets/oops.jpg")}
+                        source={{
+                          uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2Foops.jpg?alt=media&token=64e05841-6420-4dda-8214-bc2c31254e0f",
+                        }}
                       />
                     </View>
                     <Text style={{ fontFamily: "Avenir", fontSize: 23 }}>
@@ -449,7 +450,9 @@ const SelfPlanForm = ({ navigation }) => {
                   <View>
                     <Image
                       style={{ height: 40, width: 40 }}
-                      source={require("../../../assets/Calendar.png")}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FCity%20images%2FCalendar.png?alt=media&token=e6b7dfb2-8e95-45ae-9c75-c224ebe4d1a8",
+                      }}
                     />
                   </View>
                   <View
@@ -496,7 +499,12 @@ const SelfPlanForm = ({ navigation }) => {
               ))}
 
               <View style={{ width: WIDTH, marginLeft: -20 }}>
-                <Image style={styles.calendarImage} source={Card} />
+                <Image
+                  style={styles.calendarImage}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2FBoard.jpg?alt=media&token=be1b5370-9893-41be-b3a4-fef78b592715",
+                  }}
+                />
                 <View
                   style={{
                     display: "flex",
