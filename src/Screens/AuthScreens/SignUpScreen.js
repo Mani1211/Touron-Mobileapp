@@ -35,6 +35,7 @@ Notifications.setNotificationHandler({
 });
 
 function SignUpScreen({ navigation }) {
+  console.log(`navigation`, navigation);
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -55,6 +56,13 @@ function SignUpScreen({ navigation }) {
   const notificationListener = useRef();
   const responseListener = useRef();
   const [passVisible, setPassVisible] = useState(false);
+  const [editable, setEditable] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setEditable(true);
+    }, 100);
+  }, []);
 
   const storeToken = async (value) => {
     try {
@@ -239,7 +247,7 @@ function SignUpScreen({ navigation }) {
           storeToken(user);
           setLoaded(false);
           prevStep();
-          navigation.replace("Main");
+          navigation.navigate("Main");
         }
       })
       .catch((err) => {
@@ -306,9 +314,8 @@ function SignUpScreen({ navigation }) {
                     style={styles.input}
                     value={name}
                     placeholder="Name"
-                    keyboardType="visible-password"
-                    keyboardAppearance="dark"
                     keyboardType="default"
+                    keyboardAppearance="dark"
                     onChangeText={(value) => setName(value)}
                     placeholderTextColor="white"
                   />
@@ -335,13 +342,12 @@ function SignUpScreen({ navigation }) {
                   <TextInput
                     style={styles.input}
                     placeholder="Email"
-                    autoCapitalize="none"
                     value={email}
-                    keyboardType="visible-password"
+                    keyboardType="email-address"
                     keyboardAppearance="dark"
-                    keyboardType="default"
                     onChangeText={(value) => setEmail(value)}
                     placeholderTextColor="white"
+                    editable={editable}
                   />
                 </View>
                 {!emailerr ? (
@@ -414,10 +420,12 @@ function SignUpScreen({ navigation }) {
                     onChangeText={(value) => setPassword(value)}
                     secureTextEntry={passVisible ? true : false}
                     keyboardType="default"
+                    placeholderTextColor="#fff"
+                    value={password}
                   />
                   <Entypo
                     onPress={() => setPassVisible(!passVisible)}
-                    name={!passVisible ? "eye-with-line" : "eye"}
+                    name={!passVisible ? "eye" : "eye-with-line"}
                     size={24}
                     color="#fff"
                   />
@@ -509,6 +517,7 @@ function SignUpScreen({ navigation }) {
                   keyboardAppearance="dark"
                   keyboardType="number-pad"
                   onChangeText={(value) => setCode(value)}
+                  value={code}
                 />
               </View>
               {!otperr ? null : (
