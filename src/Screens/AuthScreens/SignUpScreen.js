@@ -307,7 +307,7 @@ function SignUpScreen({ navigation }) {
                     placeholder="Name"
                     keyboardType="visible-password"
                     keyboardAppearance="dark"
-                    keyboardType="email-address"
+                    keyboardType="default"
                     onChangeText={(value) => setName(value)}
                     placeholderTextColor="white"
                   />
@@ -338,7 +338,7 @@ function SignUpScreen({ navigation }) {
                     value={email}
                     keyboardType="visible-password"
                     keyboardAppearance="dark"
-                    keyboardType="email-address"
+                    keyboardType="default"
                     onChangeText={(value) => setEmail(value)}
                     placeholderTextColor="white"
                   />
