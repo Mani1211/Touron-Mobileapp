@@ -39,6 +39,13 @@ const ProfileScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
 
   const [loaded, setLoaded] = useState(true);
+  const [editable, setEditable] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setEditable(true);
+    }, 100);
+  }, []);
 
   const getUserData = () => {
     if (user !== null) {
@@ -390,6 +397,7 @@ const ProfileScreen = ({ navigation }) => {
                         value={email}
                         keyboardType="email-address"
                         onChangeText={(value) => setEmail(value)}
+                        editable={editable}
                       />
                     </View>
 
