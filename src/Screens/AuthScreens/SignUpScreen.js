@@ -55,7 +55,7 @@ function SignUpScreen({ navigation }) {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [passVisible, setPassVisible] = useState(false);
+  const [passVisible, setPassVisible] = useState(true);
   const [editable, setEditable] = useState(false);
 
   useEffect(() => {
@@ -110,21 +110,23 @@ function SignUpScreen({ navigation }) {
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
           setUser(user.user);
-          database().ref(`userGeneralInfo/${user.user.uid}`).set({
-            phoneNumber: number,
-            name: name,
-            address: "",
-            age: "",
-            gender: "",
-            aboutMe: "",
-            travellerType: "",
-            admin: false,
-            pushNotificationToken: "",
-            photoURL: "",
-            email: email,
-            profession: "",
-            userID: user.user.uid,
-          });
+          database()
+            .ref(`userGeneralInfo/${user.user.uid}`)
+            .set({
+              phoneNumber: number,
+              name: name,
+              address: "",
+              age: "",
+              gender: "",
+              aboutMe: "",
+              travellerType: "",
+              admin: false,
+              pushNotificationToken: expoToken === "" ? "" : expoToken,
+              photoURL: "",
+              email: email,
+              profession: "",
+              userID: user.user.uid,
+            });
           user.user
             .updateProfile({
               displayName: name,
@@ -343,7 +345,6 @@ function SignUpScreen({ navigation }) {
                     style={styles.input}
                     placeholder="Email"
                     value={email}
-                    keyboardType="email-address"
                     keyboardAppearance="dark"
                     onChangeText={(value) => setEmail(value)}
                     placeholderTextColor="white"

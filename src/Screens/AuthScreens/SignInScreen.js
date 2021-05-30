@@ -43,7 +43,7 @@ function SignInScreen({ navigation }) {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [passVisible, setPassVisible] = useState(false);
+  const [passVisible, setPassVisible] = useState(true);
   const [editable, setEditable] = useState(false);
 
   useEffect(() => {
@@ -119,11 +119,13 @@ function SignInScreen({ navigation }) {
       });
   };
   const updateUserToken = (user) => {
-    if (user !== null) {
-      database()
-        .ref(`userGeneralInfo/${user.uid}`)
-        .child("pushNotificationToken")
-        .set(expoToken);
+    if (expoToken !== "") {
+      if (user !== null) {
+        database()
+          .ref(`userGeneralInfo/${user.uid}`)
+          .child("pushNotificationToken")
+          .set(expoToken);
+      }
     }
   };
   const signIn = () => {
@@ -455,7 +457,7 @@ function SignInScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        // behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
         <>{renderForm()}</>
