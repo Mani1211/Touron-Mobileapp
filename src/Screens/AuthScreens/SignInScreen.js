@@ -43,7 +43,14 @@ function SignInScreen({ navigation }) {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [passVisible, setPassVisible] = useState(false);
+  const [passVisible, setPassVisible] = useState(true);
+  const [editable, setEditable] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setEditable(true);
+    }, 100);
+  }, []);
 
   const storeToken = async (value) => {
     try {
@@ -222,15 +229,16 @@ function SignInScreen({ navigation }) {
           >
             <View style={{ position: "absolute" }}>
               <View style={{ marginBottom: HEIGHT / 10, alignItems: "center" }}>
-                <Text
+                {/* <Text
                   style={{
                     fontSize: 40,
-                    fontFamily: "Andika",
                     color: "black",
+                    fontFamily:
+                      Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
                   }}
                 >
                   Sign In
-                </Text>
+                </Text> */}
               </View>
               <View>
                 <View style={[styles.inputContainer, { marginBottom: 30 }]}>
@@ -238,8 +246,10 @@ function SignInScreen({ navigation }) {
                     style={styles.input}
                     placeholder="Email"
                     keyboardAppearance="dark"
-                    keyboardType="default"
                     onChangeText={(value) => setEmail(value)}
+                    value={email}
+                    keyboardType="email-address"
+                    editable={editable}
                   />
                 </View>
 
@@ -255,15 +265,20 @@ function SignInScreen({ navigation }) {
                   ]}
                 >
                   <TextInput
-                    style={{ width: WIDTH / 2, color: "#fff" }}
+                    style={{
+                      width: WIDTH / 2,
+                      color: "#fff",
+                      fontFamily: "Andika",
+                    }}
                     placeholder="Password"
                     onChangeText={(value) => setPassword(value)}
                     secureTextEntry={passVisible ? true : false}
                     keyboardType="default"
+                    value={password}
                   />
                   <Entypo
                     onPress={() => setPassVisible(!passVisible)}
-                    name={!passVisible ? "eye-with-line" : "eye"}
+                    name={!passVisible ? "eye" : "eye-with-line"}
                     size={24}
                     color="#fff"
                   />
@@ -328,7 +343,7 @@ function SignInScreen({ navigation }) {
             <ImageBackground
               style={{ width: WIDTH, height: HEIGHT, zIndex: -2 }}
               source={{
-                uri: "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                uri: "https://images.pexels.com/photos/2412606/pexels-photo-2412606.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
               }}
             />
             <View style={styles.skipButton}>
@@ -360,21 +375,22 @@ function SignInScreen({ navigation }) {
           >
             <View style={{ position: "absolute", paddingBottom: 10 }}>
               <View style={{ marginBottom: HEIGHT / 10, alignItems: "center" }}>
-                <Text
-                  style={{ fontSize: 40, fontFamily: "Andika", color: "black" }}
+                {/* <Text
+                  style={{ fontSize: 40, fontFamily: "Andika", color: "#fff" }}
                 >
                   Enter the Email
-                </Text>
+                </Text> */}
               </View>
               <View>
                 <View style={[styles.inputContainer, { marginBottom: 30 }]}>
                   <TextInput
                     style={styles.input}
-                    placeholder="Email"
-                    keyboardType="visible-password"
+                    placeholder="Enter the Email"
                     keyboardAppearance="dark"
-                    keyboardType="email-address"
                     onChangeText={(value) => setEmail(value)}
+                    keyboardType="email-address"
+                    editable={editable}
+                    value={email}
                   />
                 </View>
 
@@ -430,7 +446,7 @@ function SignInScreen({ navigation }) {
             <ImageBackground
               style={{ width: WIDTH, height: HEIGHT, zIndex: -2 }}
               source={{
-                uri: "https://images.pexels.com/photos/207237/pexels-photo-207237.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                uri: "https://images.pexels.com/photos/2412606/pexels-photo-2412606.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
               }}
             />
           </Animatable.View>
@@ -441,7 +457,7 @@ function SignInScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        // behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
         <>{renderForm()}</>
@@ -451,6 +467,7 @@ function SignInScreen({ navigation }) {
 }
 
 export default SignInScreen;
+
 const styles = StyleSheet.create({
   input: {
     marginHorizontal: 20,
@@ -462,7 +479,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     height: 60,
     borderRadius: 10,
-    backgroundColor: "#0005",
+    backgroundColor: "#0009",
   },
   skipButton: {
     position: "absolute",
