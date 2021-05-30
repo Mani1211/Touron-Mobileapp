@@ -46,6 +46,8 @@ function SignInScreen({ navigation }) {
   const [passVisible, setPassVisible] = useState(true);
   const [editable, setEditable] = useState(false);
 
+  console.log(`expoToken`, expoToken);
+
   useEffect(() => {
     setTimeout(() => {
       setEditable(true);
@@ -56,16 +58,16 @@ function SignInScreen({ navigation }) {
     try {
       const token = AsyncStorage.getItem("userToken");
       const pToken = JSON.stringify(token);
-      console.log(`pToken`, pToken);
+      // console.log(`pToken`, pToken);
 
       if (pToken) {
         await AsyncStorage.removeItem("userToken");
         const userToken = JSON.stringify(value);
-        console.log(`userToken`, userToken);
+        // console.log(`userToken`, userToken);
         await AsyncStorage.setItem("userToken", userToken);
       } else {
         const userToken = JSON.stringify(value);
-        console.log(`userToken`, userToken);
+        // console.log(`userToken`, userToken);
 
         await AsyncStorage.setItem("userToken", userToken);
       }
@@ -105,27 +107,30 @@ function SignInScreen({ navigation }) {
   }, []);
 
   const getUserData = (uid) => {
-    console.log(`user.uid`, uid);
+    // console.log(`user.uid`, uid);
     database()
       .ref(`userGeneralInfo/${uid}`)
       .on("value", (data) => {
-        console.log(`d`, data);
+        // console.log(`d`, data);
         if (data === null) {
           setUserInfo({});
         } else {
           let val = data.val();
+          // console.log(`val`, val);
           setUserInfo(val);
         }
       });
   };
-  const updateUserToken = (user) => {
-    if (expoToken !== "") {
-      if (user !== null) {
-        database()
-          .ref(`userGeneralInfo/${user.uid}`)
-          .child("pushNotificationToken")
-          .set(expoToken);
-      }
+  const updateUserToken = (uid) => {
+    if (Platform.OS === "ios") {
+      return;
+    }
+    console.log(`expoTonvbken`, expoToken, uid);
+    if (user !== null && expoToken !== "") {
+      database()
+        .ref(`userGeneralInfo/${uid}`)
+        .child("pushNotificationToken")
+        .set(expoToken);
     }
   };
   const signIn = () => {
@@ -137,7 +142,7 @@ function SignInScreen({ navigation }) {
         setUser(user.user);
         setLoaded(false);
         storeToken(user.user);
-        updateUserToken(user.user);
+        updateUserToken(user.user.uid);
         getUserData(user.user.uid);
         setEmail("");
         setPassword("");
