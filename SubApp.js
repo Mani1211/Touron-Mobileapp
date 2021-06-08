@@ -44,6 +44,7 @@ import SelfTourInner from "./src/Screens/SelfPlanTourScreens/SelfTourInner";
 import OverviewToursScreen from "./src/Screens/CheckoutScreens/OverviewToursScreen";
 import ProgressScreen from "./src/Screens/CheckoutScreens/ProgressScreen";
 import RoadTripScreen from "./src/Screens/CategoryScreens/RoadTripScreen";
+import StoryView from "./src/Screens/StoryScreens/StoryView";
 
 const prefix = Linking.makeUrl("/");
 
@@ -135,9 +136,9 @@ const SubApp = () => {
           overlayColor={0}
           drawerContent={(props) => <DrawerContent {...props} />}
         >
-          {!isLoggedIn && (
+          {/* {!isLoggedIn && (
             <Drawer.Screen name="Get" component={GettingStartedScreen} />
-          )}
+          )} */}
           <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
           <Drawer.Screen name="Profile" component={ProfileScreen} />
           <Drawer.Screen name="MyRequest" component={MyRequestScreen} />
@@ -239,8 +240,9 @@ const SubApp = () => {
           <Drawer.Screen name="CountryHome" component={CountryHomeScreen} />
           <Drawer.Screen name="CityHome" component={CityHomeScreen} />
           <Drawer.Screen name="TourHome" component={TourHomeScreen} />
-
           {/* Home Stack Screen */}
+
+          <Drawer.Screen name="StoryView" component={StoryView} />
         </Drawer.Navigator>
       </AuthContext.Provider>
     </NavigationContainer>

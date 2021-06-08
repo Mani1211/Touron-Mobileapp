@@ -33,6 +33,8 @@ import CountryCityTile from "./components/CountryCityTile";
 import TourTile from "./components/TourTile";
 import TestimonialsTile from "./components/TestimonialTile";
 import Promotions from "./components/Promotions";
+import Story from "../StoryScreens/Story";
+
 const HomeScreen = ({ navigation }) => {
   const [promotions, setPromotions] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -593,6 +595,8 @@ const HomeScreen = ({ navigation }) => {
                 </ScrollView>
               </Modal>
               <Header navigation={navigation} />
+
+              <Story />
 
               {promotions.length === 0 ? (
                 <>
