@@ -46,7 +46,7 @@ function SignInScreen({ navigation }) {
   const [passVisible, setPassVisible] = useState(true);
   const [editable, setEditable] = useState(false);
 
-  console.log(`expoToken`, expoToken);
+  // console.log(`expoToken`, expoToken);
 
   useEffect(() => {
     setTimeout(() => {
@@ -125,7 +125,7 @@ function SignInScreen({ navigation }) {
     if (Platform.OS === "ios") {
       return;
     }
-    console.log(`expoTonvbken`, expoToken, uid);
+    // console.log(`expoTonvbken`, expoToken, uid);
     if (user !== null && expoToken !== "") {
       database()
         .ref(`userGeneralInfo/${uid}`)
@@ -153,7 +153,7 @@ function SignInScreen({ navigation }) {
         setLoaded(false);
         setUser(null);
         removeToken();
-        console.log(err.message, "pcco");
+        // console.log(err.message, "pcco");
         setErr(err.message);
       });
   };
@@ -165,7 +165,7 @@ function SignInScreen({ navigation }) {
         Permissions.NOTIFICATIONS
       );
       let finalStatus = existingStatus;
-      console.log(finalStatus, existingStatus, "stst");
+      // console.log(finalStatus, existingStatus, "stst");
 
       if (existingStatus !== "granted" || Platform.OS === "android") {
         const { status } = await Permissions.askAsync(
@@ -207,7 +207,7 @@ function SignInScreen({ navigation }) {
       // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
       responseListener.current =
         Notifications.addNotificationResponseReceivedListener((response) => {
-          console.log(response);
+          // console.log(response);
         });
 
       return () => {

@@ -24,8 +24,9 @@ const AboutUs = ({ navigation }) => {
     let url = `whatsapp://send?text=&phone= +91 8667801206`;
     Linking.openURL(url)
       .then((data) => {
-        console.log("WhatsApp Opened successfully " + data);
+        // console.log("WhatsApp Opened successfully " + data);
       })
+
       .catch(() => {
         alert("Make sure WhatsApp installed on your device");
       });

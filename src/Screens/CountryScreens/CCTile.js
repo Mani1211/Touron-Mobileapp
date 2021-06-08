@@ -9,10 +9,9 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-const CCTile = ({ navigation, navName, item, name, index }) => {
+const CCTile = ({ navigation, navName, item, name }) => {
   return (
     <TouchableOpacity
-      key={index}
       onPress={() => {
         navigation.navigate(navName, { item: item });
       }}

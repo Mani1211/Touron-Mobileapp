@@ -58,169 +58,184 @@ const HomeScreen = ({ navigation }) => {
   const city = [
     {
       coordinates: {
-        latitude: "27.4712",
-        longitude: "89.6339",
+        latitude: "37.4467",
+        longitude: "25.3289",
       },
-      _id: "5ef5db91db65dc0017ca692c",
-      cityName: "Thimphu",
-      countryName: "Bhutan",
+      _id: "5efd6fd68b64970017a68831",
+      cityName: "Mykonos",
+      countryName: "Greece",
       aboutCity:
-        "Thimphu, Bhutan’s capital, occupies a valley in the country’s western interior. In addition to being the government seat, the city is known for its Buddhist sites.",
+        "Mykonos is an island in the Cyclades group in the Aegean Sea. It's popularly known for its summer party atmosphere. Beaches such as Paradise and Super Paradise have bars that blare thumping music. Massive dance clubs attract world-renowned DJs and typically stay open well past dawn.",
       idealDays: "3-4 days",
       imageUrl:
-        "https://lp-cms-production.imgix.net/2019-06/920de4c69eb8dc956b6687b1e78ae804-trashi-chhoe-dzong.jpg?fit=crop&q=40&sharp=10&vib=20&auto=format&ixlib=react-8.6.4",
-      weather: "26 C",
-      travelDuration: "8-10 hours",
+        "https://mk0travelawayrru2xew.kinstacdn.com/wp-content/uploads/2016/04/bay-mykonos-town.jpg",
+      weather: "18 C - 30 C",
+      travelDuration: "14-16 hours",
       famousPlacesToVisit:
-        "1. Trashi Chho Dzong 2. Changangkha Lhakhang 3. Tango Goemba 4. National Memorial Chorten 4. Motithang Takin Preserve 5. Dechen Phodrang",
-      __v: 0,
-      airportName: "Bagdogra International Airport",
+        "1. Little Venice Mykonos Quarter 2. Kato Mili 3. Island Of Delos 4. Platys Gialos Beach 5. Panagia Paraportiani 6. Ano Mera 7. Elia Beach 8. Paradise Beach 9. Rarity Gallery 10. Matoyianni Street",
       airportType: "Nearest Airport",
+      airportName: "Athens International Airport",
+      documentsRequired:
+        "<p>Passport<br>Flight Tickets<br>Tour and Hotel Vouchers<br>Visa<br>RT-PCR Test Reports/Vaccine Certificates</p>",
+      thingsToPack:
+        "<p>1. Passport&nbsp;<br>2. Essential medicines<br>3. RT-PCR Negative Test Report/ Vaccination certificate<br>4. Tour and Hotel Vouchers<br>5. Suitable Clothes for the weather<br>6. Comfortable Footwear<br>7. Camera and other gadgets<br>8. Sunscreen and an Umbrella<br>9. Face Mask and Hand Sanitiser</p>",
     },
     {
       coordinates: {
-        latitude: "27.4287",
-        longitude: "89.4164",
+        latitude: "8.3405° S",
+        longitude: "115.0920° E",
       },
-      _id: "5ef5e625db65dc0017ca692e",
-      cityName: "Paro",
-      countryName: "Bhutan",
+      _id: "5ef49464bd272f0017c7920b",
+      cityName: "Bali",
+      countryName: "Indonesia",
       aboutCity:
-        "1. Paro is a valley town in Bhutan, west of the capital\n2. It is the site of the country’s only international airport and is also known for the many sacred sites in the area.",
-      idealDays: "3-4 days",
+        "Bali is an Indonesian island known for its forested volcanic mountains, iconic rice paddies, beaches and coral reefs. The island is home to religious sites such as cliffside Uluwatu Temple. To the south, the beachside city of Kuta has lively bars, while Seminyak, Sanur and Nusa Dua are popular resort towns. The island is also known for its yoga and meditation retreats.",
+      idealDays: "4-5 days",
       imageUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/6/68/Paro%2C_Paro%2C_Bhutan_%288026008882%29.jpg",
-      weather: "- 2 C - 23 C",
-      travelDuration: "6-8 hours",
-      famousPlacesToVisit:
-        "1. Taktsang Lhakhang or the Tiger’s Nest 2. Chele La pass 3. Rinchen Pung Dzong 4. Drukgyel Dzong 5. Druk Choeding temple 6. National Museum",
-      __v: 0,
-      airportName: "Paro International Airport ",
-      airportType: "Native Airport",
-    },
-    {
-      coordinates: {
-        latitude: "11.5564",
-        longitude: "104.9282",
-      },
-      _id: "5ef5ed3adb65dc0017ca6932",
-      cityName: "Phnom Penh",
-      countryName: "Cambodia",
-      aboutCity:
-        "Phnom Penh, Cambodia’s busy capital, sits at the junction of the Mekong and Tonlé Sap rivers. It was a hub for both the Khmer Empire and French colonialists. On its walkable riverfront, lined with parks, restaurants and bars, are the ornate Royal Palace, Silver Pagoda and the National Museum, displaying artifacts from around the country. At the city’s heart is the massive, art deco Central Market.",
-      idealDays: "3-4 days",
-      imageUrl:
-        "https://images.pexels.com/photos/3226403/pexels-photo-3226403.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      weather: "26 - 34 C",
+        "https://images.pexels.com/photos/2474689/pexels-photo-2474689.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      weather: "26 to 27",
       travelDuration: "8-10 hours",
       famousPlacesToVisit:
-        "Royal Palace, Wat Phnom, Central Market, Tuol Sleng Genocide Museum, National Museum of Cambodia, Independence Monument.",
-      __v: 0,
-      airportName: "Phnom Penh International (PNH) Airport",
+        "Denpasar, Kuta, Ubud, Mount Batur, Seminyak, Jimbaran, Canggu, Nusa Penida, Nusa Dua",
+      airportName: "Ngurah Rai International Airport (DPS)",
       airportType: "Native Airport",
-      createdAt: "2020-10-27T06:09:37.314Z",
-      updatedAt: "2020-11-03T09:30:10.333Z",
+      cityTips:
+        "<ol><li>Tips on Coping with a Tsunami in Bali</li><li>Prepare yourself for the worst:&nbsp;If you are staying at one of the vulnerable areas mentioned above, study the attached evacuation maps, and familiarise yourself with the escape routes and the direction of the yellow zone.</li><li>Cooperate with your Bali hotel:&nbsp;Ask your hotel in Bali for the tsunami preparation procedures. Do participate in tsunami and earthquake drills, if requested by the hotel.</li><li>Assume the worst when an earthquake strikes:&nbsp;After an earthquake, move away from the beach immediately without waiting for the siren, and head for the designated yellow zone in your immediate vicinity.</li><li>Keep your ears open for the siren:&nbsp;If you hear the siren sound a three-minute long wail, head immediately for the designated yellow zone, or if that is impossible, look for the vertical evacuation centre closest to you.</li><li>Check broadcast media for tsunami updates:&nbsp;The Bali local radio station RPKD Radio 92.6 FM (radio.denpasarkota.go.id) is assigned to send tsunami updates live on the air. National TV channels will also broadcast tsunami warnings as breaking news.</li><li>Check social media, too:&nbsp;The BMKG government office issues regular updates on their&nbsp;official Twitter account, and via&nbsp;apps for iPhones and Android devices.</li></ol>",
+      documentsRequired:
+        "<p>Passport<br>Flight Tickets<br>Tour and Hotel Vouchers<br>Visa<br>RT-PCR Test Reports/Vaccine Certificates</p>",
+      thingsToPack:
+        "<p>1. Passport&nbsp;<br>2. Essential medicines<br>3. RT-PCR Negative Test Report/ Vaccination certificate<br>4. Tour and Hotel Vouchers<br>5. Airy Cotton Clothes<br>6. Comfortable Footwear<br>7. Camera and other gadgets<br>8. Sunscreen and an Umbrella<br>9. Face Mask and Hand Sanitiser</p>",
     },
     {
       coordinates: {
-        latitude: "27.7172",
-        longitude: "85.3240",
+        latitude: "48.8566",
+        longitude: "2.3522",
       },
-      _id: "5ef5edcfdb65dc0017ca6933",
-      cityName: "Kathmandu",
-      countryName: "Nepal",
+      _id: "5ef9c93759661c0017caa7b8",
+      cityName: "Paris",
+      countryName: "France",
       aboutCity:
-        "1. Kathmandu, Nepal's capital, is set in a valley surrounded by the Himalayan mountains. \n2. At the heart of the old city’s mazelike alleys is Durbar Square, which becomes frenetic during Indra Jatra, a religious festival featuring masked dances",
-      idealDays: "3-4 days",
+        "1. Paris, France's capital, is a major European city and a global center for art, fashion, gastronomy and culture.\n2.  Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture.",
+      idealDays: "4-5 days",
       imageUrl:
-        "https://images.pexels.com/photos/4133938/pexels-photo-4133938.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      weather: "20 C - 30 C",
-      travelDuration: "6-8 hours",
+        "https://images.pexels.com/photos/2675268/pexels-photo-2675268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      weather: "15 C - 27 C",
+      travelDuration: "12-14 hours",
       famousPlacesToVisit:
-        "1. Tabitha Bahal 2. Boudhanath Stupa 3. Swayambhunath temple 4. Kathmandu Durbar Square 5. Pashupati temple",
-      __v: 0,
-      airportName: "Tribhuvan International Airport",
+        "1. Eiffel Tower 2. Notre Dame Cathedral 3. Louvre Museum 4. Arc de Triomphe  5. Cruise on the Seine 6. Montmartre 7. Latin Quarter of Paris 8. Moulin Rouge 9. Disneyland Paris 10. Palace of Versailles",
       airportType: "Native Airport",
-      createdAt: "2020-11-03T09:29:21.354Z",
-      updatedAt: "2021-01-31T14:10:19.141Z",
+      airportName: "Charles de Gaulle Airport",
+      updatedAt: "2021-05-31T09:17:15.538Z",
+      documentsRequired:
+        "<p>Passport<br>Flight Tickets<br>Tour and Hotel Vouchers<br>Visa<br>RT-PCR Test Reports/Vaccine Certificates</p>",
+      thingsToPack:
+        "<p>1. Passport&nbsp;<br>2. Essential medicines<br>3. RT-PCR Negative Test Report/ Vaccination certificate<br>4. Tour and Hotel Vouchers<br>5. Suitable Clothes for the weather<br>6. Comfortable Footwear<br>7. Camera and other gadgets<br>8. Sunscreen and an Umbrella<br>9. Face Mask and Hand Sanitiser</p>",
     },
 
     {
       coordinates: {
-        latitude: "28.2096",
-        longitude: "83.9856",
+        latitude: "42.6507",
+        longitude: "18.0944",
       },
-      _id: "5ef5effadb65dc0017ca6935",
-      cityName: "Pokhara",
-      countryName: "Nepal",
+      _id: "5efad3a88985b80017a0fbd8",
+      cityName: "Dubrovnik ",
+      countryName: "Croatia",
       aboutCity:
-        "1. Pokhara is a city on Phewa Lake, in central Nepal.\n2. It’s known as a gateway to the Annapurna Circuit, a popular trail in the Himalayas.",
-      idealDays: "8-10 days",
+        "1. DescriptionDubrovnik is a city in southern Croatia fronting the Adriatic Sea. \n2. It's known for its distinctive Old Town, encircled with massive stone walls completed in the 16th century.",
+      idealDays: "4-5 days",
       imageUrl:
-        "https://img.traveltriangle.com/blog/wp-content/uploads/2018/10/Phewa-Lake-Cover.jpg",
-      weather: "21 C",
-      travelDuration: "10-12hours",
+        "https://images.pexels.com/photos/3566139/pexels-photo-3566139.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      weather: "20 C - 30 C",
+      travelDuration: "12-14 hours",
       famousPlacesToVisit:
-        "1. Phewa Lake / Tal 2. David’s falls 3. Bindabasini temple 4. Gupteshwor Mahadev 5. Bats Cave 6. Mahendra cave 7.Museum 8. Begnas Lake 9. Sarangkot 10. World Peace Stupa",
-      __v: 0,
-      airportName: "Tribhuvan International",
-      airportType: "Nearest Airport",
+        "1. Dubrovnik’s City Walls 2. Stradun 3. Dubrovnik Cable Car 4. Rector's Palace 5. Fort Lovrijenac 6. Pile Gate 7. Onofrio Fountain 8. Franciscan Monastery 9. Banje Beach 10. Dubrovnik’s Old Harbour",
+      airportType: "Native Airport",
+      airportName: "Dubrovnik Airport",
+      documentsRequired:
+        "<p>Passport<br>Flight Tickets<br>Tour and Hotel Vouchers<br>Visa<br>RT-PCR Test Reports/Vaccine Certificates</p>",
+      thingsToPack:
+        "<p>1. Passport&nbsp;<br>2. Essential medicines<br>3. RT-PCR Negative Test Report/ Vaccination certificate<br>4. Tour and Hotel Vouchers<br>5. Warm Clothes and Jerkins&nbsp;<br>6. Comfortable Footwear fit for mountainous regions&nbsp;<br>7. Camera and other gadgets<br>8. Moisturiser / Cold cream<br>9. Face Mask and Hand Sanitiser</p>",
+    },
+
+    {
+      coordinates: {
+        latitude: "64.1466",
+        longitude: "21.9426",
+      },
+      _id: "5efdba43d87364001723458f",
+      cityName: "Reykjavik",
+      countryName: "Iceland",
+      aboutCity:
+        "Reykjavik, on the coast of Iceland, is the country's capital and largest city. It's home to the National and Saga museums, tracing Iceland’s Viking history. ",
+      idealDays: "3-4 days",
+      imageUrl:
+        "https://www.dontforgettomove.com/wp-content/uploads/2020/04/virtual-helsinki.jpg",
+      weather: "2 C - 14 C",
+      travelDuration: "12-14 hours",
+      famousPlacesToVisit:
+        "1. Saga Museum 2. Volcano House 3. Laugavegur 4. Arbaer Open Air Museum  5. Harpa 6. Perlan 7. Settlement Exhibition 8. National Museum of Iceland 9. Solfar Sculpture 10. Hallgrimskirkja",
+      airportType: "Native Airport",
+      airportName: " Keflavík International Airport",
     },
   ];
 
   const country = [
     {
       visa: {
-        onArrival: "no",
-        cost: 6000,
+        onArrival: "No",
+        cost: 5000,
       },
       general: {
-        bestTimeToVisit: ["June", "July", "August", "September", "October"],
-        currency: "Russian Rouble",
-        timeZone: "-2.5 Hours",
+        bestTimeToVisit: [
+          "January",
+          "Febuary",
+          "March",
+          "April",
+          "November",
+          "December",
+        ],
+        currency: "AED",
+        timeZone: "-1.5 Hours",
       },
-      _id: "5f1952f78a23960017195e17",
-      countryName: "Russia",
+      _id: "5ef48d3fbd272f0017c79205",
+      countryName: "United Arab Emirates",
       aboutCountry:
-        "Russia is a land of superlatives. By far the world’s largest country, it covers nearly twice the territory of Canada, the second largest. It extends across the whole of northern Asia and the eastern third of Europe, spanning 11 time zones and incorporating a great range of environments and landforms, from deserts to semiarid steppes to deep forests and Arctic tundra.",
-      idealDays: "7-8 days",
+        "The United Arab Emirates, sometimes simply called the Emirates, is a country in Western Asia located at the eastern end of the Arabian Peninsula. It borders Oman and Saudi Arabia, and has maritime borders in the Persian Gulf with Qatar and Iran.",
+      idealDays: "6-7 days",
       imageUrl:
-        "https://images.pexels.com/photos/753339/pexels-photo-753339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      weather: "-5 to 17",
-      bestPlaces: "Mosow, Saint Petersburg",
+        "https://images.pexels.com/photos/70441/pexels-photo-70441.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      weather: "37",
+      bestPlaces: "Abu Dhabi, Sharjah,  Ajman, Dubai",
       countryFlagImage:
-        "https://www.countryflags.com/wp-content/uploads/russia-flag-png-large.png",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEW1S1lnXteMi2CvVkd0ZcCdv4DvsWBXRg5Q&usqp=CAU",
     },
     {
       visa: {
-        onArrival: "YES",
+        onArrival: "Yes",
         cost: 0,
       },
       general: {
         bestTimeToVisit: [
-          "May",
-          "June",
-          "July",
           "August",
           "September",
           "October",
           "November",
           "December",
         ],
-        currency: "Mauritian Rupee",
-        timeZone: "1.30 HRS",
+        currency: "Maldivian rufiyaa",
+        timeZone: "-30 min",
       },
-      _id: "5f2d0064e0533b0017e1df03",
-      countryName: "Mauritius",
+      _id: "5ef5f055db65dc0017ca6936",
+      countryName: "Maldives",
       aboutCountry:
-        "Mauritius, an Indian Ocean island nation, is known for its beaches, lagoons and reefs. The mountainous interior includes Black River Gorges National Park, with rainforests, waterfalls, hiking trails and wildlife like the flying fox. ",
-      idealDays: "8-10 days",
+        "The Maldives, officially the Republic of Maldives, is a small island nation in South Asia, located in the Arabian Sea of the Indian Ocean. It lies southwest of Sri Lanka and India, about 1,000 kilometres from the Asian continent",
+      idealDays: "4-5 days",
       imageUrl:
-        "https://www.andbeyond.com/wp-content/uploads/sites/5/Beautiful-Mauritius-Beaches-1920x1080.jpg",
-      weather: "19 to 22",
-      bestPlaces: "1. Port Louis\n2. Beau Bassin-Rose Hill\n3. Vacoas ",
+        "https://images.pexels.com/photos/3601421/pexels-photo-3601421.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      weather: "26 to 32",
+      bestPlaces: "Male",
       countryFlagImage:
-        "https://www.countryflags.com/wp-content/uploads/mauritius-flag-png-large.png",
+        "https://www.countryflags.com/wp-content/uploads/maldives-flag-png-large.png",
     },
     {
       visa: {
@@ -246,32 +261,55 @@ const HomeScreen = ({ navigation }) => {
     },
     {
       visa: {
-        onArrival: "NO",
+        onArrival: "No",
         cost: 8000,
       },
       general: {
         bestTimeToVisit: [
-          "March",
           "April",
           "May",
+          "June",
+          "July",
+          "August",
           "September",
           "October",
-          "November",
         ],
-        currency: "Polish Zloty",
-        timeZone: "3.30 Hours°",
+        currency: "Euros",
+        timeZone: "3.5 hours ",
       },
-      _id: "5f2d08cfe0533b0017e1df05",
-      countryName: "Poland",
+      _id: "5ef9b7f559661c0017caa7b6",
+      countryName: "France",
       aboutCountry:
-        "Poland, officially the Republic of Poland, is a country located in Central Europe. It is divided into 16 administrative subdivisions, covering an area of 312,696 square kilometres, and has a largely temperate seasonal climate.",
-      idealDays: "5-6 days",
+        "1. France, in Western Europe, encompasses medieval cities, alpine villages and Mediterranean beaches.\n2. The country is also renowned for its wines and sophisticated cuisine.",
+      idealDays: "8-10 days",
       imageUrl:
-        "https://images.pexels.com/photos/4552456/pexels-photo-4552456.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      weather: "12 to 25",
-      bestPlaces: "1. Krakow\n2. Warsaw\n3. Gdansk\n4. Wrocław",
+        "https://images.pexels.com/photos/705764/pexels-photo-705764.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      weather: "16 to 24",
+      bestPlaces: "1. Paris\n2. Lyon\n3. Bordeaux\n4. Marseille\n5. Nice",
       countryFlagImage:
-        "https://www.countryflags.com/wp-content/uploads/poland-flag-png-large.png",
+        "https://www.countryflags.com/wp-content/uploads/france-flag-png-large.png",
+    },
+    {
+      visa: {
+        onArrival: "NO",
+        cost: 8000,
+      },
+      general: {
+        bestTimeToVisit: ["April", "May", "June", "September", "October"],
+        currency: "Euro",
+        timeZone: "-2.5 Hours",
+      },
+      _id: "5efc876a7766b900172619c9",
+      countryName: "Greece",
+      aboutCountry:
+        "The story of Greece is long and formidable, but it all started on a beautiful land enclosed by seas that soon gave birth to modern necessities such as democracy. In the midst of those discoveries, Western civilization grew, leaving countless relics that have stunned wanderers thousands of years after. ",
+      idealDays: "8-10 days",
+      imageUrl:
+        "https://images.pexels.com/photos/5865865/pexels-photo-5865865.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      weather: "5 to 37",
+      bestPlaces: "1. Crete \n2. Santorini\n3. Athens\n4. Mykonos",
+      countryFlagImage:
+        "https://www.countryflags.com/wp-content/uploads/greece-flag-png-large.png",
     },
   ];
 
@@ -430,7 +468,7 @@ const HomeScreen = ({ navigation }) => {
 
     Linking.openURL(url)
       .then((data) => {
-        console.log("WhatsApp Opened successfully " + data);
+        // console.log("WhatsApp Opened successfully " + data);
       })
       .catch(() => {
         alert("Make sure WhatsApp installed on your device");
@@ -592,10 +630,12 @@ const HomeScreen = ({ navigation }) => {
                   </View>
                 </ScrollView>
               </Modal>
-              <Header navigation={navigation} />
+              <View style={{ paddingHorizontal: 20 }}>
+                <Header navigation={navigation} />
+              </View>
 
-              {promotions.length === 0 ? (
-                <>
+              {/* {promotions.length === 0 ? (
+                <View>
                   <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
                     <View
                       style={{
@@ -616,9 +656,9 @@ const HomeScreen = ({ navigation }) => {
                       />
                     </View>
                   </SkeletonPlaceholder>
-                </>
+                </View>
               ) : (
-                <>
+                <View style={{ paddingHorizontal: 20 }}>
                   <Slider
                     data={promotions}
                     dotStyle={{
@@ -630,117 +670,118 @@ const HomeScreen = ({ navigation }) => {
                     showDots={true}
                     renderItem={_renderPromo}
                   />
-                </>
-              )}
-
-              <ContentList
-                route={"CountryHome"}
-                navigation={navigation}
-                title={"Tour Categories"}
-                more={""}
-                content={
-                  "Are you the adventurous type? Do you love a long ride? Are you an organizing freak? Whichever you are, find the ultimate vacation for you!"
-                }
-              />
-              <Categories navigation={navigation} />
-              <ContentList
-                route={"CountryHome"}
-                navigation={navigation}
-                title={"Fascinating Countries"}
-                more={"Show More"}
-                content={
-                  "Explore enchanting new lands that will steal your heart. Find out more about the countries you want to visit"
-                }
-              />
-
-              {country.length === 0 ? (
-                <>
-                  <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
-                    <View style={{ flexDirection: "row" }}>
-                      {new Array(6).fill("0").map((c, index) => (
-                        <View style={styles.cityImage} key={index} />
-                      ))}
-                    </View>
-                  </SkeletonPlaceholder>
-                </>
-              ) : (
-                <FlatList
-                  data={country}
-                  showsHorizontalScrollIndicator={false}
-                  horizontal
-                  keyExtractor={(d) => d._id}
-                  renderItem={memoizedCountry}
+                </View>
+              )} */}
+              <View style={{ paddingHorizontal: 15 }}>
+                <ContentList
+                  route={"CountryHome"}
+                  navigation={navigation}
+                  title={"Tour Categories"}
+                  more={""}
+                  content={
+                    "Are you the adventurous type? Do you love a long ride? Are you an organizing freak? Whichever you are, find the ultimate vacation for you!"
+                  }
                 />
-              )}
-
-              <ContentList
-                route={"CityHome"}
-                navigation={navigation}
-                title={"Beautiful Cities"}
-                more={"Show More"}
-                content={
-                  "Are you a wanderlust soul getting lost in breathtaking cities? Here are our suggestions!"
-                }
-              />
-              {city.length === 0 ? (
-                <>
-                  <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
-                    <View style={{ flexDirection: "row" }}>
-                      {new Array(6).fill("0").map((c, index) => (
-                        <View style={styles.cityImage} key={index} />
-                      ))}
-                    </View>
-                  </SkeletonPlaceholder>
-                </>
-              ) : (
-                <FlatList
-                  data={city}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(d) => d._id}
-                  renderItem={memoizedCity}
+                <Categories navigation={navigation} />
+                <ContentList
+                  route={"CountryHome"}
+                  navigation={navigation}
+                  title={"Fascinating Countries"}
+                  more={"Show More"}
+                  content={
+                    "Explore enchanting new lands that will steal your heart. Find out more about the countries you want to visit"
+                  }
                 />
-              )}
 
-              <ContentList
-                route={"TourHome"}
-                navigation={navigation}
-                title={"Curated Tours"}
-                more={"Show More"}
-                content={
-                  "Are you a kindred spirit looking for the perfect holiday? Look no further!"
-                }
-              />
+                {country.length === 0 ? (
+                  <>
+                    <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
+                      <View style={{ flexDirection: "row" }}>
+                        {new Array(6).fill("0").map((c, index) => (
+                          <View style={styles.cityImage} key={index} />
+                        ))}
+                      </View>
+                    </SkeletonPlaceholder>
+                  </>
+                ) : (
+                  <FlatList
+                    data={country}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    keyExtractor={(d) => d._id}
+                    renderItem={memoizedCountry}
+                  />
+                )}
 
-              {tours.length === 0 ? (
-                <>
-                  <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
-                    <View style={{ flexDirection: "row" }}>
-                      {new Array(6).fill("0").map((c, index) => (
-                        <View
-                          style={{
-                            height: HEIGHT / 3.8,
-                            width: WIDTH / 1.2,
-                            borderRadius: 10,
-                            marginVertical: 10,
-                            marginRight: 10,
-                          }}
-                          key={index}
-                        />
-                      ))}
-                    </View>
-                  </SkeletonPlaceholder>
-                </>
-              ) : (
-                <FlatList
-                  data={tours}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(d) => d._id}
-                  renderItem={memoizedTour}
+                <ContentList
+                  route={"CityHome"}
+                  navigation={navigation}
+                  title={"Beautiful Cities"}
+                  more={"Show More"}
+                  content={
+                    "Are you a wanderlust soul getting lost in breathtaking cities? Here are our suggestions!"
+                  }
                 />
-              )}
-              <>
+                {city.length === 0 ? (
+                  <>
+                    <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
+                      <View style={{ flexDirection: "row" }}>
+                        {new Array(6).fill("0").map((c, index) => (
+                          <View style={styles.cityImage} key={index} />
+                        ))}
+                      </View>
+                    </SkeletonPlaceholder>
+                  </>
+                ) : (
+                  <FlatList
+                    data={city}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(d) => d._id}
+                    renderItem={memoizedCity}
+                  />
+                )}
+
+                <ContentList
+                  route={"TourHome"}
+                  navigation={navigation}
+                  title={"Curated Tours"}
+                  more={"Show More"}
+                  content={
+                    "Are you a kindred spirit looking for the perfect holiday? Look no further!"
+                  }
+                />
+
+                {tours.length === 0 ? (
+                  <>
+                    <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
+                      <View style={{ flexDirection: "row" }}>
+                        {new Array(6).fill("0").map((c, index) => (
+                          <View
+                            style={{
+                              height: HEIGHT / 3.8,
+                              width: WIDTH / 1.2,
+                              borderRadius: 10,
+                              marginVertical: 10,
+                              marginRight: 10,
+                            }}
+                            key={index}
+                          />
+                        ))}
+                      </View>
+                    </SkeletonPlaceholder>
+                  </>
+                ) : (
+                  <FlatList
+                    data={tours}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(d) => d._id}
+                    renderItem={memoizedTour}
+                  />
+                )}
+              </View>
+              <View style={{ paddingHorizontal: 10 }}>
                 <ContentList
                   navigation={navigation}
                   title={"Our Travellers Talks"}
@@ -812,171 +853,170 @@ const HomeScreen = ({ navigation }) => {
                     from our travellers
                   </Text>
                 </View>
-
-                {testimonials.length === 0 ? (
-                  <>
-                    <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
+              </View>
+              {testimonials.length === 0 ? (
+                <>
+                  <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
+                    <View
+                      style={{
+                        borderColor: "#333",
+                        borderWidth: Platform.OS === "ios" ? 2 : 2,
+                        borderRadius: 10,
+                        paddingBottom: 20,
+                        marginTop: 20,
+                        height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
+                        marginBottom: 30,
+                      }}
+                    >
                       <View
                         style={{
-                          borderColor: "#333",
-                          borderWidth: Platform.OS === "ios" ? 2 : 2,
-                          borderRadius: 10,
-                          paddingBottom: 20,
-                          marginTop: 20,
-                          height: HEIGHT > 850 ? HEIGHT / 2.2 : HEIGHT / 1.7,
-                          marginBottom: 30,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          paddingHorizontal: 20,
+                          paddingTop: 20,
                         }}
                       >
                         <View
                           style={{
-                            flexDirection: "row",
+                            paddingHorizontal: 10,
                             alignItems: "center",
-                            paddingHorizontal: 20,
-                            paddingTop: 20,
                           }}
                         >
                           <View
                             style={{
-                              paddingHorizontal: 10,
-                              alignItems: "center",
+                              width: 100,
+                              height: 100,
+                              borderRadius: 50,
                             }}
-                          >
-                            <View
-                              style={{
-                                width: 100,
-                                height: 100,
-                                borderRadius: 50,
-                              }}
-                            ></View>
-                          </View>
-                          <View>
-                            <View
-                              style={{
-                                width: 200,
-                                height: 20,
-                                marginBottom: 10,
-                              }}
-                            ></View>
-                            <View style={{ width: 100, height: 20 }}></View>
-                          </View>
+                          ></View>
                         </View>
-                        <View
-                          style={{
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
+                        <View>
                           <View
                             style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
+                              width: 200,
+                              height: 20,
+                              marginBottom: 10,
                             }}
-                          />
-                          <View
-                            style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
-                            }}
-                          />
-                          <View
-                            style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
-                            }}
-                          />
-                          <View
-                            style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
-                            }}
-                          />
-                          <View
-                            style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
-                            }}
-                          />
-                          <View
-                            style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
-                            }}
-                          />
-                          <View
-                            style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
-                            }}
-                          />
-                          <View
-                            style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
-                            }}
-                          />
-                          <View
-                            style={{
-                              width: WIDTH * 0.85,
-                              marginVertical: 10,
-                              height: 10,
-                              overflow: "scroll",
-                            }}
-                          />
+                          ></View>
+                          <View style={{ width: 100, height: 20 }}></View>
                         </View>
                       </View>
-                    </SkeletonPlaceholder>
-                  </>
-                ) : (
-                  <View style={{ paddingBottom: 100 }}>
-                    <View style={{ width: WIDTH, position: "relative" }}>
-                      <Text
+                      <View
                         style={{
-                          backgroundColor: "#758283",
-                          position: "absolute",
-                          right: 40,
-                          textAlign: "right",
-                          padding: 5,
-                          paddingHorizontal: 8,
-                          borderRadius: 8,
-                          color: "#fff",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        {activeSlide + 1} / {testimonials.length}
-                      </Text>
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                        <View
+                          style={{
+                            width: WIDTH * 0.85,
+                            marginVertical: 10,
+                            height: 10,
+                            overflow: "scroll",
+                          }}
+                        />
+                      </View>
                     </View>
-                    <Slider
-                      data={testimonials}
-                      dotStyle={{
-                        height: 10,
-                        backgroundColor: "#8E8E8F",
-                        marginHorizontal: 10,
-                        borderRadius: 5,
+                  </SkeletonPlaceholder>
+                </>
+              ) : (
+                <View style={{ paddingBottom: 100 }}>
+                  <View style={{ width: WIDTH, position: "relative" }}>
+                    <Text
+                      style={{
+                        backgroundColor: "#758283",
+                        position: "absolute",
+                        right: 40,
+                        textAlign: "right",
+                        padding: 5,
+                        paddingHorizontal: 8,
+                        borderRadius: 8,
+                        color: "#fff",
                       }}
-                      setActiveSlide={(s) => {
-                        set(s);
-                      }}
-                      showDots={false}
-                      renderItem={_renderItem}
-                    />
+                    >
+                      {activeSlide + 1} / {testimonials.length}
+                    </Text>
                   </View>
-                )}
-              </>
+                  <Slider
+                    data={testimonials}
+                    dotStyle={{
+                      height: 10,
+                      backgroundColor: "#8E8E8F",
+                      marginHorizontal: 10,
+                      borderRadius: 5,
+                    }}
+                    setActiveSlide={(s) => {
+                      set(s);
+                    }}
+                    showDots={false}
+                    renderItem={_renderItem}
+                  />
+                </View>
+              )}
             </>
           </View>
         </ScrollView>
@@ -989,7 +1029,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 30,
     flex: 1,
-    padding: 15,
+    // padding: 15,
     backgroundColor: "#FFF",
   },
 

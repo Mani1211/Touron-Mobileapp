@@ -22,13 +22,9 @@ const CountryInnerScreen = ({ navigation, route }) => {
   const openWhatsApp = (name) => {
     let url = `whatsapp://send?text=Hi,I would like to go ${name} help me to plan on that &phone= +91 8667801206`;
 
-    Linking.openURL(url)
-      .then((data) => {
-        console.log("WhatsApp Opened successfully " + data);
-      })
-      .catch(() => {
-        alert("Make sure WhatsApp installed on your device");
-      });
+    Linking.openURL(url).catch(() => {
+      alert("Make sure WhatsApp installed on your device");
+    });
   };
 
   return (

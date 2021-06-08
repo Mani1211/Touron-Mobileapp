@@ -44,20 +44,18 @@ import SelfTourInner from "./src/Screens/SelfPlanTourScreens/SelfTourInner";
 import OverviewToursScreen from "./src/Screens/CheckoutScreens/OverviewToursScreen";
 import ProgressScreen from "./src/Screens/CheckoutScreens/ProgressScreen";
 import RoadTripScreen from "./src/Screens/CategoryScreens/RoadTripScreen";
+import AddStories from "./src/Screens/StoriesScreens/AddStories";
+import StoriesHome from "./src/Screens/StoriesScreens/StoriesHome";
 
-const prefix = Linking.makeUrl("/");
+// const prefix = Linking.makeUrl("/");
+// console.log(`prefix`, prefix);
 
 const SubApp = () => {
   const [details, setDetails] = useState();
 
   const linking = {
-    prefixes: [prefix],
-    // prefixes: [
-    //   "https://www.touron.in",
-    //   "https://touron.in",
-    //   "http://touron.in",
-    //   "http://www.touron.in",
-    // ],
+    // prefixes: [prefix],
+    prefixes: ["https://www.touron.in", "https://touron.in"],
     config: {
       screens: {
         AboutUs: "about",
@@ -79,7 +77,7 @@ const SubApp = () => {
           screens: {
             Blogs: {
               screens: {
-                BlogInner: "blogdetails/:title/:id",
+                BlogInner: "blogdetails/:title/:id/:countryname",
                 BlogHome: "blogs",
               },
             },
@@ -132,115 +130,12 @@ const SubApp = () => {
             opacity: 0.6,
             zIndex: 2,
           }}
+          initialRouteName="StoriesHome"
           overlayColor={0}
           drawerContent={(props) => <DrawerContent {...props} />}
         >
-          {!isLoggedIn && (
-            <Drawer.Screen name="Get" component={GettingStartedScreen} />
-          )}
-          <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-          <Drawer.Screen name="Profile" component={ProfileScreen} />
-          <Drawer.Screen name="MyRequest" component={MyRequestScreen} />
-          <Drawer.Screen name="WishList" component={WishListScreen} />
-          <Drawer.Screen name="MyPlans" component={MyPlansScreen} />
-          <Drawer.Screen name="MyPlanInner" component={MyPlansInner} />
-          <Drawer.Screen
-            name="MyVisaRequestScreen"
-            component={MyVisaRequestsScreen}
-          />
-          <Drawer.Screen name="Visa" component={VisaDetailsScreen} />
-          <Drawer.Screen name="VisaInner" component={VisaInner} />
-          <Drawer.Screen name="RequestInner" component={RequestInner} />
-          <Drawer.Screen name="SignInScreen" component={SignInScreen} />
-          <Drawer.Screen name="SignUpScreen" component={SignUpScreen} />
-          <Drawer.Screen
-            options={{
-              title: "About Us",
-              headerShown: false,
-              headerTransparent: false,
-            }}
-            name="AboutUs"
-            component={AboutUs}
-          />
-          <Drawer.Screen
-            options={{
-              title: "Contact Us",
-              headerShown: false,
-              headerTransparent: false,
-            }}
-            name="ContactUs"
-            component={ContactUs}
-          />
-          <Drawer.Screen
-            options={{
-              title: "",
-              headerShown: false,
-              headerTransparent: true,
-            }}
-            name="Feedback"
-            component={FeedbackScreen}
-          />
-          <Drawer.Screen
-            options={{
-              title: "",
-              headerShown: false,
-              headerTransparent: true,
-            }}
-            name="CountryInner"
-            component={CountryInnerScreen}
-          />
-          <Drawer.Screen
-            options={{
-              title: "",
-              headerShown: false,
-              headerTransparent: true,
-            }}
-            name="CityInner"
-            component={CityInnerScreen}
-          />
-          <Drawer.Screen
-            options={{
-              title: "",
-              headerShown: false,
-              headerTransparent: true,
-            }}
-            name="TourInner"
-            component={TourInnerScreen}
-          />
-          <Drawer.Screen
-            options={{
-              title: "",
-              headerShown: false,
-              headerTransparent: true,
-            }}
-            name="BlogInner"
-            component={BlogInnerScreen}
-          />
-
-          {/* Self stck screen */}
-          <Drawer.Screen name="SelfPlanForm" component={SelfPlanForm} />
-          <Drawer.Screen
-            name="OverviewCities"
-            component={OverviewCitiesScreen}
-          />
-          <Drawer.Screen name="SelfTourHome" component={SelfTourHome} />
-          <Drawer.Screen name="SelfTourInner" component={SelfTourInner} />
-          <Drawer.Screen name="OverviewTours" component={OverviewToursScreen} />
-          <Drawer.Screen name="Progress" component={ProgressScreen} />
-          {/* Self stck screen */}
-
-          {/* Home Stack Screen */}
-          <Drawer.Screen name="Planned" component={PlannedTourScreen} />
-          <Drawer.Screen name="Surprise" component={SurpriseTourScreen} />
-          <Drawer.Screen name="Road" component={RoadTripScreen} />
-          <Drawer.Screen name="Wildlife" component={WildLife} />
-          <Drawer.Screen name="Luxury" component={Luxury} />
-          <Drawer.Screen name="Honeymoon" component={Honeymoon} />
-          <Drawer.Screen name="CountryHome" component={CountryHomeScreen} />
-          <Drawer.Screen name="CityHome" component={CityHomeScreen} />
-          <Drawer.Screen name="TourHome" component={TourHomeScreen} />
-
-          {/* Home Stack Screen */}
+          <Drawer.Screen name="StoriesHome" component={StoriesHome} />
+          <Drawer.Screen name="AddStories" component={AddStories} />
         </Drawer.Navigator>
       </AuthContext.Provider>
     </NavigationContainer>
@@ -248,3 +143,110 @@ const SubApp = () => {
 };
 
 export default SubApp;
+
+// {!isLoggedIn && (
+//     <Drawer.Screen name="Get" component={GettingStartedScreen} />
+//   )}
+//   <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
+//   <Drawer.Screen name="Profile" component={ProfileScreen} />
+//   <Drawer.Screen name="MyRequest" component={MyRequestScreen} />
+//   <Drawer.Screen name="WishList" component={WishListScreen} />
+//   <Drawer.Screen name="MyPlans" component={MyPlansScreen} />
+//   <Drawer.Screen name="MyPlanInner" component={MyPlansInner} />
+//   <Drawer.Screen
+//     name="MyVisaRequestScreen"
+//     component={MyVisaRequestsScreen}
+//   />
+//   <Drawer.Screen name="Visa" component={VisaDetailsScreen} />
+//   <Drawer.Screen name="VisaInner" component={VisaInner} />
+//   <Drawer.Screen name="RequestInner" component={RequestInner} />
+//   <Drawer.Screen name="SignInScreen" component={SignInScreen} />
+//   <Drawer.Screen name="SignUpScreen" component={SignUpScreen} />
+//   <Drawer.Screen
+//     options={{
+//       title: "About Us",
+//       headerShown: false,
+//       headerTransparent: false,
+//     }}
+//     name="AboutUs"
+//     component={AboutUs}
+//   />
+//   <Drawer.Screen
+//     options={{
+//       title: "Contact Us",
+//       headerShown: false,
+//       headerTransparent: false,
+//     }}
+//     name="ContactUs"
+//     component={ContactUs}
+//   />
+//   <Drawer.Screen
+//     options={{
+//       title: "",
+//       headerShown: false,
+//       headerTransparent: true,
+//     }}
+//     name="Feedback"
+//     component={FeedbackScreen}
+//   />
+//   <Drawer.Screen
+//     options={{
+//       title: "",
+//       headerShown: false,
+//       headerTransparent: true,
+//     }}
+//     name="CountryInner"
+//     component={CountryInnerScreen}
+//   />
+//   <Drawer.Screen
+//     options={{
+//       title: "",
+//       headerShown: false,
+//       headerTransparent: true,
+//     }}
+//     name="CityInner"
+//     component={CityInnerScreen}
+//   />
+//   <Drawer.Screen
+//     options={{
+//       title: "",
+//       headerShown: false,
+//       headerTransparent: true,
+//     }}
+//     name="TourInner"
+//     component={TourInnerScreen}
+//   />
+//   <Drawer.Screen
+//     options={{
+//       title: "",
+//       headerShown: false,
+//       headerTransparent: true,
+//     }}
+//     name="BlogInner"
+//     component={BlogInnerScreen}
+//   />
+
+//   {/* Self stck screen */}
+//   <Drawer.Screen name="SelfPlanForm" component={SelfPlanForm} />
+//   <Drawer.Screen
+//     name="OverviewCities"
+//     component={OverviewCitiesScreen}
+//   />
+//   <Drawer.Screen name="SelfTourHome" component={SelfTourHome} />
+//   <Drawer.Screen name="SelfTourInner" component={SelfTourInner} />
+//   <Drawer.Screen name="OverviewTours" component={OverviewToursScreen} />
+//   <Drawer.Screen name="Progress" component={ProgressScreen} />
+//   {/* Self stck screen */}
+
+//   {/* Home Stack Screen */}
+//   <Drawer.Screen name="Planned" component={PlannedTourScreen} />
+//   <Drawer.Screen name="Surprise" component={SurpriseTourScreen} />
+//   <Drawer.Screen name="Road" component={RoadTripScreen} />
+//   <Drawer.Screen name="Wildlife" component={WildLife} />
+//   <Drawer.Screen name="Luxury" component={Luxury} />
+//   <Drawer.Screen name="Honeymoon" component={Honeymoon} />
+//   <Drawer.Screen name="CountryHome" component={CountryHomeScreen} />
+//   <Drawer.Screen name="CityHome" component={CityHomeScreen} />
+//   <Drawer.Screen name="TourHome" component={TourHomeScreen} />
+
+//   {/* Home Stack Screen */}

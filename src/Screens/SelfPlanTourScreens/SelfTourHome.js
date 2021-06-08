@@ -40,14 +40,12 @@ const SelfTourHome = ({
   const [selectedTours, setSelectedTours] = useState([]);
   const [selectedTourNames, setSelectedTourNames] = useState([]);
 
-  console.log(`selectedTourNames`, selectedTourNames);
   const getTour = async (city) => {
     try {
       const tourResponse = await touron.get(`/tour/cityname/${city}`);
       setTour(tourResponse.data);
       setLoader(false);
     } catch (err) {
-      console.log(err, "err");
       setErrorMessage("Something went wrong");
     }
   };
@@ -180,7 +178,6 @@ const SelfTourHome = ({
                             <TouchableOpacity
                               onPress={() => {
                                 if (selectedTourNames.includes(item.tourName)) {
-                                  console.log("running");
                                   let tours = selectedTourNames.filter((c) => {
                                     return c !== item.tourName;
                                   });
@@ -193,7 +190,6 @@ const SelfTourHome = ({
                                   );
                                   setSelectedTours(updatedTours);
                                 } else {
-                                  console.log("object");
                                   setSelectedTourNames([
                                     ...selectedTourNames,
                                     item.tourName,
@@ -358,7 +354,6 @@ const SelfTourHome = ({
             onPress={() => {
               const cityLength = selectedCityNames.length - 1;
 
-              //   console.log(active);
               if (active <= cityLength) {
                 setActive(active + 1);
                 getTour(selectedCityNames[active + 1]);

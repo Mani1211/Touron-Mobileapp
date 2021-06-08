@@ -8,10 +8,10 @@ const TestimonialTile = ({ index, item }) => {
     <View
       key={index}
       style={{
-        width: WIDTH * 0.9,
-        marginHorizontal: 5,
+        width: WIDTH,
+        // marginHorizontal: 5,
         marginTop: 20,
-        justifyContent: "center",
+        // justifyContent: "center",
         // marginBottom: 35,
         alignItems: "center",
       }}
@@ -49,15 +49,23 @@ const TestimonialTile = ({ index, item }) => {
             value={item.comment}
             stylesheet={{
               p: {
-                paddingLeft: 10,
                 fontFamily: "Andika",
+                paddingHorizontal: 25,
                 fontSize: 13,
                 textAlign: "center",
               },
             }}
           />
         </View>
-        <Text style={{ textAlign: "center", paddingTop: 20 }}>{item.name}</Text>
+        <Text
+          style={{
+            textAlign: "center",
+            paddingTop: 20,
+            fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+          }}
+        >
+          {item.name}
+        </Text>
         <Text
           style={{
             fontSize: 16,

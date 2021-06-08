@@ -52,11 +52,11 @@ const ProfileScreen = ({ navigation }) => {
       setName(user.displayName);
       setEmail(user.email);
 
-      console.log(`user,uid`, user.uid);
+      // console.log(`user,uid`, user.uid);
       database()
         .ref(`userGeneralInfo/${user.uid}`)
         .on("value", (data) => {
-          console.log(data, "DATA");
+          // console.log(data, "DATA");
           if (data.val() == null) {
             setAboutMe("");
             setAddress("");

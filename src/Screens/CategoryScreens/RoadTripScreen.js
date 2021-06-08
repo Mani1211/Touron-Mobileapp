@@ -410,7 +410,6 @@ const RoadTripScreen = ({ navigation }) => {
         tourCost: 0,
       })
       .then((data) => {
-        console.log(data);
         const token = getExpoToken(userID);
         sendEmail(userInfo.email, "Road Trip");
         const message = {

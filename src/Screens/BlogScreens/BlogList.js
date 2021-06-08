@@ -3,10 +3,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text, Dimensions, Image, TouchableOpacity } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-const BlogList = ({ navigation, item, navName, index }) => {
+const BlogList = ({ navigation, item, navName }) => {
   return (
     <View
-      key={index}
       style={{
         width: WIDTH * 0.8,
         // flexWrap: "wrap",

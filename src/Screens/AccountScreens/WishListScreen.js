@@ -18,7 +18,6 @@ const WishListScreen = ({ navigation }) => {
   const { userInfo } = useContext(AuthContext);
   const [loaded, setLoaded] = useState(false);
   const [savedTours, setSavedTours] = useState([]);
-  console.log(`savedTours`, savedTours);
 
   const getSavedTours = () => {
     setLoaded(true);
@@ -202,7 +201,6 @@ const WishListScreen = ({ navigation }) => {
                               database()
                                 .ref(`saved-tours/${userInfo.userID}`)
                                 .set(filterTour)
-                                .then((data) => console.log(data))
                                 .catch((err) => console.log(err));
                               setTimeout(() => {
                                 setSavedTours(filterTour);

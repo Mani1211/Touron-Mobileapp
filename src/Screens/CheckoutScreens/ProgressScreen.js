@@ -545,7 +545,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
                 tourCost: 0,
                 tourType: "International",
               })
-              .then((data) => setStep())
+              .then(() => setStep())
               .catch((err) => console.log(err));
           }}
         >

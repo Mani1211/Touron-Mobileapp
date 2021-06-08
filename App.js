@@ -5,6 +5,7 @@ const HEIGHT = Dimensions.get("window").height;
 import * as firebase from "firebase";
 import SubApp from "./SubApp";
 import * as Font from "expo-font";
+import { Root } from "native-base";
 
 var firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
@@ -72,7 +73,7 @@ const App = () => {
 
   // return <GettingStartedScreen />;
   // return <>{!appLoading && <TourInnerScreen />}</>;
-  return <>{!appLoading && <SubApp />}</>;
+  return <Root>{!appLoading && <SubApp />}</Root>;
 };
 
 export default App;

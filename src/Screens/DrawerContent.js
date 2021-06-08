@@ -87,6 +87,23 @@ const DrawerContent = (props) => {
                     props.navigation.navigate("Profile");
                   }}
                 />
+                <DrawerItem
+                  label={() => <Text style={styles.label}>Stories</Text>}
+                  icon={() => (
+                    <Image
+                      style={{
+                        height: 30,
+                        width: 30,
+                      }}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2FSidebar%2FProfiles.png?alt=media&token=4658a078-2026-481b-b26e-512900244234",
+                      }}
+                    />
+                  )}
+                  onPress={() => {
+                    props.navigation.navigate("AddStories");
+                  }}
+                />
 
                 <DrawerItem
                   label={() => <Text style={styles.label}>My Requests</Text>}

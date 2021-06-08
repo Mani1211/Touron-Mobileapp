@@ -27,16 +27,14 @@ const BlogHomeScreen = ({ navigation, route }) => {
   const [loaded, setLoaded] = useState(true);
   const [blogloaded, setBlogLoaded] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [cat, setCat] = useState("Popular");
+  const [cat, setCat] = useState("Recent");
   const getBlog = async () => {
     try {
       const blogResponse = await touron.get(`/blog/search?page=1&pageSize=200`);
       setBlog(blogResponse.data);
-      // console.log(`object`, blogResponse.data);
       setBlogLoaded(false);
       setLoaded(false);
     } catch (err) {
-      console.log(err, "err");
       alert(err.message);
     }
   };
@@ -141,22 +139,6 @@ const BlogHomeScreen = ({ navigation, route }) => {
               }}
             >
               <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity onPress={() => setCat("Popular")}>
-                  <Text
-                    style={{
-                      fontFamily: "Avenir",
-                      fontSize: 16,
-                      backgroundColor: "#E28633",
-                      opacity: cat === "Popular" ? 1 : 0.5,
-                      borderRadius: Platform.OS === "ios" ? 40 : 10,
-                      padding: 10,
-                      marginRight: 10,
-                      color: "#fff",
-                    }}
-                  >
-                    Popular
-                  </Text>
-                </TouchableOpacity>
                 <TouchableOpacity onPress={() => setCat("Recent")}>
                   <Text
                     style={{
@@ -171,6 +153,22 @@ const BlogHomeScreen = ({ navigation, route }) => {
                     }}
                   >
                     Recent
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setCat("Popular")}>
+                  <Text
+                    style={{
+                      fontFamily: "Avenir",
+                      fontSize: 16,
+                      backgroundColor: "#E28633",
+                      opacity: cat === "Popular" ? 1 : 0.5,
+                      borderRadius: Platform.OS === "ios" ? 40 : 10,
+                      padding: 10,
+                      marginRight: 10,
+                      color: "#fff",
+                    }}
+                  >
+                    Popular
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -189,7 +187,7 @@ const BlogHomeScreen = ({ navigation, route }) => {
                   )
                     return (
                       <BlogList
-                        index={index}
+                        key={index}
                         navigation={navigation}
                         item={item}
                         navName={"BlogInner"}

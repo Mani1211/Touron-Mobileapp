@@ -76,7 +76,6 @@ const SelfPlanForm = ({ navigation }) => {
     });
 
     const result = [...c];
-    console.log(`result.length`, result.length);
     return result;
   };
 
@@ -86,7 +85,6 @@ const SelfPlanForm = ({ navigation }) => {
 
       const stateResponse = await touron.get(`/state`);
       setStates(stateResponse.data);
-      // console.log("object", stateResponse.data);
       setLoaded(false);
     } catch (err) {
       console.log(err, "err");
@@ -94,13 +92,11 @@ const SelfPlanForm = ({ navigation }) => {
   };
 
   const getDomesticCities = async (name) => {
-    // console.log(`name`, name.length);
     try {
       setLoaded(true);
       const domesticResponse = await touron.get(`/statecity/statename/${name}`);
 
       setDCities(domesticResponse.data);
-      console.log(`object`, domesticResponse.data);
       setLoaded(false);
     } catch (err) {
       console.log(err, "err");
@@ -119,13 +115,10 @@ const SelfPlanForm = ({ navigation }) => {
     selectedCity.forEach((c) => {
       return (count = count + c.days * 1);
     });
-    // console.log("count", count);
     return count;
   };
 
   const filterState = () => {
-    // console.log(`destination`, destination);
-
     if (destination === "") return states;
 
     const state = states.filter((c) => {

@@ -97,7 +97,6 @@ const TourHomeScreen = ({ navigation, route }) => {
           database()
             .ref(`saved-tours/${user.uid}`)
             .set(savedToursDetails)
-            .then((data) => console.log(data))
             .catch((err) => console.log(err));
         }
       }
@@ -106,7 +105,6 @@ const TourHomeScreen = ({ navigation, route }) => {
   }, []);
 
   const getTour = async () => {
-    console.log("object", route.params.name);
     if (route.params.name) {
       const cityname = route.params.name;
       try {
@@ -114,7 +112,6 @@ const TourHomeScreen = ({ navigation, route }) => {
         if (tourResponse.data.length === 0) {
           setTour([]);
         }
-        console.log("tourResponse.data", tourResponse.data);
         setTour(tourResponse.data);
       } catch (err) {
         setErrorMessage("Something went wrong");

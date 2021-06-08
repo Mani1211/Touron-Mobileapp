@@ -336,7 +336,6 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       .ref(`requests`)
       .push(data)
       .then((data) => {
-        console.log(data);
         const token = getExpoToken(userID);
         sendEmail(userInfo.email, destination);
         const message = {

@@ -359,7 +359,6 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       .ref(`requests`)
       .push(data)
       .then((data) => {
-        console.log(data);
         const token = getExpoToken(userID);
         sendEmail(userInfo.email, destination);
         const message = {

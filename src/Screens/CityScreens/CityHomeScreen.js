@@ -24,11 +24,9 @@ const CityHomeScreen = ({ navigation, route }) => {
   const [error, setErrorMessage] = useState("");
   const [loader, setLoader] = useState(false);
   const [cityName, setCityName] = useState("");
-  console.log(`city.length`, city.length);
   const [pageSize, setPageSize] = useState(10);
 
   const getCity = async () => {
-    console.log(route.params.name, "kk");
     if (route.params.name) {
       const countryname = route.params.name;
       try {
@@ -43,6 +41,8 @@ const CityHomeScreen = ({ navigation, route }) => {
       } catch (err) {
         setErrorMessage("Something went wrong");
       }
+    } else {
+      setCity(cities);
     }
   };
 
@@ -84,13 +84,38 @@ const CityHomeScreen = ({ navigation, route }) => {
             }}
           />
         ) : (
-          <ScrollView>
-            <View style={styles.countryGrid}>
+          <ScrollView
+            contentContainerStyle={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: WIDTH,
+            }}
+          >
+            {route.params.name !== "" && (
+              <Text
+                style={{ fontSize: 20, marginBottom: 10, fontFamily: "Andika" }}
+              >
+                Cities in {route.params.name}
+              </Text>
+            )}
+            <View
+              style={{
+                flexDirection: "row",
+                width: WIDTH,
+                flexWrap: "wrap",
+                justifyContent: city.length % 2 === 0 ? "center" : "flex-start",
+                alignItems: "center",
+                marginBottom: 30,
+                paddingHorizontal: city.length % 2 === 0 ? 0 : 10,
+                paddingBottom: 150,
+                alignContent: "stretch",
+              }}
+            >
               {search().map((item, index) => {
                 if (index < pageSize)
                   return (
                     <CCTile
-                      index={index}
+                      key={index}
                       navigation={navigation}
                       item={item}
                       navName={"CityInner"}
@@ -98,7 +123,7 @@ const CityHomeScreen = ({ navigation, route }) => {
                     />
                   );
               })}
-              {pageSize < 145 && cityName === "" && (
+              {route.params.name === "" && pageSize < 145 && cityName === "" && (
                 <TouchableOpacity
                   onPress={() => setPageSize(pageSize + 10)}
                   style={{
@@ -155,13 +180,14 @@ const styles = StyleSheet.create({
     left: 20,
   },
 
-  countryGrid: {
-    flexDirection: "row",
-    width: WIDTH,
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 30,
-    paddingBottom: 150,
-  },
+  // countryGrid: {
+  //   flexDirection: "row",
+  //   width: WIDTH,
+  //   flexWrap: "wrap",
+  //   justifyContent: city % 2 === 0 ? "center" : "flex-start",
+  //   alignItems: "center",
+  //   marginBottom: 30,
+  //   paddingBottom: 150,
+  //   alignContent: "stretch",
+  // },
 });

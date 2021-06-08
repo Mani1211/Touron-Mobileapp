@@ -378,7 +378,6 @@ const PlannedTourScreen = ({ navigation, route }) => {
       .ref(`requests`)
       .push(data)
       .then((data) => {
-        console.log(data);
         const token = getExpoToken(userID);
         sendEmail(userInfo.email, "Surprise trip");
         const message = {

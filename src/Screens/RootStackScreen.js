@@ -12,7 +12,6 @@ export const RootStackScreen = ({ navigation }) => {
   const [initialRouteName, setInitialRouteName] = useState("GettingStarted");
   useEffect(() => {
     if (isLoggedIn) {
-      console.log("object");
       setInitialRouteName("Main");
     }
   }, []);
@@ -22,10 +21,6 @@ export const RootStackScreen = ({ navigation }) => {
       screenOptions={{ headerShown: false }}
       initialRouteName={initialRouteName}
     >
-      {/* <RootStack.Screen
-        name="GettingStarted"
-        component={GettingStartedScreen}
-      /> */}
       <RootStack.Screen name="Main" component={MainTabScreen} />
       <RootStack.Screen name="SignInScreen" component={SignInScreen} />
       <RootStack.Screen name="SignUpScreen" component={SignUpScreen} />

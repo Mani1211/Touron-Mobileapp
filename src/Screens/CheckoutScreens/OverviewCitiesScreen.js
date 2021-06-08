@@ -27,13 +27,11 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
-  console.log(`totalDays`, totalDays);
   const calculateTotalDays = () => {
     let count = 0;
     selectedCity.forEach((c) => {
       return (count = count + c.days * 1);
     });
-    console.log(`count`, count);
     return count;
   };
 
@@ -118,7 +116,6 @@ const OverviewCitiesScreen = ({ prevStep, setStep, selectedCitys }) => {
                 <TextInput
                   keyboardType="number-pad"
                   onChangeText={(value) => {
-                    console.log("value", value);
                     const index = selectedCity.findIndex((a) => {
                       return a.cityName === item.cityName;
                     });

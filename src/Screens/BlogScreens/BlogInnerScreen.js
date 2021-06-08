@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   ActivityIndicator,
+  StyleSheet,
   Dimensions,
   ScrollView,
 } from "react-native";
@@ -20,8 +21,6 @@ import axios from "axios";
 
 const BlogInnerScreen = ({ navigation, route }) => {
   const { title, id } = route.params;
-  // const [blogid, setBlogid] = useState(id);
-  // console.log(`deep Item`, title, id, blogid);
   const [blogDetails, setBlogDetails] = useState({});
   const [loaded, setLoaded] = useState(false);
 
@@ -104,7 +103,7 @@ const BlogInnerScreen = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
           <View style={{ marginBottom: 25 }}>
-            <View>
+            <View style={{ position: "relative" }}>
               <Image
                 style={{
                   width: WIDTH,
@@ -114,6 +113,22 @@ const BlogInnerScreen = ({ navigation, route }) => {
                 }}
                 source={{ uri: blogDetails.imageSrc }}
               />
+              {Object.keys(blogDetails).includes("imageCredit") &&
+                blogDetails.imageCredit !== "" && (
+                  <View
+                    style={[
+                      styles.credit,
+                      {
+                        borderBottomRightRadius: 30,
+                        borderBottomLeftRadius: 30,
+                      },
+                    ]}
+                  >
+                    <Text style={styles.creditText}>
+                      Credits : {blogDetails.imageCredit}
+                    </Text>
+                  </View>
+                )}
             </View>
             {Object.keys(blogDetails).includes("countryName") && (
               <View
@@ -168,9 +183,13 @@ const BlogInnerScreen = ({ navigation, route }) => {
                 />
               </View>
               <Text style={{ fontFamily: "Andika", fontSize: 16 }}>
-                PUBLISHED {moment(blogDetails.createdAt).format("MMMM Do YYYY")}
+                {moment(blogDetails.createdAt).format("MMMM Do YYYY")}
                 {"\n"}
-                by tour On Team
+                by{" "}
+                {!Object.keys(blogDetails).includes("writtenBy") ||
+                blogDetails.writtenBy === ""
+                  ? "tour  On team"
+                  : blogDetails.writtenBy}
               </Text>
             </View>
             {Object.keys(blogDetails).includes("content") &&
@@ -220,11 +239,20 @@ const BlogInnerScreen = ({ navigation, route }) => {
             )}
             {Object.keys(blogDetails).includes("imageSrc1") &&
             blogDetails.imageSrc1.length < 10 ? null : (
-              <View>
+              <View style={{ position: "relative" }}>
                 <Image
                   style={{ width: WIDTH, height: HEIGHT / 3 }}
                   source={{ uri: blogDetails.imageSrc1 }}
                 />
+
+                {Object.keys(blogDetails).includes("imageCredit1") &&
+                  blogDetails.imageCredit1 !== "" && (
+                    <View style={styles.credit}>
+                      <Text style={styles.creditText}>
+                        Credits : {blogDetails.imageCredit1}
+                      </Text>
+                    </View>
+                  )}
               </View>
             )}
             {blogDetails.content1 == "" ? null : (
@@ -278,11 +306,19 @@ const BlogInnerScreen = ({ navigation, route }) => {
             )}
             {Object.keys(blogDetails).includes("imageSrc2") &&
             blogDetails.imageSrc2.length < 10 ? null : (
-              <View>
+              <View style={{ position: "relative" }}>
                 <Image
                   style={{ width: WIDTH, height: HEIGHT / 3 }}
                   source={{ uri: blogDetails.imageSrc2 }}
                 />
+                {Object.keys(blogDetails).includes("imageCredit2") &&
+                  blogDetails.imageCredit2 !== "" && (
+                    <View style={styles.credit}>
+                      <Text style={styles.creditText}>
+                        Credits : {blogDetails.imageCredit2}
+                      </Text>
+                    </View>
+                  )}
               </View>
             )}
             {blogDetails.content2 == "" ? null : (
@@ -336,11 +372,19 @@ const BlogInnerScreen = ({ navigation, route }) => {
             )}
             {Object.keys(blogDetails).includes("imageSrc3") &&
             blogDetails.imageSrc3.length < 10 ? null : (
-              <View>
+              <View style={{ position: "relative" }}>
                 <Image
                   style={{ width: WIDTH, height: HEIGHT / 3 }}
                   source={{ uri: blogDetails.imageSrc3 }}
                 />
+                {Object.keys(blogDetails).includes("imageCredit3") &&
+                  blogDetails.imageCredit3 !== "" && (
+                    <View style={styles.credit}>
+                      <Text style={styles.creditText}>
+                        Credits : {blogDetails.imageCredit3}
+                      </Text>
+                    </View>
+                  )}
               </View>
             )}
             {blogDetails.content3 == "" ? null : (
@@ -386,3 +430,18 @@ const BlogInnerScreen = ({ navigation, route }) => {
 };
 
 export default BlogInnerScreen;
+const styles = StyleSheet.create({
+  credit: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "#0006",
+    // opacity: 0.4,
+    width: WIDTH,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  creditText: {
+    fontFamily: "Andika",
+    color: "#fff",
+  },
+});

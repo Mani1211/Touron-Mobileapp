@@ -35,7 +35,6 @@ Notifications.setNotificationHandler({
 });
 
 function SignUpScreen({ navigation }) {
-  console.log(`navigation`, navigation);
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -92,7 +91,6 @@ function SignUpScreen({ navigation }) {
   };
 
   const sendOtp = () => {
-    console.log("clicked");
     setEmailErr(false);
     setNumErr(false);
     setPassErr(false);
@@ -131,7 +129,7 @@ function SignUpScreen({ navigation }) {
             .updateProfile({
               displayName: name,
             })
-            .then((displayName) => console.log(displayName))
+            // .then((displayName) => console.log(displayName))
             .catch((err) => console.log(err));
           setIsLoggedIn(true);
           storeToken(user.user);
@@ -141,7 +139,7 @@ function SignUpScreen({ navigation }) {
             )
             .then((response) => {
               let session = response.data.Details;
-              console.log(session, "RESPONSE DATA");
+              // console.log(session, "RESPONSE DATA");
               setLoaded(false);
               setSessionID(session);
               nextStep();
@@ -153,7 +151,7 @@ function SignUpScreen({ navigation }) {
         .catch((err) => {
           setLoaded(false);
           setErr(err.message);
-          console.log(err.message);
+          // console.log(err.message);
         });
     } else {
       if (email.includes("@") === false) {
@@ -178,7 +176,7 @@ function SignUpScreen({ navigation }) {
         Permissions.NOTIFICATIONS
       );
       let finalStatus = existingStatus;
-      console.log(finalStatus, existingStatus, "stst");
+      // console.log(finalStatus, existingStatus, "stst");
 
       if (existingStatus !== "granted" || Platform.OS === "android") {
         const { status } = await Permissions.askAsync(
@@ -186,7 +184,7 @@ function SignUpScreen({ navigation }) {
         );
         finalStatus = status;
 
-        console.log(finalStatus, "fianl");
+        // console.log(finalStatus, "fianl");
       }
       if (finalStatus !== "granted") {
         alert("Failed to get push token for push notification!");
@@ -220,7 +218,7 @@ function SignUpScreen({ navigation }) {
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        // console.log(response);
       });
 
     return () => {
@@ -236,9 +234,9 @@ function SignUpScreen({ navigation }) {
         `https://2factor.in/API/V1/8697a4f2-e821-11ea-9fa5-0200cd936042/SMS/VERIFY/${sessionID}/${code}`
       )
       .then((response) => {
-        console.log(response, "RESPONSE");
+        // console.log(response, "RESPONSE");
         const status = response.data.Details;
-        console.log(status, "STATUS");
+        // console.log(status, "STATUS");
         if (status == "OTP Matched") {
           setName("");
           setNumber("");
@@ -254,7 +252,7 @@ function SignUpScreen({ navigation }) {
       })
       .catch((err) => {
         setLoaded(false);
-        console.log(err, "err");
+        // console.log(err, "err");
         setOtpErr(true);
       });
   };

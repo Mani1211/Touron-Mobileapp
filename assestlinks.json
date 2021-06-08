@@ -1,0 +1,19 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "web",
+      "site": "https://www.google.com"
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.touron.travelapp",
+      "sha256_cert_fingerprints": [
+        "59:15:B4:EA:A0:AE:C2:30:38:79:1B:11:AB:D6:37:59:4C:1D:B6:1E:E9:BC:D5:B1:9A:61:F4:C8:14:D4:1D:15"
+      ]
+    }
+  }
+]

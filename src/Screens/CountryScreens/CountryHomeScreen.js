@@ -17,7 +17,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import CCTile from "./CCTile";
 import HeaderTile from "./../../Reusable Components/HeaderTile";
 const CountryHomeScreen = ({ navigation }) => {
-  console.log(`navigation`, navigation);
   const { countries } = useContext(AuthContext);
   const [country, setCountry] = useState(countries);
   const [loader, setLoader] = useState(true);
@@ -37,7 +36,6 @@ const CountryHomeScreen = ({ navigation }) => {
   }, []);
 
   const search = () => {
-    console.log(countryName, "NAME");
     const d = country.filter((c) => {
       return c.countryName
         .trim()
