@@ -551,6 +551,10 @@ const HomeScreen = ({ navigation }) => {
   const memoizedTour = useMemo(() => renderTour, [tours]);
 
   return (
+    // <View style={{ paddingHorizontal: 20 }}>
+    //   <Header navigation={navigation} />
+    //   <Story />
+    // </View>
     <Provider>
       <Portal style={{ position: "relative" }}>
         <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
@@ -636,15 +640,10 @@ const HomeScreen = ({ navigation }) => {
                 <Header navigation={navigation} />
               </View>
 
-<<<<<<< HEAD
-              {/* {promotions.length === 0 ? (
-                <View>
-=======
               <Story />
 
               {promotions.length === 0 ? (
                 <>
->>>>>>> d0ba9f59fc38510b51fbb38b97593e9bbdd6c4e0
                   <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
                     <View
                       style={{
@@ -665,7 +664,7 @@ const HomeScreen = ({ navigation }) => {
                       />
                     </View>
                   </SkeletonPlaceholder>
-                </View>
+                </>
               ) : (
                 <View style={{ paddingHorizontal: 20 }}>
                   <Slider
@@ -680,7 +679,7 @@ const HomeScreen = ({ navigation }) => {
                     renderItem={_renderPromo}
                   />
                 </View>
-              )} */}
+              )}
               <View style={{ paddingHorizontal: 15 }}>
                 <ContentList
                   route={"CountryHome"}

@@ -101,7 +101,7 @@ const DrawerContent = (props) => {
                     />
                   )}
                   onPress={() => {
-                    props.navigation.navigate("AddStories");
+                    props.navigation.navigate("StoriesHome");
                   }}
                 />
 

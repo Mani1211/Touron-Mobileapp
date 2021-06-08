@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Text,
   View,
@@ -8,13 +8,16 @@ import {
   Image,
   useWindowDimensions,
 } from "react-native";
+
 import { useIsFocused } from "@react-navigation/native";
 
 import { database } from "firebase";
 import HeaderTile from "./../../Reusable Components/HeaderTile";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { AuthContext } from "./../../context/AuthContext";
 
 const StoriesHome = ({ navigation }) => {
+  const { setFleetData } = useContext(AuthContext);
   const [step, setStep] = useState(1);
   const { width, height } = useWindowDimensions();
   const [storiesData, setStoriesData] = useState([]);
@@ -48,6 +51,7 @@ const StoriesHome = ({ navigation }) => {
 
     // console.log(`v`, v);
     setStoriesData(v);
+    setFleetData(v);
     setStoryLoaded(false);
   };
 
@@ -137,7 +141,7 @@ const StoriesHome = ({ navigation }) => {
         <ActivityIndicator size={28} />
       ) : (
         <>
-          <HeaderTile name={"Stories"} />
+          <HeaderTile name={"Stories"} navigation={navigation} />
           <Text
             style={{
               fontSize: 30,

@@ -13,6 +13,31 @@ const Data = () => {
   const [cities, setCities] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [userInfo, setUserInfo] = useState({});
+  const [fleetData, setFleetData] = useState([]);
+
+  const getStoriesData = () => {
+    let v = [];
+    database()
+      .ref("stories")
+      .on("value", (data) => {
+        data.forEach((d) => {
+          let stories = [];
+          d.forEach((s) => {
+            stories.push({ key: s.key, value: s.val() });
+          });
+          v.push({
+            storyNumber: d.key,
+            categoryTitle: stories[0].value.categoryTitle,
+            stories: stories,
+          });
+        });
+      });
+    setFleetData(v);
+  };
+
+  useEffect(() => {
+    getStoriesData();
+  }, []);
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
@@ -122,6 +147,8 @@ const Data = () => {
     countries,
     tours,
     blogs,
+    fleetData,
+    setFleetData,
   ];
 };
 

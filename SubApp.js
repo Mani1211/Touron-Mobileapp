@@ -98,6 +98,8 @@ const SubApp = () => {
     countries,
     tours,
     blogs,
+    fleetData,
+    setFleetData,
   ] = Data();
   console.log(`isLoggedIn`, isLoggedIn);
   return (
@@ -116,6 +118,8 @@ const SubApp = () => {
           blogs,
           details,
           setDetails,
+          fleetData,
+          setFleetData,
         }}
       >
         <Drawer.Navigator
@@ -131,7 +135,7 @@ const SubApp = () => {
             opacity: 0.6,
             zIndex: 2,
           }}
-          initialRouteName="StoriesHome"
+          // initialRouteName="StoriesHome"
           overlayColor={0}
           drawerContent={(props) => <DrawerContent {...props} />}
         >

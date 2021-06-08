@@ -2,16 +2,13 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-const SingleStory = ({ user }) => {
-  console.log(`user`, user);
-  console.log(`us`, user.stories[0].value.imageUrl);
+const SingleStory = ({ user, index }) => {
+  // console.log(`user`, user);
 
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("StoryView", { userId: user.storyNumber })
-      }
+      onPress={() => navigation.navigate("StoryView", { index: index })}
     >
       <View style={styles.container}>
         <View style={styles.singleContainer}>
@@ -40,10 +37,10 @@ const styles = StyleSheet.create({
   },
   singleContainer: {
     backgroundColor: "#fff",
-    padding: 5,
+    padding: 3,
     borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "#1B98F5",
+    borderWidth: 3,
+    borderColor: "#E28633",
   },
   image: {
     height: 80,
