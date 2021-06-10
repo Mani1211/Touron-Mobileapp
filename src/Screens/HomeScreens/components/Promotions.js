@@ -8,7 +8,6 @@ const Promotions = ({ setSelectedPromotion, setModalVisible, item, index }) => {
       key={index}
       style={{
         width: WIDTH * 0.9,
-        marginHorizontal: 5,
         marginTop: 20,
         justifyContent: "center",
         alignItems: "center",

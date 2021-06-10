@@ -148,8 +148,8 @@ const AddStories = ({ navigation, route }) => {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [8, 15],
+      // allowsEditing: true,
+      // aspect: [6, 10],
       quality: 1,
     });
     if (!result.cancelled) {
@@ -246,6 +246,7 @@ const AddStories = ({ navigation, route }) => {
               marginHorizontal: 20,
               padding: 20,
               borderRadius: 10,
+              marginBottom: 40,
             }}
           >
             {storyUploaded ? (
@@ -271,6 +272,7 @@ const AddStories = ({ navigation, route }) => {
               marginHorizontal: 20,
               padding: 20,
               borderRadius: 10,
+              marginBottom: 40,
             }}
           >
             {storyUploaded ? (
@@ -297,7 +299,7 @@ const AddStories = ({ navigation, route }) => {
           containerStyle={{ padding: 30 }}
           style={{ backgroundColor: "#E28633" }}
           position="bottomRight"
-          onPress={pickImage}
+          onPress={() => pickImage()}
         >
           <Entypo name="plus" size={24} color="#fff" />
         </Fab>

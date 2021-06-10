@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Image,
+  ScrollView,
   useWindowDimensions,
 } from "react-native";
 
@@ -36,7 +37,6 @@ const StoriesHome = ({ navigation }) => {
       .ref("stories")
       .on("value", (data) => {
         data.forEach((d) => {
-          // console.log(`key`, d.key);
           let stories = [];
           d.forEach((s) => {
             stories.push({ key: s.key, value: s.val() });
@@ -50,8 +50,8 @@ const StoriesHome = ({ navigation }) => {
       });
 
     // console.log(`v`, v);
+    // setFleetData(v);
     setStoriesData(v);
-    setFleetData(v);
     setStoryLoaded(false);
   };
 
@@ -207,10 +207,11 @@ const StoriesHome = ({ navigation }) => {
           {render().length === 0 ? (
             <NotFound />
           ) : (
-            <View
+            <ScrollView
               style={{
                 width: width,
-                justifyContent: "center",
+                // marginBottom: 30,
+                // justifyContent: "center",
                 // alignItems: "center",
               }}
             >
@@ -225,7 +226,7 @@ const StoriesHome = ({ navigation }) => {
                 );
               })}
               <TouchableOpacity
-                style={{ width: "40%", alignSelf: "center" }}
+                style={{ width: "40%", alignSelf: "center", marginBottom: 40 }}
                 onPress={() =>
                   navigation.navigate("AddStories", {
                     story: step,
@@ -237,7 +238,7 @@ const StoriesHome = ({ navigation }) => {
               >
                 <Text style={styles.addStory}>Add Stories</Text>
               </TouchableOpacity>
-            </View>
+            </ScrollView>
           )}
         </>
       )}

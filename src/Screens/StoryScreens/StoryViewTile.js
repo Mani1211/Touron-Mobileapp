@@ -28,6 +28,7 @@ const StoryViewTile = ({
         justifyContent: "center",
         backgroundColor: "#0f2027",
         position: "relative",
+        paddingTop: Platform.OS === "ios" ? 40 : 0,
       }}
     >
       <View
@@ -59,6 +60,7 @@ const StoryViewTile = ({
         <View>
           <Image
             style={{ height: height, width: width, position: "relative" }}
+            resizeMode="contain"
             source={{
               uri: fleet.imageUrl,
             }}
@@ -91,7 +93,7 @@ const StoryViewTile = ({
           height: 5,
           width: width,
           position: "absolute",
-          top: 45,
+          top: 25,
           marginBottom: 10,
           flexDirection: "row",
           marginHorizontal: 15,
@@ -114,7 +116,7 @@ const StoryViewTile = ({
           ></View>
         ))}
       </View>
-      <View
+      {/* <View
         style={{
           position: "absolute",
           top: 45,
@@ -147,14 +149,13 @@ const StoryViewTile = ({
             />
           </View>
           <View>
-            {/* <Text style={{ fontSize: 23, color: "#fff" }}>{user.username}</Text> */}
             <Text style={{ fontSize: 23, color: "#fff" }}>
               {fleet.categoryTitle}
             </Text>
             <Text style={{ fontSize: 15, color: "#fff" }}>12 hours ago</Text>
           </View>
         </View>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
