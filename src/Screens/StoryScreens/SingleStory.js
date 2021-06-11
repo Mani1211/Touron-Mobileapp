@@ -2,14 +2,13 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-const SingleStory = ({ user, index }) => {
+const SingleStory = ({ user }) => {
   console.log(`user`, user);
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("StoryView", {
-          index: index,
           storyNumber: user.storyNumber,
         })
       }
@@ -25,7 +24,7 @@ const SingleStory = ({ user, index }) => {
             <Text>{user.stories[0].value.storyContent}</Text>
           )}
         </View>
-        <Text>{user.categoryTitle}</Text>
+        {/* <Text>{user.categoryTitle}</Text> */}
       </View>
     </TouchableOpacity>
   );
@@ -43,12 +42,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 3,
     borderRadius: 50,
-    // borderWidth: 3,
-    // borderColor: "#E28633",
+    borderWidth: 3,
+    borderColor: "#E28633",
   },
   image: {
-    height: 80,
-    width: 80,
-    borderRadius: 40,
+    height: 30,
+    width: 30,
+    borderRadius: 10,
   },
 });

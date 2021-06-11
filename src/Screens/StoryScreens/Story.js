@@ -4,7 +4,6 @@ import SingleFleet from "./SingleStory";
 import { database } from "firebase";
 import { useIsFocused } from "@react-navigation/native";
 const Story = () => {
-  // console.log(`fleetbjhvData`, fleetData);
   const [fleetData, setFleetData] = useState([]);
   const isFocused = useIsFocused();
 
@@ -38,9 +37,9 @@ const Story = () => {
         data={fleetData}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <SingleFleet user={item} index={index} />
-        )}
+        renderItem={({ item, index }) => {
+          if (index === 0) return <SingleFleet user={item} index={index} />;
+        }}
       />
     </View>
   );

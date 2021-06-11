@@ -638,12 +638,12 @@ const HomeScreen = ({ navigation }) => {
               </View>
 
               {/* {userInfo.email === "vikashmanoharan@touron.in" && <Story />} */}
-              {Object.keys(userInfo).length !== 0 &&
+              {/* {Object.keys(userInfo).length !== 0 &&
                 userInfo.email === "vikashmanoharan@touron.in" && (
                   <Story />
-                  // <Story fleetData={fleetData} />
-                )}
-              {promotions.length === 0 ? (
+                  )} */}
+              {/* <Story /> */}
+              {/* {promotions.length === 0 ? (
                 <>
                   <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
                     <View
@@ -681,7 +681,7 @@ const HomeScreen = ({ navigation }) => {
                     renderItem={_renderPromo}
                   />
                 </View>
-              )}
+              )} */}
               <View style={{ paddingHorizontal: 15 }}>
                 <ContentList
                   route={"CountryHome"}
@@ -864,7 +864,7 @@ const HomeScreen = ({ navigation }) => {
                   </Text>
                 </View>
               </View>
-              {testimonials.length === 0 ? (
+              {/* {testimonials.length === 0 ? (
                 <>
                   <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
                     <View
@@ -1026,7 +1026,7 @@ const HomeScreen = ({ navigation }) => {
                     renderItem={_renderItem}
                   />
                 </View>
-              )}
+              )} */}
             </>
           </View>
         </ScrollView>

@@ -5,8 +5,10 @@ import {
   useWindowDimensions,
   Image,
   TouchableOpacity,
+  StyleSheet,
   SafeAreaView,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 
 const StoryViewTile = ({
   user,
@@ -20,58 +22,71 @@ const StoryViewTile = ({
   const customWidth = (width * 0.9) / fleetCount;
   const singleWidth = width * 0.95;
 
+  const animationTypes = [
+    "flipInY",
+    "fadeInUp",
+    "slideInDown",
+    "zoomInDown",
+    "zoomInRight",
+  ];
+
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#0f2027",
-        position: "relative",
-        paddingTop: Platform.OS === "ios" ? 40 : 0,
-      }}
-    >
+    <SafeAreaView style={styles.container}>
       <View
-        style={{
-          position: "absolute",
-          flex: 1,
-          zIndex: 10,
-          flexDirection: "row",
-          height: "100%",
-          width: "100%",
-        }}
+        style={[
+          styles.barContainer,
+          {
+            width: width,
+          },
+        ]}
       >
-        <TouchableOpacity
-          onPress={() => goToPrevFleet()}
-          style={{
-            width: "50%",
-            height: "100%",
-          }}
-        ></TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => goToNextFleet()}
-          style={{
-            width: "50%",
-            height: "100%",
-          }}
-        ></TouchableOpacity>
+        {user.stories.map((i, index) => (
+          <View
+            key={index}
+            style={{
+              height: 3,
+              width: fleetCount > 1 ? customWidth : singleWidth,
+              marginBottom: 10,
+              marginRight: fleetCount - 1 === index ? 0 : 3,
+              backgroundColor: fleetIndex < index ? "#e7e7e739" : "#fff",
+              borderRadius: 50,
+            }}
+          ></View>
+        ))}
       </View>
+
       {fleet.type === "IMAGE" && (
-        <View>
+        <View style={{ paddingTop: 20 }}>
           <Image
-            style={{ height: height, width: width, position: "relative" }}
+            style={{
+              height: height * 0.94,
+              width: width * 0.95,
+              position: "relative",
+              borderRadius: 6,
+            }}
             resizeMode="contain"
             source={{
               uri: fleet.imageUrl,
             }}
           />
-          <View style={{ position: "absolute", bottom: 20 }}>
-            <Text style={{ fontSize: 23, color: "#fff" }}>
+          <View
+            style={{ position: "absolute", bottom: 20, backgroundColor: "red" }}
+          >
+            <Animatable.Text
+              animation={animationTypes[Math.round(Math.random() * 4)]}
+              easing="ease-out"
+              style={{ fontSize: 23, color: "#fff" }}
+            >
               {fleet.storyTitle}
-            </Text>
-            <Text style={{ fontSize: 23, color: "#fff" }}>
+            </Animatable.Text>
+            <Animatable.Text
+              animation={animationTypes[Math.round(Math.random() * 4)]}
+              style={{ fontSize: 23, color: "#fff" }}
+              direction="alternate"
+              easing="ease-in"
+            >
               {fleet.storyContent}
-            </Text>
+            </Animatable.Text>
           </View>
         </View>
       )}
@@ -88,76 +103,52 @@ const StoryViewTile = ({
         </Text>
       )}
 
-      <View
-        style={{
-          height: 5,
-          width: width,
-          position: "absolute",
-          top: 25,
-          marginBottom: 10,
-          flexDirection: "row",
-          marginHorizontal: 15,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 50,
-        }}
-      >
-        {user.stories.map((i, index) => (
-          <View
-            key={index}
-            style={{
-              height: 3,
-              width: fleetCount > 1 ? customWidth : singleWidth,
-              marginBottom: 10,
-              marginRight: fleetCount - 1 === index ? 0 : 5,
-              backgroundColor: fleetIndex < index ? "#e7e7e739" : "#e1e1e1",
-              borderRadius: 50,
-            }}
-          ></View>
-        ))}
-      </View>
-      {/* <View
-        style={{
-          position: "absolute",
-          top: 45,
-          left: 5,
-          marginTop: 10,
-        }}
-      >
-        <View
+      <View style={styles.prevNextContainer}>
+        <TouchableOpacity
+          onPress={() => goToPrevFleet()}
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginHorizontal: 20,
+            width: "50%",
+            height: "100%",
           }}
-        >
-          <View
-            style={{
-              backgroundColor: "transparent",
-              padding: 5,
-              borderRadius: 50,
-              borderWidth: 1,
-              borderColor: "#fff",
-              marginRight: 20,
-            }}
-          >
-            <Image
-              style={{ height: 50, width: 50, borderRadius: 30 }}
-              source={{
-                uri: fleet.imageUrl,
-              }}
-            />
-          </View>
-          <View>
-            <Text style={{ fontSize: 23, color: "#fff" }}>
-              {fleet.categoryTitle}
-            </Text>
-            <Text style={{ fontSize: 15, color: "#fff" }}>12 hours ago</Text>
-          </View>
-        </View>
-      </View> */}
+        ></TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => goToNextFleet()}
+          style={{
+            width: "50%",
+            height: "100%",
+          }}
+        ></TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
 
 export default StoryViewTile;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#0f2027",
+    position: "relative",
+    paddingTop: Platform.OS === "ios" ? 40 : 0,
+  },
+  prevNextContainer: {
+    position: "absolute",
+    flex: 1,
+    zIndex: 10,
+    flexDirection: "row",
+    height: "100%",
+    width: "100%",
+  },
+  barContainer: {
+    height: 5,
+    marginBottom: 10,
+    flexDirection: "row",
+    marginHorizontal: 15,
+    top: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+  },
+});
