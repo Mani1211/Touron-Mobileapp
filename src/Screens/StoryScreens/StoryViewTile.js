@@ -29,7 +29,7 @@ const StoryViewTile = ({
     "zoomInDown",
     "zoomInRight",
   ];
-
+  console.log(`fleet`, fleet);
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -55,7 +55,7 @@ const StoryViewTile = ({
         ))}
       </View>
 
-      {fleet.type === "IMAGE" && (
+      {fleet.imageUrl != "" && (
         <View style={{ paddingTop: 20 }}>
           <Image
             style={{
@@ -90,18 +90,18 @@ const StoryViewTile = ({
           </View>
         </View>
       )}
-      {fleet.type === "TEXT" && (
-        <Text
-          style={{
-            fontSize: 30,
-            textAlign: "center",
-            margin: 20,
-            color: "#fff",
-          }}
-        >
-          {fleet.storyContent}
-        </Text>
-      )}
+      {/* {fleet.type === "TEXT" && ( */}
+      <Text
+        style={{
+          fontSize: 30,
+          textAlign: "center",
+          margin: 20,
+          color: "#fff",
+        }}
+      >
+        {fleet.storyContent}
+      </Text>
+      {/* )} */}
 
       <View style={styles.prevNextContainer}>
         <TouchableOpacity

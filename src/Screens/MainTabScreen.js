@@ -54,6 +54,8 @@ const MainTabScreen = () => (
     />
     <Tab.Screen
       options={{
+        tabBarVisible: false,
+
         tabBarIcon: ({ focused }) => (
           <View
             style={{
@@ -85,6 +87,7 @@ const MainTabScreen = () => (
     />
     <Tab.Screen
       options={{
+        tabBarVisible: false,
         tabBarIcon: ({ focused }) => (
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <FontAwesome
@@ -111,7 +114,7 @@ const MainTabScreen = () => (
     />
     <Tab.Screen
       options={{
-        // tabBarVisible: false,
+        tabBarVisible: false,
         tabBarIcon: ({ focused }) => (
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <FontAwesome5

@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FlatList, View } from "react-native";
 import SingleFleet from "./SingleStory";
 import { database } from "firebase";
-import { useIsFocused } from "@react-navigation/native";
 const Story = () => {
   const [fleetData, setFleetData] = useState([]);
-  const isFocused = useIsFocused();
 
   const getStoriesData = () => {
     let v = [];
@@ -13,23 +11,16 @@ const Story = () => {
       .ref("stories")
       .on("value", (data) => {
         data.forEach((d) => {
-          let stories = [];
-          d.forEach((s) => {
-            stories.push({ key: s.key, value: s.val() });
-          });
-          v.push({
-            storyNumber: d.key,
-            categoryTitle: stories[0].value.categoryTitle,
-            stories: stories,
-          });
+          v.push(d.val());
         });
       });
+    console.log(`v`, v);
     setFleetData(v);
   };
 
   useEffect(() => {
     getStoriesData();
-  }, [isFocused]);
+  }, []);
 
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -38,7 +29,7 @@ const Story = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item, index }) => {
-          if (index === 0) return <SingleFleet user={item} index={index} />;
+          if (index === 0) return <SingleFleet story={item} index={index} />;
         }}
       />
     </View>
