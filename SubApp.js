@@ -1,5 +1,5 @@
 import { Dimensions } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DrawerContent from "./src/Screens/DrawerContent";
@@ -18,6 +18,7 @@ import AboutUs from "./src/Screens/AccountScreens/AboutUs";
 import ContactUs from "./src/Screens/AccountScreens/ContactUs";
 import { AuthContext } from "./src/context/AuthContext";
 import Data from "./src/Data/Data";
+import { database } from "firebase";
 const Drawer = createDrawerNavigator();
 
 import * as Linking from "expo-linking";
@@ -101,7 +102,30 @@ const SubApp = () => {
     fleetData,
     setFleetData,
   ] = Data();
-  console.log(`isLoggedIn`, isLoggedIn);
+
+  // const getStoriesData = () => {
+  //   let v = [];
+  //   database()
+  //     .ref("stories")
+  //     .on("child_added", (data) => {
+  //       data.forEach((d) => {
+  //         let stories = [];
+  //         d.forEach((s) => {
+  //           stories.push({ key: s.key, value: s.val() });
+  //         });
+  //         v.push({
+  //           storyNumber: d.key,
+  //           categoryTitle: stories[0].value.categoryTitle,
+  //           stories: stories,
+  //         });
+  //       });
+  //     });
+  //   setFleetData(v);
+  // };
+
+  // useEffect(() => {
+  //   getStoriesData();
+  // }, []);
   return (
     <NavigationContainer linking={linking}>
       <AuthContext.Provider
@@ -135,7 +159,6 @@ const SubApp = () => {
             opacity: 0.6,
             zIndex: 2,
           }}
-          // initialRouteName="StoriesHome"
           overlayColor={0}
           drawerContent={(props) => <DrawerContent {...props} />}
         >

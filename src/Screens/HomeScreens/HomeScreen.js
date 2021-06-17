@@ -43,13 +43,10 @@ const HomeScreen = ({ navigation }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedPromotion, setSelectedPromotion] = useState({});
   const [testimonials, setTestimonials] = useState([]);
-  const { isLoggedIn, userInfo } = useContext(AuthContext);
+  const { isLoggedIn, userInfo, fleetData } = useContext(AuthContext);
   useEffect(() => {
     let mounted = true;
-    // console.log(
-    //   `isSubmittedFeedback(userInfo.userID)`,
-    //   isSubmittedFeedback(userInfo.userID)
-    // );
+
     if (mounted) {
       if (isLoggedIn && isSubmittedFeedback(userInfo.userID) === false) {
         setTimeout(() => setReview(true), 30000);
@@ -640,19 +637,24 @@ const HomeScreen = ({ navigation }) => {
                 <Header navigation={navigation} />
               </View>
 
-              <Story />
-
+              {/* {userInfo.email === "vikashmanoharan@touron.in" && <Story />} */}
+              {Object.keys(userInfo).length !== 0 &&
+                userInfo.email === "vikashmanoharan@touron.in" && (
+                  <Story />
+                  // <Story fleetData={fleetData} />
+                )}
               {promotions.length === 0 ? (
                 <>
                   <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>
                     <View
                       style={{
-                        width: WIDTH * 0.9,
-                        marginHorizontal: 5,
+                        width: WIDTH,
+                        // marginHorizontal: 5,
                         marginVertical: 20,
                         justifyContent: "center",
                         // marginBottom: 35,
                         alignItems: "center",
+                        paddingHorizontal: 20,
                       }}
                     >
                       <View
