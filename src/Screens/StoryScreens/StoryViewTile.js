@@ -64,17 +64,22 @@ const StoryViewTile = ({
               position: "relative",
               borderRadius: 6,
             }}
-            resizeMode="contain"
+            resizeMode="cover"
             source={{
               uri: fleet.imageUrl,
             }}
           />
           <View
-            style={{ position: "absolute", bottom: 20, backgroundColor: "red" }}
+            style={{
+              position: "absolute",
+              bottom: 20,
+              // backgroundColor: "red",
+              width: width,
+            }}
           >
             <Animatable.Text
               animation={animationTypes[Math.round(Math.random() * 4)]}
-              easing="ease-out"
+              // easing="ease-out"
               style={{ fontSize: 23, color: "#fff" }}
             >
               {fleet.storyTitle}
@@ -83,7 +88,7 @@ const StoryViewTile = ({
               animation={animationTypes[Math.round(Math.random() * 4)]}
               style={{ fontSize: 23, color: "#fff" }}
               direction="alternate"
-              easing="ease-in"
+              // easing="ease-in"
             >
               {fleet.storyContent}
             </Animatable.Text>

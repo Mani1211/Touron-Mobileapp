@@ -21,9 +21,9 @@ const StoryView = () => {
       return;
     }
     if (fleetIndex < story?.stories?.length) {
-      setFleet(story?.stories[fleetIndex]);
+      setFleet(story?.stories[0]);
     } else if (fleetIndex === story?.stories?.length) {
-      navigation.navigate("Main");
+      navigation.navigate("StorySection");
     }
   }, [isFocused, fleetIndex]);
 

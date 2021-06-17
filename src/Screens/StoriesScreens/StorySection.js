@@ -3,19 +3,18 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableOpacity,
   ScrollView,
   Dimensions,
   ActivityIndicator,
 } from "react-native";
 import { AuthContext } from "../../context/AuthContext";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-import SearchBar from "../../Reusable Components/SearchBar";
-import { FontAwesome } from "@expo/vector-icons";
 import { database } from "firebase";
 import HeaderTile from "./../../Reusable Components/HeaderTile";
-import CCTile from "./../CountryScreens/CCTile";
 const StorySection = ({ navigation }) => {
   const { countries } = useContext(AuthContext);
   const [country, setCountry] = useState(countries);
@@ -81,13 +80,33 @@ const StorySection = ({ navigation }) => {
               {fleetData.map((item, index) => {
                 if (index < pageSize)
                   return (
-                    <CCTile
-                      index={index}
-                      navigation={navigation}
-                      item={item.stories[0]}
-                      navName={"CountryInner"}
-                      name={item.categoryTitle}
-                    />
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("StoryView", { story: item })
+                      }
+                    >
+                      <View style={styles.imageContainer}>
+                        <View>
+                          <View style={styles.imageContainer1}>
+                            <MaterialCommunityIcons
+                              name="image-filter-none"
+                              size={24}
+                              style={{
+                                alignSelf: "flex-end",
+                                padding: 10,
+                                zIndex: 10,
+                              }}
+                              color="#fff"
+                            />
+                          </View>
+                          <Text style={styles.name}>{item.categoryTitle}</Text>
+                          <Image
+                            style={styles.image}
+                            source={{ uri: item.stories[0].imageUrl }}
+                          />
+                        </View>
+                      </View>
+                    </TouchableOpacity>
                   );
               })}
             </View>
@@ -113,7 +132,36 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 30,
-    paddingBottom: 150,
+    paddingBottom: 50,
+    paddingTop: 30,
     // marginHorizontal: 10,
+  },
+  image: {
+    height: HEIGHT / 3.25,
+    width: WIDTH / 2.25,
+    justifyContent: "space-around",
+    borderRadius: 18,
+    flexDirection: "row",
+  },
+  imageContainer: {
+    padding: 5,
+    position: "relative",
+  },
+  imageContainer1: {
+    position: "absolute",
+    backgroundColor: "#0003",
+    height: HEIGHT / 3.25,
+    width: WIDTH / 2.25,
+    borderRadius: 18,
+    zIndex: 2,
+  },
+  name: {
+    position: "absolute",
+    fontSize: 20,
+    color: "#fff",
+    zIndex: 10,
+    fontFamily: "Andika",
+    bottom: 10,
+    left: 20,
   },
 });

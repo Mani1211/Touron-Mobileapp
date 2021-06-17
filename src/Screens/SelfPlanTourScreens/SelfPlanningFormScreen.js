@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  ImageBackground,
   Image,
   ScrollView,
   Dimensions,
@@ -28,6 +29,7 @@ import OverviewToursScreen from "../CheckoutScreens/OverviewToursScreen";
 import ProgressScreen from "../CheckoutScreens/ProgressScreen";
 import OverviewCitiesScreen from "../CheckoutScreens/OverviewCitiesScreen";
 import SearchBar from "../../Reusable Components/SearchBar";
+import TextButton from "./../../Reusable Components/TextButton";
 
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
@@ -242,24 +244,17 @@ const SelfPlanForm = ({ navigation }) => {
             )}
 
             {selectedState !== "" && (
-              <TouchableOpacity
+              <TextButton
+                label="Proceed"
+                customContainerStyle={styles.proceedButton}
+                customLabelStyle={{
+                  fontSize: 20,
+                }}
                 onPress={() => {
                   getDomesticCities(selectedState);
                   setStep(step + 1);
                 }}
-              >
-                <View style={styles.proceedButton}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "white",
-                      fontFamily: "Andika",
-                    }}
-                  >
-                    Proceed
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              />
             )}
           </View>
         );
@@ -394,19 +389,14 @@ const SelfPlanForm = ({ navigation }) => {
             )}
 
             {selectedCity.length === 0 ? null : (
-              <TouchableOpacity onPress={() => setStep(3)}>
-                <View style={styles.proceedButton}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "white",
-                      fontFamily: "Andika",
-                    }}
-                  >
-                    Proceed
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <TextButton
+                label="Proceed"
+                customContainerStyle={styles.proceedButton}
+                customLabelStyle={{
+                  fontSize: 20,
+                }}
+                onPress={() => setStep(3)}
+              />
             )}
           </View>
         );
@@ -491,22 +481,28 @@ const SelfPlanForm = ({ navigation }) => {
                 </Surface>
               ))}
 
-              <View style={{ width: WIDTH, marginLeft: -20 }}>
-                <Image
+              <View
+                style={{
+                  alignItems: "center",
+                  // backgroundColor: "red",
+                }}
+              >
+                <ImageBackground
                   style={styles.calendarImage}
                   source={{
                     uri: "https://firebasestorage.googleapis.com/v0/b/touronapp-248e4.appspot.com/o/Touron%20app%2Fstats%20and%20Default%2FBoard.jpg?alt=media&token=be1b5370-9893-41be-b3a4-fef78b592715",
                   }}
-                />
-                <View
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    left: 20,
-                  }}
                 >
-                  <View style={styles.embark}>
+                  <View
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      // height: "33%",
+                      flexBasis: "50%",
+                    }}
+                  >
                     <Text
                       style={{
                         fontSize: WIDTH / 22,
@@ -517,58 +513,58 @@ const SelfPlanForm = ({ navigation }) => {
                     >
                       When do you embark your journey
                     </Text>
-                  </View>
-                  <View style={styles.dateContainer}>
-                    <View>
-                      <View style={styles.from}>
-                        <Text style={{ fontSize: 20, color: "#fff" }}>
-                          Onward
-                        </Text>
-                      </View>
-                      <View style={styles.picker}>
-                        <DatePicker
-                          style={{ width: 200 }}
-                          date={fromDate}
-                          mode="date"
-                          placeholder=""
-                          format="YYYY-MM-DD"
-                          minDate={moment()
-                            .add(14, "days")
-                            .format("YYYY-MM-DD")}
-                          confirmBtnText="Confirm"
-                          cancelBtnText="Cancel"
-                          onDateChange={(date) => {
-                            const dates = moment(date)
-                              .add(totalDays - 1, "days")
-                              .format("YYYY-MM-DD");
-                            setFromDate(date);
-                            setToDate(dates);
-                          }}
-                          showIcon={false}
-                          customStyles={{
-                            dateInput: {
-                              borderWidth: 0,
-                            },
-                          }}
-                        />
-                      </View>
-                    </View>
-                    <View>
-                      <View style={styles.from}>
-                        <Text style={{ fontSize: 20, color: "#fff" }}>
-                          Return
-                        </Text>
-                      </View>
-                      <View style={styles.picker}>
-                        {toDate === "" ? (
-                          <Text style={{ fontSize: 15, color: "#333" }}>
-                            Select Date
+                    <View style={styles.dateContainer}>
+                      <View>
+                        <View style={styles.from}>
+                          <Text style={{ fontSize: 20, color: "#fff" }}>
+                            Onward
                           </Text>
-                        ) : (
-                          <Text style={{ fontSize: 15, color: "#333" }}>
-                            {toDate}
+                        </View>
+                        <View style={styles.picker}>
+                          <DatePicker
+                            style={{ width: 200 }}
+                            date={fromDate}
+                            mode="date"
+                            placeholder=""
+                            format="YYYY-MM-DD"
+                            minDate={moment()
+                              .add(14, "days")
+                              .format("YYYY-MM-DD")}
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            onDateChange={(date) => {
+                              const dates = moment(date)
+                                .add(totalDays - 1, "days")
+                                .format("YYYY-MM-DD");
+                              setFromDate(date);
+                              setToDate(dates);
+                            }}
+                            showIcon={false}
+                            customStyles={{
+                              dateInput: {
+                                borderWidth: 0,
+                              },
+                            }}
+                          />
+                        </View>
+                      </View>
+                      <View>
+                        <View style={styles.from}>
+                          <Text style={{ fontSize: 20, color: "#fff" }}>
+                            Return
                           </Text>
-                        )}
+                        </View>
+                        <View style={styles.picker}>
+                          {toDate === "" ? (
+                            <Text style={{ fontSize: 15, color: "#333" }}>
+                              Select Date
+                            </Text>
+                          ) : (
+                            <Text style={{ fontSize: 15, color: "#333" }}>
+                              {toDate}
+                            </Text>
+                          )}
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -577,7 +573,6 @@ const SelfPlanForm = ({ navigation }) => {
                       style={{
                         flexDirection: "row",
                         justifyContent: "space-around",
-                        marginVertical: 1,
                       }}
                     >
                       <View style={{ alignItems: "center" }}>
@@ -659,21 +654,18 @@ const SelfPlanForm = ({ navigation }) => {
                     </View>
                   </View>
                   {fromDate !== "" && adult > 0 && totalDays > 0 && (
-                    <TouchableOpacity
-                      style={{
-                        marginTop:
-                          HEIGHT < 550 ? -WIDTH / 10 - 20 : -WIDTH / 10 - 20,
+                    <TextButton
+                      label="Proceed"
+                      customContainerStyle={styles.proceedButton}
+                      customLabelStyle={{
+                        fontSize: 20,
                       }}
                       onPress={() => {
                         setStep(step + 1);
                       }}
-                    >
-                      <View style={styles.buttonContainer}>
-                        <Text style={styles.exploreButton}>Proceed</Text>
-                      </View>
-                    </TouchableOpacity>
+                    />
                   )}
-                </View>
+                </ImageBackground>
               </View>
             </View>
           </ScrollView>
@@ -686,7 +678,7 @@ const SelfPlanForm = ({ navigation }) => {
         return (
           <View
             style={{
-              // justifyContent: "center",
+              justifyContent: "space-around",
               width: WIDTH,
               alignItems: "center",
               flex: 1,
@@ -793,19 +785,15 @@ const SelfPlanForm = ({ navigation }) => {
                 </View>
               </View>
             ) : null}
-            <TouchableOpacity
-              onPress={submitD}
-              style={{
-                // marginTop: 0,
-                bottom: 10,
-                position: "absolute",
-                paddingBottom: 30,
+            <TextButton
+              label="Submit"
+              customContainerStyle={styles.buttonContainer}
+              customLabelStyle={{
+                padding: 10,
+                fontSize: 20,
               }}
-            >
-              <View style={styles.buttonContainer}>
-                <Text style={styles.exploreButton}>Submit</Text>
-              </View>
-            </TouchableOpacity>
+              onPress={submitD}
+            />
           </View>
         );
       case 5:
@@ -1305,26 +1293,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   dateContainer: {
-    width: WIDTH,
+    width: "100%",
     alignItems: "center",
     marginVertical: 5,
     justifyContent: "space-around",
-    position: "absolute",
     flexDirection: "row",
-    bottom: HEIGHT * 0.5,
   },
-  embark: {
-    position: "absolute",
-    bottom: HEIGHT / 1.45,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-  },
+
   calendarImage: {
     marginTop: 0,
     height: HEIGHT / 1.3,
-    width: WIDTH * 1.1,
+    width: WIDTH * 0.9,
     position: "relative",
+    alignItems: "center",
+    // justifyContent: "space-between",
+    paddingVertical: 20,
   },
   cityimage: {
     width: 100,
@@ -1344,12 +1327,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   numbers: {
-    position: "absolute",
-    height: HEIGHT / 3.7,
+    flexBasis: "40%",
     width: WIDTH * 0.9,
-    marginHorizontal: 20,
     zIndex: 1,
-    bottom: HEIGHT * 0.11,
     borderRadius: 20,
   },
   personText: {
@@ -1423,12 +1403,13 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   proceedButton: {
-    width: WIDTH * 0.8,
+    width: WIDTH * 0.9,
     backgroundColor: "#E28633",
     borderRadius: 10,
     padding: 5,
     alignItems: "center",
-    marginBottom: Platform.OS === "ios" ? 25 : 5,
+    marginTop: 10,
+    // marginBottom: Platform.OS === "ios" ? 25 : 5,
   },
   container: {
     flex: 1,
