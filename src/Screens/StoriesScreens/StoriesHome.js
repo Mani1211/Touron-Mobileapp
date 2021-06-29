@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  FlatList,
   Image,
   ScrollView,
   useWindowDimensions,
@@ -49,8 +50,6 @@ const StoriesHome = ({ navigation }) => {
         });
       });
 
-    // console.log(`v`, v);
-    // setFleetData(v);
     setStoriesData(v);
     setStoryLoaded(false);
   };
@@ -135,6 +134,48 @@ const StoriesHome = ({ navigation }) => {
     return sto?.stories ? sto?.stories : [];
   };
 
+  const stories = [
+    {
+      name: "Story 1",
+      number: 1,
+    },
+    {
+      name: "Story 2",
+      number: 2,
+    },
+    {
+      name: "Story 3",
+      number: 3,
+    },
+    {
+      name: "Story 4",
+      number: 4,
+    },
+    {
+      name: "Story 5",
+      number: 5,
+    },
+    {
+      name: "Story 6",
+      number: 6,
+    },
+    {
+      name: "Story 7",
+      number: 7,
+    },
+    {
+      name: "Story 8",
+      number: 8,
+    },
+    {
+      name: "Story 9",
+      number: 9,
+    },
+    {
+      name: "Story 10",
+      number: 10,
+    },
+  ];
   return (
     <View style={{ flex: 1, paddingTop: 20, backgroundColor: "#fff" }}>
       {storyLoaded ? (
@@ -159,62 +200,49 @@ const StoriesHome = ({ navigation }) => {
               justifyContent: "center",
             }}
           >
-            <TouchableOpacity onPress={() => setStep(1)}>
-              <Text
-                style={[
-                  styles.storyHead,
-                  { backgroundColor: step === 1 ? "#E28633" : "#D9D9D9" },
-                ]}
-              >
-                Story 1
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setStep(2)}>
-              <Text
-                style={[
-                  styles.storyHead,
-                  { backgroundColor: step === 2 ? "#E28633" : "#D9D9D9" },
-                ]}
-              >
-                Story 2
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setStep(3)}>
-              <Text
-                style={[
-                  styles.storyHead,
-                  { backgroundColor: step === 3 ? "#E28633" : "#D9D9D9" },
-                ]}
-              >
-                Story 3
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setStep(4)}>
-              <Text
-                style={[
-                  styles.storyHead,
-                  {
-                    marginRight: 0,
-                    backgroundColor: step === 4 ? "#E28633" : "#D9D9D9",
-                  },
-                ]}
-              >
-                Story 4
-              </Text>
-            </TouchableOpacity>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => item.number}
+              data={stories}
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity onPress={() => setStep(item.number)}>
+                    <Text
+                      style={[
+                        styles.storyHead,
+                        {
+                          backgroundColor:
+                            step === item.number ? "#E28633" : "#D9D9D9",
+                        },
+                      ]}
+                    >
+                      {item.name}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              }}
+            />
           </View>
 
           {render().length === 0 ? (
             <NotFound />
           ) : (
             <ScrollView
-              style={{
+              contentContainerStyle={{
                 width: width,
-                // marginBottom: 30,
-                // justifyContent: "center",
-                // alignItems: "center",
               }}
             >
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Andika",
+                  textAlign: "center",
+                  paddingVertical: 10,
+                }}
+              >
+                Category : {render()[0].value.categoryTitle}
+              </Text>
               {render().map((d, index) => {
                 return (
                   <SingleStory

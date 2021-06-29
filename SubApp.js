@@ -103,29 +103,6 @@ const SubApp = () => {
     setFleetData,
   ] = Data();
 
-  // const getStoriesData = () => {
-  //   let v = [];
-  //   database()
-  //     .ref("stories")
-  //     .on("child_added", (data) => {
-  //       data.forEach((d) => {
-  //         let stories = [];
-  //         d.forEach((s) => {
-  //           stories.push({ key: s.key, value: s.val() });
-  //         });
-  //         v.push({
-  //           storyNumber: d.key,
-  //           categoryTitle: stories[0].value.categoryTitle,
-  //           stories: stories,
-  //         });
-  //       });
-  //     });
-  //   setFleetData(v);
-  // };
-
-  // useEffect(() => {
-  //   getStoriesData();
-  // }, []);
   return (
     <NavigationContainer linking={linking}>
       <AuthContext.Provider

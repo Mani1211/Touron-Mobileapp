@@ -108,23 +108,21 @@ function SignUpScreen({ navigation }) {
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
           setUser(user.user);
-          database()
-            .ref(`userGeneralInfo/${user.user.uid}`)
-            .set({
-              phoneNumber: number,
-              name: name,
-              address: "",
-              age: "",
-              gender: "",
-              aboutMe: "",
-              travellerType: "",
-              admin: false,
-              pushNotificationToken: expoToken === "" ? "" : expoToken,
-              photoURL: "",
-              email: email,
-              profession: "",
-              userID: user.user.uid,
-            });
+          database().ref(`userGeneralInfo/${user.user.uid}`).set({
+            phoneNumber: number,
+            name: name,
+            address: "",
+            age: "",
+            gender: "",
+            aboutMe: "",
+            travellerType: "",
+            admin: false,
+            pushNotificationToken: "",
+            photoURL: "",
+            email: email,
+            profession: "",
+            userID: user.user.uid,
+          });
           user.user
             .updateProfile({
               displayName: name,
@@ -344,7 +342,7 @@ function SignUpScreen({ navigation }) {
                     placeholder="Email"
                     value={email}
                     keyboardAppearance="dark"
-                    onChangeText={(value) => setEmail(value)}
+                    onChangeText={(value) => setEmail(value.trim())}
                     placeholderTextColor="white"
                     editable={editable}
                   />

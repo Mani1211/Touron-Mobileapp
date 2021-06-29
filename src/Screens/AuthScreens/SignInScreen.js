@@ -251,7 +251,7 @@ function SignInScreen({ navigation }) {
                     style={styles.input}
                     placeholder="Email"
                     keyboardAppearance="dark"
-                    onChangeText={(value) => setEmail(value)}
+                    onChangeText={(value) => setEmail(value.trim())}
                     value={email}
                     keyboardType="email-address"
                     editable={editable}

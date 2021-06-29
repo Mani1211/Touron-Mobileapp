@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import HeaderTile from "./../../../Reusable Components/HeaderTile";
+import TextButton from "./../../../Reusable Components/TextButton";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -41,11 +42,27 @@ const Tourname = ({ imgSrc, step, description, tourName, navigation }) => {
         </Text>
       </View>
 
-      <TouchableOpacity onPress={step}>
+      {/* <TouchableOpacity onPress={step}>
         <View style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Get Started</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <TextButton
+        label="Get Started"
+        customContainerStyle={{
+          alignItems: "center",
+          justifyContent: "center",
+          // marginBottom: 65,
+          marginVertical: 30,
+        }}
+        customLabelStyle={{
+          borderRadius: 10,
+          backgroundColor: "#E28633",
+          padding: 15,
+          fontSize: 16,
+        }}
+        onPress={() => step()}
+      />
     </View>
   );
 };
