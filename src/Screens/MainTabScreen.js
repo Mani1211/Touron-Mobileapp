@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Platform, TouchableOpacity } from "react-native";
-import { FontAwesome, Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Ionicons,
+  FontAwesome5,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import HomeScreen from "./HomeScreens/HomeScreen";
 import BlogHomeScreen from "./BlogScreens/BlogHomeScreen";
 import SelfPlanningScreen from "./SelfPlanTourScreens/SelfPlanningScreen";
@@ -43,9 +48,9 @@ const MainTabScreen = ({ navigation }) => {
       >
         <View
           style={{
-            width: 70,
-            height: 70,
-            borderRadius: 35,
+            width: 60,
+            height: 60,
+            borderRadius: 30,
             backgroundColor: "#E28633",
           }}
         >
@@ -118,7 +123,6 @@ const MainTabScreen = ({ navigation }) => {
                 style={{
                   color: focused ? "#E28633" : "#333",
                   fontFamily: "Andika",
-                  // marginTop: Platform.OS === "ios" ? 30 : 20,
                 }}
               >
                 PIY
@@ -134,7 +138,12 @@ const MainTabScreen = ({ navigation }) => {
           tabBarVisible: false,
 
           tabBarIcon: ({ focused }) => (
-            <FontAwesome name="paint-brush" size={24} color="#fff" />
+            <MaterialIcons
+              name="settings-input-svideo"
+              size={34}
+              color="#fff"
+            />
+            // <FontAwesome5 name="photo-video" size={24} color="#fff" />
           ),
           tabBarButton: (props) => <TabbarCustomButton {...props} />,
         }}

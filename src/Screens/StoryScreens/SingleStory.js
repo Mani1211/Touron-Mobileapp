@@ -19,6 +19,7 @@ const SingleStory = ({ story }) => {
             <Text>{story.stories[0].storyContent}</Text>
           )}
         </View>
+        <Text style={{ fontFamily: "Andika", fontSize: 10 }}>Story</Text>
       </View>
     </TouchableOpacity>
   );
@@ -30,7 +31,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    margin: 10,
   },
   singleContainer: {
     backgroundColor: "#fff",

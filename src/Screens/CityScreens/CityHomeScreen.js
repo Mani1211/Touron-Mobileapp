@@ -4,7 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Platform,
   ScrollView,
   ActivityIndicator,
   Dimensions,
@@ -15,7 +14,6 @@ const HEIGHT = Dimensions.get("window").height;
 import touron from "../../api/touron";
 import axios from "axios";
 import SearchBar from "./../../Reusable Components/SearchBar";
-import { FontAwesome } from "@expo/vector-icons";
 import CCTile from "./../CountryScreens/CCTile";
 import HeaderTile from "./../../Reusable Components/HeaderTile";
 const CityHomeScreen = ({ navigation, route }) => {

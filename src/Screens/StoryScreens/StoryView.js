@@ -10,10 +10,9 @@ import StoryViewTile from "./StoryViewTile";
 const StoryView = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { story } = route.params;
   const [fleetIndex, setFleetIndex] = useState(0);
+  const { story } = route.params;
   const [fleet, setFleet] = useState(story?.stories[fleetIndex] || null);
-  console.log(`flbjhveet`, fleet);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -21,17 +20,22 @@ const StoryView = () => {
       return;
     }
     if (fleetIndex < story?.stories?.length) {
-      setFleet(story?.stories[0]);
+      setFleet(story?.stories[fleetIndex]);
     } else if (fleetIndex === story?.stories?.length) {
+      setFleetIndex(0);
       navigation.navigate("StorySection");
     }
-  }, [isFocused, fleetIndex]);
+  }, [story, fleetIndex, isFocused]);
 
   const goToNextFleet = () => {
     setFleetIndex(fleetIndex + 1);
   };
 
   const goToPrevFleet = () => {
+    if(fleetIndex ===0){
+      navigation.navigate("StorySection");
+
+    }
     if (fleetIndex > 0) {
       setFleetIndex(fleetIndex - 1);
     }

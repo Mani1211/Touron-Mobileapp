@@ -19,6 +19,8 @@ const Header = ({ navigation }) => {
           color="#000"
           style={{
             fontSize: 30,
+            alignSelf: "flex-start",
+            flex: 1,
             paddingTop: Platform.OS === "ios" ? 10 : 10,
             fontWeight: "bold",
           }}
@@ -29,6 +31,7 @@ const Header = ({ navigation }) => {
           style={{
             flexBasis: "60%",
             alignSelf: "flex-start",
+            flex: 1,
             fontSize: 30,
             fontFamily: "PlaylistScript",
             color: "#263768",
@@ -37,18 +40,7 @@ const Header = ({ navigation }) => {
           tour On
         </Text>
       </View>
-      {/* <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-        <Feather
-          name="menu"
-          color="#000"
-          style={{
-            fontSize: 30,
-            paddingTop: Platform.OS === "ios" ? 10 : 10,
 
-            fontWeight: "bold",
-          }}
-        />
-      </TouchableOpacity> */}
       <Story />
     </View>
   );

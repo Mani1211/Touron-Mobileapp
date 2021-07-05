@@ -5,6 +5,7 @@ import {
   useWindowDimensions,
   Image,
   TouchableOpacity,
+  Platform,
   StyleSheet,
   SafeAreaView,
 } from "react-native";
@@ -17,9 +18,10 @@ const StoryViewTile = ({
   goToNextFleet,
   fleetIndex,
 }) => {
+  console.log(`user,fleet,fleetIndex`, user, fleet, fleetIndex);
   const { width, height } = useWindowDimensions();
   const fleetCount = user.stories.length;
-  const customWidth = (width * 0.9) / fleetCount;
+  const customWidth = (width * 0.95) / fleetCount;
   const singleWidth = width * 0.95;
 
   const animationTypes = [
@@ -28,8 +30,15 @@ const StoryViewTile = ({
     "slideInDown",
     "zoomInDown",
     "zoomInRight",
+    "bounceIn",
+    "bounceInDown",
+    "fadeInUpBig",
+    "flipInY",
+    "lightSpeedIn",
+    "zoomIn",
+    "zoomInUp",
+    "zoomInRight",
   ];
-  console.log(`fleet`, fleet);
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -56,11 +65,11 @@ const StoryViewTile = ({
       </View>
 
       {fleet.imageUrl != "" && (
-        <View style={{ paddingTop: 20 }}>
+        <View style={{ paddingTop: 0 }}>
           <Image
             style={{
-              height: height * 0.94,
-              width: width * 0.95,
+              height: height * 0.97,
+              width: width * 0.97,
               position: "relative",
               borderRadius: 6,
             }}
@@ -73,20 +82,25 @@ const StoryViewTile = ({
             style={{
               position: "absolute",
               bottom: 20,
-              // backgroundColor: "red",
+              padding: 20,
               width: width,
             }}
           >
             <Animatable.Text
               animation={animationTypes[Math.round(Math.random() * 4)]}
               // easing="ease-out"
-              style={{ fontSize: 23, color: "#fff" }}
+              style={{
+                fontSize: 23,
+                color: "#fff",
+                fontFamily:
+                  Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+              }}
             >
               {fleet.storyTitle}
             </Animatable.Text>
             <Animatable.Text
               animation={animationTypes[Math.round(Math.random() * 4)]}
-              style={{ fontSize: 23, color: "#fff" }}
+              style={{ fontSize: 16, color: "#fff", fontFamily: "Andika" }}
               direction="alternate"
               // easing="ease-in"
             >
@@ -150,8 +164,8 @@ const styles = StyleSheet.create({
     height: 5,
     marginBottom: 10,
     flexDirection: "row",
-    marginHorizontal: 15,
-    top: 20,
+    // marginHorizontal: 5,
+    top: 10,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,

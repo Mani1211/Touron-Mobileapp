@@ -130,11 +130,11 @@ const styles = StyleSheet.create({
     width: WIDTH,
     flexWrap: "wrap",
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     marginBottom: 30,
     paddingBottom: 50,
     paddingTop: 30,
-    // marginHorizontal: 10,
+    marginHorizontal: 10,
   },
   image: {
     height: HEIGHT / 3.25,
