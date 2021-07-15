@@ -374,6 +374,7 @@ Come and explore with tour On, India’s amazing National Parks and wildlife san
       reports: "",
       tourCost: 0,
       requestDate: new Date().toDateString(),
+      receivedFrom: "App",
     };
 
     database()

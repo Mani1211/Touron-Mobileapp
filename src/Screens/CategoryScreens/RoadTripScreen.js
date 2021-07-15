@@ -46,6 +46,7 @@ const RoadTripScreen = ({ navigation }) => {
   const [startPoint, setStartPoint] = useState("");
   const [driveDuration, setDriveDuration] = useState("");
   const [driveRestriction, setDriveRestriction] = useState("");
+  const [destination, setDestination] = useState("");
   const [stops, setStops] = useState("");
   const [carRent, setCarRent] = useState(false);
   const [additionalInfo, setAdditionalInfo] = useState(false);
@@ -286,17 +287,17 @@ const RoadTripScreen = ({ navigation }) => {
               "https://image.freepik.com/free-vector/car-towing-caravan-trailer-camper-against-mountains-spruce-trees-background-summer-travel-lettering-vehicle-wild-nature-adventure-trip-seasonal-camping-illustration_198278-1324.jpg"
             }
             attr3={startPoint}
-            attr1={driveDuration}
-            attr2={driveRestriction}
-            placeholder1={"Ex.6 hours"}
-            placeholder2={" Ex.Veg food only"}
+            attr2={driveDuration}
+            attr1={destination}
+            placeholder2={"Ex.6 hours"}
+            placeholder1={" Ex.Kerela"}
             placeholder3={"Ex.Chennai"}
             que3={"Where will be your starting point ?"}
-            que1={"How long would you like to drive? (Optional)"}
-            que2={"Any travel or dietary restrictions? (Optional)"}
+            que2={"How long would you like to drive? (Optional)"}
+            que1={"Where you want to go?"}
             func3={(value) => setStartPoint(value)}
-            func1={(value) => setDriveDuration(value)}
-            func2={(value) => setDriveRestriction(value)}
+            func2={(value) => setDriveDuration(value)}
+            func1={(value) => setDestination(value)}
           />
         );
       case 7:
@@ -390,6 +391,7 @@ const RoadTripScreen = ({ navigation }) => {
         children: children,
         travelMode: travelMode,
         startPoint: startPoint,
+        destination: destination,
         driveRestriction: driveRestriction,
         driveDuration: driveDuration,
         toDate: toDate,
@@ -406,7 +408,7 @@ const RoadTripScreen = ({ navigation }) => {
         plans: "",
         reports: "",
         requestDate: new Date().toDateString(),
-
+        receivedFrom: "App",
         tourCost: 0,
       })
       .then((data) => {

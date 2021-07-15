@@ -379,6 +379,7 @@ const SurpriseTourScreen = ({ navigation }) => {
       status: "Query Received",
       tourCost: 0,
       requestDate: new Date().toDateString(),
+      receivedFrom: "App",
     };
 
     database()

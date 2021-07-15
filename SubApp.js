@@ -48,6 +48,9 @@ import RoadTripScreen from "./src/Screens/CategoryScreens/RoadTripScreen";
 import AddStories from "./src/Screens/StoriesScreens/AddStories";
 import StoriesHome from "./src/Screens/StoriesScreens/StoriesHome";
 import StoryView from "./src/Screens/StoryScreens/StoryView";
+import ResortsInner from "./src/Screens/Resorts/ResortsInner";
+import Resort from "./src/Screens/Resorts/Resort";
+import ResortHome from "./src/Screens/Resorts/ResortHome";
 
 // const prefix = Linking.makeUrl();
 // console.log(`prefix`, prefix);
@@ -139,9 +142,9 @@ const SubApp = () => {
           overlayColor={0}
           drawerContent={(props) => <DrawerContent {...props} />}
         >
-          {!isLoggedIn && (
+          {/* {!isLoggedIn && (
             <Drawer.Screen name="Get" component={GettingStartedScreen} />
-          )}
+          )} */}
           <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
           <Drawer.Screen name="Profile" component={ProfileScreen} />
           <Drawer.Screen name="MyRequest" component={MyRequestScreen} />
@@ -246,8 +249,13 @@ const SubApp = () => {
           {/* Home Stack Screen */}
 
           <Drawer.Screen name="StoryView" component={StoryView} />
-          <Drawer.Screen name="StoriesHome" component={StoriesHome} />
           <Drawer.Screen name="AddStories" component={AddStories} />
+
+          {/* Resort Section */}
+
+          <Drawer.Screen name="Resort" component={Resort} />
+          <Drawer.Screen name="ResortInner" component={ResortsInner} />
+          <Drawer.Screen name="ResortHome" component={ResortHome} />
         </Drawer.Navigator>
       </AuthContext.Provider>
     </NavigationContainer>

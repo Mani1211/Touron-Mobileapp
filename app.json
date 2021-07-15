@@ -49,7 +49,6 @@
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "enableDangerousExperimentalLeanBuilds": true,
       "package": "com.touron.travelapp",
       "versionCode": 32,
       "useNextNotificationsApi": true,

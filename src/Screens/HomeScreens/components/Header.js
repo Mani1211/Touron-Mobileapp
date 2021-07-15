@@ -40,7 +40,6 @@ const Header = ({ navigation }) => {
           tour On
         </Text>
       </View>
-
       <Story />
     </View>
   );

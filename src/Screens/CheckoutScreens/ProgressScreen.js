@@ -544,6 +544,7 @@ const ProgressScreen = ({ selectedCitys, setStep, prevStep }) => {
                 status: "Query Received",
                 tourCost: 0,
                 tourType: "International",
+                receivedFrom: "App",
               })
               .then(() => setStep())
               .catch((err) => console.log(err));

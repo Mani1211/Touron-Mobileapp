@@ -370,7 +370,7 @@ const PlannedTourScreen = ({ navigation, route }) => {
       plans: "",
       reports: "",
       requestDate: new Date().toDateString(),
-
+      receivedFrom: "App",
       tourCost: 0,
     };
 

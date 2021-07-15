@@ -32,9 +32,8 @@ const StoryView = () => {
   };
 
   const goToPrevFleet = () => {
-    if(fleetIndex ===0){
+    if (fleetIndex === 0) {
       navigation.navigate("StorySection");
-
     }
     if (fleetIndex > 0) {
       setFleetIndex(fleetIndex - 1);

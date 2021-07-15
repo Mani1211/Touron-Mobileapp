@@ -68,7 +68,7 @@ const StoryViewTile = ({
         <View style={{ paddingTop: 0 }}>
           <Image
             style={{
-              height: height * 0.97,
+              height: Platform.OS === "ios" ? height * 0.9 : height * 0.97,
               width: width * 0.97,
               position: "relative",
               borderRadius: 6,

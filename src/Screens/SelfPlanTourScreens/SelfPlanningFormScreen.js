@@ -158,6 +158,7 @@ const SelfPlanForm = ({ navigation }) => {
         tourCategory: "Self Plan Tour",
         status: "Query Received",
         tourCost: 0,
+        receivedFrom: "App",
       })
       .then((data) => {
         setSelectedState("");

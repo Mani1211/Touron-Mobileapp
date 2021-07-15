@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
@@ -5,12 +6,13 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Platform,
   ScrollView,
   Dimensions,
   ActivityIndicator,
 } from "react-native";
 import { AuthContext } from "../../context/AuthContext";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import { database } from "firebase";
@@ -81,30 +83,27 @@ const StorySection = ({ navigation }) => {
                 if (index < pageSize)
                   return (
                     <TouchableOpacity
+                      key={index}
                       onPress={() =>
                         navigation.navigate("StoryView", { story: item })
                       }
                     >
                       <View style={styles.imageContainer}>
-                        <View>
-                          <View style={styles.imageContainer1}>
-                            <MaterialCommunityIcons
-                              name="image-filter-none"
-                              size={24}
-                              style={{
-                                alignSelf: "flex-end",
-                                padding: 10,
-                                zIndex: 10,
-                              }}
-                              color="#fff"
-                            />
-                          </View>
-                          <Text style={styles.name}>{item.categoryTitle}</Text>
-                          <Image
-                            style={styles.image}
-                            source={{ uri: item.stories[0].imageUrl }}
-                          />
-                        </View>
+                        <Image
+                          style={styles.image}
+                          source={{ uri: item.stories[0].imageUrl }}
+                        />
+                        <MaterialCommunityIcons
+                          name="image-filter-none"
+                          size={24}
+                          style={{
+                            alignSelf: "flex-end",
+                            padding: 10,
+                            zIndex: 10,
+                          }}
+                          color="#fff"
+                        />
+                        <Text style={styles.name}>{item.categoryTitle}</Text>
                       </View>
                     </TouchableOpacity>
                   );
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   image: {
-    height: HEIGHT / 3.25,
+    height: HEIGHT / 3.8,
     width: WIDTH / 2.25,
     justifyContent: "space-around",
     borderRadius: 18,
@@ -146,22 +145,24 @@ const styles = StyleSheet.create({
   imageContainer: {
     padding: 5,
     position: "relative",
+    marginBottom: 10,
   },
   imageContainer1: {
     position: "absolute",
-    backgroundColor: "#0003",
-    height: HEIGHT / 3.25,
+    backgroundColor: "#0009",
+    opacity: 0.1,
+    height: HEIGHT / 3.8,
     width: WIDTH / 2.25,
     borderRadius: 18,
     zIndex: 2,
   },
   name: {
-    position: "absolute",
-    fontSize: 20,
-    color: "#fff",
-    zIndex: 10,
-    fontFamily: "Andika",
-    bottom: 10,
-    left: 20,
+    // position: 'absolute',
+    fontSize: 18,
+    color: "#333",
+    textAlign: "center",
+    fontFamily: Platform.OS === "ios" ? "AvenirNext-Bold" : "Avenir",
+
+    // fontFamily: "Andika",
   },
 });

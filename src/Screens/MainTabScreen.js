@@ -66,10 +66,10 @@ const MainTabScreen = ({ navigation }) => {
         style: {
           backgroundColor: "#fff",
           position: "absolute",
-          height: 80,
-          // bottom: 10,
+          height: Platform.OS === "ios" ? 100 : 80,
+          bottom: 5,
           left: 10,
-          borderRadius: 15,
+          borderRadius: 55,
           right: 10,
         },
         keyboardHidesTabBar: true,
@@ -116,6 +116,7 @@ const MainTabScreen = ({ navigation }) => {
               <FontAwesome
                 name="paint-brush"
                 size={24}
+                style={{ marginTop: Platform.OS === "ios" ? 15 : 0 }}
                 color={focused ? "#E28633" : "#333"}
               />
 

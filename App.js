@@ -7,6 +7,8 @@ import * as firebase from "firebase";
 import SubApp from "./SubApp";
 import * as Font from "expo-font";
 import { Root } from "native-base";
+import * as Application from "expo-application";
+import ResortsInner from "./src/Screens/Resorts/ResortsInner";
 
 var firebaseConfig = {
   apiKey: "AIzaSyCCZ2bo_iPbtvarsADQe84qX2s9cWPMq3U",
@@ -43,6 +45,8 @@ const App = () => {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
+      let code = Application.applicationName;
+      console.log(`code`, code);
       fetchFont();
     }
     return () => (mounted = false);
@@ -73,7 +77,7 @@ const App = () => {
   // );
 
   // return <GettingStartedScreen />;
-  // return <>{!appLoading && <TourInnerScreen />}</>;
+  // return <>{!appLoading && <ResortsInner />}</>;
   return <Root>{!appLoading && <SubApp />}</Root>;
 };
 

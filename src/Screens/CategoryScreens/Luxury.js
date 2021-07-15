@@ -353,6 +353,7 @@ Luxury tours are tailor made to individual requirements. Be it India or abroad, 
       reports: "",
       tourCost: 0,
       requestDate: new Date().toDateString(),
+      receivedFrom: "App",
     };
 
     database()

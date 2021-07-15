@@ -35,6 +35,7 @@ import CountryCityTile from "./components/CountryCityTile";
 import TourTile from "./components/TourTile";
 import TestimonialsTile from "./components/TestimonialTile";
 import Promotions from "./components/Promotions";
+import Resort from "../Resorts/Resort";
 
 const HomeScreen = ({ navigation }) => {
   const [promotions, setPromotions] = useState([]);
@@ -363,7 +364,14 @@ const HomeScreen = ({ navigation }) => {
                     renderItem={renderCountry}
                   />
                 )}
-
+                <ContentList
+                  route={"ResortHome"}
+                  navigation={navigation}
+                  title={"Resorts"}
+                  more={"Show More"}
+                  content={""}
+                />
+                <Resort />
                 <ContentList
                   route={"CityHome"}
                   navigation={navigation}
@@ -373,6 +381,7 @@ const HomeScreen = ({ navigation }) => {
                     "Are you a wanderlust soul getting lost in breathtaking cities? Here are our suggestions!"
                   }
                 />
+
                 {city.length === 0 ? (
                   <>
                     <SkeletonPlaceholder highlightColor="#F2F8FC" speed={800}>

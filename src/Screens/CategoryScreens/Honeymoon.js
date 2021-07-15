@@ -328,7 +328,7 @@ This tour is exclusively for honeymooners and we provide you with suggestions of
       plans: "",
       reports: "",
       requestDate: new Date().toDateString(),
-
+      receivedFrom: "App",
       tourCost: 0,
     };
 
